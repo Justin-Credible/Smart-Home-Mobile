@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/widgets/history by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <base  />
+    <link rel="stylesheet" type="text/css" href="../../css.css" />
+    <title>AlertMe.com API v5 Documentation :: calls/widgets/history :: DRAFT</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+  </head>
+  <body>
+    <h1>
+      API v5 Documentation <span>draft</span>
+    </h1>
+    <div class="menu">
+      <ul class="menu">
+   <li><h4><a href="../../../docs.html">overview</a></h4>
+      <ul>
+         <li><a href="../../responses.html">responses</a></li>
+         <li><a href="../../errors.html">errors</a></li>
+         <li><a href="../../examples.html">examples</a></li>
+
+      </ul>
+   </li>
+   <li><h4>calls</h4>
+      <ul>
+
+         <li><a href="../sessions.html">sessions</a></li>
+
+         <li><a href="../users.html">users</a>
+            <ul>
+
+               <li><a href="../users/systemalerts.html">system alerts</a></li>
+
+               <li><a href="../questions.html">questions</a></li>
+
+               <li><a href="../hubs.html">hubs</a>
+                  <ul>
+                     <li><a href="../hubs/activityLog.html">activity log (history)</a></li>
+                     <li><a href="../devices.html">devices</a>
+                       <ul>
+
+                           <li><a href="../devices/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+                     <li><a href="../hubs/profiles.html">profiles</a></li>
+
+                     <li>rules
+                        <ul>
+                           <li><a href="../rules/actions.html">actions</a></li>
+                           <li><a href="../../actions.html">action types</a></li>                           
+                           <li><a href="../rules/wizard.html">wizard</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="../services.html">services</a>
+                        <ul>
+
+                           <li><a href="../services/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+
+                  </ul>
+               </li>
+
+               <li><a href="../widgets.html">widgets</a>
+                  <ul>
+                     <li><a href="alarm.html">alarm</a></li>
+                     <li><a href="care.html">care</a></li>
+                     <li><a href="cameras.html">cameras</a></li>
+                     <li><a href="climate.html">climate</a></li>
+                     <li><a href="dashboard.html">dashboard</a></li>
+                     <li><a href="heating.html">heating</a></li>
+                     <li><a href="locks.html">locks</a></li>
+                     <li><a href="homestatus.html">homestatus</a></li>
+
+                     <li><a href="presence.html">presence</a></li>
+                     <li><a href="smartplugs.html">smartplugs</a></li>
+                     <li><a href="swingometer.html">swingometer</a></li>
+                     <li><a href="temperature.html">temperature</a></li>
+                     <li><a href="usage.html">usage</a></li>
+                     <li><a href="petdoors.html">petdoors</a></li>
+                     <li><a href="group.html">groups</a></li>
+                     <li><a href="history.html">history</a></li>
+                     <li><a href="irrigation.html">irrigation</a></li>
+                     <li><a href="secondaryuser.html">secondaryuser</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+</ul>
+    </div>
+    <div class="doc calls widgets history_page">
+      <div class="section">
+    <p>All calls listed below follow <span class="call">/users/<em>:username</em>/widgets</span> in the URI;
+       this prefix has been omitted for conciseness</p>
+</div>
+
+<div class="section">
+   <h2>GET <span class="call">/history?limit=:limit&offsetId=:offsetId&minimal=:minimal&subActivities=:subActivities</span></h2>
+   <p>Returns a list of formatted activity log items for a history widget.</p>
+   <div class="args">
+      <h3>Arguments</h3>
+      <div class="args">
+         <dl>
+            <dt>:limit</dt> <dd>Return not more than <span class="var">limit</span> entries. Maximum and default values for limit is <b>300</b>. If we need to get more entries, we need to use offsetId.</dd>
+            <dt>:offsetId</dt> <dd>Returned entries will have ID less than <span class="var">offsetId</span></dd>
+            <dt>:minimal</dt> <dd>(Optional) <span class="var">'true','false'</span>. Use <span class="var">minimal='true'</span> to return history log in minimal mode.</dd>
+            <dt>:subActivities</dt> <dd>INCLUDE, SUMMARIZE or EXCLUDE; if INCLUDE then sub-activities (actions) will be included with each activity; if EXCLUDE you won't get any mention of sub-activities and if SUMMARIZE then you'll get counts etc of sub-activities but not the details for such. This parameter is ignored if no activities are being returned. If INCLUDE then all nested levels of sub-activities will be returned, currently there's only activities and sub-activities, but that's likely to be expanded in the near future</dd>
+         </dl>
+      </div>
+   </div>
+   <div class="sample">
+      <h3>Sample Response for <span class="call">...?limit=10&amp;subActivities=INCLUDE</span>:</h3>
+      <p class="json">
+         {
+            "hasMore": true,
+            "activities": [
+               {
+                  "id": "13810",
+                  "timestamp': 1382017774,
+                  "date": "Today",
+                  "time": "9:49 am",
+                  "description": "User user01 signed in on the Iris website",
+                  "type": "User sign in"
+               },
+               {
+                  "id": "13801",
+                  "timestamp": 1382015989,
+                  "date": "Today",
+                  "time": "9:19 am",
+                  "description": "Intruder Alarm triggered by Contact Sensor 12 Big name for this device rrrrrrr (Contact Sensor)",
+                  "type": "Alarm"
+               },
+               {
+                  "id": "13800",
+                  "timestamp": 1382015956,
+                  "date": "Today",
+                  "time": "9:19 am",
+                  "description": "Contact Sensor 12 Big name for this device rrrrrrr (Contact Sensor) opened",
+                  "type": "Contact Sensor Opened"
+               },
+               ...
+            ]
+      </p>
+   </div>
+   <p class="note"><span class="var">hasMore</span> value always will be <span class="var">false</span> if <span class="var">:limit</span> is not defined</p>
+</div>
+
+
+    </div>
+  </body>
+
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/widgets/history by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/contacts by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <base  />
+    <link rel="stylesheet" type="text/css" href="../css.css" />
+    <title>AlertMe.com API v5 Documentation :: calls/contacts :: DRAFT</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+  </head>
+  <body>
+    <h1>
+      API v5 Documentation <span>draft</span>
+    </h1>
+    <div class="menu">
+      <ul class="menu">
+   <li><h4><a href="../../docs.html">overview</a></h4>
+      <ul>
+         <li><a href="../responses.html">responses</a></li>
+         <li><a href="../errors.html">errors</a></li>
+         <li><a href="../examples.html">examples</a></li>
+
+      </ul>
+   </li>
+   <li><h4>calls</h4>
+      <ul>
+
+         <li><a href="sessions.html">sessions</a></li>
+
+         <li><a href="users.html">users</a>
+            <ul>
+
+               <li><a href="users/systemalerts.html">system alerts</a></li>
+
+               <li><a href="questions.html">questions</a></li>
+
+               <li><a href="hubs.html">hubs</a>
+                  <ul>
+                     <li><a href="hubs/activityLog.html">activity log (history)</a></li>
+                     <li><a href="devices.html">devices</a>
+                       <ul>
+
+                           <li><a href="devices/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+                     <li><a href="hubs/profiles.html">profiles</a></li>
+
+                     <li>rules
+                        <ul>
+                           <li><a href="rules/actions.html">actions</a></li>
+                           <li><a href="../actions.html">action types</a></li>                           
+                           <li><a href="rules/wizard.html">wizard</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="services.html">services</a>
+                        <ul>
+
+                           <li><a href="services/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+
+                  </ul>
+               </li>
+
+               <li><a href="widgets.html">widgets</a>
+                  <ul>
+                     <li><a href="widgets/alarm.html">alarm</a></li>
+                     <li><a href="widgets/care.html">care</a></li>
+                     <li><a href="widgets/cameras.html">cameras</a></li>
+                     <li><a href="widgets/climate.html">climate</a></li>
+                     <li><a href="widgets/dashboard.html">dashboard</a></li>
+                     <li><a href="widgets/heating.html">heating</a></li>
+                     <li><a href="widgets/locks.html">locks</a></li>
+                     <li><a href="widgets/homestatus.html">homestatus</a></li>
+
+                     <li><a href="widgets/presence.html">presence</a></li>
+                     <li><a href="widgets/smartplugs.html">smartplugs</a></li>
+                     <li><a href="widgets/swingometer.html">swingometer</a></li>
+                     <li><a href="widgets/temperature.html">temperature</a></li>
+                     <li><a href="widgets/usage.html">usage</a></li>
+                     <li><a href="widgets/petdoors.html">petdoors</a></li>
+                     <li><a href="widgets/group.html">groups</a></li>
+                     <li><a href="widgets/history.html">history</a></li>
+                     <li><a href="widgets/irrigation.html">irrigation</a></li>
+                     <li><a href="widgets/secondaryuser.html">secondaryuser</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+</ul>
+    </div>
+    <div class="doc calls contacts_page">
+      <div class="section">
+ <h2>GET <span class="call">/users/<em>:username</em>/contacts</span></h2>
+ <p>List all of a user's contacts.</p>
+ <div class="sample">
+  <h3>Response:</h3>
+  <p class="json">
+[
+  {
+     "id":      123,
+     "name":    "Joe Bloggs",
+     "email":   "JoeBloggs@example.com",
+     "mobile":  "+447777777777",
+     "phone":   "+442222222222"
+  }
+]
+  </p>
+ </div>
+</div>
+
+
+<div class="section">
+ <h2>POST <span class="call">/users/<em>:username</em>/contacts</span></h2>
+ <p>Creates a new contact and returns the contactId.</p>
+ <div class="args">
+  <h3>Arguments:</h3>
+  <dl>
+	<dt>name</dt>   <dd>The name of the contact.</dd>
+	<dt>email</dt>  <dd>The email address of the contact.</dd>
+	<dt>mobile</dt> <dd>The mobile number of the contact.</dd>
+	<dt>phone</dt>  <dd>The phone number of the contact.</dd>
+  </dl>
+  <p class="note">
+   <span class="var">email</span>, <span class="var">mobile</span> &amp; <span class="var">phone</span> 
+   are each optional but <strong>at least one</strong> of them must be provided.
+  </p>
+ </div>
+ <div class="sample">
+  <h3>Response:-</h3>
+  <p class="header">HTTP 202 Created</p>
+  <p class="json">
+{
+    "contactId": 8967762
+}
+  </p>
+ </div>
+</div>
+
+
+<div class="section">
+ <h2>GET <span class="call">/users/<em>:username</em>/contacts/<em>:contactId</em></span></h2>
+ <p>Returns the full details of a single contact.</p>
+ <div class="sample">
+  <h3>Sample Response:</h3>
+  <p class="json">
+{
+   "id":      123,
+   "name":    "Joe Bloggs",
+   "email":   "JoeBloggs@example.com",
+   "mobile":  "+447777777777",
+   "phone":   "+442222222222"
+}
+  </p>
+ </div>
+</div>
+
+
+<div class="section">
+ <h2>PUT <span class="call">/users/<em>:username</em>/contacts/<em>:contactId</em></span></h2>
+ <p>Updates a contact's details.</p>
+ <div class="args">
+  <h3>Arguments:</h3>
+  <dl>
+   <dt>name</dt>   <dd>The name of the contact.</dd>
+   <dt>email</dt>  <dd>The email address of the contact.</dd>
+   <dt>mobile</dt> <dd>The mobile phone number of the contact.</dd>
+   <dt>phone</dt>  <dd>The phone number of the contact.</dd>
+  </dl>
+  <p class="note">
+   <span class="var">email</span>, <span class="var">mobile</span> &amp; <span class="var">phone</span> 
+   are each optional but <strong>at least one</strong> of them must be provided.  Empty values are 
+   permitted, and will clear the stored values if encountered.
+   </p>
+ </div>
+ <div class="sample">
+  <h3>Response:-</h3>
+  <p class="header">HTTP 204 <span>Updated</span></p>
+ </div>
+</div>
+
+
+<div class="section">
+ <h2>DELETE <span class="call">/users/<em>:username</em>/contacts/<em>:contactId</em></span></h2>
+ <p>Deletes the specified contact.</p>
+ <div class="sample">
+  <h3>Response:</h3>
+  <p class="header">HTTP 204 <span>Deleted</span></p>
+ </div>
+</div>
+
+    </div>
+  </body>
+
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/contacts by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:17 GMT -->
+</html>

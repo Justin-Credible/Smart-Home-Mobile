@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/widgets/locks by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <base  />
+    <link rel="stylesheet" type="text/css" href="../../css.css" />
+    <title>AlertMe.com API v5 Documentation :: calls/widgets/locks :: DRAFT</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+  </head>
+  <body>
+    <h1>
+      API v5 Documentation <span>draft</span>
+    </h1>
+    <div class="menu">
+      <ul class="menu">
+   <li><h4><a href="../../../docs.html">overview</a></h4>
+      <ul>
+         <li><a href="../../responses.html">responses</a></li>
+         <li><a href="../../errors.html">errors</a></li>
+         <li><a href="../../examples.html">examples</a></li>
+
+      </ul>
+   </li>
+   <li><h4>calls</h4>
+      <ul>
+
+         <li><a href="../sessions.html">sessions</a></li>
+
+         <li><a href="../users.html">users</a>
+            <ul>
+
+               <li><a href="../users/systemalerts.html">system alerts</a></li>
+
+               <li><a href="../questions.html">questions</a></li>
+
+               <li><a href="../hubs.html">hubs</a>
+                  <ul>
+                     <li><a href="../hubs/activityLog.html">activity log (history)</a></li>
+                     <li><a href="../devices.html">devices</a>
+                       <ul>
+
+                           <li><a href="../devices/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+                     <li><a href="../hubs/profiles.html">profiles</a></li>
+
+                     <li>rules
+                        <ul>
+                           <li><a href="../rules/actions.html">actions</a></li>
+                           <li><a href="../../actions.html">action types</a></li>                           
+                           <li><a href="../rules/wizard.html">wizard</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="../services.html">services</a>
+                        <ul>
+
+                           <li><a href="../services/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+
+                  </ul>
+               </li>
+
+               <li><a href="../widgets.html">widgets</a>
+                  <ul>
+                     <li><a href="alarm.html">alarm</a></li>
+                     <li><a href="care.html">care</a></li>
+                     <li><a href="cameras.html">cameras</a></li>
+                     <li><a href="climate.html">climate</a></li>
+                     <li><a href="dashboard.html">dashboard</a></li>
+                     <li><a href="heating.html">heating</a></li>
+                     <li><a href="locks.html">locks</a></li>
+                     <li><a href="homestatus.html">homestatus</a></li>
+
+                     <li><a href="presence.html">presence</a></li>
+                     <li><a href="smartplugs.html">smartplugs</a></li>
+                     <li><a href="swingometer.html">swingometer</a></li>
+                     <li><a href="temperature.html">temperature</a></li>
+                     <li><a href="usage.html">usage</a></li>
+                     <li><a href="petdoors.html">petdoors</a></li>
+                     <li><a href="group.html">groups</a></li>
+                     <li><a href="history.html">history</a></li>
+                     <li><a href="irrigation.html">irrigation</a></li>
+                     <li><a href="secondaryuser.html">secondaryuser</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+</ul>
+    </div>
+    <div class="doc calls widgets locks_page">
+      <div class="section">
+    <p>All calls listed below follow <span class="call">/users/<em>:username</em>/widgets</span> in the URI;
+       this prefix has been omitted for conciseness</p>
+</div>
+
+<div class="section">
+    <h2>GET <span class="call">/locks/<em>:deviceId</em></span></h2>
+
+    <p>Return list of all lock, plus <em>At a glance</em> info for all lock.</p>
+    <p class="note"> the <code>:deviceId</code> on this call is optional</p>
+    <div class="args">
+        <h3>Arguments:</h3>
+        <dl>
+            <dt><code>forceUpdate</code></dt>
+            <dd>[optional] boolean <em>true</em> or <em>false</em>. Applied for Z-Wave devices:
+                force update when true or return cached value when false. Default - <em>false</em>.
+            </dd>
+        </dl>
+    </div>
+    <div class="sample">
+        <h3>Sample Response (when no <code>:deviceId</code> provided):</h3>
+
+        <p class="json">
+{
+    "locks": [
+        {
+            "id": "00-0D-6F-00-00-1D-A7-2D",
+            "name": "Back door",
+            "type": "DEADBOLT",
+            "presence": true,
+            "lockState": "UNLOCKED",
+            "canLock": false,
+            "canBuzzIn": true
+        },
+        {
+            "id": "00-0D-6F-00-00-1D-A7-2F",
+            "name": "Front Door",
+            "type": "LEVER",
+            "presence": true,
+            "lockState": "LOCKED",
+            "canLock": true,
+            "canBuzzIn": true
+        }
+    ],
+    "atAGlance": {
+        "name": "Back door",
+        "locked": 2,
+        "unlocked": 0,
+        "total": 2
+    },
+    "widgetStatus":"OK",
+    "widgetVisible":true
+}
+        </p>
+    </div>
+
+    <div class="args">
+        <h3>Possible widgetStatuses</h3>
+        <dl class="wide">
+            <dt>OK</dt>
+            <dd>Widget able to prepare all data</dd>
+            <dt>NOT_AVAILABLE</dt>
+            <dd>Widget is not available due user's subscription</dd>
+            <dt>NO_DEVICE</dt>
+            <dd>No device assigned to this widget</dd>
+            <dt>DEVICE_MISSING</dt>
+            <dd>Assigned devices are missing</dd>
+            <dt>NO_DATA</dt>
+            <dd>Inner error, data cannot be prepared correctly</dd>
+        </dl>
+    </div>
+
+</div>
+
+<div class="section">
+ <h2>GET <span class="call">/locks/<em>:deviceId</em>/lockState</span></h2>
+
+ <p>Checks the locked/unlocked state of the lock.</p>
+ <p class="note">
+    This does not reflect if the door is open or closed just if it could
+    be opened from the outside if is was closed.
+ </p>
+
+ <div class="args">
+  <h3>Arguments:</h3>
+  <dl>
+   <dt><code>forceUpdate</code></dt>
+   <dd>[optional] boolean <em>true</em> or <em>false</em>. Applied for Z-Wave devices:
+       force update when true or return cached value when false. Default - <em>false</em>.
+   </dd>
+
+  </dl>
+ </div>
+
+ <div class="sample">
+  <h3>Sample Response:</h3>
+  <p class="json">
+{
+    "lockState": "UNLOCKED"
+}
+  </p>
+  <h3>Possible Values:</h3>
+  <dl>
+   <dt>lockState</dt>
+   <dd>LOCKED, UNLOCKED, BUZZ_IN</dd>
+  </dl>
+ </div>
+
+</div>
+
+<div class="section">
+ <h2>PUT <span class="call">/locks/<em>:deviceId</em>/lockState</span></h2>
+
+ <p>Changes the locked/unlocked state of the lock.</p>
+
+ <p class="note">
+    You can use "all" instead of <code>:deviceId</code>, then call will change state of all locks.
+    In this case <code>timeout</code> will not be returned.
+ </p>
+
+ <div class="args">
+  <h3>Body:</h3>
+  <dl><dt>lockState</dt>  <dd>"LOCKED" to lock, "UNLOCKED" to unlock, "BUZZ_IN"</dd></dl>
+ </div>
+
+ <div class="sample">
+  <h3>Sample Response:</h3>
+  <p class="json">
+{
+   "timeout": 30
+}
+  </p>
+ </div>
+
+<div class="sample">
+  <h3>Error:</h3>
+  <p class="json">
+{
+   "reason": "INVALID_PARAMETER"
+}
+  </p>
+  If invalid state was passed
+ </div>
+
+ <div class="sample">
+  <h3>Error:</h3>
+  <p class="json">
+{
+   "reason": "FAILED_TO_COMUNICATE_WITH_DEVICE"
+}
+  </p>
+  If state of lock has not changed
+ </div>
+
+ <div class="sample">
+  <h3>Error:</h3>
+  <p class="json">
+{
+   "reason": "CANNOT_LOCK_REMOTELY"
+}
+  </p>
+  If this device cannot be managed remotely
+ </div>
+
+</div>
+
+<div class="section">
+ <h2>GET <span class="call">/locks/permissions</span></h2>
+
+ <p>Returns a list of contacts and if they can use their pin on this lock</p>
+ <p class="note">
+    If pins are added to the lock via the keypad they will appear
+    as anonymous users, these can be deleted but not added to other locks
+ </p>
+
+ <div class="sample">
+  <h3>Sample Response:</h3>
+  <p class="json">
+{
+    "locks": {
+        "00-0D-6F-00-00-1D-A7-2D": {
+            "name": "Back door",
+            "permissions": {
+                "Me": true,
+                "Alice": true,
+                "Bob": false
+            },
+            "anonymous": true
+        },
+        "00-0D-6F-00-00-1D-A7-2F": {
+            "name": "Front Door",
+            "permissions": {
+                "Me": true,
+                "Alice": true,
+                "Bob": true
+            },
+            "anonymous": false
+        }
+    }
+}
+  </p>
+ </div>
+
+</div>
+
+<div class="section">
+   <h2>PUT <span class="call">/locks/permissions</span></h2>
+
+   <p>Changes the contacts allowed to use their pin on this lock</p>
+   <p class="note">contacts not included will remain unchanged</p>
+   <div class="args">
+      <h3>Arguments:</h3>
+      <dl class="wide">
+         <dt>locks[00-00-00-C0-02-2E-3D-DD][permissions][Alice]</dt>
+         <dd>true</dd>
+         <dt>locks[00-00-00-C0-02-2E-3D-DD][permissions][Bob]</dt>
+         <dd>false</dd>
+         <dt>locks[00-00-00-C0-02-2E-3D-DD][permissions][Charlie]</dt>
+         <dd>true</dd>
+         <dt>locks[00-00-00-D1-13-3F-4E-EE][permissions][Alice]</dt>
+         <dd>false</dd>
+         <dt>locks[00-00-00-D1-13-3F-4E-EE][permissions][Bob]</dt>
+         <dd>true</dd>
+         <dt>locks[00-00-00-D1-13-3F-4E-EE][permissions][Charlie]</dt>
+         <dd>true</dd>
+         <dt>locks[00-00-00-D1-13-3F-4E-EE][anonymous]</dt>
+         <dd>true</dd>
+      </dl>
+   </div>
+   <div class="sample">
+   <h3>Sample Response:</h3>
+      <p class="header">
+HTTP 204 Accepted
+      </p>
+   </div>
+</div>
+    </div>
+  </body>
+
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/widgets/locks by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+</html>

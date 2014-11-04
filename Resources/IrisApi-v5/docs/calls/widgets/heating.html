@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/widgets/heating by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <base  />
+    <link rel="stylesheet" type="text/css" href="../../css.css" />
+    <title>AlertMe.com API v5 Documentation :: calls/widgets/heating :: DRAFT</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+  </head>
+  <body>
+    <h1>
+      API v5 Documentation <span>draft</span>
+    </h1>
+    <div class="menu">
+      <ul class="menu">
+   <li><h4><a href="../../../docs.html">overview</a></h4>
+      <ul>
+         <li><a href="../../responses.html">responses</a></li>
+         <li><a href="../../errors.html">errors</a></li>
+         <li><a href="../../examples.html">examples</a></li>
+
+      </ul>
+   </li>
+   <li><h4>calls</h4>
+      <ul>
+
+         <li><a href="../sessions.html">sessions</a></li>
+
+         <li><a href="../users.html">users</a>
+            <ul>
+
+               <li><a href="../users/systemalerts.html">system alerts</a></li>
+
+               <li><a href="../questions.html">questions</a></li>
+
+               <li><a href="../hubs.html">hubs</a>
+                  <ul>
+                     <li><a href="../hubs/activityLog.html">activity log (history)</a></li>
+                     <li><a href="../devices.html">devices</a>
+                       <ul>
+
+                           <li><a href="../devices/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+                     <li><a href="../hubs/profiles.html">profiles</a></li>
+
+                     <li>rules
+                        <ul>
+                           <li><a href="../rules/actions.html">actions</a></li>
+                           <li><a href="../../actions.html">action types</a></li>                           
+                           <li><a href="../rules/wizard.html">wizard</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="../services.html">services</a>
+                        <ul>
+
+                           <li><a href="../services/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+
+                  </ul>
+               </li>
+
+               <li><a href="../widgets.html">widgets</a>
+                  <ul>
+                     <li><a href="alarm.html">alarm</a></li>
+                     <li><a href="care.html">care</a></li>
+                     <li><a href="cameras.html">cameras</a></li>
+                     <li><a href="climate.html">climate</a></li>
+                     <li><a href="dashboard.html">dashboard</a></li>
+                     <li><a href="heating.html">heating</a></li>
+                     <li><a href="locks.html">locks</a></li>
+                     <li><a href="homestatus.html">homestatus</a></li>
+
+                     <li><a href="presence.html">presence</a></li>
+                     <li><a href="smartplugs.html">smartplugs</a></li>
+                     <li><a href="swingometer.html">swingometer</a></li>
+                     <li><a href="temperature.html">temperature</a></li>
+                     <li><a href="usage.html">usage</a></li>
+                     <li><a href="petdoors.html">petdoors</a></li>
+                     <li><a href="group.html">groups</a></li>
+                     <li><a href="history.html">history</a></li>
+                     <li><a href="irrigation.html">irrigation</a></li>
+                     <li><a href="secondaryuser.html">secondaryuser</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+</ul>
+    </div>
+    <div class="doc calls widgets heating_page">
+      <div class="section root">
+   <p>All calls listed below follow <span class="call">/users/<em>:username</em>/widgets</span> in the URI; this prefix
+      has been omitted for conciseness.</p>
+</div>
+<div class="section">
+   <h2>GET<span class="call">/heating</span></h2>
+   <p>Returns a summary of information for the heating controller.</p>
+   <p class="note">"targetTemperature" and "currentTemperature" are in degrees Celsius.</p>
+   <p class="note">"confirmed" indicates whether the schedule has been accepted and confirmed by the device.</p>
+   <p class="note">"targetTemperature" is returned as an integer.</p>
+   <p class="note">"currentTemperature" is returned to within 1 decimal place.</p>
+   <div class="sample">
+      <h3>Sample Response:</h3>
+      <p class="json">
+{
+   "presence": true,
+   "mode": "AUTO",
+   "targetTemperature": 20,
+   "currentTemperature": 23.8,
+   "boilerOn": false,
+   "confirmed": true
+}
+      </p>
+   </div>
+</div>
+<div class="section">
+   <h2>PUT<span class="call">/heating/mode</span></h2>
+   <p>Sets the heating controller mode.</p>
+   <div class="args">
+      <h3>Arguments:</h3>
+      <dl>
+         <dt>mode</dt>
+         <dd>"AUTO", "OFF", "MANUAL"</dd>
+      </dl>
+   </div>
+   <div class="sample">
+      <h3>Sample Response:</h3>
+      <p class="header">
+HTTP 204 Accepted
+      </p>
+   </div>
+</div>
+<div class="section">
+   <h2>PUT<span class="call">/heating/targetTemperature</span></h2>
+   <p>Sets the heating controller target temperature and set it into "manual" mode.</p>
+   <p class="note">If the heating controller is in "AUTO" mode the new mode will be "OVERRIDE" and
+   for the current event only.</p>
+   <p class="note">Sets the heating controller into "MANUAL" mode if not in the mode "AUTO".</p>
+   <p class="note">The "temperature" argument needs to be supplied as an integer number of degrees 
+   Celsius.</p>
+   <div class="args">
+      <h3>Arguments:</h3>
+      <dl>
+         <dt>temperature</dt>
+         <dd>25</dd>
+      </dl>
+   </div>
+   <div class="sample">
+      <h3>Sample Response:</h3>
+      <p class="header">
+HTTP 204 Accepted
+      </p>
+   </div>
+</div>
+<div class="section">
+   <h2>GET<span class="call">/heating/detail</span></h2>
+   <p>Returns schedule information.</p>
+   <p class="note">All "temperature" values are supplied in degrees Celsius.</p>
+   <p class="note">All "temperature" values in the "schedule" and "relativeSetpoints" returned by 
+   this call are integers.</p>
+   <div class="sample">
+      <h3>Sample Response:</h3>
+      <p class="json">
+{
+   "schedule": {
+      "numberOfSetpoints": 4,
+      "days": {
+         "monday": [
+            {
+               "temperature": 21,
+               "time": "05:00"
+            },
+            {
+               "temperature": 18,
+               "time": "09:00"
+            },
+            {
+               "temperature": 21,
+               "time": "16:00"
+            },
+            {
+               "temperature": 18,
+               "time": "21:00"
+            }
+         ],
+         "tuesday": [
+            {
+               "temperature": 21,
+               "time": "05:00"
+            },
+            {
+               "temperature": 18,
+               "time": "09:00"
+            },
+            {
+               "temperature": 21,
+               "time": "16:00"
+            },
+            {
+                "temperature": 18,
+                "time": "21:00"
+            }
+         ],
+         "wednesday": [
+            {
+               "temperature": 21,
+               "time": "05:00"
+            },
+            {
+               "temperature": 18,
+               "time": "09:00"
+            },
+            {
+               "temperature": 20,
+               "time": "16:00"
+            },
+            {
+               "temperature": 18,
+               "time": "21:00"
+            }
+         ],
+         "thursday": [
+            {
+               "temperature": 21,
+               "time": "05:00"
+            },
+            {
+               "temperature": 18,
+               "time": "09:00"
+            },
+            {
+               "temperature": 21,
+               "time": "16:00"
+            },
+            {
+               "temperature": 18,
+               "time": "21:00"
+            }
+         ],
+         "friday": [
+            {
+               "temperature": 21,
+               "time": "05:00"
+            },
+            {
+               "temperature": 18,
+               "time": "09:00"
+            },
+            {
+               "temperature": 21,
+               "time": "16:00"
+            },
+            {
+               "temperature": 18,
+               "time": "21:00"
+            }
+         ],
+         "saturday": [
+            {
+               "temperature": 21,
+               "time": "05:00"
+            },
+            {
+               "temperature": 18,
+               "time": "09:00"
+            },
+            {
+               "temperature": 21,
+               "time": "16:00"
+            },
+            {
+               "temperature": 18,
+               "time": "21:00"
+            }
+         ],
+         "sunday": [
+            {
+               "temperature": 23,
+               "time": "05:00"
+            },
+            {
+               "temperature": 18,
+               "time": "11:00"
+            },
+            {
+               "temperature": 21,
+               "time": "16:00"
+            },
+            {
+               "temperature": 18,
+               "time": "21:00"
+            }
+         ]
+      }
+   },
+   "differentDailyTemps": true,
+   "confirmed": true,
+   "showAdvancedSchedule": false,
+   "relativeSetpoints": {
+      "previous": {
+         "temperature": 21,
+         "time": "05:00",
+         "name": "AWAKE",
+         "setpoint": 0
+      },
+      "current": {
+         "temperature": 18,
+         "time": "09:00",
+         "name": "AWAKE",
+         "setpoint": 1
+      },
+      "next": {
+         "temperature": 20,
+         "time": "16:00",
+         "name": "AWAY",
+         "setpoint": 2
+      },
+      "nextPlusOne": {
+         "temperature": 18,
+         "time": "21:00",
+         "name": "AWAKE",
+         "setpoint": 3
+      }
+   }
+}
+        </p>
+    </div>
+</div>
+<div class="section">
+   <h2>POST <span class="call">/heating/detail/schedule</span></h2>
+   <p>Sets the heating controller's schedule for auto mode.</p>
+   <p class="note">The "temperature" argument needs to be supplied as an integer number of degrees 
+   Celsius.</p>
+   <div class="args">
+      <h3>Arguments:</h3>
+      <dl>
+         <dt>numberOfSetpoints</dt>
+         <dd>4</dd>
+         <dt>days[monday][0][time]</dt>
+         <dd>06:00</dd>
+         <dt>days[monday][0[temperature]</dt>
+         <dd>24</dd>
+         <dt>days[monday][1][time]</dt>
+         <dd>09:00</dd>
+         <dt>days[monday][1][temperature]</dt>
+         <dd>18</dd>
+         <dt>days[monday][2][time]</dt>
+         <dd>16:00</dd>
+         <dt>days[monday][2][temperature]</dt>
+         <dd>24</dd>
+         <dt>days[monday][3][time]</dt>
+         <dd>22:00</dd>
+         <dt>days[monday][3][temperature]</dt>
+         <dd>18</dd>
+         <dt>days[tuesday][0][time]</dt>
+         <dd>06:00</dd>
+         <dt>days[tuesday][0[temperature]</dt>
+         <dd>24</dd>
+         <dt>days[tuesday][1][time]</dt>
+         <dd>09:00</dd>
+         <dt>days[tuesday][1][temperature]</dt>
+         <dd>18</dd>
+         <dt>days[tuesday][2][time]</dt>
+         <dd>16:00</dd>
+         <dt>days[tuesday][2][temperature]</dt>
+         <dd>24</dd>
+         <dt>days[tuesday][3][time]</dt>
+         <dd>22:00</dd>
+         <dt>days[tuesday][3][temperature]</dt>
+         <dd>18</dd>
+         <dt>days[wednesday][0][time]</dt>
+         <dd>09:00</dd>
+         <dt>...</dt>
+      </dl>
+      <h3>OR</h3>
+      <dl>
+         <dt>numberOfSetpoints</dt>
+         <dd>4</dd>
+         <dt>days[weekdays][0][time]</dt>
+         <dd>06:00</dd>
+         <dt>days[weekdays][0][temperature]</dt>
+         <dd>21</dd>
+         <dt>days[weekdays][1][time]</dt>
+         <dd>09:00</dd>
+         <dt>days[weekdays][1][temperature]</dt>
+         <dd>18</dd>
+         <dt>days[weekdays][2][time]</dt>
+         <dd>16:00</dd>
+         <dt>days[weekdays][2][temperature]</dt>
+         <dd>21</dd>
+         <dt>days[weekdays][3][time]</dt>
+         <dd>22:00</dd>
+         <dt>days[weekdays][3][temperature]</dt>
+         <dd>18</dd>
+         <dt>days[weekend][0][time]</dt>
+         <dd>09:00</dd>
+         <dt>days[weekend][0][temperature]</dt>
+         <dd>21</dd>
+         <dt>days[weekend][1][time]</dt>
+         <dd>11:00</dd>
+         <dt>days[weekend][1][temperature]</dt>
+         <dd>18</dd>
+         <dt>days[weekend][2][time]</dt>
+         <dd>16:00</dd>
+         <dt>days[weekend][2][temperature]</dt>
+         <dd>21</dd>
+         <dt>days[weekend][3][time]</dt>
+         <dd>23:00</dd>
+         <dt>days[weekend][3][temperature]</dt>
+         <dd>18</dd>      
+      </dl>
+   </div>
+   <div class="sample">
+   <h3>Sample Response:</h3>
+      <p class="header">
+HTTP 204 Accepted
+      </p>
+   </div>
+</div>
+    </div>
+  </body>
+
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/widgets/heating by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+</html>

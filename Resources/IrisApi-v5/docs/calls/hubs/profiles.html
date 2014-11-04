@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/hubs/profiles by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <base  />
+    <link rel="stylesheet" type="text/css" href="../../css.css" />
+    <title>AlertMe.com API v5 Documentation :: calls/hubs/profiles :: DRAFT</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+  </head>
+  <body>
+    <h1>
+      API v5 Documentation <span>draft</span>
+    </h1>
+    <div class="menu">
+      <ul class="menu">
+   <li><h4><a href="../../../docs.html">overview</a></h4>
+      <ul>
+         <li><a href="../../responses.html">responses</a></li>
+         <li><a href="../../errors.html">errors</a></li>
+         <li><a href="../../examples.html">examples</a></li>
+
+      </ul>
+   </li>
+   <li><h4>calls</h4>
+      <ul>
+
+         <li><a href="../sessions.html">sessions</a></li>
+
+         <li><a href="../users.html">users</a>
+            <ul>
+
+               <li><a href="../users/systemalerts.html">system alerts</a></li>
+
+               <li><a href="../questions.html">questions</a></li>
+
+               <li><a href="../hubs.html">hubs</a>
+                  <ul>
+                     <li><a href="activityLog.html">activity log (history)</a></li>
+                     <li><a href="../devices.html">devices</a>
+                       <ul>
+
+                           <li><a href="../devices/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+                     <li><a href="profiles.html">profiles</a></li>
+
+                     <li>rules
+                        <ul>
+                           <li><a href="../rules/actions.html">actions</a></li>
+                           <li><a href="../../actions.html">action types</a></li>                           
+                           <li><a href="../rules/wizard.html">wizard</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="../services.html">services</a>
+                        <ul>
+
+                           <li><a href="../services/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+
+                  </ul>
+               </li>
+
+               <li><a href="../widgets.html">widgets</a>
+                  <ul>
+                     <li><a href="../widgets/alarm.html">alarm</a></li>
+                     <li><a href="../widgets/care.html">care</a></li>
+                     <li><a href="../widgets/cameras.html">cameras</a></li>
+                     <li><a href="../widgets/climate.html">climate</a></li>
+                     <li><a href="../widgets/dashboard.html">dashboard</a></li>
+                     <li><a href="../widgets/heating.html">heating</a></li>
+                     <li><a href="../widgets/locks.html">locks</a></li>
+                     <li><a href="../widgets/homestatus.html">homestatus</a></li>
+
+                     <li><a href="../widgets/presence.html">presence</a></li>
+                     <li><a href="../widgets/smartplugs.html">smartplugs</a></li>
+                     <li><a href="../widgets/swingometer.html">swingometer</a></li>
+                     <li><a href="../widgets/temperature.html">temperature</a></li>
+                     <li><a href="../widgets/usage.html">usage</a></li>
+                     <li><a href="../widgets/petdoors.html">petdoors</a></li>
+                     <li><a href="../widgets/group.html">groups</a></li>
+                     <li><a href="../widgets/history.html">history</a></li>
+                     <li><a href="../widgets/irrigation.html">irrigation</a></li>
+                     <li><a href="../widgets/secondaryuser.html">secondaryuser</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+</ul>
+    </div>
+    <div class="doc calls hubs profiles_page">
+      <div class="section root">
+ <p>All calls listed below follow <span class="call">/users/<em>:userId</em>/hubs/<em>:hubId</em></span> in the URI; this prefix has been omitted for conciseness.</p>
+</div>
+
+<div class="section">
+ <h2>GET <span class="call">/profiles</span></h2>
+ <p>Returns the current user profile configuration.</p>
+ <p></p>
+ 
+ <div class="sample">
+  <h3>Sample Response:</h3>
+  <p class="json">
+{
+    "profiles": {
+        "AWAY": {
+            "actions": []
+        },
+        "HOME": {
+            "actions": [
+                {
+                    "type": "PLUGS",
+                    "action": "OFF",
+                    "actionableId": "00-00-00-00-22-22-22-22",
+                    "parameters": {
+                        "testParam": "testParamValue"
+                    }
+                },
+                {
+                    "type": "PLUGS",
+                    "action": "OFF",
+                    "actionableId": "00-0D-6F-00-00-49-01-01",
+                    "parameters": []
+                },
+                {
+                    "type": "PLUGS",
+                    "action": "ON",
+                    "actionableId": "00-0D-6F-00-00-49-01-02",
+                    "parameters": {
+                        "delay": "2"
+                    }
+                }
+            ]
+        },
+        "NIGHT": {
+            "actions": []
+        },
+        "VACATION": {
+            "actions": [
+                {
+                    "type": "INTRUDER",
+                    "action": "PARTIAL",
+                    "actionableId": "00-00-00-00-00-00-00-00",
+                    "parameters": []
+                },
+                {
+                    "type": "LOCKS",
+                    "action": "OFF",
+                    "actionableId": "00-00-11-22-44-55-66-88",
+                    "parameters": []
+                }
+            ]
+        }
+    }
+}
+  </p>
+  <p></p>
+ </div>
+</div>
+
+<div class="section">
+ <h2>POST <span class="call">/profiles</span></h2>
+ <p>Updates the user's profile configuration</p>
+ 
+ <div class="args">
+  <h3>Body:</h3>
+  <dl>
+   <dt>profiles</dt><dd>array of profiles, actions and action parameters to add or edit. When the key fields match an edit occurs, otherwise a new entry is added.</dd>
+  </dl>
+ </div> 
+ <p class="note">Type, action and actionableId (this is specific to the given action, can be a hub ID, device ID, email address...) 
+ are always required, all other parameters are optional. The API will reject profiles which it doesn't know.</p>
+ 
+ <div class="sample">
+  <h3>Sample Request:</h3>
+   <p class="header">
+     POST /users/00000/hubs/0000000000000000/profiles/
+     profiles[HOME][actions][0][type]=PLUGS&amp;
+     profiles[HOME][actions][0][action]=OFF&amp;
+     profiles[HOME][actions][0][actionableId]=00-00-00-00-22-22-22-22&amp;
+     profiles[HOME][actions][0][parameters][testParam]=testParamValue&amp;
+     profiles[HOME][actions][1][type]=PLUGS&amp;
+     profiles[HOME][actions][1][action]=ON&amp;
+     profiles[HOME][actions][1][actionableId]=00-00-00-00-33-33-33-33&amp;
+     profiles[HOME][actions][1][parameters][delay]=5     
+  </p>
+ </div>
+</div>
+
+<div class="section">
+ <h2>PUT <span class="call">/profile</span></h2>
+ <p>Executes the specified profile configuration.</p>
+ 
+ <div class="args">
+ <h3>Body:</h3>
+  <dl>
+   <dt>profile</dt><dd>Name of profile</dd>
+  </dl>
+ </div> 
+  
+ <div class="sample">
+  <h3>Sample Response:</h3>
+   <p class="header">
+      HTTP 200 PROFILE_EXECUTED
+  </p>
+ </div>
+</div>
+
+<div class="section">
+   <h2>GET <span class="call">/profile</span></h2>
+   
+   <p>Returns the current profile</p>
+   
+   <div class="sample">
+      <h3>Sample response:</h3>
+      <p class="json">
+{
+   "currentProfile" : "HOME"
+}
+      </p>
+   </div>
+
+   <div class="errors">
+      <h3>Retruned errors:</h3>
+      <dl>
+         <dt>500 &lt;EXCEPTION_MESSAGE&gt;</dt>   <dd>See the error message for details</dd>
+      </dl>
+   </div>
+</div>
+    </div>
+  </body>
+
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/hubs/profiles by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+</html>

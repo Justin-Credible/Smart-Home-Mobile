@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/devices by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <base  />
+    <link rel="stylesheet" type="text/css" href="../css.css" />
+    <title>AlertMe.com API v5 Documentation :: calls/devices :: DRAFT</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+  </head>
+  <body>
+    <h1>
+      API v5 Documentation <span>draft</span>
+    </h1>
+    <div class="menu">
+      <ul class="menu">
+   <li><h4><a href="../../docs.html">overview</a></h4>
+      <ul>
+         <li><a href="../responses.html">responses</a></li>
+         <li><a href="../errors.html">errors</a></li>
+         <li><a href="../examples.html">examples</a></li>
+
+      </ul>
+   </li>
+   <li><h4>calls</h4>
+      <ul>
+
+         <li><a href="sessions.html">sessions</a></li>
+
+         <li><a href="users.html">users</a>
+            <ul>
+
+               <li><a href="users/systemalerts.html">system alerts</a></li>
+
+               <li><a href="questions.html">questions</a></li>
+
+               <li><a href="hubs.html">hubs</a>
+                  <ul>
+                     <li><a href="hubs/activityLog.html">activity log (history)</a></li>
+                     <li><a href="devices.html">devices</a>
+                       <ul>
+
+                           <li><a href="devices/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+                     <li><a href="hubs/profiles.html">profiles</a></li>
+
+                     <li>rules
+                        <ul>
+                           <li><a href="rules/actions.html">actions</a></li>
+                           <li><a href="../actions.html">action types</a></li>                           
+                           <li><a href="rules/wizard.html">wizard</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="services.html">services</a>
+                        <ul>
+
+                           <li><a href="services/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+
+                  </ul>
+               </li>
+
+               <li><a href="widgets.html">widgets</a>
+                  <ul>
+                     <li><a href="widgets/alarm.html">alarm</a></li>
+                     <li><a href="widgets/care.html">care</a></li>
+                     <li><a href="widgets/cameras.html">cameras</a></li>
+                     <li><a href="widgets/climate.html">climate</a></li>
+                     <li><a href="widgets/dashboard.html">dashboard</a></li>
+                     <li><a href="widgets/heating.html">heating</a></li>
+                     <li><a href="widgets/locks.html">locks</a></li>
+                     <li><a href="widgets/homestatus.html">homestatus</a></li>
+
+                     <li><a href="widgets/presence.html">presence</a></li>
+                     <li><a href="widgets/smartplugs.html">smartplugs</a></li>
+                     <li><a href="widgets/swingometer.html">swingometer</a></li>
+                     <li><a href="widgets/temperature.html">temperature</a></li>
+                     <li><a href="widgets/usage.html">usage</a></li>
+                     <li><a href="widgets/petdoors.html">petdoors</a></li>
+                     <li><a href="widgets/group.html">groups</a></li>
+                     <li><a href="widgets/history.html">history</a></li>
+                     <li><a href="widgets/irrigation.html">irrigation</a></li>
+                     <li><a href="widgets/secondaryuser.html">secondaryuser</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+</ul>
+    </div>
+    <div class="doc calls devices_page">
+      <div class="section root">
+ <p>
+  All calls listed below follow 
+   <span class="call">/users/<em>:username</em>/hubs/<em>:hubId</em></span>
+  in the URI; this prefix has been omitted for conciseness
+ </p>
+</div>
+
+<div class="section">
+ <h2>GET <span class="call">/devices</span></h2>
+ <p>Returns a list of all devices associated with this hub</p>
+ <div class="sample">
+  <h3>Sample Response:</h3>
+  <p class="json">
+[
+    {
+        "id": "00-00-01-00-00-01",
+        "type":     "Button",
+        "name":     "doorbell"
+    },
+    {
+        "id": "02-05-05-04-31-93",
+        "type":     "SmartPlug",
+        "name":     "plug1"
+    }
+]
+  </p>
+ </div>
+<p class="note">See GET .../devices/:deviceType/:deviceId for information about the optional detail parameter.</p>
+</div>
+
+
+<div class="section">
+ <h2>GET <span class="call">/devices/<em>:deviceType</em></span></h2>
+ <p>Returns the list of devices of a particular type</p>
+ <div class="sample">
+  <h3>Sample Response:</h3>
+  <p class="json">
+[
+    {
+        "id": "01-10-21-30-05-77",
+        "type":     "Keyfob",
+        "name":     "Sophie"
+    },
+    {
+        "id": "03-45-25-14-11-95",
+        "type":     "Keyfob",
+        "name":     "Jack"
+    }
+]
+  </p>
+ </div>
+ <p>
+  Valid types are: Buttons, SmartPlugs, HeatingControllers, MeterReaders, ContactSensors, 
+  MotionSensors, Cameras, Keyfobs, AlarmDetectors.
+ </p>
+ <p>
+  There is also a special type called "all", which can be used when querying or manipulating all 
+  devices simultaneously - not all calls allow such.
+ </p>
+ <p class="note">
+  See GET .../devices/:deviceType/:deviceId for information about the optional detail parameter.
+ </p>
+</div>
+
+<div class="section">
+ <h2><span class="call">/devices/<em>:deviceType</em>/only</span></h2>
+ <p>Shortcut for all calls beginning with /devices/<em>:deviceType</em>/<em>:deviceId</em></p>
+ <p>Available when only one device of <em>:deviceType</em> (including special value of "all") is installed on the hub.</p>
+ 
+  <div class="errors">
+  <h3>Returned errors:</h3>
+   <dl><dt>404 NO_SUCH_DEVICE</dt>        <dd>There is no device of <em>:deviceType</em> installed on the hub.</dd></dl>
+   <dl><dt>400 MORE_THAN_ONE_DEVICE</dt>  <dd>There are more than one device of <em>:deviceType</em> installed on the hub.</dd></dl>
+  </div>
+</div>
+
+<div class="section">
+ <h2>GET <span class="call">/devices/<em>:deviceType</em>/<em>:deviceId</em></span></h2>
+ <p>Returns the details of an individual device</p>
+ 
+  <div class="args">
+  <h3>Arguments:</h3>
+  <dl>
+   <dt>detail</dt>
+   <dd>(optional) Level of details, specified as one or more of the flags listed below, concatenated with plus sign (+)
+   
+    <dl><dt>versionInfo</dt>    <dd>Device version information</dd></dl>
+    <dl><dt>channelValues</dt>  <dd>List of values of all device channels</dd></dl>
+   
+   </dd>
+  </dl>
+ </div>
+ 
+ <div class="sample">
+  <h3>Response:</h3>
+  
+  <p>No detail parameter specified:</p>
+  <p class="json">
+{
+    "id": "03-45-25-14-11-95",
+    "type":          "Button",
+    "name":          "front door"
+}
+  </p>
+
+  <p>detail=versionInfo:</p>
+  <p class="json">
+{
+    "id": "03-45-25-14-11-95",
+    "type":          "Button",
+    "name":          "front door",
+    "version":       "2.01r16",
+    "latestVersion": "2.01r16",
+    "hardwareRevision": "0.1"
+}
+  </p>
+  <p>detail=versionInfo+channelValues:</p>
+  <p class="json">
+{
+    "id": "03-45-25-14-11-95",
+    "type":          "Button",
+    "name":          "front door",
+    "version":       "2.01r16",
+    "latestVersion": "2.01r16",
+    "hardwareRevision": "0.1",
+    "channels":      {
+                        "presence":true,
+                        "tamper":false,
+                        "temperature":22,
+                        "battery":2.93847656,
+                        "batteryPercentage":100,
+                        "batteryLevel":5,
+                        "signal":84
+                     }
+}
+  </p>
+ </div>
+ <p>Some calls allow a special deviceId of "all" to query or manipulate all devices of the specified type</p>
+ <p>Battery percentage and battery level might not be returned if battery value is 0 or undefined</p>
+</div>
+
+
+<div class="section">
+ <h2>DELETE <span class="call">/devices/<em>:deviceType</em>/<em>:deviceId</em></span></h2>
+ <p>Removes a device from this hub</p>
+ <div class="sample">
+  <h3>Response:</h3>
+  <p class="header">HTTP 204</p>
+ </div>
+ 
+ <div class="errors">
+   <h3>Returned errors:</h3>
+   <dl>
+    <dt>503 CANNOT_REMOVE_DEVICE</dt>
+    <dd>The device couldn't be removed. Please try again.</dd>
+   </dl>
+   <dl>
+    <dt>503 CANNOT_COMPLETELY_REMOVE_DEVICE</dt>
+    <dd>The hub failed to remove the device completely. The user may need to restart the hub manually.</dd>
+   </dl>
+ </div>
+ 
+</div>
+
+
+<div class="section">
+ <h2>PUT <span class="call">/devices/<em>:deviceType</em>/<em>:deviceId</em>/name</span></h2>
+ <p>
+  This call sets the name of the specified device. Typically this will be a room name where the 
+  device is located or the name of a keyfob holder.
+ </p>
+ <div class="args">
+  <h3>Arguments:</h3>
+  <dl><dt>name</dt>  <dd>Name to set</dd></dl>
+ </div>
+ <div class="sample">
+  <h3>Response:</h3>
+  <p class="header">HTTP 204</p>
+ </div>
+</div>
+
+
+<div class="section">
+ <h2>GET <span class="call">/devices/<em>:deviceType</em>/<em>:deviceId</em>/lastseen</span></h2>
+ <p>Returns the time when a device was seen online last time as set of pairs zigbee ID =&gt; time.</p>
+
+ <div class="sample">
+  <h3>Sample Response</h3>
+  <p class="json">
+ {
+     "00-0D-6F-00-00-1C-9C-FF": "2011-09-19 09:16:40"
+ }
+
+  </p>
+ </div>
+  <p class="note">This method supports 'all/all' selector.</p>
+ <div class="sample">
+  <h3>Sample Response</h3>
+  <p class="json">
+{
+    "00-0D-6F-00-00-1E-B8-4F": null,
+    "00-0D-6F-00-00-1E-C8-CC": null,
+    "00-0D-6F-00-00-1E-C6-5A": null,
+    "00-0D-6F-00-00-40-CD-B4": "2012-02-21 09:11:50",
+    "00-0D-6F-00-00-1D-6B-DF": "2011-09-19 09:16:29",
+    "00-00-00-C0-02-1C-DB-B8": "2011-10-06 15:08:33",
+    "00-0D-6F-00-00-19-17-27": null,
+    "00-0D-6F-00-00-1D-A8-9D": "2012-03-21 11:40:32",
+    "00-0D-6F-00-00-49-41-E4": null,
+    "00-0D-6F-00-00-1C-9C-FF": "2011-09-19 09:16:40"
+}
+
+  </p>
+ </div>
+</div>
+
+
+<div class="section">
+ <h2>GET <span class="call">/devices/<em>:deviceType</em>/<em>:deviceId</em>/firstinstall</span></h2>
+ <p>Returns the time when a device was installed for the first time as set of pairs zigbee ID =&gt; time.</p>
+
+ <div class="sample">
+  <h3>Sample Response</h3>
+  <p class="json">
+ {
+     "00-0D-6F-00-00-1C-9C-FF": "2011-09-19 09:16:40"
+ }
+
+  </p>
+ </div>
+  <p class="note">This method supports 'all/all' selector.</p>
+ <div class="sample">
+  <h3>Sample Response</h3>
+  <p class="json">
+{
+    "00-0D-6F-00-00-40-CD-B4": "2012-02-21 09:11:50",
+    "00-0D-6F-00-00-1D-6B-DF": "2011-09-19 09:16:29",
+    "00-00-00-C0-02-1C-DB-B8": "2011-10-06 15:08:33",
+    "00-0D-6F-00-00-1D-A8-9D": "2012-03-21 11:40:32",
+    "00-0D-6F-00-00-1C-9C-FF": "2011-09-19 09:16:40"
+}
+
+  </p>
+ </div>
+</div>
+
+
+<div class="section">
+ <h2>GET <span class="call">/devices/<em>:deviceType</em>/<em>:deviceId</em>/version</span></h2>
+ <p>Returns the details of a device's upgrade status.  This can be used to establish if the device is eligible for upgrades of a certain criticality.</p>
+ 
+  <div class="args">
+  <h3>Arguments:</h3>
+  <dl>
+   <dt>criticality</dt><dd>Upgrade criticality level
+    <dl>
+     <dt>high</dt>  <dd>(default) The most critical upgrades, regarded as compulsory for all users, and required at install time</dd>
+     <dt>medium</dt>  <dd>Upgrades of medium criticality; depending on the configuration they may be applied automatically overnight</dd>
+     <dt>low</dt>  <dd>All other upgrades</dd>
+    </dl>
+   </dd>
+  </dl>
+ </div>
+ 
+ <p class="note">
+   If the criticality level is not specified in the request, it defaults to "high".
+ </p>
+ 
+ <div class="sample">
+  <h3>Sample Response</h3>
+  <p class="json">
+{
+    "version":               "2.01r16",
+    "latestVersion":         "2.01r16",
+    "latestRequiredVersion": "2.01r16",
+    "upgrade":               "INELIGIBLE",
+    "reason":                "ALREADY_AT_LATEST_VERSION",
+    "progress":              0,
+    "hardwareRevision":      "0.1"
+}
+  </p>
+ </div>
+  <p class="note">The "reason" value is only filled in if the "state" is "INELIGIBLE".</p>
+  <p class="note">The "state" value will be one of "ELIGIBLE", "INELIGIBLE", or "UPGRADING"</p>
+  <p class="note">The "progress" value is a percentage, and is only non-zero if the device is currently being upgraded</p>
+  <p class="note">
+      The "latestRequiredVersion" value is the minimum version required for the device to be at, for the upgrade 
+      criticality specified in the call argument. 
+      This field may be omitted if there are no such requirements.
+  </p>
+</div>
+
+
+<div class="section">
+ <h2>PUT <span class="call">/devices/<em>:deviceType</em>/<em>:deviceId</em>/version</span></h2>
+ <p>Instructs the device to upgrade to the latest version.</p>
+ <div class="args">
+  <h3>Arguments:</h3>
+  <dl><dt>version</dt> <dd>LATEST</dd></dl>
+ </div>
+ <div class="sample">
+  <h3>Sample Response</h3>
+  <p class="header">HTTP 202</p>
+    <p class="json">
+{
+    "result":  "DEVICE_UPGRADE_REQUESTED"
+}
+  </p>
+ </div>
+ <div class="errors">
+  <h3>Returned errors:</h3>
+  <dl><dt>400 MISSING_PARAMETER</dt>   <dd>Version parameter is missing.</dd></dl>
+  <dl><dt>400 INVALID_PARAMETER</dt>   <dd>Version parameter is invalid (only valid value in current API version is LATEST).</dd></dl>
+ </div>
+ 
+ <p class="note">This call allows upgrading multiple devices at once as well. This can be done by passing a comma-separated list of device ids as :deviceId</p>
+</div>
+
+
+<div class="section">
+ <h2>PUT <span class="call">/devices/<em>:deviceType</em>/<em>:deviceId</em>/mode</span></h2>
+ <p>Changes device mode between placing (range test) and normal operation</p>
+ <div class="args">
+  <h3>Argument</h3>
+   <dl>
+   <dt>mode</dt>
+   <dd>
+    values:
+    <dl>
+     <dt>placing</dt>   <dd>Put the device into placing mode</dd>
+     <dt>normal</dt>    <dd>Put the device into normal (placed) mode</dd>
+    </dl>
+   </dd>
+  </dl>
+ </div>
+ <div class="sample">
+  <h3>Possible Responses:</h3>
+  <p class="header">HTTP 202</p>
+    <p class="json">
+{
+    "result":  "PLACING_MODE_REQUESTED"
+}
+  </p>
+  <p>or</p>
+  <p class="header">HTTP 202</p>
+    <p class="json">
+{
+    "result":  "NORMAL_MODE_REQUESTED"
+}
+  </p>
+ </div>
+</div>
+
+<div class="section">
+ <h2>
+   GET
+      <span class="call">
+         /devices/<em>:deviceType</em>/<em>:deviceId</em>/status
+      </span>
+ </h2>
+ <p>Return status information for the device</p>
+ <div class="sample">
+  <h3>Sample Response:</h3>
+  <p class="json">
+{
+   "battery": 95,
+   "batteryLow": false,
+   "power": 100,
+   "signal": 100,
+   "presence": true,
+   "temperature": null,
+   "version": "2.01r16"
+}
+  </p>
+ </div>
+</div>
+
+<div class="section">
+ <h2>
+   PUT
+      <span class="call">
+         /devices/<em>:deviceType</em>/<em>:deviceId</em>/recover
+      </span>
+ </h2>
+ <p>Recovers a device</p>
+ <div class="sample">
+  <h3>Sample Response:</h3>
+  <p class="header">HTTP 202</p>
+ </div>
+</div>
+
+<div class="section">
+    <h2>GET <span class="call">/devices/<em>:deviceType</em>/<em>:deviceId</em>/zwaveOnOffState</span></h2>
+    <p>Returns the state of a Z-Wave device on or off. Since Generic Z-Wave devices don't report their state to the hub
+       server, the information returned by this call may be outdated.
+       Use <span class="call">forceUpdate=true</span> query parameter to obtain the actual state of the device</p>
+
+    <div class="args">
+       <h3>Parameters:</h3>
+       <dl>
+          <dt>forceUpdate</dt><dd>[optional] if true, forces the hub server to query a device for its actual state</dd>
+       </dl>
+    </div>
+
+    <div class="sample">
+        <h3>Sample Response:</h3>
+        <p class="json">
+{
+   "state":"on"
+}
+        </p>
+    </div>
+
+    <div class="errors">
+        <h3>Returned errors:</h3>
+        <dl>
+            <dt>400 INVALID_PARAMETER</dt><dd>A device with such <span class="call">deviceId</span> does not exist.</dd>
+            <dt>400 UNSUPPORTED_DEVICE_TYPE</dt><dd>The specified device is not generic. See the list of valid devices in the body of the response.</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="section">
+    <h2>PUT <span class="call">/devices/<em>:deviceType</em>/<em>:deviceId</em>/zwaveOnOffState</span></h2>
+    <p>Turns a Z-Wave device on or off</p>
+    <div class="args">
+        <h3>Body:</h3>
+        <dl><dt>onOffState</dt>  <dd>"on" to turn on or "off" to turn off</dd></dl>
+    </div>
+
+    <div class="sample">
+        <h3>Sample Response:</h3>
+        <p class="header">
+            HTTP 204 Turning Z-Wave device on
+        </p>
+    </div>
+
+    <div class="errors">
+        <h3>Returned errors:</h3>
+        <dl>
+            <dt>400 MISSING_PARAMETER</dt><dd>The <span class="call">onOffState</span> is missing</dd>
+            <dt>400 INVALID_PARAMETER</dt><dd>The <span class="call">onOffState</span> is invalid</dd>
+            <dt>400 UNSUPPORTED_DEVICE_TYPE</dt><dd>The given device does not support remote state change</dd>
+        </dl>
+    </div>
+</div>    </div>
+  </body>
+
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/devices by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+</html>
