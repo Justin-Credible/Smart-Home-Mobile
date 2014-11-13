@@ -1,0 +1,37 @@
+﻿<ion-view title="Camera Configuration">
+
+    <ion-nav-buttons side="right">
+        <button class="button icon ion-plus"
+                ng-click="controller.add_click()"></button>
+    </ion-nav-buttons>
+
+    <ion-content class="has-header">
+
+        <icon-panel name="empty-icon-panel"
+                    icon="ion-ios7-videocam-outline"
+                    ng-show="viewModel.cameras.length === 0"
+                    text="No cameras have been added yet. Tap the button below to add one!"></icon-panel>
+
+        <div class="padding">
+            <button class="button button-block button-balanced"
+                    ng-show="viewModel.cameras.length === 0"
+                    ng-click="controller.add_click()">
+                Add Camera
+            </button>
+        </div>
+
+        <div class="list">
+
+            <div ng-repeat="camera in viewModel.cameras"
+                 class="item item-icon-left item-icon-right"
+                 ng-href="#/app/settings/camera/{{camera.id}}">
+                <i class="icon ion-ios7-cloud-upload-outline"></i>
+                <i class="icon ion-ios7-arrow-forward"></i>
+                {{camera.name}}
+            </div>
+
+        </div>
+
+    </ion-content>
+
+</ion-view>

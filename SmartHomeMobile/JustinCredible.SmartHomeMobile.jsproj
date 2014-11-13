@@ -144,6 +144,8 @@
     <Content Include="templates\Dialogs\Set-Multiple-Smart-Plugs-State.html" />
     <Content Include="templates\Dialogs\Reorder-Categories.html" />
     <Content Include="templates\Blank.html" />
+    <Content Include="templates\Settings\Cameras-List.html" />
+    <Content Include="templates\Settings\Hub.html" />
     <Content Include="templates\Smart-Plugs.html" />
     <Content Include="templates\Security.html" />
     <Content Include="templates\Settings\About.html" />
@@ -194,6 +196,8 @@
     <TypeScriptCompile Include="app\Controllers\Dialogs\ReorderCategoriesController.ts" />
     <TypeScriptCompile Include="app\Controllers\Dialogs\SetMultipleSmartPlugsStateController.ts" />
     <TypeScriptCompile Include="app\Controllers\MenuController.ts" />
+    <TypeScriptCompile Include="app\Controllers\Settings\CamerasListController.ts" />
+    <TypeScriptCompile Include="app\Controllers\Settings\HubController.ts" />
     <TypeScriptCompile Include="app\Controllers\SmartPlugsController.ts" />
     <TypeScriptCompile Include="app\Controllers\SecurityController.ts" />
     <TypeScriptCompile Include="app\Controllers\Settings\AboutController.ts" />
@@ -213,6 +217,7 @@
     <TypeScriptCompile Include="app\Models\Dialogs\PinEntryDialogModel.ts" />
     <TypeScriptCompile Include="app\Models\Dialogs\PinEntryDialogResultModel.ts" />
     <TypeScriptCompile Include="app\Models\Misc.ts" />
+    <TypeScriptCompile Include="app\Models\Settings\Camera.ts" />
     <TypeScriptCompile Include="app\Models\Settings\LogEntry.ts" />
     <TypeScriptCompile Include="app\Services\FileUtilities.ts" />
     <TypeScriptCompile Include="app\Services\HttpInterceptor.ts" />
@@ -298,6 +303,8 @@
     <Content Include="res\screens\ios\screen-iphone-portrait-2x.png" />
     <Content Include="res\screens\windows8\splashscreen.png" />
     <Content Include="res\screens\wp8\screen-portrait.jpg" />
+    <TypeScriptCompile Include="app\ViewModels\Settings\CamerasListViewModel.ts" />
+    <TypeScriptCompile Include="app\ViewModels\Settings\HubViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\SmartPlugsViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\SecurityViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Settings\AboutViewModel.ts" />

@@ -30,9 +30,7 @@
         private static IRRIGATION_CADDY_USER_NAME = "IRRIGATION_CADDY_USER_NAME";
         private static IRRIGATION_CADDY_PASSWORD = "IRRIGATION_CADDY_PASSWORD";
 
-        private static CAMERAS_URL = "CAMERAS_URL";
-        private static CAMERAS_USER_NAME = "CAMERAS_USER_NAME";
-        private static CAMERAS_PASSWORD = "CAMERAS_PASSWORD";
+        private static CAMERAS = "CAMERAS";
 
         //#endregion
 
@@ -217,42 +215,23 @@
             }
         }
 
-        get camerasUrl(): string {
-            return localStorage.getItem(Preferences.CAMERAS_URL);
-        }
+        get cameras(): Camera[] {
+            var json = localStorage.getItem(Preferences.CATEGORY_ORDER);
 
-        set camerasUrl(value: string) {
-            if (value == null) {
-                localStorage.removeItem(Preferences.CAMERAS_URL);
+            if (json == null) {
+                return null;
             }
             else {
-                localStorage.setItem(Preferences.CAMERAS_URL, value);
+                return JSON.parse(json);
             }
         }
 
-        get camerasUserName(): string {
-            return localStorage.getItem(Preferences.CAMERAS_USER_NAME);
-        }
-
-        set camerasUserName(value: string) {
+        set cameras(value: Camera[]) {
             if (value == null) {
-                localStorage.removeItem(Preferences.CAMERAS_USER_NAME);
+                localStorage.removeItem(Preferences.CAMERAS);
             }
             else {
-                localStorage.setItem(Preferences.CAMERAS_USER_NAME, value);
-            }
-        }
-
-        get camerasPassword(): string {
-            return localStorage.getItem(Preferences.CAMERAS_PASSWORD);
-        }
-
-        set camerasPassword(value: string) {
-            if (value == null) {
-                localStorage.removeItem(Preferences.CAMERAS_PASSWORD);
-            }
-            else {
-                localStorage.setItem(Preferences.CAMERAS_PASSWORD, value);
+                localStorage.setItem(Preferences.CAMERAS, JSON.stringify(value));
             }
         }
 
@@ -261,13 +240,13 @@
         //#region User Interface
 
         get categoryOrder(): string[] {
-            var categoryOrder = localStorage.getItem(Preferences.CATEGORY_ORDER);
+            var json = localStorage.getItem(Preferences.CATEGORY_ORDER);
 
-            if (categoryOrder == null) {
+            if (json == null) {
                 return null;
             }
             else {
-                return JSON.parse(categoryOrder);
+                return JSON.parse(json);
             }
         }
 
