@@ -168,7 +168,6 @@
          * Used to mock up the APIs that are not present when running in Android.
          */
         public mockForAndroid() {
-            alert("mockForAndroid, before: " + (window.ProgressIndicator == null ? null : window.ProgressIndicator.hide));
             window.ProgressIndicator = {
                 hide: _.bind(this.progressIndicator_hide, this),
                 showSimple: _.bind(this.progressIndicator_show, this),
@@ -183,7 +182,6 @@
                 showSuccess: _.bind(this.progressIndicator_show, this),
                 showText: _.bind(this.progressIndicator_show, this),
             };
-            alert("mockForAndroid, after: " + (window.ProgressIndicator == null ? null : window.ProgressIndicator.hide));
         }
 
         //#endregion

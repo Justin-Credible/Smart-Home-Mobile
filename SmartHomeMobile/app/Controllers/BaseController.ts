@@ -49,7 +49,7 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public initialize() {
+        public initialize(): void {
             // No logic should be placed here, since TypeScript doesn't currently support
             // protected members, so descendants may not be delegating to super.initialize().
         }
@@ -59,7 +59,7 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public destroy() {
+        public destroy(): void {
             // No logic should be placed here, since TypeScript doesn't currently support
             // protected members, so descendants may not be delegating to super.initialize().
         }

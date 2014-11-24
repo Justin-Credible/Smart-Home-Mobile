@@ -6,18 +6,20 @@
 
     export class AboutController extends BaseController<ViewModels.AboutViewModel> implements IAboutController {
 
-        public static $inject = ["$scope", "$location", "Utilities", "Preferences", "UiHelper", "versionInfo"];
+        public static $inject = ["$scope", "$location", "$ionicViewService", "Utilities", "Preferences", "UiHelper", "versionInfo"];
 
         private $location: ng.ILocationService;
+        private $ionicViewService: any;
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
         private UiHelper: Services.UiHelper;
         private versionInfo: JustinCredible.SmartHomeMobile.DataTypes.IVersionInfo;
 
-        constructor($scope: ng.IScope, $location: ng.ILocationService, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper, versionInfo: JustinCredible.SmartHomeMobile.DataTypes.IVersionInfo) {
+        constructor($scope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper, versionInfo: JustinCredible.SmartHomeMobile.DataTypes.IVersionInfo) {
             super($scope, ViewModels.AboutViewModel);
 
             this.$location = $location;
+            this.$ionicViewService = $ionicViewService;
             this.Utilities = Utilities;
             this.Preferences = Preferences;
             this.UiHelper = UiHelper;
@@ -53,7 +55,7 @@
             if (this.viewModel.logoClickCount > 9) {
                 this.Preferences.enableDeveloperTools = true;
                 this.UiHelper.toast.showShortBottom("Development Tools Enabled!");
-                this.$location.path("/app/settings");
+                this.$ionicViewService.getBackView().go();
             }
         }
 
