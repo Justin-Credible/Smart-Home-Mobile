@@ -1,11 +1,15 @@
-﻿<ion-view title="Camera Configuration">
+﻿<ion-view title="Cameras">
 
-    <ion-nav-buttons side="right">
-        <a class="button icon ion-plus"
-           href="#/app/settings/camera/add"></a>
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button icon ion-navicon phone-both-tablet-portrait"></button>
     </ion-nav-buttons>
 
-    <ion-content class="has-header">
+    <ion-nav-buttons side="right">
+    </ion-nav-buttons>
+
+    <ion-content class="has-header" scrolling="true" padding="true">
+
+        </ion-refresher>
 
         <div class="list">
 
@@ -15,7 +19,7 @@
 
             <a ng-repeat="camera in viewModel.cameras | filter: { type: 'SNAPSHOT' }"
                  ng-hide="viewModel.isRefreshing"
-                 href="#/app/settings/camera/edit/{{camera.id}}"
+                 href="#/app/camera/{{camera.id}}"
                  class="item item-icon-left item-icon-right">
 
                 <i class="icon ion-ios7-camera"></i>
@@ -29,7 +33,7 @@
 
             <a ng-repeat="camera in viewModel.cameras | filter: { type: 'STREAMING' }"
                  ng-hide="viewModel.isRefreshing"
-                 href="#/app/settings/camera/edit/{{camera.id}}"
+                 href="#/app/camera/{{camera.id}}"
                  class="item item-icon-left item-icon-right">
 
                 <i class="icon ion-ios7-videocam"></i>
@@ -37,20 +41,16 @@
                 {{camera.name}}
             </a>
 
+            <div class="item" ng-show="viewModel.isRefreshing" style="text-align:center;">
+                <i class="icon ion-loading-c"></i>
+            </div>
+
         </div>
 
         <icon-panel name="empty-icon-panel"
-            icon="ion-ios7-videocam-outline"
-            ng-show="viewModel.cameras.length === 0"
-            text="No cameras have been added yet. Tap the button below to add one!"></icon-panel>
-
-        <div class="padding">
-            <a class="button button-block button-positive"
-               ng-show="viewModel.cameras.length === 0"
-               href="#/app/settings/camera/add">
-                Add Camera
-            </a>
-        </div>
+                    icon="ion-ios7-videocam-outline"
+                    ng-show="viewModel.cameras.length === 0"
+                    text="No cameras have been added yet. Add some via Settings &gt; IP Cameras."></icon-panel>
 
     </ion-content>
 

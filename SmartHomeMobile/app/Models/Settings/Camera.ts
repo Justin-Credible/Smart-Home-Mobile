@@ -5,6 +5,8 @@
         public name: string;
         public url: string;
         public type: string;
+        public userName: string;
+        public password: string;
     }
 
 }

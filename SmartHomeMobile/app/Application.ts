@@ -69,6 +69,7 @@ module JustinCredible.SmartHomeMobile.Application {
 
         // Define each of the directives.
         ngModule.directive("iconPanel", getDirectiveFactoryFunction(Directives.IconPanelDirective));
+        ngModule.directive("shmOnLoad", ["$parse", ($parse: ng.IParseService) => { return new Directives.OnLoadDirective($parse); }]);
         //ngModule.directive("ngModelOnblur", () => { return new Directives.ModelOnBlurDirective(); });
 
         // Define each of the filters.
@@ -80,13 +81,18 @@ module JustinCredible.SmartHomeMobile.Application {
         ngModule.controller("MenuController", Controllers.MenuController);
         ngModule.controller("CategoryController", Controllers.CategoryController);
         ngModule.controller("SecurityController", Controllers.SecurityController);
+        //ngModule.controller("ThermostatController", Controllers.ThermostatController);
         ngModule.controller("SmartPlugsController", Controllers.SmartPlugsController);
+        ngModule.controller("CamerasController", Controllers.CamerasController);
+        ngModule.controller("CameraViewController", Controllers.CameraViewController);
+        //ngModule.controller("IrrigationController", Controllers.IrrigationController);
         ngModule.controller("ReorderCategoriesController", Controllers.ReorderCategoriesController);
         ngModule.controller("PinEntryController", Controllers.PinEntryController);
         ngModule.controller("SetMultipleSmartPlugsStateController", Controllers.SetMultipleSmartPlugsStateController);
         ngModule.controller("SettingsListController", Controllers.SettingsListController);
         ngModule.controller("HubController", Controllers.HubController);
         ngModule.controller("CamerasListController", Controllers.CamerasListController);
+        ngModule.controller("CameraEditController", Controllers.CameraEditController);
         ngModule.controller("LogsController", Controllers.LogsController);
         ngModule.controller("LogEntryController", Controllers.LogEntryController);
         ngModule.controller("DeveloperController", Controllers.DeveloperController);
@@ -273,6 +279,18 @@ module JustinCredible.SmartHomeMobile.Application {
             }
         });
 
+        /*
+        $stateProvider.state("app.thermostat", {
+            url: "/thermostat",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Thermostat.html",
+                    controller: "ThermostatController"
+                }
+            }
+        });
+        */
+
         $stateProvider.state("app.smart-plugs", {
             url: "/smart-plugs",
             views: {
@@ -282,6 +300,38 @@ module JustinCredible.SmartHomeMobile.Application {
                 }
             }
         });
+
+        $stateProvider.state("app.cameras", {
+            url: "/cameras",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Cameras.html",
+                    controller: "CamerasController"
+                }
+            }
+        });
+
+        $stateProvider.state("app.camera", {
+            url: "/camera/:id",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Camera-View.html",
+                    controller: "CameraViewController"
+                }
+            }
+        });
+
+        /*
+        $stateProvider.state("app.irrigation", {
+            url: "/irrigation",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Irrigation.html",
+                    controller: "IrrigationController"
+                }
+            }
+        });
+        */
 
         //#region Settings
 
@@ -315,22 +365,22 @@ module JustinCredible.SmartHomeMobile.Application {
             }
         });
 
-        $stateProvider.state("app.cameras-add", {
-            url: "/settings/camera/edit/[NEW]",
+        $stateProvider.state("app.camera-add", {
+            url: "/settings/camera/add",
             views: {
                 "menuContent": {
-                    templateUrl: "templates/Settings/Cameras-Edit.html",
-                    controller: "CamerasEditController"
+                    templateUrl: "templates/Settings/Camera-Edit.html",
+                    controller: "CameraEditController"
                 }
             }
         });
 
-        $stateProvider.state("app.cameras-edit", {
+        $stateProvider.state("app.camera-edit", {
             url: "/settings/camera/edit/:id",
             views: {
                 "menuContent": {
-                    templateUrl: "templates/Settings/Cameras-Edit.html",
-                    controller: "CamerasEditController"
+                    templateUrl: "templates/Settings/Camera-Edit.html",
+                    controller: "CameraEditController"
                 }
             }
         });

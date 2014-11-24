@@ -215,8 +215,8 @@
             }
         }
 
-        get cameras(): Camera[] {
-            var json = localStorage.getItem(Preferences.CATEGORY_ORDER);
+        get cameras(): Models.Camera[] {
+            var json = localStorage.getItem(Preferences.CAMERAS);
 
             if (json == null) {
                 return null;
@@ -226,7 +226,7 @@
             }
         }
 
-        set cameras(value: Camera[]) {
+        set cameras(value: Models.Camera[]) {
             if (value == null) {
                 localStorage.removeItem(Preferences.CAMERAS);
             }

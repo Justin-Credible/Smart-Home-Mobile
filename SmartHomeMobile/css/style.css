@@ -32,6 +32,10 @@
 	float: right;
 }
 
+.item-small-icon > .icon {
+	font-size: 20px;
+}
+
 /* Useful for vertically centering content in an ion-content directive. */
 .content-vertical-center {
 	display: -webkit-box;
@@ -128,4 +132,10 @@
 .icon-panel .icon-container {
 	text-align: center;
 	font-size: 120pt;
+}
+
+/** Camera View **********************************************************************************/
+
+.camera-image {
+	width: 100%;
 }

@@ -139,11 +139,14 @@
     <Content Include="plugins\org.pbernasconi.progressIndicator\src\ios\ProgressIndicator.m" />
     <Content Include="plugins\org.pbernasconi.progressIndicator\www\progressIndicator.js" />
     <Content Include="scripts\BuildVars.js" />
+    <Content Include="templates\Cameras.html" />
+    <Content Include="templates\Camera-View.html" />
     <Content Include="templates\Category.html" />
     <Content Include="templates\Dialogs\Pin-Entry.html" />
     <Content Include="templates\Dialogs\Set-Multiple-Smart-Plugs-State.html" />
     <Content Include="templates\Dialogs\Reorder-Categories.html" />
     <Content Include="templates\Blank.html" />
+    <Content Include="templates\Settings\Camera-Edit.html" />
     <Content Include="templates\Settings\Cameras-List.html" />
     <Content Include="templates\Settings\Hub.html" />
     <Content Include="templates\Smart-Plugs.html" />
@@ -190,6 +193,8 @@
     <Content Include="lib\ionic\version.json" />
     <TypeScriptCompile Include="app\Application.ts" />
     <TypeScriptCompile Include="app\Controllers\BaseController.ts" />
+    <TypeScriptCompile Include="app\Controllers\CamerasController.ts" />
+    <TypeScriptCompile Include="app\Controllers\CameraViewController.ts" />
     <TypeScriptCompile Include="app\Controllers\CategoryController.ts" />
     <TypeScriptCompile Include="app\Controllers\Dialogs\BaseDialogController.ts" />
     <TypeScriptCompile Include="app\Controllers\Dialogs\PinEntryController.ts" />
@@ -197,6 +202,7 @@
     <TypeScriptCompile Include="app\Controllers\Dialogs\SetMultipleSmartPlugsStateController.ts" />
     <TypeScriptCompile Include="app\Controllers\MenuController.ts" />
     <TypeScriptCompile Include="app\Controllers\Settings\CamerasListController.ts" />
+    <TypeScriptCompile Include="app\Controllers\Settings\CameraEditController.ts" />
     <TypeScriptCompile Include="app\Controllers\Settings\HubController.ts" />
     <TypeScriptCompile Include="app\Controllers\SmartPlugsController.ts" />
     <TypeScriptCompile Include="app\Controllers\SecurityController.ts" />
@@ -210,6 +216,7 @@
     <TypeScriptCompile Include="app\Directives\BaseDirective.ts" />
     <TypeScriptCompile Include="app\Directives\IconPanelDirective.ts" />
     <TypeScriptCompile Include="app\Directives\ModelOnBlurDirective.ts" />
+    <TypeScriptCompile Include="app\Directives\OnLoadDirective.ts" />
     <TypeScriptCompile Include="app\Filters\ObjectToArrayFilter.ts" />
     <TypeScriptCompile Include="app\Filters\ThousandsFilter.ts" />
     <TypeScriptCompile Include="app\Filters\TitleCaseFilter.ts" />
@@ -228,6 +235,8 @@
     <TypeScriptCompile Include="app\Services\MockApis.ts" />
     <TypeScriptCompile Include="app\Services\UiHelper.ts" />
     <TypeScriptCompile Include="app\Services\Utilities.ts" />
+    <TypeScriptCompile Include="app\ViewModels\CamerasViewModel.ts" />
+    <TypeScriptCompile Include="app\ViewModels\CameraViewViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\CategoryItemViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\CategoryViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Dialogs\PinEntryViewModel.ts" />
@@ -303,6 +312,7 @@
     <Content Include="res\screens\ios\screen-iphone-portrait-2x.png" />
     <Content Include="res\screens\windows8\splashscreen.png" />
     <Content Include="res\screens\wp8\screen-portrait.jpg" />
+    <TypeScriptCompile Include="app\ViewModels\Settings\CameraEditViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Settings\CamerasListViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Settings\HubViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\SmartPlugsViewModel.ts" />

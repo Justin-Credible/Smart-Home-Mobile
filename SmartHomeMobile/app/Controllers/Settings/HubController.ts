@@ -6,17 +6,19 @@
 
     export class HubController extends BaseController<ViewModels.HubViewModel> implements IHubController {
 
-        public static $inject = ["$scope", "$location", "Utilities", "Preferences", "UiHelper"];
+        public static $inject = ["$scope", "$location", "$ionicViewService", "Utilities", "Preferences", "UiHelper"];
 
         private $location: ng.ILocationService;
+        private $ionicViewService: any;
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
         private UiHelper: Services.UiHelper;
 
-        constructor($scope: ng.IScope, $location: ng.ILocationService, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
+        constructor($scope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
             super($scope, ViewModels.HubViewModel);
 
             this.$location = $location;
+            this.$ionicViewService = $ionicViewService;
             this.Utilities = Utilities;
             this.Preferences = Preferences;
             this.UiHelper = UiHelper;
@@ -36,15 +38,18 @@
         //#region Controller Methods
 
         public apiInfo_click(): void {
-            var infoMessage = "Currently supported hubs are ones that use the AlertMe API (such as Lowe's Iris Smart Home platform). This should be a URL to the root of the AlertMe API such as: https://api.alertme.com/v5";
+            var infoMessage1 = "The hub is responsible for controlling communicating with the smart home devices, such as security, locks, power, thermostat, etc.";
+            var infoMessage2 = "Currently supported hubs are ones that use the AlertMe API (such as Lowe's Iris Smart Home platform). This should be a URL to the root of the AlertMe API such as: https://api.alertme.com/v5";
             var promptMessage = "Would you like to use the default URL for Lowe's Iris Smart Home platform? (https://www.irissmarthome.com/v5)";
 
-            this.UiHelper.alert(infoMessage, "API URL Info").then(() => {
-                this.UiHelper.confirm(promptMessage, "API URL Info").then((result: string) => {
-                    if (result === "Yes") {
-                        this.viewModel.apiUrl = "https://www.irissmarthome.com/v5";
-                        this.viewModel.showSaveButton = true;
-                    }
+            this.UiHelper.alert(infoMessage1, "Hub Info").then(() => {
+                this.UiHelper.alert(infoMessage2, "Hub Info").then(() => {
+                    this.UiHelper.confirm(promptMessage, "Use Default").then((result: string) => {
+                        if (result === "Yes") {
+                            this.viewModel.apiUrl = "https://www.irissmarthome.com/v5";
+                            this.viewModel.showSaveButton = true;
+                        }
+                    });
                 });
             });
         }
@@ -66,12 +71,14 @@
                 }
             }
 
+            // Update the values in the preferences.
             this.Preferences.irisUrl = this.viewModel.apiUrl;
             this.Preferences.irisUserName = this.viewModel.userName;
             this.Preferences.irisPassword = this.viewModel.password;
 
+            // Kick the user back to the settings list view.
             this.UiHelper.toast.showShortBottom("Changes have been saved.");
-            this.$location.path("/app/settings");//TODO this needs to replace the curent path, or go back in the nav stack
+            this.$ionicViewService.getBackView().go();
         }
 
         //#endregion

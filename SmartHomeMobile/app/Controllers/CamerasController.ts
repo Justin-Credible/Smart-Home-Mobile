@@ -1,10 +1,10 @@
 ﻿module JustinCredible.SmartHomeMobile.Controllers {
 
-    export interface ICamerasListController {
-        viewModel: ViewModels.CamerasListViewModel;
+    export interface ICamerasController {
+        viewModel: ViewModels.CamerasViewModel;
     }
 
-    export class CamerasListController extends BaseController<ViewModels.CamerasListViewModel> implements ICamerasListController {
+    export class CamerasController extends BaseController<ViewModels.CamerasViewModel> implements ICamerasController {
 
         public static $inject = ["$scope", "$location", "Utilities", "Preferences", "UiHelper"];
 
@@ -15,7 +15,7 @@
         private versionInfo: JustinCredible.SmartHomeMobile.DataTypes.IVersionInfo;
 
         constructor($scope: ng.IScope, $location: ng.ILocationService, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
-            super($scope, ViewModels.CamerasListViewModel);
+            super($scope, ViewModels.CamerasViewModel);
 
             this.$location = $location;
             this.Utilities = Utilities;

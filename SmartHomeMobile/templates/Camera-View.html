@@ -1,0 +1,39 @@
+﻿<ion-view title="{{viewModel.camera.name}}">
+
+    <ion-nav-buttons side="left">
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <button class="button icon ion-loop"
+                ng-click="controller.refresh_click()"
+                ng-hide="blockingRequestInProgress || nonBlockingRequestInProgress || viewModel.camera.type !== 'SNAPSHOT'"></button>
+    </ion-nav-buttons>
+
+    <ion-content class="has-header" scrolling="true" padding="true">
+
+        <ion-refresher pulling-text="Pull to refresh..."
+                       refreshing-text="Refreshing..."
+                       on-refresh="controller.refresher_refresh()">
+        </ion-refresher>
+
+        <div class="last-updated-row"
+             ng-show="viewModel.camera.type === 'SNAPSHOT'">
+            Last updated at {{viewModel.lastUpdated | date: 'MM/dd/yyyy HH:mm:ss Z'}}
+        </div>
+
+        <img ng-src="{{viewModel.url}}" class="camera-image" shm-on-load="controller.image_load()" />
+
+        <icon-panel icon="ion-loading-b"
+                    ng-show="viewModel.showLoadingPanel"
+                    text="Please Wait..."></icon-panel>
+
+        <!--
+            Used to force the browser to use the basic auth credentials that are embedded in the URL
+            since it won't use them via the image element's src attribute.
+            http://stackoverflow.com/questions/25505110/alternative-to-showing-mjpeg-in-an-img-tag-with-basic-authentication
+        -->
+        <iframe style="display:none;" ng-src="{{controller.getIframeUrl(viewModel.camera)}}"></iframe>
+
+    </ion-content>
+
+</ion-view>
