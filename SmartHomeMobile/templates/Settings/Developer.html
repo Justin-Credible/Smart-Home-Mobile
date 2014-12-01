@@ -18,10 +18,15 @@
                 </label>
             </label>
 
-            <button class="button button-block button-positive" ng-click="controller.setCredentials()">Set Iris Credentials</button>
-            <button class="button button-block button-positive" ng-click="controller.irisLogin()">Iris /login</button>
-            <button class="button button-block button-positive" ng-click="controller.irisLogout()">Iris /logout</button>
-            <button class="button button-block button-positive" ng-click="controller.irisHomeStatus()">Iris /widgets/homeStatus</button>
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">AlertMe API</div>
+
+            <button class="button button-block button-positive" ng-click="controller.setCredentials()">Set Credentials</button>
+            <button class="button button-block button-positive" ng-click="controller.alertMeApiLogin()">POST /login</button>
+            <button class="button button-block button-positive" ng-click="controller.alertMeApiLogout()">POST /logout</button>
+            <button class="button button-block button-positive" ng-click="controller.alertMeApiHomeStatus()">GET /widgets/homeStatus</button>
         </div>
 
         <div class="list card">

@@ -6,37 +6,37 @@
 
     export class SecurityController extends BaseController<ViewModels.SecurityViewModel> implements ISecurityController {
 
-        public static $inject = ["$scope", "Utilities", "UiHelper", "IrisDataSource", "IrisApi"];
+        public static $inject = ["$scope", "Utilities", "UiHelper", "HubDataSource", "AlertMeApi"];
 
         private Utilities: Services.Utilities;
         private UiHelper: Services.UiHelper;
-        private IrisDataSource: Services.IrisDataSource;
-        private IrisApi: Services.IrisApi;
+        private HubDataSource: Services.HubDataSource;
+        private AlertMeApi: Services.AlertMeApi;
 
-        constructor($scope: ng.IScope, Utilities: Services.Utilities, UiHelper: Services.UiHelper, IrisDataSource: Services.IrisDataSource, IrisApi: Services.IrisApi) {
+        constructor($scope: ng.IScope, Utilities: Services.Utilities, UiHelper: Services.UiHelper, HubDataSource: Services.HubDataSource, AlertMeApi: Services.AlertMeApi) {
             super($scope, ViewModels.SecurityViewModel);
 
             this.Utilities = Utilities;
             this.UiHelper = UiHelper;
-            this.IrisDataSource = IrisDataSource;
-            this.IrisApi = IrisApi;
+            this.HubDataSource = HubDataSource;
+            this.AlertMeApi = AlertMeApi;
         }
 
         //#region Controller Events
 
         public initialize() {
 
-            if (this.IrisDataSource.security == null
-                || this.IrisDataSource.securityLastUpdated == null
-                || this.IrisDataSource.securityLastUpdated.diff(moment(), "minutes") > 10) {
+            if (this.HubDataSource.security == null
+                || this.HubDataSource.securityLastUpdated == null
+                || this.HubDataSource.securityLastUpdated.diff(moment(), "minutes") > 10) {
                 this.refresh();
             }
             else {
-                this.viewModel.alarmData = this.IrisDataSource.alarm;
-                this.viewModel.alarmOverviewData = this.IrisDataSource.alarmOverview;
-                this.viewModel.lockData = this.IrisDataSource.locks;
+                this.viewModel.alarmData = this.HubDataSource.alarm;
+                this.viewModel.alarmOverviewData = this.HubDataSource.alarmOverview;
+                this.viewModel.lockData = this.HubDataSource.locks;
                 this.viewModel.isRefreshing = false;
-                this.viewModel.lastUpdated = this.IrisDataSource.securityLastUpdated.toDate();
+                this.viewModel.lastUpdated = this.HubDataSource.securityLastUpdated.toDate();
             }
         }
 
@@ -47,14 +47,14 @@
         private refresh(): void {
             this.viewModel.isRefreshing = true;
 
-            this.IrisDataSource.refreshSecurity().then((result: ViewModels.SecurityViewModel) => {
+            this.HubDataSource.refreshSecurity().then((result: ViewModels.SecurityViewModel) => {
                 this.viewModel.isRefreshing = false;
                 this.scope.$broadcast("scroll.refreshComplete");
 
                 this.viewModel.alarmData = result.alarmData;
                 this.viewModel.alarmOverviewData = result.alarmOverviewData;
                 this.viewModel.lockData = result.lockData;
-                this.viewModel.lastUpdated = this.IrisDataSource.securityLastUpdated.toDate();
+                this.viewModel.lastUpdated = this.HubDataSource.securityLastUpdated.toDate();
             }, () => {
                 this.viewModel.isRefreshing = false;
                 this.scope.$broadcast("scroll.refreshComplete");
@@ -77,7 +77,7 @@
             }
 
             // If ANY of the locks are unlocked, then the button should be enabled.
-            this.viewModel.lockData.locks.forEach((lock: IrisApiTypes.LockDevice) => {
+            this.viewModel.lockData.locks.forEach((lock: AlertMeApiTypes.LockDevice) => {
                 if (lock.lockState === "UNLOCKED") {
                     disabled = false;
                 }
@@ -98,7 +98,7 @@
             }
 
             // If ANY of the locks are locked, then the button should be enabled.
-            this.viewModel.lockData.locks.forEach((lock: IrisApiTypes.LockDevice) => {
+            this.viewModel.lockData.locks.forEach((lock: AlertMeApiTypes.LockDevice) => {
                 if (lock.lockState === "LOCKED") {
                     disabled = false;
                 }
@@ -125,11 +125,11 @@
             // Make the call to arm the alarm. We pass now as false and checkState as true so that if a contact
             // sensor is open, the alarm will not be armed. Instead the failure callback will be executed where-in
             // we can notify them and prompt if they want to continue anyways.
-            this.IrisApi.setAlarmMode(Services.IrisApi.AlarmMode.Away, false, true).then((result: IrisApiTypes.AlarmModePutResult) => {
+            this.AlertMeApi.setAlarmMode(Services.AlertMeApi.AlarmMode.Away, false, true).then((result: AlertMeApiTypes.AlarmModePutResult) => {
                 this.viewModel.alarmData.state = "ARMED";
             }/*, (error: any) => {
 
-                // NOTE: [10-27-14] Commenting this out for now as the Iris v5 API implementation doesn't seem to be
+                // NOTE: [10-27-14] Commenting this out for now as the AlertMe v5 API implementation doesn't seem to be
                 // respecting the state of the now and checkState flags.
 
                 if (error && error.reason && error.reason === "CONTACT_SENSOR_OPEN") {
@@ -143,7 +143,7 @@
 
                         // The user indicated that they want to continue anyways. Make the call again, but this time pass
                         // now as true and checkState as false so the arming will ignore/bypass the open sensors.
-                        this.IrisApi.setAlarmMode(Services.IrisApi.AlarmMode.Away, true, false).then((result: IrisApiTypes.AlarmModePutResult) => {
+                        this.AlertMeApi.setAlarmMode(Services.AlertMeApi.AlarmMode.Away, true, false).then((result: AlertMeApiTypes.AlarmModePutResult) => {
                             this.viewModel.alarmData.state = "ARMED";
                         });
                     });
@@ -152,7 +152,7 @@
         }
 
         public disarm_click(): void {
-            this.IrisApi.setAlarmMode(Services.IrisApi.AlarmMode.Home, true, false).then((result: IrisApiTypes.AlarmModePutResult) => {
+            this.AlertMeApi.setAlarmMode(Services.AlertMeApi.AlarmMode.Home, true, false).then((result: AlertMeApiTypes.AlarmModePutResult) => {
                 this.viewModel.alarmData.state = "DISARMED";
             });
         }
@@ -172,7 +172,7 @@
             this.UiHelper.alert(info);
         }
 
-        public lockToggle_click(device: IrisApiTypes.LockDevice): void {
+        public lockToggle_click(device: AlertMeApiTypes.LockDevice): void {
             var oldLockState: string,
                 newLockState: string;
 
@@ -182,9 +182,9 @@
 
             // Determine what lock state we need to pass to the API call
             // based on the current lock state (we use the opposite).
-            newLockState = device.lockState === "LOCKED" ? Services.IrisApi.LockState.Unlocked : Services.IrisApi.LockState.Locked;
+            newLockState = device.lockState === "LOCKED" ? Services.AlertMeApi.LockState.Unlocked : Services.AlertMeApi.LockState.Locked;
 
-            this.IrisApi.setLockState(device.id, newLockState).then(() => {
+            this.AlertMeApi.setLockState(device.id, newLockState).then(() => {
                 // If the API call succeeded, set the new lock state into
                 // the view model.
                 device.lockState = newLockState;
@@ -199,19 +199,19 @@
 
             // Save this off, so the API call fails, we can set the value
             // back to its original value.
-            this.viewModel.lockData.locks.forEach((device: IrisApiTypes.LockDevice) => {
+            this.viewModel.lockData.locks.forEach((device: AlertMeApiTypes.LockDevice) => {
                 oldLockStates.push(device.lockState);
             });
 
-            this.IrisApi.setLockState("all", "LOCKED").then(() => {
+            this.AlertMeApi.setLockState("all", "LOCKED").then(() => {
                 // If the API call succeeded, set the new lock state into
                 // the view model.
-                this.viewModel.lockData.locks.forEach((device: IrisApiTypes.LockDevice) => {
+                this.viewModel.lockData.locks.forEach((device: AlertMeApiTypes.LockDevice) => {
                     device.lockState = "LOCKED";
                 });
             }, () => {
                 // If the API call failed, then preserve the previous state.
-                this.viewModel.lockData.locks.forEach((device: IrisApiTypes.LockDevice, index: number) => {
+                this.viewModel.lockData.locks.forEach((device: AlertMeApiTypes.LockDevice, index: number) => {
                     device.lockState = oldLockStates[index];
                 });
 
@@ -226,19 +226,19 @@
 
             // Save this off, so the API call fails, we can set the value
             // back to its original value.
-            this.viewModel.lockData.locks.forEach((device: IrisApiTypes.LockDevice) => {
+            this.viewModel.lockData.locks.forEach((device: AlertMeApiTypes.LockDevice) => {
                 oldLockStates.push(device.lockState);
             });
 
-            this.IrisApi.setLockState("all", "UNLOCKED").then(() => {
+            this.AlertMeApi.setLockState("all", "UNLOCKED").then(() => {
                 // If the API call succeeded, set the new lock state into
                 // the view model.
-                this.viewModel.lockData.locks.forEach((device: IrisApiTypes.LockDevice) => {
+                this.viewModel.lockData.locks.forEach((device: AlertMeApiTypes.LockDevice) => {
                     device.lockState = "UNLOCKED";
                 });
             }, () => {
                 // If the API call failed, then preserve the previous state.
-                this.viewModel.lockData.locks.forEach((device: IrisApiTypes.LockDevice, index: number) => {
+                this.viewModel.lockData.locks.forEach((device: AlertMeApiTypes.LockDevice, index: number) => {
                     device.lockState = oldLockStates[index];
                 });
 

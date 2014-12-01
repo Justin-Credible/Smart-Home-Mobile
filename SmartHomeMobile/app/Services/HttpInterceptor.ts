@@ -77,7 +77,7 @@
          * object (eg URL, HTTP headers, etc) can be modified before the request goes
          * out.
          */
-        public request(config: Interfaces.IRequestConfig): Interfaces.IRequestConfig {
+        public request(config: Interfaces.RequestConfig): Interfaces.RequestConfig {
 
             console.log("HttpInterceptor.request: " + config.url, [config]);
 
@@ -101,12 +101,12 @@
          * Fired when an HTTP request completes with a status code in the 200 range.
          */
         public response(httpResponse: ng.IHttpPromiseCallbackArg<any>): ng.IHttpPromiseCallbackArg<any> {
-            var config: Interfaces.IRequestConfig;
+            var config: Interfaces.RequestConfig;
 
             console.log("HttpInterceptor.response: " + httpResponse.config.url, [httpResponse]);
 
             // Cast to our custom type which includes some extra flags.
-            config = <Interfaces.IRequestConfig>httpResponse.config;
+            config = <Interfaces.RequestConfig>httpResponse.config;
 
             // Do nothing for Angular's template requests.
             if (this.Utilities.endsWith(config.url, ".html")) {
@@ -131,7 +131,7 @@
         public requestError(rejection: ng.IHttpPromiseCallbackArg<any>) {
             var httpResponse: ng.IHttpPromiseCallbackArg<any>,
                 exception: Error,
-                config: Interfaces.IRequestConfig;
+                config: Interfaces.RequestConfig;
 
             console.error("HttpInterceptor.requestError", [rejection]);
 
@@ -148,7 +148,7 @@
                 httpResponse = <ng.IHttpPromiseCallbackArg<any>>rejection;
 
                 // Cast to our custom type which includes some extra flags.
-                config = <Interfaces.IRequestConfig>httpResponse.config;
+                config = <Interfaces.RequestConfig>httpResponse.config;
 
                 // Keep track of how many requests are still in progress and hide spinners etc.
                 if (config) {
@@ -168,7 +168,7 @@
         public responseError(responseOrError: any) {
             var httpResponse: ng.IHttpPromiseCallbackArg<any>,
                 exception: Error,
-                config: Interfaces.IRequestConfig;
+                config: Interfaces.RequestConfig;
 
             console.log("HttpInterceptor.responseError", [httpResponse]);
 
@@ -181,7 +181,7 @@
                 httpResponse = <ng.IHttpPromiseCallbackArg<any>>responseOrError;
 
                 // Cast to our custom type which includes some extra flags.
-                config = <Interfaces.IRequestConfig>httpResponse.config;
+                config = <Interfaces.RequestConfig>httpResponse.config;
 
                 // Do nothing for Angular's template requests.
                 if (this.Utilities.endsWith(config.url, ".html")) {
@@ -220,7 +220,7 @@
          * Handles keeping track of the number of requests that are currently in progress as well
          * as shows any UI blocking or animated spinners.
          */
-        private handleRequestStart(config: Interfaces.IRequestConfig) {
+        private handleRequestStart(config: Interfaces.RequestConfig) {
 
             // Default the blocking flag if it isn't present.
             if (typeof (config.blocking) === "undefined") {
@@ -296,7 +296,7 @@
          * Handles keeping track of the number of requests that are currently in progress as well
          * as hides any UI blocking or animated spinners.
          */
-        private handleResponseEnd(config: Interfaces.IRequestConfig) {
+        private handleResponseEnd(config: Interfaces.RequestConfig) {
 
             // Decrement the total number of HTTP requests that are in progress.
             this.requestsInProgress -= 1;

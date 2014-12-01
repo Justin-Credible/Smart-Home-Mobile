@@ -4,7 +4,7 @@
         viewModel: ViewModels.SetMultipleSmartPlugsStateViewModel;
     }
 
-    export class SetMultipleSmartPlugsStateController extends BaseDialogController<ViewModels.SetMultipleSmartPlugsStateViewModel, IrisApiTypes.SmartPlugDevice[], IrisApiTypes.SmartPlugDevice[]> implements ISetMultipleSmartPlugsState {
+    export class SetMultipleSmartPlugsStateController extends BaseDialogController<ViewModels.SetMultipleSmartPlugsStateViewModel, AlertMeApiTypes.SmartPlugDevice[], AlertMeApiTypes.SmartPlugDevice[]> implements ISetMultipleSmartPlugsState {
 
         public static $inject = ["$scope", "Utilities", "Preferences", "UiHelper"];
 
@@ -37,7 +37,7 @@
         //#region Attribute/Expression Properties
 
         get lighting_show(): boolean {
-            var outlets: IrisApiTypes.SmartPlugDevice[];
+            var outlets: AlertMeApiTypes.SmartPlugDevice[];
 
             // If there is no view model data, then the section shouldn't be visible.
             if (this.viewModel == null || this.viewModel.smartPlugs == null) {
@@ -45,7 +45,7 @@
             }
 
             // We want to show the outlets section if we have applicances of type lighting.
-            outlets = _.filter(this.viewModel.smartPlugs, (smartPlug: IrisApiTypes.SmartPlugDevice) => {
+            outlets = _.filter(this.viewModel.smartPlugs, (smartPlug: AlertMeApiTypes.SmartPlugDevice) => {
                 return smartPlug.applianceType === "LIGHTS";
             });
 
@@ -54,7 +54,7 @@
         }
 
         get outlets_show(): boolean {
-            var outlets: IrisApiTypes.SmartPlugDevice[];
+            var outlets: AlertMeApiTypes.SmartPlugDevice[];
 
             // If there is no view model data, then the section shouldn't be visible.
             if (this.viewModel == null || this.viewModel.smartPlugs == null) {
@@ -62,7 +62,7 @@
             }
 
             // We want to show the outlets section if we have applicances of type smart plug.
-            outlets = _.filter(this.viewModel.smartPlugs, (smartPlug: IrisApiTypes.SmartPlugDevice) => {
+            outlets = _.filter(this.viewModel.smartPlugs, (smartPlug: AlertMeApiTypes.SmartPlugDevice) => {
                 return smartPlug.applianceType === "SMARTPLUG";
             });
 
@@ -82,7 +82,7 @@
             this.close(this.viewModel.smartPlugs);
         }
 
-        public smartPlugToggle_click(smartPlug: IrisApiTypes.SmartPlugDevice[]): void {
+        public smartPlugToggle_click(smartPlug: AlertMeApiTypes.SmartPlugDevice[]): void {
             this.viewModel.stateChanged = true;
         }
 

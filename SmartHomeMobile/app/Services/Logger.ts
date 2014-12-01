@@ -269,7 +269,7 @@
             this.addLogEntry(logEntry);
         }
 
-        public logHttpRequestConfig(config: Interfaces.IRequestConfig): void {
+        public logHttpRequestConfig(config: Interfaces.RequestConfig): void {
             var logEntry: Models.LogEntry;
 
             logEntry = new Models.LogEntry();

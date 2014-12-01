@@ -28,9 +28,9 @@
 
         public initialize(): void {
             this.viewModel.showSaveButton = false;
-            this.viewModel.apiUrl = this.Preferences.irisUrl;
-            this.viewModel.userName = this.Preferences.irisUserName;
-            this.viewModel.password = this.Preferences.irisPassword;
+            this.viewModel.apiUrl = this.Preferences.alertMeApiUrl;
+            this.viewModel.userName = this.Preferences.alertMeUserName;
+            this.viewModel.password = this.Preferences.alertMePassword;
         }
 
         //#endregion
@@ -72,9 +72,9 @@
             }
 
             // Update the values in the preferences.
-            this.Preferences.irisUrl = this.viewModel.apiUrl;
-            this.Preferences.irisUserName = this.viewModel.userName;
-            this.Preferences.irisPassword = this.viewModel.password;
+            this.Preferences.alertMeApiUrl = this.viewModel.apiUrl;
+            this.Preferences.alertMeUserName = this.viewModel.userName;
+            this.Preferences.alertMePassword = this.viewModel.password;
 
             // Kick the user back to the settings list view.
             this.UiHelper.toast.showShortBottom("Changes have been saved.");

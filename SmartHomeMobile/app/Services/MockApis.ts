@@ -188,7 +188,7 @@
 
         //#region Mock HTTP Responses
 
-        private getMockAlarmGetResponse(): IrisApiTypes.AlarmGetResult {
+        private getMockAlarmGetResponse(): AlertMeApiTypes.AlarmGetResult {
             return {
                 "status": {
                     "deviceName": null,
@@ -214,7 +214,7 @@
             };
         }
 
-        private getMockAlarmOverviewGetResponse(): IrisApiTypes.AlarmOverviewGetResult {
+        private getMockAlarmOverviewGetResponse(): AlertMeApiTypes.AlarmOverviewGetResult {
             return {
                 "summary": {
                     "message": "LAST_TRIGGERED",
@@ -283,7 +283,7 @@
             };
         }
 
-        private getMockLocksGetResponse(): IrisApiTypes.LocksGetResult {
+        private getMockLocksGetResponse(): AlertMeApiTypes.LocksGetResult {
             return {
                 "locks": [
                     {
@@ -325,7 +325,7 @@
             };
         }
 
-        private getMockSmartPlugsResponse(): IrisApiTypes.SmartPlugsGetResult {
+        private getMockSmartPlugsResponse(): AlertMeApiTypes.SmartPlugsGetResult {
             return {
                 "smartplugs": [
                     {

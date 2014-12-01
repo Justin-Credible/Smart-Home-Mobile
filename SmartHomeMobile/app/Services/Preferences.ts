@@ -22,9 +22,9 @@
 
         private static CATEGORY_ORDER = "CATEGORY_ORDER";
 
-        private static IRIS_URL = "IRIS_URL";
-        private static IRIS_USER_NAME = "IRIS_USER_NAME";
-        private static IRIS_PASSWORD = "IRIS_PASSWORD";
+        private static ALERT_ME_API_URL = "ALERT_ME_API_URL";
+        private static ALERT_ME_USER_NAME = "ALERT_ME_USER_NAME";
+        private static ALERT_ME_PASSWORD = "ALERT_ME_PASSWORD";
 
         private static IRRIGATION_CADDY_URL = "IRRIGATION_CADDY_URL";
         private static IRRIGATION_CADDY_USER_NAME = "IRRIGATION_CADDY_USER_NAME";
@@ -137,42 +137,42 @@
 
         //#region URLs/Credentials
 
-        get irisUrl(): string {
-            return localStorage.getItem(Preferences.IRIS_URL);
+        get alertMeApiUrl(): string {
+            return localStorage.getItem(Preferences.ALERT_ME_API_URL);
         }
 
-        set irisUrl(value: string) {
+        set alertMeApiUrl(value: string) {
             if (value == null) {
-                localStorage.removeItem(Preferences.IRIS_URL);
+                localStorage.removeItem(Preferences.ALERT_ME_API_URL);
             }
             else {
-                localStorage.setItem(Preferences.IRIS_URL, value);
+                localStorage.setItem(Preferences.ALERT_ME_API_URL, value);
             }
         }
 
-        get irisUserName(): string {
-            return localStorage.getItem(Preferences.IRIS_USER_NAME);
+        get alertMeUserName(): string {
+            return localStorage.getItem(Preferences.ALERT_ME_USER_NAME);
         }
 
-        set irisUserName(value: string) {
+        set alertMeUserName(value: string) {
             if (value == null) {
-                localStorage.removeItem(Preferences.IRIS_USER_NAME);
+                localStorage.removeItem(Preferences.ALERT_ME_USER_NAME);
             }
             else {
-                localStorage.setItem(Preferences.IRIS_USER_NAME, value);
+                localStorage.setItem(Preferences.ALERT_ME_USER_NAME, value);
             }
         }
 
-        get irisPassword(): string {
-            return localStorage.getItem(Preferences.IRIS_PASSWORD);
+        get alertMePassword(): string {
+            return localStorage.getItem(Preferences.ALERT_ME_PASSWORD);
         }
 
-        set irisPassword(value: string) {
+        set alertMePassword(value: string) {
             if (value == null) {
-                localStorage.removeItem(Preferences.IRIS_PASSWORD);
+                localStorage.removeItem(Preferences.ALERT_ME_PASSWORD);
             }
             else {
-                localStorage.setItem(Preferences.IRIS_PASSWORD, value);
+                localStorage.setItem(Preferences.ALERT_ME_PASSWORD, value);
             }
         }
 

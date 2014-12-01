@@ -29,7 +29,7 @@ module JustinCredible.SmartHomeMobile.Application {
      * configure its controllers, services, etc.
      */
     function main() {
-        var versionInfo: DataTypes.IVersionInfo;
+        var versionInfo: Interfaces.VersionInfo;
 
         // Set the default error handler for all uncaught exceptions.
         window.onerror = window_onerror;
@@ -64,8 +64,8 @@ module JustinCredible.SmartHomeMobile.Application {
         ngModule.service("MockApis", Services.MockApis);
         ngModule.factory("HttpInterceptor", Services.HttpInterceptor.getFactory());
         ngModule.service("UiHelper", Services.UiHelper);
-        ngModule.service("IrisApi", Services.IrisApi);
-        ngModule.service("IrisDataSource", Services.IrisDataSource);
+        ngModule.service("AlertMeApi", Services.AlertMeApi);
+        ngModule.service("HubDataSource", Services.HubDataSource);
 
         // Define each of the directives.
         ngModule.directive("iconPanel", getDirectiveFactoryFunction(Directives.IconPanelDirective));

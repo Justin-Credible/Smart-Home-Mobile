@@ -6,18 +6,18 @@
 
     export class MenuController extends BaseController<ViewModels.MenuViewModel> implements IMenuController {
 
-        public static $inject = ["$scope", "$location", "$http", "Utilities", "UiHelper", "Preferences", "IrisApi"];
+        public static $inject = ["$scope", "$location", "$http", "Utilities", "UiHelper", "Preferences", "AlertMeApi"];
 
         private $location: ng.ILocationService;
         private $http: ng.IHttpService;
         private Utilities: Services.Utilities;
         private UiHelper: Services.UiHelper;
         private Preferences: Services.Preferences;
-        private IrisApi: Services.IrisApi;
+        private AlertMeApi: Services.AlertMeApi;
 
         private isReloginPromptVisible = false;
 
-        constructor($scope: ng.IScope, $location: ng.ILocationService, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, IrisApi: Services.IrisApi) {
+        constructor($scope: ng.IScope, $location: ng.ILocationService, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, AlertMeApi: Services.AlertMeApi) {
             super($scope, ViewModels.MenuViewModel);
 
             this.$location = $location;
@@ -25,14 +25,14 @@
             this.Utilities = Utilities;
             this.UiHelper = UiHelper;
             this.Preferences = Preferences;
-            this.IrisApi = IrisApi;
+            this.AlertMeApi = AlertMeApi;
 
             this.viewModel.categories = this.Utilities.categories;
 
             $scope.$on("http.error", _.bind(this.http_error, this));
             $scope.$on("http.unauthorized", _.bind(this.http_unauthorized, this));
-            $scope.$on(Services.IrisApi.URL_NOT_SPECIFIED_EVENT, _.bind(this.irisApi_urlNotSpecified, this));
-            $scope.$on(Services.IrisApi.CREDENTIALS_NOT_SPECIFIED_EVENT, _.bind(this.irisApi_credentialsNotSpecified, this));
+            $scope.$on(Services.AlertMeApi.URL_NOT_SPECIFIED_EVENT, _.bind(this.alertMeApi_urlNotSpecified, this));
+            $scope.$on(Services.AlertMeApi.CREDENTIALS_NOT_SPECIFIED_EVENT, _.bind(this.alertMeApi_credentialsNotSpecified, this));
         }
 
         //#region Event Handlers
@@ -52,11 +52,11 @@
 
         private http_unauthorized(event: ng.IAngularEvent, error: ng.IHttpPromiseCallbackArg<any>): void {
 
-            if (/*error.config["IS_IRIS"] && */ !this.isReloginPromptVisible) {
+            if (/*error.config["IS_ALERT_ME_API"] && */ !this.isReloginPromptVisible) {
 
                 this.isReloginPromptVisible = true;
 
-                this.UiHelper.confirm("Your Iris session is invalid; would you like to attempt to re-login?").then((result: string) => {
+                this.UiHelper.confirm("Your AlertMe API session is invalid; would you like to attempt to re-login?").then((result: string) => {
 
                     if (result === "No") {
                         this.isReloginPromptVisible = false;
@@ -65,7 +65,7 @@
 
                     this.UiHelper.progressIndicator.showText(true, "Authenticating...", "center");
 
-                    this.IrisApi.login().then((result: any) => {
+                    this.AlertMeApi.login().then((result: any) => {
                         this.isReloginPromptVisible = false;
                         this.UiHelper.progressIndicator.hide();
                         this.UiHelper.progressIndicator.showSuccess(false, "Login successful");
@@ -78,12 +78,12 @@
             }
         }
 
-        private irisApi_urlNotSpecified(): void {
-            this.UiHelper.toast.showLongBottom("Iris API URL is required; see preferences.");
+        private alertMeApi_urlNotSpecified(): void {
+            this.UiHelper.toast.showLongBottom("AlertMe API URL is required; see preferences.");
         }
 
-        private irisApi_credentialsNotSpecified(): void {
-            this.UiHelper.toast.showLongBottom("Iris API credentials are required; see preferences.");
+        private alertMeApi_credentialsNotSpecified(): void {
+            this.UiHelper.toast.showLongBottom("AlertMe API credentials are required; see preferences.");
         }
 
         //#endregion

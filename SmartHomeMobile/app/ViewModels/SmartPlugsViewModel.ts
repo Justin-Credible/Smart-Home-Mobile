@@ -3,7 +3,7 @@
     export class SmartPlugsViewModel {
         public isRefreshing: boolean;
         public lastUpdated: Date;
-        public smartPlugs: IrisApiTypes.SmartPlugDevice[];
+        public smartPlugs: AlertMeApiTypes.SmartPlugDevice[];
 
         /**
          * A map of device IDs to flags that indicate if the update row

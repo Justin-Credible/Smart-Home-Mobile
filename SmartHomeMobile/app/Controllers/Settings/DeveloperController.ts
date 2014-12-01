@@ -6,7 +6,7 @@
 
     export class DeveloperController extends BaseController<ViewModels.DeveloperViewModel> implements IDeveloperController {
 
-        public static $inject = ["$scope", "$http", "Utilities", "UiHelper", "FileUtilities", "Logger", "Preferences", "MockApis", "IrisApi"];
+        public static $inject = ["$scope", "$http", "Utilities", "UiHelper", "FileUtilities", "Logger", "Preferences", "MockApis", "AlertMeApi"];
 
         private $http: ng.IHttpService;
         private Utilities: Services.Utilities;
@@ -15,9 +15,9 @@
         private Logger: Services.Logger;
         private Preferences: Services.Preferences;
         private MockApis: Services.MockApis;
-        private IrisApi: Services.IrisApi;
+        private AlertMeApi: Services.AlertMeApi;
 
-        constructor($scope: ng.IScope, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, FileUtilities: Services.FileUtilities, Logger: Services.Logger, Preferences: Services.Preferences, MockApis: Services.MockApis, IrisApi: Services.IrisApi) {
+        constructor($scope: ng.IScope, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, FileUtilities: Services.FileUtilities, Logger: Services.Logger, Preferences: Services.Preferences, MockApis: Services.MockApis, AlertMeApi: Services.AlertMeApi) {
             super($scope, ViewModels.DeveloperViewModel);
 
             this.$http = $http;
@@ -27,7 +27,7 @@
             this.Logger = Logger;
             this.Preferences = Preferences;
             this.MockApis = MockApis;
-            this.IrisApi = IrisApi;
+            this.AlertMeApi = AlertMeApi;
         }
 
         //#region BaseController Overrides
@@ -78,25 +78,25 @@
         }
 
         public setCredentials() {
-            this.Preferences.irisUrl = "https://www.irissmarthome.com/v5";
-            this.Preferences.irisUserName = "";
-            this.Preferences.irisPassword = "";
+            this.Preferences.alertMeApiUrl = "https://www.irissmarthome.com/v5";
+            this.Preferences.alertMeUserName = "";
+            this.Preferences.alertMePassword = "";
 
             this.UiHelper.alert("Credentials set!");
         }
 
-        public irisLogin() {
-            this.IrisApi.login().then((result: IrisApiTypes.LoginResult) => {
+        public alertMeApiLogin() {
+            this.AlertMeApi.login().then((result: AlertMeApiTypes.LoginResult) => {
                 this.UiHelper.alert("Hub ID: " + result.hubIds[0]);
             });
         }
 
-        public irisLogout() {
-            this.IrisApi.logout();
+        public alertMeApiLogout() {
+            this.AlertMeApi.logout();
         }
 
-        public irisHomeStatus() {
-            this.IrisApi.getHomeStatus().then((result: any) => {
+        public alertMeApiHomeStatus() {
+            this.AlertMeApi.getHomeStatus().then((result: any) => {
                 console.log(result);
             });
         }

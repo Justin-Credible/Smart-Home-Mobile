@@ -228,8 +228,8 @@
     <TypeScriptCompile Include="app\Models\Settings\LogEntry.ts" />
     <TypeScriptCompile Include="app\Services\FileUtilities.ts" />
     <TypeScriptCompile Include="app\Services\HttpInterceptor.ts" />
-    <TypeScriptCompile Include="app\Services\IrisApi.ts" />
-    <TypeScriptCompile Include="app\Services\IrisDataSource.ts" />
+    <TypeScriptCompile Include="app\Services\AlertMeApi.ts" />
+    <TypeScriptCompile Include="app\Services\HubDataSource.ts" />
     <TypeScriptCompile Include="app\Services\Logger.ts" />
     <TypeScriptCompile Include="app\Services\Preferences.ts" />
     <TypeScriptCompile Include="app\Services\MockApis.ts" />
@@ -351,11 +351,10 @@
     <TypeScriptCompile Include="scripts\typings\cordova\plugins\Splashscreen.d.ts" />
     <TypeScriptCompile Include="scripts\typings\cordova\plugins\Vibration.d.ts" />
     <TypeScriptCompile Include="scripts\typings\cordova\plugins\WebSQL.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\custom\IrisApiTypes.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\custom\AlertMeApiTypes.d.ts" />
     <TypeScriptCompile Include="scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="scripts\typings\custom\Interfaces.d.ts" />
     <TypeScriptCompile Include="scripts\typings\custom\cordova.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\custom\DataTypes.d.ts" />
     <TypeScriptCompile Include="scripts\typings\custom\extensions.d.ts" />
     <TypeScriptCompile Include="scripts\typings\custom\ionic.d.ts" />
     <TypeScriptCompile Include="scripts\typings\custom\plugins.d.ts" />

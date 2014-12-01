@@ -1,20 +1,20 @@
 ﻿module JustinCredible.SmartHomeMobile.Services {
 
     /**
-     * A data source for the Iris API; used to cache data for views etc.
+     * A data source for the AlertMe API; used to cache data for views etc.
      */
-    export class IrisDataSource {
+    export class HubDataSource {
 
-        public static $inject = ["$rootScope", "$q", "IrisApi"];
+        public static $inject = ["$rootScope", "$q", "AlertMeApi"];
 
         private $rootScope: ng.IRootScopeService;
         private $q: ng.IQService;
-        private IrisApi: Services.IrisApi;
+        private AlertMeApi: Services.AlertMeApi;
 
-        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, IrisApi: Services.IrisApi) {
+        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, AlertMeApi: Services.AlertMeApi) {
             this.$rootScope = $rootScope;
             this.$q = $q;
-            this.IrisApi = IrisApi;
+            this.AlertMeApi = AlertMeApi;
         }
 
         //#region Security
@@ -22,13 +22,13 @@
         private _security: ViewModels.SecurityViewModel;
         private _securityLastUpdated: Moment;
 
-        private _locks: IrisApiTypes.LocksGetResult;
+        private _locks: AlertMeApiTypes.LocksGetResult;
         private _locksLastUpdated: Moment;
 
-        private _alarm: IrisApiTypes.AlarmGetResult;
+        private _alarm: AlertMeApiTypes.AlarmGetResult;
         private _alarmLastUpdated: Moment;
 
-        private _alarmOverview: IrisApiTypes.AlarmOverviewGetResult;
+        private _alarmOverview: AlertMeApiTypes.AlarmOverviewGetResult;
         private _alarmOverviewLastUpdated: Moment;
 
         get security(): ViewModels.SecurityViewModel {
@@ -64,7 +64,7 @@
             return q.promise;
         }
 
-        get alarm(): IrisApiTypes.AlarmGetResult {
+        get alarm(): AlertMeApiTypes.AlarmGetResult {
             return this._alarm;
         }
 
@@ -72,10 +72,10 @@
             return this._alarmLastUpdated;
         }
 
-        public refreshAlarm(): ng.IPromise<IrisApiTypes.AlarmGetResult> {
-            var q = this.$q.defer<IrisApiTypes.AlarmGetResult>();
+        public refreshAlarm(): ng.IPromise<AlertMeApiTypes.AlarmGetResult> {
+            var q = this.$q.defer<AlertMeApiTypes.AlarmGetResult>();
 
-            this.IrisApi.getAlarm().then((result: IrisApiTypes.AlarmGetResult) => {
+            this.AlertMeApi.getAlarm().then((result: AlertMeApiTypes.AlarmGetResult) => {
                 this._alarm = result;
                 this._alarmLastUpdated = moment();
                 q.resolve(result);
@@ -84,7 +84,7 @@
             return q.promise;
         }
 
-        get alarmOverview(): IrisApiTypes.AlarmOverviewGetResult {
+        get alarmOverview(): AlertMeApiTypes.AlarmOverviewGetResult {
             return this._alarmOverview;
         }
 
@@ -92,10 +92,10 @@
             return this._alarmOverviewLastUpdated;
         }
 
-        public refreshAlarmOverview(): ng.IPromise<IrisApiTypes.AlarmOverviewGetResult> {
-            var q = this.$q.defer<IrisApiTypes.AlarmOverviewGetResult>();
+        public refreshAlarmOverview(): ng.IPromise<AlertMeApiTypes.AlarmOverviewGetResult> {
+            var q = this.$q.defer<AlertMeApiTypes.AlarmOverviewGetResult>();
 
-            this.IrisApi.getAlarmOverview().then((result: IrisApiTypes.AlarmOverviewGetResult) => {
+            this.AlertMeApi.getAlarmOverview().then((result: AlertMeApiTypes.AlarmOverviewGetResult) => {
                 this._alarmOverview = result;
                 this._alarmOverviewLastUpdated = moment();
                 q.resolve(result);
@@ -104,14 +104,14 @@
             return q.promise;
         }
 
-        get locks(): IrisApiTypes.LocksGetResult {
+        get locks(): AlertMeApiTypes.LocksGetResult {
             return this._locks;
         }
 
-        public refreshLocks(): ng.IPromise<IrisApiTypes.LocksGetResult> {
-            var q = this.$q.defer<IrisApiTypes.LocksGetResult>();
+        public refreshLocks(): ng.IPromise<AlertMeApiTypes.LocksGetResult> {
+            var q = this.$q.defer<AlertMeApiTypes.LocksGetResult>();
 
-            this.IrisApi.getLocks().then((result: IrisApiTypes.LocksGetResult) => {
+            this.AlertMeApi.getLocks().then((result: AlertMeApiTypes.LocksGetResult) => {
                 this._locks = result;
                 this._locksLastUpdated = moment();
                 q.resolve(result);
@@ -124,10 +124,10 @@
 
         //#region Smart Plugs
 
-        private _smartPlugs: IrisApiTypes.SmartPlugDevice[];
+        private _smartPlugs: AlertMeApiTypes.SmartPlugDevice[];
         private _smartPlugsLastUpdated: Moment;
 
-        get smartPlugs(): IrisApiTypes.SmartPlugDevice[] {
+        get smartPlugs(): AlertMeApiTypes.SmartPlugDevice[] {
             return this._smartPlugs;
         }
 
@@ -135,10 +135,10 @@
             return this._smartPlugsLastUpdated;
         }
 
-        public refreshSmartPlugs(): ng.IPromise<IrisApiTypes.SmartPlugDevice[]> {
-            var q = this.$q.defer<IrisApiTypes.SmartPlugDevice[]>();
+        public refreshSmartPlugs(): ng.IPromise<AlertMeApiTypes.SmartPlugDevice[]> {
+            var q = this.$q.defer<AlertMeApiTypes.SmartPlugDevice[]>();
 
-            this.IrisApi.getSmartPlugs().then((result: IrisApiTypes.SmartPlugsGetResult) => {
+            this.AlertMeApi.getSmartPlugs().then((result: AlertMeApiTypes.SmartPlugsGetResult) => {
                 this._smartPlugs = result.smartplugs;
                 this._smartPlugsLastUpdated = moment();
                 q.resolve(result.smartplugs);
