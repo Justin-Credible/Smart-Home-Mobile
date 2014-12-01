@@ -167,7 +167,7 @@
                 exception: Error,
                 config: Interfaces.RequestConfig;
 
-            console.log("HttpInterceptor.responseError", [httpResponse]);
+            console.log("HttpInterceptor.responseError", [responseOrError]);
 
             if (responseOrError instanceof Error) {
                 exception = <Error>responseOrError;

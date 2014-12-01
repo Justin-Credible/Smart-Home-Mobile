@@ -110,9 +110,10 @@
                 return this.$q.reject(responseOrError);
             }
 
-            // If this API request failed with a 401 unauthorized, then lets see if we can handle it
-            // by re-authenticating and then re-issuing the orignial request.
             if (httpResponse.status === 401) {
+
+                // If this API request failed with a 401 unauthorized, then lets see if we can handle it
+                // by re-authenticating and then re-issuing the orignial request.
 
                 // Grab a reference to the AlertMeAPi service.
                 AlertMeApi = this.$injector.get("AlertMeApi");
@@ -132,6 +133,10 @@
                     // If the re-authentication failed, then issue a rejection.
                     q.reject(loginError);
                 });
+            }
+            else {
+                // We don't need to do anything special for non-401s.
+                q.reject(httpResponse);
             }
 
             return q.promise;
