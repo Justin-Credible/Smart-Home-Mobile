@@ -30,7 +30,6 @@
             this.viewModel.categories = this.Utilities.categories;
 
             $scope.$on("http.error", _.bind(this.http_error, this));
-            $scope.$on("http.unauthorized", _.bind(this.http_unauthorized, this));
             $scope.$on(Services.AlertMeApi.URL_NOT_SPECIFIED_EVENT, _.bind(this.alertMeApi_urlNotSpecified, this));
             $scope.$on(Services.AlertMeApi.CREDENTIALS_NOT_SPECIFIED_EVENT, _.bind(this.alertMeApi_credentialsNotSpecified, this));
         }
@@ -47,34 +46,6 @@
             }
             else {
                 this.UiHelper.toast.showLongBottom(this.Utilities.format("HTTP {0} - {1}", error.status, error.statusText));
-            }
-        }
-
-        private http_unauthorized(event: ng.IAngularEvent, error: ng.IHttpPromiseCallbackArg<any>): void {
-
-            if (/*error.config["IS_ALERT_ME_API"] && */ !this.isReloginPromptVisible) {
-
-                this.isReloginPromptVisible = true;
-
-                this.UiHelper.confirm("Your AlertMe API session is invalid; would you like to attempt to re-login?").then((result: string) => {
-
-                    if (result === "No") {
-                        this.isReloginPromptVisible = false;
-                        return;
-                    }
-
-                    this.UiHelper.progressIndicator.showText(true, "Authenticating...", "center");
-
-                    this.AlertMeApi.login().then((result: any) => {
-                        this.isReloginPromptVisible = false;
-                        this.UiHelper.progressIndicator.hide();
-                        this.UiHelper.progressIndicator.showSuccess(false, "Login successful");
-                        this.UiHelper.toast.showShortBottom("You have been logged in successfully; please try your request again.");
-                    }, () => {
-                        this.isReloginPromptVisible = false;
-                        this.UiHelper.progressIndicator.hide();
-                    });
-                });
             }
         }
 

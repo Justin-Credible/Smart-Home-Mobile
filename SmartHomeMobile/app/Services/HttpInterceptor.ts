@@ -1,7 +1,6 @@
 ﻿module JustinCredible.SmartHomeMobile.Services {
 
-    //TODO REMOVE THIS
-    /*tslint:disable no-string-literal*/
+    /*tslint:disable no-string-literals*/
 
     /**
     * This is a custom interceptor for Angular's $httpProvider.
@@ -17,19 +16,17 @@
         private Preferences: Services.Preferences;
         private Utilities: Utilities;
         private Logger: Services.Logger;
-        private apiVersion: string;
 
         private requestsInProgress: number;
         private blockingRequestsInProgress: number;
         private spinnerRequestsInProgress: number;
 
-        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, Preferences: Services.Preferences, Utilities: Services.Utilities, Logger: Services.Logger, apiVersion: string) {
+        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, Preferences: Services.Preferences, Utilities: Services.Utilities, Logger: Services.Logger) {
             this.$rootScope = $rootScope;
             this.$q = $q;
             this.Preferences = Preferences;
             this.Utilities = Utilities;
             this.Logger = Logger;
-            this.apiVersion = apiVersion;
 
             this.requestsInProgress = 0;
             this.blockingRequestsInProgress = 0;
@@ -49,9 +46,9 @@
 
             // Angular expects the factory function to return the object that is used
             // for the factory when it is injected into other objects.
-            factory = function ($rootScope: ng.IRootScopeService, $q: ng.IQService, Preferences: Services.Preferences, Utilities: Services.Utilities, Logger: Services.Logger, apiVersion: string) {
+            factory = function ($rootScope: ng.IRootScopeService, $q: ng.IQService, Preferences: Services.Preferences, Utilities: Services.Utilities, Logger: Services.Logger) {
                 // Create an instance our strongly-typed service.
-                var instance = new HttpInterceptor($rootScope, $q, Preferences, Utilities, Logger, apiVersion);
+                var instance = new HttpInterceptor($rootScope, $q, Preferences, Utilities, Logger);
 
                 // Return an object that exposes the functions that we want to be exposed.
                 // We use bind here so that the correct context is used (Angular normally
@@ -65,7 +62,7 @@
             };
 
             // Annotate the factory function with the things that should be injected.
-            factory.$inject = ["$rootScope", "$q", "Preferences", "Utilities", "Logger", "apiVersion"];
+            factory.$inject = ["$rootScope", "$q", "Preferences", "Utilities", "Logger"];
 
             return factory;
         }
@@ -163,7 +160,7 @@
          * Fired when a response completes with a non-200 level status code.
          * 
          * Additionally, this can fire when there are uncaught exceptions (eg JavaScript errors)
-         * in the HttpInterceptfor response method.
+         * in the HttpInterceptor response method.
          */
         public responseError(responseOrError: any) {
             var httpResponse: ng.IHttpPromiseCallbackArg<any>,

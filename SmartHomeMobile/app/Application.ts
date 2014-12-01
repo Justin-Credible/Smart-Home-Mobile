@@ -63,6 +63,7 @@ module JustinCredible.SmartHomeMobile.Application {
         ngModule.service("Preferences", Services.Preferences);
         ngModule.service("MockApis", Services.MockApis);
         ngModule.factory("HttpInterceptor", Services.HttpInterceptor.getFactory());
+        ngModule.factory("AlertMeApiHttpInteceptor", Services.AlertMeApiHttpInteceptor.getFactory());
         ngModule.service("UiHelper", Services.UiHelper);
         ngModule.service("AlertMeApi", Services.AlertMeApi);
         ngModule.service("HubDataSource", Services.HubDataSource);
@@ -232,6 +233,10 @@ module JustinCredible.SmartHomeMobile.Application {
 
         // Register our custom interceptor with the HTTP provider so we can hook into AJAX request events.
         $httpProvider.interceptors.push("HttpInterceptor");
+
+        // Register our custom interceptor with the HTTP provider so we can seamlessly handle 401s and
+        // re-authentication for the AlertMe API requests.
+        $httpProvider.interceptors.push("AlertMeApiHttpInteceptor");
 
         // Setup all of the client side routes and their controllers and views.
         setupAngularRoutes($stateProvider, $urlRouterProvider);

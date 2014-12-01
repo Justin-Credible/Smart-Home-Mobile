@@ -227,6 +227,7 @@
     <TypeScriptCompile Include="app\Models\Settings\Camera.ts" />
     <TypeScriptCompile Include="app\Models\Settings\LogEntry.ts" />
     <TypeScriptCompile Include="app\Services\FileUtilities.ts" />
+    <TypeScriptCompile Include="app\Services\AlertMeApiHttpInteceptor.ts" />
     <TypeScriptCompile Include="app\Services\HttpInterceptor.ts" />
     <TypeScriptCompile Include="app\Services\AlertMeApi.ts" />
     <TypeScriptCompile Include="app\Services\HubDataSource.ts" />

@@ -1,5 +1,4 @@
-﻿
-/**
+﻿/**
  * This module is used to house custom interfaces.
  */
 declare module JustinCredible.SmartHomeMobile.Interfaces {
