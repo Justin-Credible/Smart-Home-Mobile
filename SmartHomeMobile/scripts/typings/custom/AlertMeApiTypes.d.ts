@@ -103,7 +103,7 @@ declare module JustinCredible.SmartHomeMobile.AlertMeApiTypes {
             message: string;
             alarm: string;
             triggerTime: string;
-            clearTime: number;
+            clearTime: string;
             deviceType: string;
             deviceName: string;
         };
