@@ -159,14 +159,28 @@
 
         public info_click(): void {
             var info: string,
-                summary = this.viewModel.alarmOverviewData.summary;
+                summary = this.viewModel.alarmOverviewData.summary,
+                triggerTime: number,
+                clearTime: number;
+
+            // The AlertMe API returns zero if a time isn't available. But if it is
+            // available it returns the time as seconds since the unix epox as a string
+            // value. Here we normalize the value to ensure we always have a number.
+
+            if (summary.triggerTime) {
+                triggerTime = parseInt(summary.triggerTime, 10);
+            }
+
+            if (summary.clearTime) {
+                clearTime = parseInt(summary.clearTime, 10);
+            }
 
             info = this.Utilities.format("Message: {0}\nAlarm Type: {1}\nTrigger Time: {2}\nClear Time: {3}\nDevice Type: {4}\nDevice Name: {5}",
                 this.Utilities.toTitleCase(summary.message),
                 this.Utilities.toTitleCase(summary.alarm),
-                summary.triggerTime,
-                summary.clearTime,
-                this.Utilities.toTitleCase(summary.deviceType),
+                triggerTime ? moment.unix(triggerTime).format() : "N/A",
+                clearTime ? moment.unix(clearTime).format() : "N/A",
+                this.Utilities.camelCaseToTitleCase(summary.deviceType),
                 summary.deviceName);
 
             this.UiHelper.alert(info);

@@ -144,6 +144,28 @@
         }
 
         /**
+         * Used to morph a camel-case string to title-case string; that is, any
+         * capitalized character that is proceeded by a lowercase character will
+         * be proceeded by a space. Additionally, any underscores will be converted
+         * to spaces and the first characer will be capitalized.
+         * 
+         * Example: thisIsMyStringValue -> This Is My String Value
+         * 
+         * @param str The camel-case string to be converted to title-case.
+         * @returns The title-case version of the string.
+         */
+        public camelCaseToTitleCase(str: string): string {
+
+            if (!str) {
+                return "";
+            }
+
+            // http://stackoverflow.com/questions/7225407/convert-camelcasetext-to-camel-case-text
+            // http://jsfiddle.net/PeYYQ/
+            return str.replace(/([A-Z]+)/g, " $1").replace(/([A-Z][a-z])/g, " $1");
+        }
+
+        /**
         * Used to format a string by replacing values with the given arguments.
         * Arguments should be provided in the format of {x} where x is the index
         * of the argument to be replaced corresponding to the arguments given.
