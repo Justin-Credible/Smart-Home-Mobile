@@ -220,7 +220,7 @@
                     "message": "LAST_TRIGGERED",
                     "alarm": "Intruder",
                     "triggerTime": "1402190362",
-                    "clearTime": 0,
+                    "clearTime": "1402190899",
                     "deviceType": "ContactSensor",
                     "deviceName": "Front Door Sensor"
                 },
