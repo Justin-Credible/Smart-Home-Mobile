@@ -159,12 +159,12 @@ module JustinCredible.SmartHomeMobile.Application {
     /**
      * The main initialize/run function for Angular; fired once the AngularJs framework is done loading.
      */
-    function angular_initialize($rootScope: ng.IScope, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockApis: Services.MockApis): void {
+    function angular_initialize($rootScope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockApis: Services.MockApis): void {
 
         // Once AngularJs has loaded we'll wait for the Ionic platform's ready event.
         // This event will be fired once the device ready event fires via Cordova.
         $ionicPlatform.ready(function () {
-            ionicPlatform_ready($rootScope, $ionicPlatform, Utilities, UiHelper, Preferences, MockApis);
+            ionicPlatform_ready($rootScope, $location, $ionicViewService, $ionicPlatform, Utilities, UiHelper, Preferences, MockApis);
         });
 
         // Mock up APIs for the various platforms. This allows us to "polyfill" functionality
@@ -175,7 +175,7 @@ module JustinCredible.SmartHomeMobile.Application {
 
             // If we are in the Ripple emulator, Cordova will never fire it's ready event which
             // means Ionic will never fire it's platform ready. We'll do it here manually.
-            ionicPlatform_ready($rootScope, $ionicPlatform, Utilities, UiHelper, Preferences, MockApis);
+            ionicPlatform_ready($rootScope, $location, $ionicViewService, $ionicPlatform, Utilities, UiHelper, Preferences, MockApis);
         }
 
         // Mock up or allow HTTP responses.
@@ -188,7 +188,7 @@ module JustinCredible.SmartHomeMobile.Application {
      * Note that this will not fire in the Ripple emulator because it relies
      * on the Codrova device ready event.
      */
-    function ionicPlatform_ready($rootScope: ng.IScope, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockApis: Services.MockApis): void {
+    function ionicPlatform_ready($rootScope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockApis: Services.MockApis): void {
 
         // If we are running on the Android platform, mock up some additional APIs.
         if (Utilities.isAndroid) {
@@ -202,7 +202,7 @@ module JustinCredible.SmartHomeMobile.Application {
 
         // Subscribe to device events.
         document.addEventListener("pause", _.bind(device_pause, null, Preferences));
-        document.addEventListener("resume", _.bind(device_resume, null, UiHelper, Preferences));
+        document.addEventListener("resume", _.bind(device_resume, null, $location, $ionicViewService, Utilities, UiHelper, Preferences));
         document.addEventListener("menubutton", _.bind(device_menuButton, null, $rootScope));
 
         // Subscribe to Angular events.
@@ -211,7 +211,7 @@ module JustinCredible.SmartHomeMobile.Application {
         // Now that the platform is ready, we'll delegate to the resume event.
         // We do this so the same code that fires on resume also fires when the
         // application is started for the first time.
-        device_resume(UiHelper, Preferences);
+        device_resume($location, $ionicViewService, Utilities, UiHelper, Preferences);
     }
 
     /**
@@ -464,13 +464,28 @@ module JustinCredible.SmartHomeMobile.Application {
      * when the user launches an app that is already open or uses the OS task manager
      * to switch back to the application.
      */
-    function device_resume(UiHelper: Services.UiHelper, Preferences: Services.Preferences) {
+    function device_resume($location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences) {
 
         isShowingPinPrompt = true;
 
         // Potentially display the PIN screen.
         UiHelper.showPinEntryAfterResume().then(() => {
             isShowingPinPrompt = false;
+
+            // If the user is still at the blank sreen, then push them to their default view.
+            if ($location.url() === "/app/blank") {
+
+                // Tell Ionic to not animate and clear the history (hide the back button)
+                // for the next view that we'll be navigating to below.
+                $ionicViewService.nextViewOptions({
+                    disableAnimate: true,
+                    disableBack: true
+                });
+
+                // Navigate the user to their default view.
+                $location.path(Utilities.defaultCategory.href.substring(1));
+                $location.replace();
+            }
         });
     }
 
