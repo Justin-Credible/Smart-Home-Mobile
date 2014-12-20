@@ -160,12 +160,12 @@
     <Content Include="templates\Settings\Log-Entry.html" />
     <Content Include="templates\Settings\Logs.html" />
     <Content Include="templates\Settings\Settings-List.html" />
+    <Content Include="templates\Thermostat.html" />
     <Content Include="tslint.json" />
     <None Include="config.xml">
       <SubType>Designer</SubType>
     </None>
     <Content Include=".jscsrc" />
-    <Content Include=".jshintignore" />
     <Content Include=".jshintrc" />
     <Content Include="css\devices.css" />
     <Content Include="css\style.css" />
@@ -215,6 +215,7 @@
     <TypeScriptCompile Include="app\Controllers\Settings\LogEntryController.ts" />
     <TypeScriptCompile Include="app\Controllers\Settings\LogsController.ts" />
     <TypeScriptCompile Include="app\Controllers\Settings\SettingsListController.ts" />
+    <TypeScriptCompile Include="app\Controllers\ThermostatController.ts" />
     <TypeScriptCompile Include="app\Directives\BaseDirective.ts" />
     <TypeScriptCompile Include="app\Directives\IconPanelDirective.ts" />
     <TypeScriptCompile Include="app\Directives\ModelOnBlurDirective.ts" />
@@ -326,6 +327,7 @@
     <TypeScriptCompile Include="app\ViewModels\Settings\DeveloperViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Settings\LogsViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Settings\SettingsListViewModel.ts" />
+    <TypeScriptCompile Include="app\ViewModels\ThermostatViewModel.ts" />
     <TypeScriptCompile Include="scripts\typings\angular-ui\angular-ui-router.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-cookies.d.ts" />

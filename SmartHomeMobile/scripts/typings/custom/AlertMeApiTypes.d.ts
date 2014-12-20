@@ -175,4 +175,102 @@ declare module JustinCredible.SmartHomeMobile.AlertMeApiTypes {
         action: string;
         timestamp: string;
     }
+
+    /**
+     * Response for GET /widgets/climate
+     */
+    interface ClimateGetResult {
+        devices: { [deviceId: string]: string };
+        deviceAvailable: boolean;
+        deviceId: string;
+        name: string;
+        battery: string;
+        mode: string;
+        control: string;
+        on: boolean;
+        onOffState: string;
+        isSchedule: boolean;
+        presenceStatus: string;
+        currentTemperature: number;
+        targetTemperature: any; // Number or "--" string.
+        shadowTemperature: any; // Number or "--" string.
+        minTargetTemperature: number;
+        maxTargetTemperature: number;
+        confirmed: boolean;
+        active: boolean;
+        type: string;
+        humidity: string;
+        filter: {
+            enabled: boolean;
+            days: number;
+            hours: number;
+            date: number;
+            usageTime: number;
+            totalUsage: number;
+            changeAt: number;
+            state: string;
+        };
+        feature: boolean;
+        hubAvailable: boolean;
+        fanMode: string;
+        formatting: {
+            locale: string;
+            temperatureUnit: string;
+            currencyUnit: string;
+            timezoneOffset: string;
+        };
+        outsideTemperature: number;
+        temperatureRanges: {
+            default: {
+                min: number;
+                max: number;
+            }
+        };
+        availableFanModes: string[];
+        exclScheduleFanModes: string[];
+        scheduleFanMode: boolean;
+        heatTargetTemperature: number;
+        coolTargetTemperature: number;
+        current: {
+            temperature: number;
+            time: string;
+            fanMode: string;
+            name: string;
+            setpoint: number;
+            start: number
+        };
+        next: {
+            temperature: number;
+            time: string;
+            fanMode: string;
+            name: string;
+            setpoint: number;
+            start: number;
+            endTime: string;
+        };
+        thermostatType: string;
+        modes: {
+            cool: string;
+            heat: string;
+            climate: string
+        };
+        controls: {
+            schedule: string;
+            manual: string;
+            presence: string
+        };
+        messageIcon: string;
+        message: string;
+        widgetStatus: string;
+        widgetVisible: boolean;
+    }
+
+    /**
+     * Response for PUT /widgets/climate/mode
+     */ 
+    interface ClimateModePutResult {
+        mode: string;
+        confirmed: boolean;
+        validModes: string[];
+    }
 }

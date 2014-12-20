@@ -82,7 +82,7 @@ module JustinCredible.SmartHomeMobile.Application {
         ngModule.controller("MenuController", Controllers.MenuController);
         ngModule.controller("CategoryController", Controllers.CategoryController);
         ngModule.controller("SecurityController", Controllers.SecurityController);
-        //ngModule.controller("ThermostatController", Controllers.ThermostatController);
+        ngModule.controller("ThermostatController", Controllers.ThermostatController);
         ngModule.controller("SmartPlugsController", Controllers.SmartPlugsController);
         ngModule.controller("CamerasController", Controllers.CamerasController);
         ngModule.controller("CameraViewController", Controllers.CameraViewController);
@@ -284,7 +284,6 @@ module JustinCredible.SmartHomeMobile.Application {
             }
         });
 
-        /*
         $stateProvider.state("app.thermostat", {
             url: "/thermostat",
             views: {
@@ -294,7 +293,6 @@ module JustinCredible.SmartHomeMobile.Application {
                 }
             }
         });
-        */
 
         $stateProvider.state("app.smart-plugs", {
             url: "/smart-plugs",

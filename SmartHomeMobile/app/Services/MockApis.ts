@@ -1,10 +1,12 @@
 ﻿module JustinCredible.SmartHomeMobile.Services {
 
+    /*tslint:disable typedef*/
+
     /**
-    * Provides a set of mocked up APIs for functions that aren't available in the Apache
-    * Ripple Emulator. Also allows us to mock up responses to API requests when the application
-    * is in "Mock API" mode (via the development tools).
-    */
+     * Provides a set of mocked up APIs for functions that aren't available in the Apache
+     * Ripple Emulator. Also allows us to mock up responses to API requests when the application
+     * is in "Mock API" mode (via the development tools).
+     */
     export class MockApis {
 
         public static $inject = ["$q", "$httpBackend", "$ionicPopup", "$ionicLoading", "Utilities"];
@@ -92,7 +94,8 @@
                 this.$httpBackend.whenGET(/widgets\/locks/).respond(200, this.getMockLocksGetResponse());
                 this.$httpBackend.whenGET(/widgets\/alarm\/overview/).respond(200, this.getMockAlarmOverviewGetResponse());
                 this.$httpBackend.whenGET(/widgets\/alarm/).respond(200, this.getMockAlarmGetResponse());
-                this.$httpBackend.whenGET(/widgets\/smartplugs/).respond(200, this.getMockSmartPlugsResponse());
+                this.$httpBackend.whenGET(/widgets\/smartplugs/).respond(200, this.getMockSmartPlugsGetResponse());
+                this.$httpBackend.whenGET(/widgets\/climate/).respond(200, this.getMockClimateGetResponse());
             }
             else {
                 // Allow ALL HTTP requests to go through.
@@ -153,7 +156,7 @@
                 showBar: _.bind(this.progressIndicator_show, this),
                 showBarWithLabel: _.bind(this.progressIndicator_show, this),
                 showSuccess: _.bind(this.progressIndicator_show, this),
-                showText: _.bind(this.progressIndicator_show, this),
+                showText: _.bind(this.progressIndicator_show, this)
             };
 
             if (cordova) {
@@ -180,7 +183,7 @@
                 showBar: _.bind(this.progressIndicator_show, this),
                 showBarWithLabel: _.bind(this.progressIndicator_show, this),
                 showSuccess: _.bind(this.progressIndicator_show, this),
-                showText: _.bind(this.progressIndicator_show, this),
+                showText: _.bind(this.progressIndicator_show, this)
             };
         }
 
@@ -325,7 +328,7 @@
             };
         }
 
-        private getMockSmartPlugsResponse(): AlertMeApiTypes.SmartPlugsGetResult {
+        private getMockSmartPlugsGetResponse(): AlertMeApiTypes.SmartPlugsGetResult {
             return {
                 "smartplugs": [
                     {
@@ -474,6 +477,99 @@
                     "heavyHour": -1,
                     "minimumPower": 0
                 },
+                "widgetStatus": "OK",
+                "widgetVisible": true
+            };
+        }
+
+
+        private getMockClimateGetResponse(): AlertMeApiTypes.ClimateGetResult {
+            return {
+                "devices": {
+                    "AD-05-00-DB-D5-E4-96-08": "Main Thermostat"
+                },
+                "deviceAvailable": true,
+                "deviceId": "AD-05-00-DB-D5-E4-96-08",
+                "name": "Main Thermostat",
+                "battery": "OK",
+                "mode": "HEAT",
+                "control": "MANUAL",
+                "on": true,
+                "onOffState": "ON",
+                "isSchedule": false,
+                "presenceStatus": "AWAY",
+                "currentTemperature": 70,
+                "targetTemperature": 70,
+                "shadowTemperature": 70,
+                "minTargetTemperature": 35,
+                "maxTargetTemperature": 95,
+                "confirmed": true,
+                "active": false,
+                "type": "climatecontroller",
+                "humidity": "56",
+                "filter": {
+                    "enabled": true,
+                    "days": 90,
+                    "hours": 0,
+                    "date": 1391746027,
+                    "usageTime": 621,
+                    "totalUsage": 2236723,
+                    "changeAt": 1058,
+                    "state": "WARNING"
+                },
+                "feature": false,
+                "hubAvailable": true,
+                "fanMode": null,
+                "formatting": {
+                    "locale": "en-GB",
+                    "temperatureUnit": "F",
+                    "currencyUnit": "GBP",
+                    "timezoneOffset": "+00:00"
+                },
+                "outsideTemperature": 54,
+                "temperatureRanges": {
+                    "default": {
+                        "min": 35,
+                        "max": 95
+                    }
+                },
+                "availableFanModes": [],
+                "exclScheduleFanModes": [
+                    "SCHEDULE"
+                ],
+                "scheduleFanMode": false,
+                "heatTargetTemperature": 70,
+                "coolTargetTemperature": 68,
+                "current": {
+                    "temperature": 62,
+                    "time": "08:00",
+                    "fanMode": "",
+                    "name": "DAY",
+                    "setpoint": 1,
+                    "start": 1419004800
+                },
+                "next": {
+                    "temperature": 70,
+                    "time": "18:00",
+                    "fanMode": "",
+                    "name": "EVENING",
+                    "setpoint": 2,
+                    "start": 1419040800,
+                    "endTime": "22:00"
+                },
+                "thermostatType": "General",
+                "modes": {
+                    "cool": "Cool",
+                    "heat": "Heat",
+                    "climate": "Auto"
+                },
+                "controls": {
+                    "schedule": "Schedule",
+                    "manual": "Hold",
+                    "presence": "Presence"
+                },
+                "messageIcon": null,
+                "message": "Outside temperature 54°F",
                 "widgetStatus": "OK",
                 "widgetVisible": true
             };

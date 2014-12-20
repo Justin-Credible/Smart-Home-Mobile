@@ -148,5 +148,32 @@
         }
 
         //#endregion
+
+        //#region Thermostat
+
+        private _climate: AlertMeApiTypes.ClimateGetResult;
+        private _climateLastUpdated: Moment;
+
+        get climate(): AlertMeApiTypes.ClimateGetResult {
+            return this._climate;
+        }
+
+        get climateLastUpdated(): Moment {
+            return this._climateLastUpdated;
+        }
+
+        public refreshClimate(deviceId?: string): ng.IPromise<AlertMeApiTypes.ClimateGetResult> {
+            var q = this.$q.defer<AlertMeApiTypes.ClimateGetResult>();
+
+            this.AlertMeApi.getClimate(deviceId).then((result: AlertMeApiTypes.ClimateGetResult) => {
+                this._climate = result;
+                this._climateLastUpdated = moment();
+                q.resolve(result);
+            });
+
+            return q.promise;
+        }
+
+        //#endregion
     }
 }

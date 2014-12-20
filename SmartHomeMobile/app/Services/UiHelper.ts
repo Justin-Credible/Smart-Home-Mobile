@@ -1,8 +1,8 @@
 ﻿module JustinCredible.SmartHomeMobile.Services {
 
     /**
-    * Provides a common set of helper methods for working with the UI.
-    */
+     * Provides a common set of helper methods for working with the UI.
+     */
     export class UiHelper {
 
         //#region Dialog Stuff
@@ -58,7 +58,6 @@
         private Preferences: Services.Preferences;
 
         private isPinEntryOpen = false;
-        private isReorderOpen = false;
 
         constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, $ionicModal: any, Utilities: Services.Utilities, Preferences: Services.Preferences) {
             this.$rootScope = $rootScope;
@@ -199,8 +198,7 @@
 
             // Define the callback that is executed when the dialog is closed.
             callback = (choice: number): void => {
-                var promiseResult: Models.KeyValuePair<string, string>,
-                    buttonText: string;
+                var buttonText: string;
 
                 // Get the button text for the button that was clicked; the callback
                 // gives us a button index that is 1 based (not zero based!).

@@ -39,6 +39,32 @@
             Off: "off"
         };
 
+        /**
+         * The mode for a climate device.
+         */
+        public static ClimateMode = {
+            Heat: "HEAT",
+            Cool: "COOL",
+            Off: "OFF",
+            Climate: "CLIMATE"
+        }
+
+        /**
+         * The on/off state of a climate device.
+         */
+        public static ClimateOnOffState = {
+            On: "ON",
+            Off: "OFF"
+        }
+
+        /**
+         * The temperature unit for a climate device.
+         */
+        public static ClimateTemperatureUnit = {
+            Celsius: "C",
+            Fahrenheit: "F"
+        }
+
         private $rootScope: ng.IRootScopeService;
         private $q: ng.IQService;
         private $http: ng.IHttpService;
@@ -371,6 +397,133 @@
                 method: "PUT",
                 url: url,
                 data: this.Utilities.format("onOffState={0}", onOffState)
+            };
+
+            this.$http(httpConfig).then(() => {
+                q.resolve();
+            }, q.reject);
+
+            return q.promise;
+        }
+
+        /**
+         * Used to get the state of of the climate control devices(s) and other related temperature information.
+         * 
+         * @param deviceId The optional device ID to retrieve information for; will return the default device otherwise.
+         */
+        public getClimate(deviceId?: string): ng.IPromise<AlertMeApiTypes.ClimateGetResult> {
+            var q = this.$q.defer<AlertMeApiTypes.ClimateGetResult>(),
+                url: string,
+                httpConfig: Interfaces.RequestConfig;
+
+            if (!this.arePreconditionsMet()) {
+                q.reject(AlertMeApi.URL_OR_CREDENTIALS_NOT_SPECIFIED_REJECTION);
+                return q.promise;
+            }
+
+            url = this.Utilities.format("{0}/users/{1}/widgets/climate", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName);
+
+            if (deviceId) {
+                url += "/" + deviceId;
+            }
+
+            httpConfig = {
+                method: "get",
+                url: url
+            };
+
+            this.$http(httpConfig).then((result: ng.IHttpPromiseCallbackArg<AlertMeApiTypes.ClimateGetResult>) => {
+                q.resolve(result.data);
+            }, q.reject);
+
+            return q.promise;
+        }
+
+        /**
+         * Used to change the on/off state of a climate device (thermostat).
+         * 
+         * @param deviceId The device ID of themostat to operate on.
+         * @param climateMode The on/off state to set; one of the values provided by AlertMeApi.ClimateOnOffState.
+         */
+        public setClimateOnOffState(deviceId: string, climateOnOffState: string): ng.IPromise<void> {
+            var q = this.$q.defer<void>(),
+                url: string,
+                httpConfig: Interfaces.RequestConfig;
+
+            if (!this.arePreconditionsMet()) {
+                q.reject(AlertMeApi.URL_OR_CREDENTIALS_NOT_SPECIFIED_REJECTION);
+                return q.promise;
+            }
+
+            url = this.Utilities.format("{0}/users/{1}/widgets/climate/{2}/onOffState", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName, deviceId);
+
+            httpConfig = {
+                method: "PUT",
+                url: url,
+                data: this.Utilities.format("onOffState={0}", climateOnOffState)
+            };
+
+            this.$http(httpConfig).then(() => {
+                q.resolve();
+            }, q.reject);
+
+            return q.promise;
+        }
+
+        /**
+         * Used to change the mode of a climate device (thermostat).
+         * 
+         * @param deviceId The device ID of themostat to operate on.
+         * @param climateMode The mode to set; one of the values provided by AlertMeApi.ClimateMode.
+         */
+        public setClimateMode(deviceId: string, climateMode: string): ng.IPromise<AlertMeApiTypes.ClimateModePutResult> {
+            var q = this.$q.defer<AlertMeApiTypes.ClimateModePutResult>(),
+                url: string,
+                httpConfig: Interfaces.RequestConfig;
+
+            if (!this.arePreconditionsMet()) {
+                q.reject(AlertMeApi.URL_OR_CREDENTIALS_NOT_SPECIFIED_REJECTION);
+                return q.promise;
+            }
+
+            url = this.Utilities.format("{0}/users/{1}/widgets/climate/{2}/mode", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName, deviceId);
+
+            httpConfig = {
+                method: "PUT",
+                url: url,
+                data: this.Utilities.format("mode={0}", climateMode)
+            };
+
+            this.$http(httpConfig).then((result: ng.IHttpPromiseCallbackArg<AlertMeApiTypes.ClimateModePutResult>) => {
+                q.resolve(result.data);
+            }, q.reject);
+
+            return q.promise;
+        }
+
+        /**
+         * Used to change the target temperature of a climate device (thermostat).
+         * 
+         * @param deviceId The device ID of themostat to operate on.
+         * @param temperature The temperature to set.
+         * @param temperatureUnit The unit of the temperature parameter; one of the values provided by AlertMeApi.ClimateTemperatureUnit.
+         */
+        public setClimateTargetTemperature(deviceId: string, temperature: number, temperatureUnit: string): ng.IPromise<void> {
+            var q = this.$q.defer<void>(),
+                url: string,
+                httpConfig: Interfaces.RequestConfig;
+
+            if (!this.arePreconditionsMet()) {
+                q.reject(AlertMeApi.URL_OR_CREDENTIALS_NOT_SPECIFIED_REJECTION);
+                return q.promise;
+            }
+
+            url = this.Utilities.format("{0}/users/{1}/widgets/climate/{2}/targetTemperature", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName, deviceId);
+
+            httpConfig = {
+                method: "PUT",
+                url: url,
+                data: this.Utilities.format("temperature={0}&temperatureUnit={1}", temperature, temperatureUnit)
             };
 
             this.$http(httpConfig).then(() => {

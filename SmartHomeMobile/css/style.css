@@ -71,6 +71,7 @@
 .last-updated-row {
 	text-align: center;
 	font-size: smaller;
+	padding-bottom: 10px;
 }
 
 /** Configure PIN View ***************************************************************************/
@@ -138,4 +139,23 @@
 
 .camera-image {
 	width: 100%;
+}
+
+/** Thermostat View ******************************************************************************/
+
+.thermo-temp-titles div.col {
+	text-align: center;
+	padding-top: 10px;
+}
+
+.thermo-temp-values div.col {
+	text-align: center;
+	font-size: xx-large;
+	font-weight: bolder;
+	padding-bottom: 30px;
+}
+
+.thermo-control-buttons {
+	padding-top: 20px;
+	padding-bottom: 10px;
 }

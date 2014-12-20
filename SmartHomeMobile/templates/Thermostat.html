@@ -1,0 +1,148 @@
+﻿<ion-view title="Thermostat">
+
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button icon ion-navicon phone-both-tablet-portrait"></button>
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <button class="button icon ion-loop" ng-click="controller.refresh_click()" ng-hide="blockingRequestInProgress || nonBlockingRequestInProgress"></button>
+    </ion-nav-buttons>
+
+    <ion-content class="has-header" scrolling="true" padding="true">
+
+        <ion-refresher pulling-text="Pull to refresh..."
+                       refreshing-text="Refreshing..."
+                       on-refresh="controller.refresher_refresh()">
+        </ion-refresher>
+
+        <div class="last-updated-row">Last updated at {{viewModel.lastUpdated | date: 'MM/dd/yyyy HH:mm:ss Z'}}</div>
+
+        <div class="list">
+
+            <div class="item item-divider">
+                {{viewModel.climate.name}}
+            </div>
+
+            <div class="item">
+
+                <div class="row thermo-temp-titles">
+                    <div class="col col-33">
+                        Outside
+                    </div>
+                    <div class="col col-33">
+                        Inside
+                    </div>
+                    <div class="col col-33">
+                        Target
+                    </div>
+                </div>
+
+                <div class="row thermo-temp-values" ng-hide="viewModel.isRefreshing">
+                    <div class="col col-33">
+                        {{viewModel.climate.outsideTemperature}}&deg;
+                    </div>
+                    <div class="col col-33">
+                        {{viewModel.climate.currentTemperature}}&deg;
+                    </div>
+                    <div class="col col-33">
+                        <span ng-hide="viewModel.newTargetTemperature == null">{{viewModel.newTargetTemperature}}&deg;</span>
+                        <span ng-show="viewModel.newTargetTemperature == null">N/A</span>
+                    </div>
+                </div>
+
+                <div class="row thermo-temp-values" ng-show="viewModel.isRefreshing">
+                    <div class="col col-33">
+                        <i class="icon ion-loading-c"></i>
+                    </div>
+                    <div class="col col-33">
+                        <i class="icon ion-loading-c"></i>
+                    </div>
+                    <div class="col col-33">
+                        <i class="icon ion-loading-c"></i>
+                    </div>
+                </div>
+
+                <div class="row thermo-control-buttons">
+
+                    <div class="col col-33">
+                        <button ng-disabled="viewModel.isRefreshing"
+                                ng-class="{ 'button-calm ion-ios7-checkmark-outline': viewModel.newMode === 'COOL' && viewModel.newOnOffState === 'ON', 'ion-ios7-circle-outline': viewModel.newOnOffState === 'OFF' || viewModel.newMode !== 'COOL' }"
+                                class="button button-block button-stable icon-left"
+                                ng-click="controller.cool_click()">
+                            Cool
+                        </button>
+                    </div>
+                    <div class="col col-33">
+                        <button ng-disabled="viewModel.isRefreshing"
+                                ng-class="{ 'button-assertive ion-ios7-checkmark-outline': viewModel.newMode === 'HEAT' && viewModel.newOnOffState === 'ON', 'ion-ios7-circle-outline': viewModel.newOnOffState === 'OFF' || viewModel.newMode !== 'HEAT' }"
+                                class="button button-block button-stable icon-left"
+                                ng-click="controller.heat_click()">
+                            Heat
+                        </button>
+                    </div>
+                    <div class="col col-33">
+                        <button ng-disabled="viewModel.isRefreshing"
+                                ng-class="{ 'button-dark ion-ios7-checkmark-outline': viewModel.newOnOffState === 'OFF', 'ion-ios7-circle-outline': viewModel.newOnOffState !== 'OFF' }"
+                                class="button button-block button-stable icon-left"
+                                ng-click="controller.off_click()">
+                            Off
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="item item-divider" ng-show="viewModel.isRefreshing || viewModel.newOnOffState !== 'OFF'">
+                Target Temperature
+            </div>
+
+            <div class="item range range-positive" ng-show="viewModel.isRefreshing || viewModel.newOnOffState !== 'OFF'">
+                <i class="icon ion-ios7-snowy"></i>
+                <input type="range" name="temperature"
+                       min="{{viewModel.climate.minTargetTemperature}}" max="{{viewModel.climate.maxTargetTemperature}}" step="1"
+                       ng-model="viewModel.newTargetTemperature"
+                       ng-change="controller.temperatureRange_change()" />
+                <i class="icon ion-flame"></i>
+            </div>
+
+            <div class="item row" ng-show="viewModel.isRefreshing || viewModel.newOnOffState !== 'OFF'">
+
+                <div class="col col-50">
+                    <button class="button button-block button-stable icon ion-chevron-down"
+                            ng-click="controller.down_click()"></button>
+                </div>
+
+                <div class="col col-50">
+                    <button class="button button-block button-stable icon ion-chevron-up"
+                            ng-click="controller.up_click()"></button>
+                </div>
+
+            </div>
+
+            <div class="item item-divider" ng-hide="viewModel.isRefreshing || !viewModel.changesMade">
+                Confirm Changes
+            </div>
+
+            <div class="item row" ng-hide="viewModel.isRefreshing || !viewModel.changesMade">
+
+                <div class="col col-50">
+                    <button class="button button-block button-balanced icon-left ion-checkmark-round"
+                            ng-click="controller.set_click()">
+                        Set
+                    </button>
+                </div>
+
+                <div class="col col-50">
+                    <button class="button button-block button-assertive icon-left ion-close-round"
+                            ng-click="controller.cancel_click()">
+                        Cancel
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </ion-content>
+
+</ion-view>

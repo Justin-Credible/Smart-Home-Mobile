@@ -22,11 +22,18 @@
 
         <div class="list card">
             <div class="item item-divider">AlertMe API</div>
-
-            <button class="button button-block button-positive" ng-click="controller.setCredentials()">Set Credentials</button>
             <button class="button button-block button-positive" ng-click="controller.alertMeApiLogin()">POST /login</button>
             <button class="button button-block button-positive" ng-click="controller.alertMeApiLogout()">POST /logout</button>
             <button class="button button-block button-positive" ng-click="controller.alertMeApiHomeStatus()">GET /widgets/homeStatus</button>
+
+            <div class="item item-divider">AlertMe API - Climate</div>
+            <button class="button button-block button-positive" ng-click="controller.thermostat_info()">Thermostat: Get Info</button>
+            <button class="button button-block button-positive" ng-click="controller.thermostat_state_on()">Thermostat: State ON</button>
+            <button class="button button-block button-positive" ng-click="controller.thermostat_state_off()">Thermostat: State OFF</button>
+            <button class="button button-block button-positive" ng-click="controller.thermostat_mode_cool()">Thermostat: Mode COOL</button>
+            <button class="button button-block button-positive" ng-click="controller.thermostat_mode_heat()">Thermostat: Mode HEAT</button>
+            <button class="button button-block button-positive" ng-click="controller.thermostat_mode_off()">Thermostat: Mode OFF</button>
+            <button class="button button-block button-positive" ng-click="controller.thermostat_setTemperature()">Thermostat: Set Temperature</button>
         </div>
 
         <div class="list card">

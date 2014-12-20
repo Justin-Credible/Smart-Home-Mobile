@@ -1,5 +1,7 @@
 ﻿module JustinCredible.SmartHomeMobile.Controllers {
 
+    /*tslint:disable typedef*/
+
     export interface IDeveloperController {
         viewModel: ViewModels.DeveloperViewModel;
     }
@@ -16,6 +18,8 @@
         private Preferences: Services.Preferences;
         private MockApis: Services.MockApis;
         private AlertMeApi: Services.AlertMeApi;
+
+        private thermostat_deviceId: string;
 
         constructor($scope: ng.IScope, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, FileUtilities: Services.FileUtilities, Logger: Services.Logger, Preferences: Services.Preferences, MockApis: Services.MockApis, AlertMeApi: Services.AlertMeApi) {
             super($scope, ViewModels.DeveloperViewModel);
@@ -77,14 +81,6 @@
             });
         }
 
-        public setCredentials() {
-            this.Preferences.alertMeApiUrl = "https://www.irissmarthome.com/v5";
-            this.Preferences.alertMeUserName = "";
-            this.Preferences.alertMePassword = "";
-
-            this.UiHelper.alert("Credentials set!");
-        }
-
         public alertMeApiLogin() {
             this.AlertMeApi.login().then((result: AlertMeApiTypes.LoginResult) => {
                 this.UiHelper.alert("Hub ID: " + result.hubIds[0]);
@@ -98,6 +94,66 @@
         public alertMeApiHomeStatus() {
             this.AlertMeApi.getHomeStatus().then((result: any) => {
                 console.log(result);
+            });
+        }
+
+        public thermostat_info() {
+            this.AlertMeApi.getClimate().then((result: AlertMeApiTypes.ClimateGetResult) => {
+                var text = this.Utilities.format("State: {0}\nMode: {1}\nTemp: {2}\n", result.onOffState, result.mode, result.targetTemperature);
+                this.thermostat_deviceId = result.deviceId;
+                this.UiHelper.alert(text);
+            });
+        }
+
+        public thermostat_state_on() {
+            this.AlertMeApi.setClimateOnOffState(this.thermostat_deviceId, Services.AlertMeApi.ClimateOnOffState.On).then(() => {
+                alert("OK!");
+            }, (err) => {
+                alert(err);
+            });
+        }
+
+        public thermostat_state_off() {
+            this.AlertMeApi.setClimateOnOffState(this.thermostat_deviceId, Services.AlertMeApi.ClimateOnOffState.Off).then(() => {
+                alert("OK!");
+            }, (err) => {
+                alert(err);
+            });
+        }
+
+        public thermostat_mode_cool() {
+            this.AlertMeApi.setClimateMode(this.thermostat_deviceId, Services.AlertMeApi.ClimateMode.Cool).then(() => {
+                alert("OK!");
+            }, (err) => {
+                alert(err);
+            });
+        }
+
+        public thermostat_mode_heat() {
+            this.AlertMeApi.setClimateMode(this.thermostat_deviceId, Services.AlertMeApi.ClimateMode.Heat).then(() => {
+                alert("OK!");
+            }, (err) => {
+                alert(err);
+            });
+        }
+
+        public thermostat_mode_off() {
+            this.AlertMeApi.setClimateMode(this.thermostat_deviceId, Services.AlertMeApi.ClimateMode.Off).then(() => {
+                alert("OK!");
+            }, (err) => {
+                alert(err);
+            });
+        }
+
+        public thermostat_setTemperature() {
+            this.UiHelper.prompt("Enter a temperature in degrees F.").then((dialogResult: Models.KeyValuePair<string, string>) => {
+                if (dialogResult.key === "OK") {
+                    this.AlertMeApi.setClimateTargetTemperature(this.thermostat_deviceId, parseInt(dialogResult.value, 10), Services.AlertMeApi.ClimateTemperatureUnit.Fahrenheit).then(() => {
+                        alert("OK!");
+                    }, (err) => {
+                        alert(err);
+                    });
+                }
             });
         }
 
