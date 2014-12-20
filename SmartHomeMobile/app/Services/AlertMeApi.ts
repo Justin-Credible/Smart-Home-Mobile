@@ -5,13 +5,17 @@
      */
     export class AlertMeApi {
 
-        public static $inject = ["$rootScope", "$q", "$http", "Preferences", "Utilities"];
+        //#region Event Constants
 
         public static URL_NOT_SPECIFIED_EVENT = "AlertMeApi.URL_NOT_SPECIFIED";
         public static CREDENTIALS_NOT_SPECIFIED_EVENT = "AlertMeApi.CREDENTIALS_NOT_SPECIFIED";
 
         public static URL_OR_CREDENTIALS_NOT_SPECIFIED_REJECTION = "AlertMeApi.URL_OR_CREDENTIALS_NOT_SPECIFIED";
         public static UNKNOWN_ORIGINAL_METHOD_REJECTION = "AlertMeApi.UNKNOWN_ORIGINAL_METHOD";
+
+        //#endregion
+
+        //#region Parameter Constants
 
         /**
          * The state of a lock; can be used with AlertMeApi.lockState(...)
@@ -65,6 +69,10 @@
             Fahrenheit: "F"
         }
 
+        //#endregion
+
+        public static $inject = ["$rootScope", "$q", "$http", "Preferences", "Utilities"];
+
         private $rootScope: ng.IRootScopeService;
         private $q: ng.IQService;
         private $http: ng.IHttpService;
@@ -79,14 +87,33 @@
             this.Utilities = Utilities;
         }
 
+        //#region Private Helpers
+
+        /**
+         * Used to check if the URL for the AlertMe API service has been configured.
+         * 
+         * @returns True if the URL has been configured, false otherwise.
+         */
         private isUrlSpecified(): boolean {
             return !!this.Preferences.alertMeApiUrl;
         }
 
+        /**
+         * Used to check if the AlertMe API credentials have been configured.
+         * 
+         * @returns True if the credentials have been configured, false otherwise.
+         */
         private areCredentialsSpecified(): boolean {
             return !!this.Preferences.alertMeUserName && !!this.Preferences.alertMePassword;
         }
 
+        /**
+         * Used to determine if all of the pre-conditions for calling the AlertMe API
+         * have been satisfied. Currently this checks for the configuration of the URL
+         * and credentials.
+         * 
+         * @returns True if all pre-conditions have been met, false otherwise.
+         */
         private arePreconditionsMet(): boolean {
             if (!this.isUrlSpecified()) {
                 this.$rootScope.$broadcast(AlertMeApi.URL_NOT_SPECIFIED_EVENT);
@@ -101,6 +128,13 @@
             }
         }
 
+        /**
+         * This is used to transform an arbitrary object into a form submission key/value
+         * pair string that can be sent over the wire.
+         * 
+         * @param data The arbitrary object to encode.
+         * @returns The form key/value pair encoding of the given data object.
+         */
         private transformRequest(data: any): string {
             var str = [];
 
@@ -115,28 +149,14 @@
             return str.join("&");
         }
 
-        //private getInvalidSessionHandler(originalMethod: string, originalPromise: ng.IDeferred<any>): (response: ng.IHttpPromiseCallbackArg<any>) => void {
+        //#endregion
 
-        //    return (response: ng.IHttpPromiseCallbackArg<any>) => {
-        //        if (response.status === 401) {
-        //            this.login().then((result: AlertMeApiTypes.LoginResult) => {
-        //                switch (originalMethod) {
-        //                    case "homeStatus":
-        //                        this.homeStatus().then(originalPromise.resolve, originalPromise.reject);
-        //                        break;
-        //                    default:
-        //                        originalPromise.reject(AlertMeApi.UNKNOWN_ORIGINAL_METHOD_REJECTION);
-        //                        break;
-        //                }
-        //            }, (err) => { originalPromise.reject(err); });
-        //        }
-        //        else {
-        //            //return rejection;
-        //            originalPromise.reject(response);
-        //        }
-        //    };
-        //}
+        //#region Authentication
 
+        /**
+         * Used to authenticate with the AlertMe API using the crednetials specified
+         * via the preferences. This utilizes the POST /login endpoint.
+         */
         public login(): ng.IPromise<AlertMeApiTypes.LoginResult> {
             var q = this.$q.defer<AlertMeApiTypes.LoginResult>(),
                 httpConfig: Interfaces.RequestConfig;
@@ -164,6 +184,9 @@
             return q.promise;
         }
 
+        /**
+         * Used to de-authenticate with the AlertMe API. This utlilizes the POST /logout endpoint.
+         */
         public logout(): ng.IPromise<any> {
             var q = this.$q.defer<any>(),
                 httpConfig: Interfaces.RequestConfig;
@@ -183,6 +206,14 @@
             return q.promise;
         }
 
+        //#endregion
+
+        //#region Home Status
+
+        /**
+         * Used to get information about all of the devices for the current hub (home).
+         * This utilizes the GET /widgets/homeStatus endpoint.
+         */
         public getHomeStatus(): ng.IPromise<any> {
             var q = this.$q.defer<any>(),
                 url: string,
@@ -207,6 +238,13 @@
             return q.promise;
         }
 
+        //#endregion
+
+        //#region Security
+
+        /**
+         * Used to get alarm status. This utilizes the GET /widgets/alarm endpoint.
+         */
         public getAlarm(): ng.IPromise<AlertMeApiTypes.AlarmGetResult> {
             var q = this.$q.defer<AlertMeApiTypes.AlarmGetResult>(),
                 url: string,
@@ -231,6 +269,10 @@
             return q.promise;
         }
 
+        /**
+         * Used to get an overview of the alarm devices. This utilizes the
+         * GET /widgets/alarm/overview endpoint.
+         */
         public getAlarmOverview(): ng.IPromise<AlertMeApiTypes.AlarmOverviewGetResult> {
             var q = this.$q.defer<AlertMeApiTypes.AlarmOverviewGetResult>(),
                 url: string,
@@ -255,6 +297,9 @@
             return q.promise;
         }
 
+        /**
+         * Used to get information about the locks. This utilizes the GET /widgets/locks endpoint.
+         */
         public getLocks(): ng.IPromise<AlertMeApiTypes.LocksGetResult> {
             var q = this.$q.defer<AlertMeApiTypes.LocksGetResult>(),
                 url: string,
@@ -281,7 +326,8 @@
 
         /**
          * Used to change the state of an individual lock (if passed a device ID) or
-         * all of the locks (when passing "all" as the device ID).
+         * all of the locks (when passing "all" as the device ID). This utilizes the
+         * PUT /widgets/locks/:deviceId/lockState endpoint.
          * 
          * @param deviceId The device ID of the lock to operate on (or "all" to operate on all locks).
          * @param lockState The state to set the lock(s); one of the values provided by AlertMeApi.LockState.
@@ -312,7 +358,7 @@
         }
 
         /**
-         * Used to change the mode of the alarm.
+         * Used to change the mode of the alarm. This utilizes the PUT /widgets/alarm/mode endpoint.
          * 
          * @param mode The mode to use to set the alarm; one of the values provided by AlertMeApi.AlarmMode.
          * @param now If the parameter is true, the alarm mode is set immediately.
@@ -347,8 +393,13 @@
             return q.promise;
         }
 
+        //#endregion
+
+        //#region Smart Plugs
+
         /**
          * Used to get the state of any smart plug devices (eg lighting, outlets, fans, blindes, etc).
+         * This utilizes the GET /widgets/smartplugs endpoint.
          */
         public getSmartPlugs(): ng.IPromise<AlertMeApiTypes.SmartPlugsGetResult> {
             var q = this.$q.defer<AlertMeApiTypes.SmartPlugsGetResult>(),
@@ -363,7 +414,7 @@
             url = this.Utilities.format("{0}/users/{1}/widgets/smartplugs", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName);
 
             httpConfig = {
-                method: "get",
+                method: "GET",
                 url: url
             };
 
@@ -376,7 +427,8 @@
 
         /**
          * Used to change the state of an individual smart plug device (if passed a device ID) or
-         * all of the smart plug devices (when passing "all" as the device ID).
+         * all of the smart plug devices (when passing "all" as the device ID). This utilizes the
+         * PUT /widgets/smartplugs/:deviceId/onOffState endpoint.
          * 
          * @param deviceId The device ID of the smart plug to operate on (or "all" to operate on all devices).
          * @param onOffState The state to set the smart plug(s); one of the values provided by AlertMeApi.SmartPlugOnOffState.
@@ -406,8 +458,13 @@
             return q.promise;
         }
 
+        //#endregion
+
+        //#region Climate
+
         /**
          * Used to get the state of of the climate control devices(s) and other related temperature information.
+         * This utilizes the GET /widgets/climate endpoint.
          * 
          * @param deviceId The optional device ID to retrieve information for; will return the default device otherwise.
          */
@@ -440,7 +497,9 @@
         }
 
         /**
-         * Used to change the on/off state of a climate device (thermostat).
+         * Used to change the on/off state of a climate device (thermostat). This utilizes the
+         * PUT /widgets/climate/:deviceId/onOffState endpoint.
+         * 
          * 
          * @param deviceId The device ID of themostat to operate on.
          * @param climateMode The on/off state to set; one of the values provided by AlertMeApi.ClimateOnOffState.
@@ -471,7 +530,8 @@
         }
 
         /**
-         * Used to change the mode of a climate device (thermostat).
+         * Used to change the mode of a climate device (thermostat). This utilizes the
+         * PUT /widgets/climate/:deviceId/mode endpoint.
          * 
          * @param deviceId The device ID of themostat to operate on.
          * @param climateMode The mode to set; one of the values provided by AlertMeApi.ClimateMode.
@@ -502,7 +562,8 @@
         }
 
         /**
-         * Used to change the target temperature of a climate device (thermostat).
+         * Used to change the target temperature of a climate device (thermostat). This utilizes the
+         * PUT /widgets/climate/:deviceId/targetTemperature endpoint.
          * 
          * @param deviceId The device ID of themostat to operate on.
          * @param temperature The temperature to set.
@@ -532,5 +593,7 @@
 
             return q.promise;
         }
+
+        //#endregion
     }
 }
