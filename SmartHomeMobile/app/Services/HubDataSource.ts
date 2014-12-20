@@ -175,5 +175,32 @@
         }
 
         //#endregion
+
+        //#region Home Status
+
+        private _homeStatus: AlertMeApiTypes.HomeStatusGetResult;
+        private _homeStatusLastUpdated: Moment;
+
+        get homeStatus(): AlertMeApiTypes.HomeStatusGetResult {
+            return this._homeStatus;
+        }
+
+        get homeStatusLastUpdated(): Moment {
+            return this._homeStatusLastUpdated;
+        }
+
+        public refreshHomeStatus(): ng.IPromise<AlertMeApiTypes.HomeStatusGetResult> {
+            var q = this.$q.defer<AlertMeApiTypes.HomeStatusGetResult>();
+
+            this.AlertMeApi.getHomeStatus().then((result: AlertMeApiTypes.HomeStatusGetResult) => {
+                this._homeStatus = result;
+                this._homeStatusLastUpdated = moment();
+                q.resolve(result);
+            });
+
+            return q.promise;
+        }
+
+        //#endregion
     }
 }

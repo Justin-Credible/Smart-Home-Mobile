@@ -273,4 +273,93 @@ declare module JustinCredible.SmartHomeMobile.AlertMeApiTypes {
         confirmed: boolean;
         validModes: string[];
     }
+
+    /**
+     * Response for GET /widgets/homeStatus
+     */
+    interface HomeStatusGetResult {
+        hub: {
+            available: boolean;
+            availableStatus: string;
+            upgrading: boolean;
+            configured: boolean;
+            hubOs: string;
+            version: string;
+            latestVersion: string;
+            upgrade: string;
+            powerType: string;
+            connectionType: string;
+            onSince: number;
+            upTime: number;
+            timezone: number;
+            timezoneName: string;
+            dateInstallDone: number;
+            daylightSaving: string;
+            behaviourId: number;
+            behaviourType: string;
+            model: string;
+            ip: string;
+            externalIp: string;
+            simPresent: boolean;
+            gprsSignalStrength: number;
+            currentImei: string;
+            currentIccid: string;
+            currentSimId: string;
+            hardwareRevision: string;
+            battery: string;
+            zigbeeNetworkInfo: string;
+            macAddress: string;
+            zwaveRole: string;
+            rerouteZwaveNetworkStatus: string;
+            name: string;
+            status: string;
+            simHistory: IHomeStatusSimHistory[];
+        }
+        devices: { [deviceId: string]: IHomeStatusDevice };
+        widgetStatus: string;
+        widgetVisible: boolean;
+    }
+
+    /**
+     * Describes a single SIM history entry in the homeStatus response.
+     */
+    interface IHomeStatusSimHistory {
+        state: string;
+        start_date: string;
+        simiccid: string;
+        imei: string;
+        provider: string;
+    }
+
+    /**
+     * Describes a single device in the homeStatus response.
+     */
+    interface IHomeStatusDevice {
+        name: string;
+        type: string;
+        protocol: string[];
+        battery: number;
+        batteryLow: boolean;
+        lowSignal: boolean;
+        batteryLevel: number;
+        batteryPercentage: number;
+        mains: boolean;
+        power: boolean;
+        signal: number;
+        presence: boolean;
+        temperature: number;
+        version: string;
+        latestVersion: string;
+        upgradeStatus: string;
+        isGeneric: boolean;
+        hasBattery: boolean;
+        state: string;
+        standalone: boolean;
+        upgrade: string;
+        reason: string;
+        hardwareRevision: string;
+        repeaterVersion: number;
+        missingProtocols: { [id: string]: string };
+        id: string;
+    }
 }

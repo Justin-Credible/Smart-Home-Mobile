@@ -214,8 +214,8 @@
          * Used to get information about all of the devices for the current hub (home).
          * This utilizes the GET /widgets/homeStatus endpoint.
          */
-        public getHomeStatus(): ng.IPromise<any> {
-            var q = this.$q.defer<any>(),
+        public getHomeStatus(): ng.IPromise<AlertMeApiTypes.HomeStatusGetResult> {
+            var q = this.$q.defer<AlertMeApiTypes.HomeStatusGetResult>(),
                 url: string,
                 httpConfig: Interfaces.RequestConfig;
 
@@ -231,7 +231,7 @@
                 url: url
             };
 
-            this.$http(httpConfig).then((result: ng.IHttpPromiseCallbackArg<any>) => {
+            this.$http(httpConfig).then((result: ng.IHttpPromiseCallbackArg<AlertMeApiTypes.HomeStatusGetResult>) => {
                 q.resolve(result.data);
             }, q.reject);
 
