@@ -112,6 +112,7 @@
     <Folder Include="res\screens\wp8\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".weignore" />
     <Content Include="css\ionic-overrides.css" />
     <Content Include="css\nprogress-overrides.css" />
     <Content Include="images\about-icon.png" />
@@ -127,6 +128,7 @@
     <Content Include="lib\nprogress\nprogress.js" />
     <Content Include="lib\URI.js" />
     <Content Include="lib\URI.min.js" />
+    <Content Include="plugins\net.justin-credible.iosname\.fetch.json" />
     <Content Include="plugins\org.pbernasconi.progressIndicator\.fetch.json" />
     <Content Include="plugins\org.pbernasconi.progressIndicator\package.json" />
     <Content Include="plugins\org.pbernasconi.progressIndicator\plugin.xml" />

@@ -1,0 +1,9 @@
+**/*.min.js
+**/lib/**
+**/app/**/*.js
+**/scripts/typings/**
+**/scripts/BuildVars.js
+**/plugins/**
+**/bld/**
+**/bin/**
+**/templates/**
