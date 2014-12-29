@@ -48,7 +48,7 @@ module JustinCredible.SmartHomeMobile.Application {
         };
 
         // Define the top level Angular module for the application.
-        ngModule = angular.module("JustinCredible.SmartHomeMobile.Application", ["ui.router", "ionic", "ngMockE2E"]);
+        ngModule = angular.module("JustinCredible.SmartHomeMobile.Application", ["ui.router", "ionic", "ngMockE2E", "angular.filter"]);
 
         // Define our constants.
         ngModule.constant("isRipple", !!(window.parent && window.parent.ripple));
@@ -90,6 +90,8 @@ module JustinCredible.SmartHomeMobile.Application {
         ngModule.controller("ReorderCategoriesController", Controllers.ReorderCategoriesController);
         ngModule.controller("PinEntryController", Controllers.PinEntryController);
         ngModule.controller("SetMultipleSmartPlugsStateController", Controllers.SetMultipleSmartPlugsStateController);
+        ngModule.controller("DevicesListController", Controllers.DevicesListController);
+        ngModule.controller("DevicesInfoController", Controllers.DevicesInfoController);
         ngModule.controller("SettingsListController", Controllers.SettingsListController);
         ngModule.controller("HubController", Controllers.HubController);
         ngModule.controller("CamerasListController", Controllers.CamerasListController);
@@ -335,6 +337,28 @@ module JustinCredible.SmartHomeMobile.Application {
             }
         });
         */
+
+        $stateProvider.state("app.devices-list", {
+            url: "/devices/list",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Devices/Devices-List.html",
+                    controller: "DevicesListController"
+                }
+            }
+        });
+
+        $stateProvider.state("app.devices-info", {
+            url: "/devices/info/:deviceId",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Devices/Devices-Info.html",
+                    controller: "DevicesInfoController"
+                }
+            }
+        });
+
+        //#endregion
 
         //#region Settings
 

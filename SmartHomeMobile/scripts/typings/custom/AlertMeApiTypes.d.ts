@@ -313,9 +313,9 @@ declare module JustinCredible.SmartHomeMobile.AlertMeApiTypes {
             rerouteZwaveNetworkStatus: string;
             name: string;
             status: string;
-            simHistory: IHomeStatusSimHistory[];
-        }
-        devices: { [deviceId: string]: IHomeStatusDevice };
+            simHistory: HomeStatusSimHistory[];
+        };
+        devices: { [deviceId: string]: HomeStatusDevice };
         widgetStatus: string;
         widgetVisible: boolean;
     }
@@ -323,7 +323,7 @@ declare module JustinCredible.SmartHomeMobile.AlertMeApiTypes {
     /**
      * Describes a single SIM history entry in the homeStatus response.
      */
-    interface IHomeStatusSimHistory {
+    interface HomeStatusSimHistory {
         state: string;
         start_date: string;
         simiccid: string;
@@ -334,7 +334,7 @@ declare module JustinCredible.SmartHomeMobile.AlertMeApiTypes {
     /**
      * Describes a single device in the homeStatus response.
      */
-    interface IHomeStatusDevice {
+    interface HomeStatusDevice {
         name: string;
         type: string;
         protocol: string[];
@@ -350,16 +350,17 @@ declare module JustinCredible.SmartHomeMobile.AlertMeApiTypes {
         temperature: number;
         version: string;
         latestVersion: string;
+        latestRequiredVersion?: string;
         upgradeStatus: string;
         isGeneric: boolean;
         hasBattery: boolean;
         state: string;
         standalone: boolean;
         upgrade: string;
-        reason: string;
+        reason?: string;
         hardwareRevision: string;
-        repeaterVersion: number;
-        missingProtocols: { [id: string]: string };
+        repeaterVersion?: number;
+        missingProtocols?: { [id: string]: string };
         id: string;
     }
 }

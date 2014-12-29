@@ -118,6 +118,8 @@
     <Content Include="images\about-icon.png" />
     <Content Include="images\place-holder.png" />
     <Content Include="images\touch-cursor-hover.png" />
+    <Content Include="lib\angular-filter.js" />
+    <Content Include="lib\angular-filter.min.js" />
     <Content Include="lib\angular-mocks.js" />
     <Content Include="lib\lodash.js" />
     <Content Include="lib\lodash.min.js" />
@@ -144,6 +146,8 @@
     <Content Include="templates\Cameras.html" />
     <Content Include="templates\Camera-View.html" />
     <Content Include="templates\Category.html" />
+    <Content Include="templates\Devices\Devices-Info.html" />
+    <Content Include="templates\Devices\Devices-List.html" />
     <Content Include="templates\Dialogs\Pin-Entry.html" />
     <Content Include="templates\Dialogs\Set-Multiple-Smart-Plugs-State.html" />
     <Content Include="templates\Dialogs\Reorder-Categories.html" />
@@ -198,6 +202,8 @@
     <TypeScriptCompile Include="app\Controllers\CamerasController.ts" />
     <TypeScriptCompile Include="app\Controllers\CameraViewController.ts" />
     <TypeScriptCompile Include="app\Controllers\CategoryController.ts" />
+    <TypeScriptCompile Include="app\Controllers\Devices\DevicesInfoController.ts" />
+    <TypeScriptCompile Include="app\Controllers\Devices\DevicesListController.ts" />
     <TypeScriptCompile Include="app\Controllers\Dialogs\BaseDialogController.ts" />
     <TypeScriptCompile Include="app\Controllers\Dialogs\PinEntryController.ts" />
     <TypeScriptCompile Include="app\Controllers\Dialogs\ReorderCategoriesController.ts" />
@@ -243,6 +249,8 @@
     <TypeScriptCompile Include="app\ViewModels\CameraViewViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\CategoryItemViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\CategoryViewModel.ts" />
+    <TypeScriptCompile Include="app\ViewModels\Devices\DevicesInfoViewModel.ts" />
+    <TypeScriptCompile Include="app\ViewModels\Devices\DevicesListViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Dialogs\PinEntryViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Dialogs\ReorderCategoriesViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Dialogs\SetMultipleSmartPlugsStateViewModel.ts" />

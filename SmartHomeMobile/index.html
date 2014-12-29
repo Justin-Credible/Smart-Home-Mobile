@@ -1,134 +1,140 @@
 ﻿<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-        <title></title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
 
-        <!-- Exposes certain build flags (version, build time, debug, etc). -->
-        <!-- This is created by the build scripts and will be a 404 during development. -->
-        <script src="scripts/BuildVars.js"></script>
+    <!-- Exposes certain build flags (version, build time, debug, etc). -->
+    <!-- This is created by the build scripts and will be a 404 during development. -->
+    <script src="scripts/BuildVars.js"></script>
 
-        <!-- Allows us to perform custom mocking, etc for the Apache Ripple Emulator. -->
-        <script src="scripts/RippleMockApi.js"></script>
+    <!-- Allows us to perform custom mocking, etc for the Apache Ripple Emulator. -->
+    <script src="scripts/RippleMockApi.js"></script>
 
-        <!-- *** Ionic Framework (includes AngularJs) **************************************** -->
+    <!-- *** Ionic Framework (includes AngularJs) and AngularJs Plug-ins ***************** -->
 
-        <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-        <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
 
-        <!-- Allows us to perform mocking in Angular (eg fake HTTP calls etc). -->
-        <script src="lib/angular-mocks.js"></script>
+    <!-- Allows us to perform mocking in Angular (eg fake HTTP calls etc). -->
+    <script src="lib/angular-mocks.js"></script>
 
-        <!-- *** Cordova Library ************************************************************* -->
+    <script src="lib/angular-filter.min.js"></script>
 
-        <!-- The ngCordova library exposes the Cordova API as Angular services. -->
-        <script src="lib/ng-cordova.js"></script>
+    <!-- *** Cordova Library ************************************************************* -->
 
-        <!-- This will be a 404 during development; it is copied into package at build time. -->
-        <script src="cordova.js"></script>
+    <!-- The ngCordova library exposes the Cordova API as Angular services. -->
+    <script src="lib/ng-cordova.js"></script>
 
-        <!-- *** Third Party Libraries ******************************************************* -->
+    <!-- This will be a 404 during development; it is copied into package at build time. -->
+    <script src="cordova.js"></script>
 
-        <script src="lib/lodash.min.js"></script>
-        <script src="lib/moment.min.js"></script>
-        <script src="lib/URI.min.js"></script>
-        <link href="lib/nprogress/nprogress.css" rel="stylesheet" />
-        <script src="lib/nprogress/nprogress.js"></script>
+    <!-- *** Third Party Libraries ******************************************************* -->
 
-        <!-- *** Application Specific Dependencies ******************************************* -->
+    <script src="lib/lodash.min.js"></script>
+    <script src="lib/moment.min.js"></script>
+    <script src="lib/URI.min.js"></script>
+    <link href="lib/nprogress/nprogress.css" rel="stylesheet" />
+    <script src="lib/nprogress/nprogress.js"></script>
 
-        <!-- Styles -->
-        <link href="css/ionic-overrides.css" rel="stylesheet">
-        <link href="css/nprogress-overrides.css" rel="stylesheet">
-        <link href="css/style.css" rel="stylesheet">
-        <link href="css/devices.css" rel="stylesheet">
+    <!-- *** Application Specific Dependencies ******************************************* -->
 
-        <!-- Models -->
-        <script src="app/Models/Misc.js"></script>
-        <script src="app/Models/Settings/LogEntry.js"></script>
-        <script src="app/Models/Settings/Camera.js"></script>
-        <script src="app/Models/Dialogs/DialogOptions.js"></script>
-        <script src="app/Models/Dialogs/PinEntryDialogModel.js"></script>
-        <script src="app/Models/Dialogs/PinEntryDialogResultModel.js"></script>
+    <!-- Styles -->
+    <link href="css/ionic-overrides.css" rel="stylesheet">
+    <link href="css/nprogress-overrides.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/devices.css" rel="stylesheet">
 
-        <!-- View Models -->
-        <script src="app/ViewModels/EmptyViewModel.js"></script>
-        <script src="app/ViewModels/MenuViewModel.js"></script>
-        <script src="app/ViewModels/CategoryViewModel.js"></script>
-        <script src="app/ViewModels/CategoryItemViewModel.js"></script>
-        <script src="app/ViewModels/SecurityViewModel.js"></script>
-        <script src="app/ViewModels/ThermostatViewModel.js"></script>
-        <script src="app/ViewModels/SmartPlugsViewModel.js"></script>
-        <script src="app/ViewModels/CamerasViewModel.js"></script>
-        <script src="app/ViewModels/CameraViewViewModel.js"></script>
-        <script src="app/ViewModels/Dialogs/ReorderCategoriesViewModel.js"></script>
-        <script src="app/ViewModels/Dialogs/PinEntryViewModel.js"></script>
-        <script src="app/ViewModels/Dialogs/SetMultipleSmartPlugsStateViewModel.js"></script>
-        <script src="app/ViewModels/Settings/LogsViewModel.js"></script>
-        <script src="app/ViewModels/Settings/HubViewModel.js"></script>
-        <script src="app/ViewModels/Settings/CamerasListViewModel.js"></script>
-        <script src="app/ViewModels/Settings/CameraEditViewModel.js"></script>
-        <script src="app/ViewModels/Settings/AboutViewModel.js"></script>
-        <script src="app/ViewModels/Settings/ConfigurePinViewModel.js"></script>
-        <script src="app/ViewModels/Settings/DeveloperViewModel.js"></script>
-        <script src="app/ViewModels/Settings/SettingsListViewModel.js"></script>
-        <script src="app/ViewModels/Settings/CloudSyncViewModel.js"></script>
+    <!-- Models -->
+    <script src="app/Models/Misc.js"></script>
+    <script src="app/Models/Settings/LogEntry.js"></script>
+    <script src="app/Models/Settings/Camera.js"></script>
+    <script src="app/Models/Dialogs/DialogOptions.js"></script>
+    <script src="app/Models/Dialogs/PinEntryDialogModel.js"></script>
+    <script src="app/Models/Dialogs/PinEntryDialogResultModel.js"></script>
 
-        <!-- Services -->
-        <script src="app/Services/Utilities.js"></script>
-        <script src="app/Services/FileUtilities.js"></script>
-        <script src="app/Services/Logger.js"></script>
-        <script src="app/Services/Preferences.js"></script>
-        <script src="app/Services/MockApis.js"></script>
-        <script src="app/Services/HttpInterceptor.js"></script>
-        <script src="app/Services/AlertMeApiHttpInteceptor.js"></script>
-        <script src="app/Services/UiHelper.js"></script>
-        <script src="app/Services/AlertMeApi.js"></script>
-        <script src="app/Services/HubDataSource.js"></script>
+    <!-- View Models -->
+    <script src="app/ViewModels/EmptyViewModel.js"></script>
+    <script src="app/ViewModels/MenuViewModel.js"></script>
+    <script src="app/ViewModels/CategoryViewModel.js"></script>
+    <script src="app/ViewModels/CategoryItemViewModel.js"></script>
+    <script src="app/ViewModels/SecurityViewModel.js"></script>
+    <script src="app/ViewModels/ThermostatViewModel.js"></script>
+    <script src="app/ViewModels/SmartPlugsViewModel.js"></script>
+    <script src="app/ViewModels/CamerasViewModel.js"></script>
+    <script src="app/ViewModels/CameraViewViewModel.js"></script>
+    <script src="app/ViewModels/Devices/DevicesListViewModel.js"></script>
+    <script src="app/ViewModels/Devices/DevicesInfoViewModel.js"></script>
+    <script src="app/ViewModels/Dialogs/ReorderCategoriesViewModel.js"></script>
+    <script src="app/ViewModels/Dialogs/PinEntryViewModel.js"></script>
+    <script src="app/ViewModels/Dialogs/SetMultipleSmartPlugsStateViewModel.js"></script>
+    <script src="app/ViewModels/Settings/LogsViewModel.js"></script>
+    <script src="app/ViewModels/Settings/HubViewModel.js"></script>
+    <script src="app/ViewModels/Settings/CamerasListViewModel.js"></script>
+    <script src="app/ViewModels/Settings/CameraEditViewModel.js"></script>
+    <script src="app/ViewModels/Settings/AboutViewModel.js"></script>
+    <script src="app/ViewModels/Settings/ConfigurePinViewModel.js"></script>
+    <script src="app/ViewModels/Settings/DeveloperViewModel.js"></script>
+    <script src="app/ViewModels/Settings/SettingsListViewModel.js"></script>
+    <script src="app/ViewModels/Settings/CloudSyncViewModel.js"></script>
 
-        <!-- Directives -->
-        <script src="app/Directives/BaseDirective.js"></script>
-        <script src="app/Directives/IconPanelDirective.js"></script>
-        <script src="app/Directives/OnLoadDirective.js"></script>
-        <script src="app/Directives/ModelOnBlurDirective.js"></script>
+    <!-- Services -->
+    <script src="app/Services/Utilities.js"></script>
+    <script src="app/Services/FileUtilities.js"></script>
+    <script src="app/Services/Logger.js"></script>
+    <script src="app/Services/Preferences.js"></script>
+    <script src="app/Services/MockApis.js"></script>
+    <script src="app/Services/HttpInterceptor.js"></script>
+    <script src="app/Services/AlertMeApiHttpInteceptor.js"></script>
+    <script src="app/Services/UiHelper.js"></script>
+    <script src="app/Services/AlertMeApi.js"></script>
+    <script src="app/Services/HubDataSource.js"></script>
 
-        <!-- Filters -->
-        <script src="app/Filters/ObjectToArrayFilter.js"></script>
-        <script src="app/Filters/TitleCaseFilter.js"></script>
-        <script src="app/Filters/ThousandsFilter.js"></script>
+    <!-- Directives -->
+    <script src="app/Directives/BaseDirective.js"></script>
+    <script src="app/Directives/IconPanelDirective.js"></script>
+    <script src="app/Directives/OnLoadDirective.js"></script>
+    <script src="app/Directives/ModelOnBlurDirective.js"></script>
 
-        <!-- Controllers -->
-        <script src="app/Controllers/BaseController.js"></script>
-        <script src="app/Controllers/MenuController.js"></script>
-        <script src="app/Controllers/CategoryController.js"></script>
-        <script src="app/Controllers/SecurityController.js"></script>
-        <script src="app/Controllers/ThermostatController.js"></script>
-        <script src="app/Controllers/SmartPlugsController.js"></script>
-        <script src="app/Controllers/CamerasController.js"></script>
-        <script src="app/Controllers/CameraViewController.js"></script>
-        <script src="app/Controllers/Dialogs/BaseDialogController.js"></script>
-        <script src="app/Controllers/Dialogs/ReorderCategoriesController.js"></script>
-        <script src="app/Controllers/Dialogs/PinEntryController.js"></script>
-        <script src="app/Controllers/Dialogs/SetMultipleSmartPlugsStateController.js"></script>
-        <script src="app/Controllers/Settings/SettingsListController.js"></script>
-        <script src="app/Controllers/Settings/HubController.js"></script>
-        <script src="app/Controllers/Settings/CamerasListController.js"></script>
-        <script src="app/Controllers/Settings/CameraEditController.js"></script>
-        <script src="app/Controllers/Settings/LogsController.js"></script>
-        <script src="app/Controllers/Settings/LogEntryController.js"></script>
-        <script src="app/Controllers/Settings/DeveloperController.js"></script>
-        <script src="app/Controllers/Settings/AboutController.js"></script>
-        <script src="app/Controllers/Settings/ConfigurePinController.js"></script>
-        <script src="app/Controllers/Settings/CloudSyncController.js"></script>
+    <!-- Filters -->
+    <script src="app/Filters/ObjectToArrayFilter.js"></script>
+    <script src="app/Filters/TitleCaseFilter.js"></script>
+    <script src="app/Filters/ThousandsFilter.js"></script>
 
-        <!-- Application Bootstrap -->
-        <script src="app/Application.js"></script>
+    <!-- Controllers -->
+    <script src="app/Controllers/BaseController.js"></script>
+    <script src="app/Controllers/MenuController.js"></script>
+    <script src="app/Controllers/CategoryController.js"></script>
+    <script src="app/Controllers/SecurityController.js"></script>
+    <script src="app/Controllers/ThermostatController.js"></script>
+    <script src="app/Controllers/SmartPlugsController.js"></script>
+    <script src="app/Controllers/CamerasController.js"></script>
+    <script src="app/Controllers/CameraViewController.js"></script>
+    <script src="app/Controllers/Dialogs/BaseDialogController.js"></script>
+    <script src="app/Controllers/Dialogs/ReorderCategoriesController.js"></script>
+    <script src="app/Controllers/Dialogs/PinEntryController.js"></script>
+    <script src="app/Controllers/Dialogs/SetMultipleSmartPlugsStateController.js"></script>
+    <script src="app/Controllers/Devices/DevicesListController.js"></script>
+    <script src="app/Controllers/Devices/DevicesInfoController.js"></script>
+    <script src="app/Controllers/Settings/SettingsListController.js"></script>
+    <script src="app/Controllers/Settings/HubController.js"></script>
+    <script src="app/Controllers/Settings/CamerasListController.js"></script>
+    <script src="app/Controllers/Settings/CameraEditController.js"></script>
+    <script src="app/Controllers/Settings/LogsController.js"></script>
+    <script src="app/Controllers/Settings/LogEntryController.js"></script>
+    <script src="app/Controllers/Settings/DeveloperController.js"></script>
+    <script src="app/Controllers/Settings/AboutController.js"></script>
+    <script src="app/Controllers/Settings/ConfigurePinController.js"></script>
+    <script src="app/Controllers/Settings/CloudSyncController.js"></script>
 
-    </head>
+    <!-- Application Bootstrap -->
+    <script src="app/Application.js"></script>
 
-    <body ng-app="JustinCredible.SmartHomeMobile.Application">
-        <ion-nav-view></ion-nav-view>
-    </body>
+</head>
+
+<body ng-app="JustinCredible.SmartHomeMobile.Application">
+    <ion-nav-view></ion-nav-view>
+</body>
 
 </html>

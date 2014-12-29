@@ -76,10 +76,6 @@
 
         //#endregion
 
-        //#region Attribute/Expression Properties
-
-        //#endregion
-
         //#region Events
 
         public refresh_click(): void {
