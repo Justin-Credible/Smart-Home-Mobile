@@ -576,8 +576,12 @@
         }
 
         private getMockHomeStatusGetResponse(): AlertMeApiTypes.HomeStatusGetResult {
+            var devices: { [deviceId: string]: AlertMeApiTypes.HomeStatusDevice },
+                hub: AlertMeApiTypes.HomeStatusHub;
 
-            var devices: { [deviceId: string]: AlertMeApiTypes.HomeStatusDevice } = {
+            //#region Devices
+
+            devices = {
                 "00-00-00-00-00-00-00-01": {
                     "name": "Entryway Range Extender",
                     "type": "Repeater",
@@ -1003,45 +1007,66 @@
                 }
             };
 
+            //#endregion
+
+            //#region Hub
+
+            hub = {
+                "available": true,
+                "availableStatus": "HUB_ONLINE",
+                "configured": true,
+                "hubOs": "1.29",
+                "version": "4.02r04",
+                "latestVersion": "4.03r09",
+
+                "upgrading": false,
+                "upgrade": "ELIGIBLE",
+
+                //"upgrading": true,
+                //"upgrade": "ELIGIBLE",
+
+                //"upgrading": false,
+                //"upgrade": "INELIGIBLE",
+                //"reason": "UPGRADE_NOT_POSSIBLE",
+
+                //"upgrading": false,
+                //"upgrade": "INELIGIBLE",
+                //"reason": "ALREADY_AT_LATEST_VERSION",
+
+                "powerType": "AC",
+                "connectionType": "BROADBAND",
+                "onSince": 1406404600,
+                "upTime": 7348015,
+                "timezone": 0,
+                "timezoneName": "America/Los_Angeles",
+                "dateInstallDone": 1390785641,
+                "daylightSaving": "EU",
+                "behaviourId": 77042,
+                "behaviourType": "HOME",
+                "model": "JUPITER",
+                "ip": "192.168.1.30",
+                "externalIp": "10.56.0.14",
+                "simPresent": false,
+                "gprsSignalStrength": null,
+                "currentImei": null,
+                "currentIccid": null,
+                "currentSimId": null,
+                "hardwareRevision": "6",
+                "battery": "4.1619999999999999",
+                "zigbeeNetworkInfo": "25",
+                "macAddress": "IHR-048 (00-1C-2B-00-00-00)",
+                "zwaveRole": "PRIMARY",
+                "rerouteZwaveNetworkStatus": "Failed",
+                "name": "Justin's Home",
+                "status": "99",
+                "simHistory": []
+            };
+
+            //#endregion
+
             return {
-                "hub": {
-                    "available": true,
-                    "availableStatus": "HUB_ONLINE",
-                    "upgrading": false,
-                    "configured": true,
-                    "hubOs": "1.29",
-                    "version": "4.02r04",
-                    "latestVersion": "4.03r09",
-                    "upgrade": "ELIGIBLE",
-                    "powerType": "AC",
-                    "connectionType": "BROADBAND",
-                    "onSince": 1406404600,
-                    "upTime": 7348015,
-                    "timezone": 0,
-                    "timezoneName": "America/Los_Angeles",
-                    "dateInstallDone": 1390785641,
-                    "daylightSaving": "EU",
-                    "behaviourId": 77042,
-                    "behaviourType": "HOME",
-                    "model": "JUPITER",
-                    "ip": "192.168.1.30",
-                    "externalIp": "10.56.0.14",
-                    "simPresent": false,
-                    "gprsSignalStrength": null,
-                    "currentImei": null,
-                    "currentIccid": null,
-                    "currentSimId": null,
-                    "hardwareRevision": "6",
-                    "battery": "4.1619999999999999",
-                    "zigbeeNetworkInfo": "25",
-                    "macAddress": "IHR-048 (00-1C-2B-00-00-00)",
-                    "zwaveRole": "PRIMARY",
-                    "rerouteZwaveNetworkStatus": "Failed",
-                    "name": "Justin's Home",
-                    "status": "99",
-                    "simHistory": []
-                },
-                devices: devices,
+                "hub": hub,
+                "devices": devices,
                 "widgetStatus": "OK",
                 "widgetVisible": true
             };

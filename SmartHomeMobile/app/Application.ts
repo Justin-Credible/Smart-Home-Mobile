@@ -91,6 +91,7 @@ module JustinCredible.SmartHomeMobile.Application {
         ngModule.controller("PinEntryController", Controllers.PinEntryController);
         ngModule.controller("SetMultipleSmartPlugsStateController", Controllers.SetMultipleSmartPlugsStateController);
         ngModule.controller("DevicesListController", Controllers.DevicesListController);
+        ngModule.controller("DevicesHubInfoController", Controllers.DevicesHubInfoController);
         ngModule.controller("DevicesInfoController", Controllers.DevicesInfoController);
         ngModule.controller("SettingsListController", Controllers.SettingsListController);
         ngModule.controller("HubController", Controllers.HubController);
@@ -344,6 +345,16 @@ module JustinCredible.SmartHomeMobile.Application {
                 "menuContent": {
                     templateUrl: "templates/Devices/Devices-List.html",
                     controller: "DevicesListController"
+                }
+            }
+        });
+
+        $stateProvider.state("app.devices-hub-info", {
+            url: "/devices/hub",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Devices/Devices-Hub-Info.html",
+                    controller: "DevicesHubInfoController"
                 }
             }
         });

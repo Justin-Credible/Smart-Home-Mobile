@@ -278,46 +278,48 @@ declare module JustinCredible.SmartHomeMobile.AlertMeApiTypes {
      * Response for GET /widgets/homeStatus
      */
     interface HomeStatusGetResult {
-        hub: {
-            available: boolean;
-            availableStatus: string;
-            upgrading: boolean;
-            configured: boolean;
-            hubOs: string;
-            version: string;
-            latestVersion: string;
-            upgrade: string;
-            powerType: string;
-            connectionType: string;
-            onSince: number;
-            upTime: number;
-            timezone: number;
-            timezoneName: string;
-            dateInstallDone: number;
-            daylightSaving: string;
-            behaviourId: number;
-            behaviourType: string;
-            model: string;
-            ip: string;
-            externalIp: string;
-            simPresent: boolean;
-            gprsSignalStrength: number;
-            currentImei: string;
-            currentIccid: string;
-            currentSimId: string;
-            hardwareRevision: string;
-            battery: string;
-            zigbeeNetworkInfo: string;
-            macAddress: string;
-            zwaveRole: string;
-            rerouteZwaveNetworkStatus: string;
-            name: string;
-            status: string;
-            simHistory: HomeStatusSimHistory[];
-        };
+        hub: HomeStatusHub;
         devices: { [deviceId: string]: HomeStatusDevice };
         widgetStatus: string;
         widgetVisible: boolean;
+    }
+
+    interface HomeStatusHub {
+        available: boolean;
+        availableStatus: string;
+        upgrading: boolean;
+        configured: boolean;
+        hubOs: string;
+        version: string;
+        latestVersion: string;
+        upgrade: string;
+        powerType: string;
+        connectionType: string;
+        onSince: number;
+        upTime: number;
+        timezone: number;
+        timezoneName: string;
+        dateInstallDone: number;
+        daylightSaving: string;
+        behaviourId: number;
+        behaviourType: string;
+        model: string;
+        ip: string;
+        externalIp: string;
+        simPresent: boolean;
+        gprsSignalStrength: number;
+        currentImei: string;
+        currentIccid: string;
+        currentSimId: string;
+        hardwareRevision: string;
+        battery: string;
+        zigbeeNetworkInfo: string;
+        macAddress: string;
+        zwaveRole: string;
+        rerouteZwaveNetworkStatus: string;
+        name: string;
+        status: string;
+        simHistory: HomeStatusSimHistory[];
     }
 
     /**

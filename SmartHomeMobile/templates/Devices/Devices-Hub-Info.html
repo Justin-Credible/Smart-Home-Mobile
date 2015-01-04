@@ -1,0 +1,224 @@
+﻿<ion-view title="Device Info">
+
+    <ion-nav-buttons side="left">
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <button class="button icon ion-loop" ng-click="controller.refresh_click()" ng-hide="blockingRequestInProgress || nonBlockingRequestInProgress"></button>
+    </ion-nav-buttons>
+
+    <ion-content class="has-header about-view" scrolling="true" padding="true">
+
+        <ion-refresher pulling-text="Pull to refresh..."
+                       refreshing-text="Refreshing..."
+                       on-refresh="controller.refresher_refresh()">
+        </ion-refresher>
+
+        <div class="last-updated-row">Last updated at {{viewModel.lastUpdated | date: 'MM/dd/yyyy HH:mm:ss Z'}}</div>
+
+        <ion-list class="list-inset card">
+
+            <ion-item class="item-divider">
+                General Information
+            </ion-item>
+
+            <ion-item>
+                <h2>Name</h2>
+                <p>{{viewModel.hub.name}}</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>Configured</h2>
+                <p>{{viewModel.hub.configured}}</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>Behavior</h2>
+                <p>{{viewModel.hub.behaviourType}} ({{viewModel.hub.behaviourId}})</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>Timezone</h2>
+                <p>{{viewModel.hub.timezoneName}}</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>Power on Time</h2>
+                <p>{{controller.getFormattedDate(viewModel.hub.onSince)}}</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>Up Time</h2>
+                <p>{{controller.getFormattedUpTime(viewModel.hub.upTime)}}</p>
+            </ion-item>
+
+            <ion-item class="item-divider">
+                Communication
+            </ion-item>
+
+            <ion-item class="item-icon-right">
+                <h2 ng-show="viewModel.hub.available">Available</h2>
+                <h2 ng-show="!viewModel.hub.available" class="assertive">Not Available</h2>
+                <p>{{viewModel.hub.availableStatus | TitleCase }}</p>
+                <i class="icon" ng-class="{ 'ion-checkmark-round': viewModel.hub.available, 'ion-alert-circled assertive': !viewModel.hub.available }"></i>
+            </ion-item>
+
+            <ion-item class="item-icon-right">
+                <h2>Internet Connection</h2>
+                <p ng-if="viewModel.hub.connectionType === 'GPRS'">Cellular/GPRS</p>
+                <p ng-if="viewModel.hub.connectionType === 'BROADBAND'">Broadband</p>
+                <p ng-if="viewModel.hub.connectionType !== 'GPRS' && viewModel.hub.connectionType !== 'BROADBAND'">
+                    {{viewModel.hub.connectionType | TitleCase }}
+                </p>
+                <i class="icon ion-checkmark-round" ng-class="{ 'ion-wifi': viewModel.hub.connectionType === 'GPRS' }"></i>
+            </ion-item>
+
+            <ion-item>
+                <h2>Internal IP Address</h2>
+                <p>{{viewModel.hub.ip}}</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>External IP Address</h2>
+                <p>{{viewModel.hub.externalIp}}</p>
+            </ion-item>
+
+            <ion-item class="item-icon-right">
+                Has SIM
+                <i class="icon" ng-class=" { 'ion-checkmark-round': viewModel.hub.simPresent, 'ion-close-round': !viewModel.hub.simPresent } "></i>
+            </ion-item>
+
+            <ion-item ng-show="viewModel.hub.simPresent">
+                <h2>SIM ID</h2>
+                <p>{{viewModel.hub.currentSimId}}</p>
+            </ion-item>
+
+            <ion-item ng-show="viewModel.hub.simPresent">
+                <h2>SIM IMEI</h2>
+                <p>{{viewModel.hub.currentImei}}</p>
+            </ion-item>
+
+            <ion-item ng-show="viewModel.hub.simPresent">
+                <h2>SIM ICCID</h2>
+                <p>{{viewModel.hub.currentIccid}}</p>
+            </ion-item>
+
+            <ion-item class="item-divider">
+                Power
+            </ion-item>
+
+            <ion-item class="item-icon-right"
+                      ng-show="viewModel.hub.powerType === 'AC'">
+                On AC Power
+                <i class="icon ion-outlet"></i>
+            </ion-item>
+
+            <ion-item class="item-icon-right assertive"
+                      ng-show="viewModel.hub.powerType === 'BATTERY'">
+                On Battery Backup
+                <i class="icon ion-alert-circled assertive"></i>
+            </ion-item>
+
+            <ion-item class="item-icon-right"
+                      ng-show="viewModel.hub.powerType === 'BATTERY'">
+                <h2>Battery Information</h2>
+                <p ng-class="{ 'assertive': viewModel.hub.batteryPercentage <= 15 }">Charge: {{viewModel.hub.batteryPercentage}}% ({{viewModel.hub.battery}}v)</p>
+                <i class="icon {{controller.getBatteryIconClassName(viewModel.hub.batteryPercentage)}}"></i>
+            </ion-item>
+
+            <ion-item class="item-divider">
+                Software
+            </ion-item>
+
+            <ion-item>
+                <h2>Hub OS Version</h2>
+                <p>{{controller.getVersionDisplayText(viewModel.hub.hubOs)}}</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>Software Version</h2>
+                <p>{{controller.getVersionDisplayText(viewModel.hub.version)}}</p>
+            </ion-item>
+
+            <ion-item class="item-icon-right">
+
+                <!-- The hub is ineligible for an updgrade because it is already at the latest version. -->
+                <h2 ng-if="!viewModel.hub.upgrading && viewModel.hub.upgrade === 'INELIGIBLE' && viewModel.hub.reason === 'ALREADY_AT_LATEST_VERSION'">
+                    No Updates Available
+                </h2>
+                <p ng-if="!viewModel.hub.upgrading && viewModel.hub.upgrade === 'INELIGIBLE' && viewModel.hub.reason === 'ALREADY_AT_LATEST_VERSION'">
+                    Already at Latest Version
+                </p>
+                <i ng-if="!viewModel.hub.upgrading && viewModel.hub.upgrade === 'INELIGIBLE' && viewModel.hub.reason === 'ALREADY_AT_LATEST_VERSION'"
+                   class="icon ion-checkmark-round"></i>
+
+                <!-- The hub is ineligible for an updgrade and NOT at the latest version. -->
+                <h2 ng-if="!viewModel.hub.upgrading && viewModel.hub.upgrade === 'INELIGIBLE' && viewModel.hub.reason !== 'ALREADY_AT_LATEST_VERSION'">
+                    Ineligible for Update
+                </h2>
+                <p ng-if="!viewModel.hub.upgrading && viewModel.hub.upgrade === 'INELIGIBLE' && viewModel.hub.reason !== 'ALREADY_AT_LATEST_VERSION'">
+                    {{viewModel.hub.reason | TitleCase }}
+                </p>
+                <i ng-if="!viewModel.hub.upgrading && viewModel.hub.upgrade === 'INELIGIBLE' && viewModel.hub.reason !== 'ALREADY_AT_LATEST_VERSION'"
+                   class="icon ion-close-round"></i>
+
+                <!-- The hub is currently installing the new version. -->
+                <h2 ng-if="viewModel.hub.upgrading">Updates Available</h2>
+                <p ng-if="viewModel.hub.upgrading">Upgrading to {{controller.getVersionDisplayText(viewModel.hub.latestVersion)}}</p>
+                <i ng-if="viewModel.hub.upgrading" class="icon ion-loading-c"></i>
+
+                <!-- The hub is eligible for a newer version. -->
+                <h2 ng-if="!viewModel.hub.upgrading && viewModel.hub.upgrade == 'ELIGIBLE'">Updates Available</h2>
+                <p ng-if="!viewModel.hub.upgrading && viewModel.hub.upgrade == 'ELIGIBLE'">Version {{controller.getVersionDisplayText(viewModel.hub.latestVersion)}}</p>
+                <i ng-if="!viewModel.hub.upgrading && viewModel.hub.upgrade == 'ELIGIBLE'" class="icon ion-alert balanced"></i>
+
+            </ion-item>
+
+            <!--
+            If the hub isn't at the latest version and it isn't eligible for the lastes version
+            we display the version number here since there isn't room for it above in that case.
+            -->
+            <ion-item ng-show="!viewModel.hub.upgrading && viewModel.hub.upgrade === 'INELIGIBLE' && viewModel.hub.reason !== 'ALREADY_AT_LATEST_VERSION'">
+                <h2>Latest Software Version</h2>
+                <p>{{controller.getVersionDisplayText(viewModel.hub.latestVersion)}}</p>
+            </ion-item>
+
+            <ion-item class="item-divider">
+                Hardware
+            </ion-item>
+
+            <ion-item>
+                <h2>Model</h2>
+                <p>{{viewModel.hub.model}}</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>Hardware Revision</h2>
+                <p>{{controller.getVersionDisplayText(viewModel.hub.hardwareRevision)}}</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>MAC Address</h2>
+                <p>{{viewModel.hub.macAddress}}</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>Zigbee Network Info</h2>
+                <p>{{viewModel.hub.zigbeeNetworkInfo}}</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>Z-Wave Role</h2>
+                <p>{{viewModel.hub.zwaveRole}}</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>Re-route Z-Wave Network Status</h2>
+                <p>{{viewModel.hub.rerouteZwaveNetworkStatus}}</p>
+            </ion-item>
+
+        </ion-list>
+
+    </ion-content>
+
+</ion-view>

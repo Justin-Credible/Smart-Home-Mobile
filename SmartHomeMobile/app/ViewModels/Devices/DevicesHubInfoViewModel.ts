@@ -1,10 +1,10 @@
 ﻿module JustinCredible.SmartHomeMobile.ViewModels {
 
-    export class DevicesInfoViewModel {
+    export class DevicesHubInfoViewModel {
         public isRefreshing: boolean;
         public lastUpdated: Date;
 
-        public device: AlertMeApiTypes.HomeStatusDevice;
+        public hub: AlertMeApiTypes.HomeStatusHub;
     }
 
 }

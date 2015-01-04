@@ -3,13 +3,104 @@
     <ion-nav-buttons side="left">
     </ion-nav-buttons>
 
+    <ion-nav-buttons side="right">
+        <button class="button icon ion-loop" ng-click="controller.refresh_click()" ng-hide="blockingRequestInProgress || nonBlockingRequestInProgress"></button>
+    </ion-nav-buttons>
+
     <ion-content class="has-header about-view" scrolling="true" padding="true">
 
-        <ion-list class="card">
+        <ion-refresher pulling-text="Pull to refresh..."
+                       refreshing-text="Refreshing..."
+                       on-refresh="controller.refresher_refresh()">
+        </ion-refresher>
 
-            <ion-item class="item-avatar">
-                <img src="images/about-icon.png">
-                DEVICES INFO
+        <div class="last-updated-row">Last updated at {{viewModel.lastUpdated | date: 'MM/dd/yyyy HH:mm:ss Z'}}</div>
+
+        <ion-list class="list-inset card">
+
+            <ion-item class="item-divider">
+                General Information
+            </ion-item>
+
+            <ion-item>
+                <h2>Name</h2>
+                <p>{{viewModel.device.name}}</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>Type</h2>
+                <p>{{viewModel.device.type | TitleCase: true}}</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>Device ID</h2>
+                <p>{{viewModel.device.id}}</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>Hardware Revision</h2>
+                <p>{{controller.getVersionDisplayText(viewModel.device.hardwareRevision)}}</p>
+            </ion-item>
+
+            <ion-item class="item-divider">
+                Communication
+            </ion-item>
+
+            <ion-item>
+                <h2>Signal</h2>
+                <p ng-class="{ 'assertive': viewModel.device.lowSignal }">Stength: {{viewModel.device.signal}}%</p>
+            </ion-item>
+
+            <ion-item>
+                <h2>Protocols</h2>
+                <p>{{controller.getProtocolDisplayList(viewModel.device.protocol)}}</p>
+            </ion-item>
+
+            <ion-item ng-show="viewModel.device.missingProtocols != null">
+                <h2>Missing Protocols</h2>
+                <p>{{controller.getMissingProtocolDisplayList(viewModel.device.missingProtocols)}}</p>
+            </ion-item>
+
+            <ion-item class="item-divider">
+                Power
+            </ion-item>
+
+            <ion-item class="item-icon-right">
+                Has Mains Power
+                <i class="icon" ng-class=" { 'ion-checkmark-round': viewModel.device.mains, 'ion-close-round': !viewModel.device.mains } "></i>
+            </ion-item>
+
+            <ion-item class="item-icon-right">
+                Has Battery
+                <i class="icon" ng-class=" { 'ion-checkmark-round': viewModel.device.hasBattery, 'ion-close-round': !viewModel.device.hasBattery } "></i>
+            </ion-item>
+
+            <ion-item class="item-icon-right" ng-show="viewModel.device.hasBattery">
+                <h2>Battery Information</h2>
+                <p ng-class="{ 'assertive': viewModel.device.batteryPercentage <= 15 }">Charge: {{viewModel.device.batteryPercentage}}% ({{viewModel.device.battery}}v)</p>
+                <i class="icon {{controller.getBatteryIconClassName(viewModel.device.batteryPercentage)}}"></i>
+            </ion-item>
+
+            <ion-item class="item-divider">
+                Software
+            </ion-item>
+
+            <ion-item>
+                <h2>Version</h2>
+                <p>{{controller.getVersionDisplayText(viewModel.device.version)}}</p>
+            </ion-item>
+
+            <ion-item class="item-icon-right"
+                      ng-show="viewModel.device.upgrade === 'INELIGIBLE' && viewModel.device.reason === 'ALREADY_AT_LATEST_VERSION'">
+                <h2>No Updates Available</h2>
+                <p>Already at Latest Version</p>
+                <i class="icon ion-checkmark-round"></i>
+            </ion-item>
+
+            <ion-item class="item-icon-right"
+                      ng-show="viewModel.device.upgrade === 'ELIGIBLE'">
+                <h2>Updates Available</h2>
+                <i class="icon ion-alert balanced"></i>
             </ion-item>
 
         </ion-list>

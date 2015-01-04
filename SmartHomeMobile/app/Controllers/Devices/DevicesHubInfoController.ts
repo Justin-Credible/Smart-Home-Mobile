@@ -1,26 +1,20 @@
 ﻿module JustinCredible.SmartHomeMobile.Controllers {
 
-    export interface IDevicesInfoControllerStateParams {
-        deviceId: string;
+    export interface IDevicesHubInfoController {
+        viewModel: ViewModels.DevicesHubInfoViewModel;
     }
 
-    export interface IDevicesInfoController {
-        viewModel: ViewModels.DevicesInfoViewModel;
-    }
+    export class DevicesHubInfoController extends BaseController<ViewModels.DevicesHubInfoViewModel> implements IDevicesHubInfoController {
 
-    export class DevicesInfoController extends BaseController<ViewModels.DevicesInfoViewModel> implements IDevicesInfoController {
+        public static $inject = ["$scope", "HubDataSource", "Utilities", "Preferences"];
 
-        public static $inject = ["$scope", "$stateParams", "HubDataSource", "Utilities", "Preferences"];
-
-        private stateParams: IDevicesInfoControllerStateParams;
         private HubDataSource: Services.HubDataSource;
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
 
-        constructor($scope: ng.IScope, $stateParams: IDevicesInfoControllerStateParams, HubDataSource: Services.HubDataSource, Utilities: Services.Utilities, Preferences: Services.Preferences) {
-            super($scope, ViewModels.DevicesInfoViewModel);
+        constructor($scope: ng.IScope, HubDataSource: Services.HubDataSource, Utilities: Services.Utilities, Preferences: Services.Preferences) {
+            super($scope, ViewModels.DevicesHubInfoViewModel);
 
-            this.stateParams = $stateParams;
             this.HubDataSource = HubDataSource;
             this.Utilities = Utilities;
             this.Preferences = Preferences;
@@ -46,7 +40,7 @@
 
         private populateViewModel(homeStatus: AlertMeApiTypes.HomeStatusGetResult, homeStatusLastUpdated: Moment): void {
             this.viewModel.lastUpdated = homeStatusLastUpdated.toDate();
-            this.viewModel.device = _.find(homeStatus.devices, { "id": this.stateParams.deviceId });
+            this.viewModel.hub = homeStatus.hub;
         }
 
         private refresh(): void {
@@ -100,12 +94,25 @@
             return classNames;
         }
 
-        public getProtocolDisplayList(protocols: string[]): string {
-            return protocols == null ? "" : protocols.join(", ");
+        public getFormattedDate(timestamp: number): string {
+
+            if (!timestamp) {
+                return "N/A";
+            }
+
+            return moment.unix(timestamp).format("MMM Do YYYY, h:mm a");
         }
 
-        public getMissingProtocolDisplayList(missingProtocols: { [id: string]: string }): string {
-            return missingProtocols == null ? "" : _.values(missingProtocols).join(", ");
+        public getFormattedUpTime(upTimeTotalSeconds: number): string {
+            var days: number;
+
+            if (!upTimeTotalSeconds) {
+                return "N/A";
+            }
+
+            days = upTimeTotalSeconds / 60 / 60 / 24;
+
+            return days.toFixed(1) + " days";
         }
 
         //#endregion

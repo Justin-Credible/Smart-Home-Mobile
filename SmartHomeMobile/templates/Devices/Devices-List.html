@@ -56,20 +56,18 @@
                 <i ng-if="viewModel.homeStatus.hub.upgrading" class="icon ion-loading-c"></i>
             </ion-item>
 
-            <!--
             <ion-item class="item-icon-right" href="#/app/devices/hub">
                 More Information
                 <i class="icon ion-ios7-arrow-forward"></i>
             </ion-item>
-            -->
 
             <ion-item class="item-divider">
                 Hub Devices ({{viewModel.deviceCount}})
             </ion-item>
 
             <ion-item ng-repeat="device in viewModel.homeStatus.devices | ObjectToArray | orderBy: 'type'"
-                      class="item-icon-left">
-                      <!--href="#/app/devices/info/{{device.id}}">-->
+                      class="item-icon-left item-icon-right"
+                      href="#/app/devices/info/{{device.id}}">
 
                 <i class="icon {{controller.GetDeviceTypeIcon(device.type)}}"></i>
 
@@ -81,7 +79,7 @@
                     <span class="assertive" ng-show="device.hasBattery && device.batteryPercentage <= 15">Low Battery ({{device.batteryPercentage}}%)</span>
                 </p>
 
-                <!--<i class="icon ion-ios7-arrow-forward"></i>-->
+                <i class="icon ion-ios7-arrow-forward"></i>
             </ion-item>
 
         </ion-list>
