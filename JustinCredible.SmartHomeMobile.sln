@@ -7,6 +7,10 @@ Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "JustinCredible.SmartHomeMob
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7BA14619-FAE8-4A08-BE35-965EE3FAACF7}"
 	ProjectSection(SolutionItems) = preProject
+		SmartHomeMobile\.jscsrc = SmartHomeMobile\.jscsrc
+		SmartHomeMobile\.jshintrc = SmartHomeMobile\.jshintrc
+		SmartHomeMobile\.weignore = SmartHomeMobile\.weignore
+		SmartHomeMobile\tslint.json = SmartHomeMobile\tslint.json
 		WebEssentials-Settings.json = WebEssentials-Settings.json
 	EndProjectSection
 EndProject
