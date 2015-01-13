@@ -560,10 +560,11 @@ module JustinCredible.SmartHomeMobile.Application {
         }
 
         try {
-        Logger = angular.element(document.body).injector().get("Logger");
-        Logger.logWindowError(message, uri, lineNumber, columnNumber);
+            Logger = angular.element(document.body).injector().get("Logger");
+            Logger.logWindowError(message, uri, lineNumber, columnNumber);
         }
         catch (ex) {
+            console.log(ex);
         }
     }
 

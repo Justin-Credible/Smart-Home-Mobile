@@ -1,17 +1,17 @@
 ﻿module JustinCredible.SmartHomeMobile.Services {
 
     /**
-    * This is a custom interceptor for the AlertMe API HTTP requests.
-    * 
-    * It allows us to seamlessly handle re-authentication for 401's.
-    * 
-    * NOTE: Unfortunately, due to a circular dependency of
-    *       $http <- AlertMeApiHttpInteceptor <- $http <- $ionicTemplateCache
-    * and
-    *       $http <- AlertMeApi <- AlertMeApiHttpInteceptor <- $http <- $ionicTemplateCache
-    * 
-    * we have to use the $injector service to grab the $http and AlertMeApi services at runtime.
-    */
+     * This is a custom interceptor for the AlertMe API HTTP requests.
+     * 
+     * It allows us to seamlessly handle re-authentication for 401's.
+     * 
+     * NOTE: Unfortunately, due to a circular dependency of
+     *       $http <- AlertMeApiHttpInteceptor <- $http <- $ionicTemplateCache
+     * and
+     *       $http <- AlertMeApi <- AlertMeApiHttpInteceptor <- $http <- $ionicTemplateCache
+     * 
+     * we have to use the $injector service to grab the $http and AlertMeApi services at runtime.
+     */
     export class AlertMeApiHttpInteceptor {
 
         private $rootScope: ng.IRootScopeService;

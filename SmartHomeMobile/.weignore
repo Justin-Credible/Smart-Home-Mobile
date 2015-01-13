@@ -7,3 +7,5 @@
 **/bld/**
 **/bin/**
 **/templates/**
+**/*.d.ts
+*.d.ts

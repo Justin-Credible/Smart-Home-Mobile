@@ -12,7 +12,6 @@
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
         private UiHelper: Services.UiHelper;
-        private versionInfo: Interfaces.VersionInfo;
 
         constructor($scope: ng.IScope, $location: ng.ILocationService, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
             super($scope, ViewModels.CamerasListViewModel);

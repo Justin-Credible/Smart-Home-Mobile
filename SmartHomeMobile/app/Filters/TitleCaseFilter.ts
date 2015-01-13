@@ -26,7 +26,7 @@
                 // enum-like strings where underscores are used instead of spaces.
                 s = s.replace(/_/g, " ");
 
-                return s.toString().toLowerCase().replace(/\b([a-z])/g, function (ch) {
+                return s.toString().toLowerCase().replace(/\b([a-z])/g, function (ch: string) {
                     return ch.toUpperCase();
                 });
             }

@@ -14,7 +14,7 @@
 
             var array = [];
 
-            angular.forEach(obj, function (element) {
+            angular.forEach(obj, function (element: any) {
                 array.push(element);
             });
 

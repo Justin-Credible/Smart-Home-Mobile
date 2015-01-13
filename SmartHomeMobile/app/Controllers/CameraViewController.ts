@@ -18,7 +18,6 @@
         private $ionicViewService: any;
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
-        private UiHelper: Services.UiHelper;
 
         private pollingTimeout: number;
 

@@ -17,7 +17,7 @@
         private modalInstance: any;
         private data: D;
 
-        constructor(scope: ng.IScope, ViewModelType, dialogId: string) {
+        constructor(scope: ng.IScope, ViewModelType: any, dialogId: string) {
             super(scope, ViewModelType);
 
             this.dialogId = dialogId;

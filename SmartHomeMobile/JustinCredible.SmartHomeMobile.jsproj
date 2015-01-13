@@ -246,7 +246,6 @@
     <TypeScriptCompile Include="app\ViewModels\CamerasViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\CameraViewViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\CategoryItemViewModel.ts" />
-    <TypeScriptCompile Include="app\ViewModels\CategoryViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Devices\DevicesHubInfoViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Devices\DevicesInfoViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Devices\DevicesListViewModel.ts" />

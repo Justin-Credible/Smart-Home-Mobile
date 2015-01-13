@@ -19,8 +19,6 @@
         private Preferences: Services.Preferences;
         private UiHelper: Services.UiHelper;
 
-        private pollingInterval: number;
-
         constructor($scope: ng.IScope, $stateParams: ICameraEditControllerStateParams, $location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
             super($scope, ViewModels.CameraEditViewModel);
 

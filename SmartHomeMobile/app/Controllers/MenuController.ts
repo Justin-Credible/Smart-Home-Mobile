@@ -15,8 +15,6 @@
         private Preferences: Services.Preferences;
         private AlertMeApi: Services.AlertMeApi;
 
-        private isReloginPromptVisible = false;
-
         constructor($scope: ng.IScope, $location: ng.ILocationService, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, AlertMeApi: Services.AlertMeApi) {
             super($scope, ViewModels.MenuViewModel);
 

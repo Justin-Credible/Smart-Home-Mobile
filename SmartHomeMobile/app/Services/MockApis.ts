@@ -1078,7 +1078,7 @@
 
         //#region Toast
 
-        private toast(message) {
+        private toast(message: string) {
             var div: HTMLDivElement,
                 existingToasts: number;
 
@@ -1157,7 +1157,7 @@
             buttonLabels.forEach((value: string, index: number) => {
                 buttons.push({
                     text: value,
-                    onTap: function (e) {
+                    onTap: function (e: MouseEvent) {
                         // The native confirm API uses a 1 based button index (not zero based!).
                         return index + 1;
                     }
@@ -1186,7 +1186,7 @@
             buttonLabels.forEach((value: string, index: number) => {
                 buttons.push({
                     text: value,
-                    onTap: function (e) {
+                    onTap: function (e: MouseEvent) {
                         var result: NotificationPromptResult,
                             input: HTMLInputElement;
 
