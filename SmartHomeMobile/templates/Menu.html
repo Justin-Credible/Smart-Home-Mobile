@@ -20,7 +20,7 @@
                 <ion-item class="item-divider">Smart Home</ion-item>
 
                 <ion-item ng-repeat="category in viewModel.categories"
-                          class="item menu-close item-icon-left nav-clear" href="{{category.href}}">
+                          class="item menu-close item-icon-left" href="{{category.href}}">
                     <i class="icon {{category.icon}}"></i>
                     {{category.name}}
                 </ion-item>
@@ -33,12 +33,12 @@
                 </ion-item>
 
 
-                <ion-item class="item-icon-left menu-close nav-clear" href="#/app/devices/list">
+                <ion-item class="item-icon-left menu-close" href="#/app/devices/list">
                     <i class="icon ion-ios7-bolt"></i>
                     Device List
                 </ion-item>
 
-                <ion-item class="item-icon-left menu-close nav-clear" href="#/app/settings/list">
+                <ion-item class="item-icon-left menu-close" href="#/app/settings/list">
                     <i class="icon ion-ios7-gear"></i>
                     Settings
                 </ion-item>

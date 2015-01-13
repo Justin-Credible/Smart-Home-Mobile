@@ -80,7 +80,6 @@ module JustinCredible.SmartHomeMobile.Application {
 
         // Define each of the controllers.
         ngModule.controller("MenuController", Controllers.MenuController);
-        ngModule.controller("CategoryController", Controllers.CategoryController);
         ngModule.controller("SecurityController", Controllers.SecurityController);
         ngModule.controller("ThermostatController", Controllers.ThermostatController);
         ngModule.controller("SmartPlugsController", Controllers.SmartPlugsController);

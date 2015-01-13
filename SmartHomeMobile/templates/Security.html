@@ -1,4 +1,4 @@
-﻿<ion-view title="Security">
+﻿<ion-view view-title="Security">
 
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="button icon ion-navicon phone-both-tablet-portrait"></button>
@@ -68,7 +68,7 @@
                 {{lock.name}}
 
                 <label class="toggle toggle-positive">
-                    <input type="checkbox" ng-model="lock.lockState" ng-true-value="LOCKED" ng-false-value="UNLOCKED" ng-click="controller.lockToggle_click(lock)">
+                    <input type="checkbox" ng-model="lock.lockState" ng-true-value="'LOCKED'" ng-false-value="'UNLOCKED'" ng-click="controller.lockToggle_click(lock)">
                     <div class="track">
                         <div class="handle"></div>
                     </div>

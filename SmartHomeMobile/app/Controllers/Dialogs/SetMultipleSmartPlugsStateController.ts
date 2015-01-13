@@ -18,17 +18,10 @@
             this.Preferences = Preferences;
         }
 
-        //#region BaseController Overrides
-
-        public initialize(): void {
-            this.viewModel.stateChanged = false;
-        }
-
-        //#endregion
-
         //#Region BaseDialogController Overrides
 
         public dialog_shown(): void {
+            this.viewModel.stateChanged = false;
             this.viewModel.smartPlugs = this.getData();
         }
 

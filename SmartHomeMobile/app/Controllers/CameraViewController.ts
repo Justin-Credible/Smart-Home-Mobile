@@ -35,7 +35,7 @@
 
         //#region BaseController Overrides
 
-        public initialize(): void {
+        public view_enter(): void {
             // Grab the camera from the preferences by ID.
             this.viewModel.camera = _.where(this.Preferences.cameras, { id: this.stateParams.id })[0];
 
@@ -47,7 +47,7 @@
             this.refresh();
         }
 
-        public destroy(): void {
+        public view_leave(): void {
             clearTimeout(this.pollingTimeout);
         }
 

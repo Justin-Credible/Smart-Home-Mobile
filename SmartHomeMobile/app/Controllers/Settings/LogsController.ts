@@ -22,7 +22,7 @@
 
         //#region BaseController Overrides
 
-        public initialize(): void {
+        public view_enter(): void {
             this.Logger.getLogs().then(_.bind(this.getLogs_success, this), _.bind(this.getLogs_failure, this));
         }
 

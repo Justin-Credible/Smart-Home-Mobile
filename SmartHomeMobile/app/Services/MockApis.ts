@@ -1132,6 +1132,10 @@
             // Build each of the buttons.
             buttons.push({ text: buttonName });
 
+            // The Ionic pop-up uses HTML to display content, so for line breaks (\n) to render
+            // we need to replace them with actual line break takes.
+            message = message.replace(/\n/g, "<br/>");
+
             // Delegate to Ionic's pop-up framework.
             this.$ionicPopup.show({ title: title, template: message, buttons: buttons }).then(() => {
                 if (alertCallback) {

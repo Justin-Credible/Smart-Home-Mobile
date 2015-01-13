@@ -28,7 +28,7 @@
 
         //#region BaseController Overrides
 
-        public initialize(): void {
+        public view_enter(): void {
             this.viewModel.logoClickCount = 0;
 
             this.viewModel.applicationName = this.versionInfo.applicationName;

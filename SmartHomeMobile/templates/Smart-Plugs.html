@@ -1,4 +1,4 @@
-﻿<ion-view title="Smart Plugs">
+﻿<ion-view view-title="Smart Plugs">
 
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="button icon ion-navicon phone-both-tablet-portrait"></button>
@@ -63,7 +63,7 @@
                 <label class="toggle toggle-positive">
                     <input type="checkbox"
                            ng-model="smartPlug.onOffState"
-                           ng-true-value="on" ng-false-value="off"
+                           ng-true-value="'on'" ng-false-value="'off'"
                            ng-click="controller.smartPlugToggle_click(smartPlug)" />
                     <div class="track">
                         <div class="handle"></div>
@@ -107,7 +107,7 @@
                 <label class="toggle toggle-positive">
                     <input type="checkbox"
                            ng-model="smartPlug.onOffState"
-                           ng-true-value="on" ng-false-value="off"
+                           ng-true-value="'on'" ng-false-value="'off'"
                            ng-click="controller.smartPlugToggle_click(smartPlug)" />
                     <div class="track">
                         <div class="handle"></div>

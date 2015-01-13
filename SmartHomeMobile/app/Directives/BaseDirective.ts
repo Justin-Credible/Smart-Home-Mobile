@@ -4,8 +4,8 @@
      * Describes what our directive objects look like.
      */
     export interface IDirective {
-        initialize();
-        render();
+        initialize(): void;
+        render(): void;
     }
 
     /**
@@ -41,11 +41,11 @@
             this.initialize();
         }
 
-        public initialize() {
+        public initialize(): void {
             throw new Error("Directives that extend BaseDirective should implement their own initialize method.");
         }
 
-        public render() {
+        public render(): void {
             throw new Error("Directives that extend BaseDirective should implement their own render method.");
         }
     }

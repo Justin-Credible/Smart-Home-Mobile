@@ -101,7 +101,7 @@
          */
         public dialog_shown(): void {
             // No logic should be placed here, since TypeScript doesn't currently support
-            // protected members, so descendants may not be delegating to super.initialize().
+            // protected members, so descendants may not be delegating to super.dialog_shown().
         }
 
         /**
@@ -111,7 +111,7 @@
          */
         public dialog_hidden(): void {
             // No logic should be placed here, since TypeScript doesn't currently support
-            // protected members, so descendants may not be delegating to super.initialize().
+            // protected members, so descendants may not be delegating to super.dialog_hidden().
         }
 
         //#endregion

@@ -23,7 +23,7 @@
 
         //#region BaseController Overrides
 
-        public initialize() {
+        public view_enter(): void {
             this.viewModel.isPinSet = this.Preferences.pin !== null;
         }
 

@@ -145,7 +145,6 @@
     <Content Include="scripts\BuildVars.js" />
     <Content Include="templates\Cameras.html" />
     <Content Include="templates\Camera-View.html" />
-    <Content Include="templates\Category.html" />
     <Content Include="templates\Devices\Devices-Hub-Info.html" />
     <Content Include="templates\Devices\Devices-Info.html" />
     <Content Include="templates\Devices\Devices-List.html" />
@@ -201,7 +200,6 @@
     <TypeScriptCompile Include="app\Controllers\BaseController.ts" />
     <TypeScriptCompile Include="app\Controllers\CamerasController.ts" />
     <TypeScriptCompile Include="app\Controllers\CameraViewController.ts" />
-    <TypeScriptCompile Include="app\Controllers\CategoryController.ts" />
     <TypeScriptCompile Include="app\Controllers\Devices\DevicesHubInfoController.ts" />
     <TypeScriptCompile Include="app\Controllers\Devices\DevicesInfoController.ts" />
     <TypeScriptCompile Include="app\Controllers\Devices\DevicesListController.ts" />

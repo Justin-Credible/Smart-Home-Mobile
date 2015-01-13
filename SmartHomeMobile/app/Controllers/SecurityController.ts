@@ -24,7 +24,7 @@
 
         //#region Controller Events
 
-        public initialize() {
+        public view_enter(): void {
 
             if (this.HubDataSource.security == null
                 || this.HubDataSource.securityLastUpdated == null

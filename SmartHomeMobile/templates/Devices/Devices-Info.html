@@ -1,4 +1,4 @@
-﻿<ion-view title="Device Info">
+﻿<ion-view view-title="Device Info">
 
     <ion-nav-buttons side="left">
     </ion-nav-buttons>
@@ -16,7 +16,7 @@
 
         <div class="last-updated-row">Last updated at {{viewModel.lastUpdated | date: 'MM/dd/yyyy HH:mm:ss Z'}}</div>
 
-        <ion-list class="list-inset card">
+        <ion-list class="list-inset">
 
             <ion-item class="item-divider">
                 General Information
@@ -77,7 +77,15 @@
 
             <ion-item class="item-icon-right" ng-show="viewModel.device.hasBattery">
                 <h2>Battery Information</h2>
-                <p ng-class="{ 'assertive': viewModel.device.batteryPercentage <= 15 }">Charge: {{viewModel.device.batteryPercentage}}% ({{viewModel.device.battery}}v)</p>
+                <p>
+                    Charge:
+                    <span ng-if="viewModel.device.batteryPercentage <= 15" class="assertive">
+                        {{viewModel.device.batteryPercentage}}% ({{viewModel.device.battery}}v)
+                    </span>
+                    <span ng-if="viewModel.device.batteryPercentage > 15">
+                        {{viewModel.device.batteryPercentage}}% ({{viewModel.device.battery}}v)
+                    </span>
+                </p>
                 <i class="icon {{controller.getBatteryIconClassName(viewModel.device.batteryPercentage)}}"></i>
             </ion-item>
 
