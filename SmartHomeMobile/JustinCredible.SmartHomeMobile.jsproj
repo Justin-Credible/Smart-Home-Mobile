@@ -159,7 +159,6 @@
     <Content Include="templates\Smart-Plugs.html" />
     <Content Include="templates\Security.html" />
     <Content Include="templates\Settings\About.html" />
-    <Content Include="templates\Settings\Cloud-Sync.html" />
     <Content Include="templates\Settings\Configure-Pin.html" />
     <Content Include="templates\Settings\Developer.html" />
     <Content Include="templates\Settings\Log-Entry.html" />
@@ -217,7 +216,6 @@
     <TypeScriptCompile Include="app\Controllers\SmartPlugsController.ts" />
     <TypeScriptCompile Include="app\Controllers\SecurityController.ts" />
     <TypeScriptCompile Include="app\Controllers\Settings\AboutController.ts" />
-    <TypeScriptCompile Include="app\Controllers\Settings\CloudSyncController.ts" />
     <TypeScriptCompile Include="app\Controllers\Settings\ConfigurePinController.ts" />
     <TypeScriptCompile Include="app\Controllers\Settings\DeveloperController.ts" />
     <TypeScriptCompile Include="app\Controllers\Settings\LogEntryController.ts" />
@@ -333,7 +331,6 @@
     <TypeScriptCompile Include="app\ViewModels\SmartPlugsViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\SecurityViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Settings\AboutViewModel.ts" />
-    <TypeScriptCompile Include="app\ViewModels\Settings\CloudSyncViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Settings\ConfigurePinViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Settings\DeveloperViewModel.ts" />
     <TypeScriptCompile Include="app\ViewModels\Settings\LogsViewModel.ts" />

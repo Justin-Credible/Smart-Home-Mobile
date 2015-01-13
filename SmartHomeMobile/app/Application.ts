@@ -102,7 +102,6 @@ module JustinCredible.SmartHomeMobile.Application {
         ngModule.controller("DeveloperController", Controllers.DeveloperController);
         ngModule.controller("AboutController", Controllers.AboutController);
         ngModule.controller("ConfigurePinController", Controllers.ConfigurePinController);
-        ngModule.controller("CloudSyncController", Controllers.CloudSyncController);
 
         // Specify the initialize/run and configuration functions.
         ngModule.run(angular_initialize);
