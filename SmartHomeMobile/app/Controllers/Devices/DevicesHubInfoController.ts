@@ -22,7 +22,7 @@
 
         //#region BaseController Overrides
 
-        public view_enter(): void {
+        public view_beforeEnter(): void {
 
             if (this.HubDataSource.homeStatus == null
                 || this.HubDataSource.homeStatusLastUpdated == null

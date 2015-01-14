@@ -36,7 +36,7 @@
 
         //#region BaseController Overrides
 
-        public view_enter(): void {
+        public view_beforeEnter(): void {
             this.viewModel.mockApiRequests = this.Preferences.enableMockHttpCalls;
 
             this.viewModel.devicePlatform = device.platform;

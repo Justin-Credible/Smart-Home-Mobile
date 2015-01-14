@@ -24,7 +24,7 @@
 
         //#region BaseController Overrides
 
-        public view_enter(): void {
+        public view_beforeEnter(): void {
             this.viewModel.cameras = this.Preferences.cameras;
 
             if (!this.viewModel.cameras) {

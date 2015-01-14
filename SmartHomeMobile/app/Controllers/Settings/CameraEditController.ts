@@ -32,7 +32,7 @@
 
         //#region BaseController Overrides
 
-        public view_enter(): void {
+        public view_beforeEnter(): void {
             this.viewModel.showSaveButton = false;
 
             if (this.stateParams.id) {
