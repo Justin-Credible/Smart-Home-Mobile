@@ -72,7 +72,7 @@
 
             this.Preferences.enableMockHttpCalls = this.viewModel.mockApiRequests;
 
-            message = "The application needs to be reloaded for changes to take effect. Reload now?";
+            message = "The application needs to be reloaded for changes to take effect.\n\nReload now?";
 
             this.UiHelper.confirm(message, "Confirm Reload").then((result: string) => {
                 if (result === "Yes") {
