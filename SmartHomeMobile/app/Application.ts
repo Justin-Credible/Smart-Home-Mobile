@@ -166,18 +166,13 @@ module JustinCredible.SmartHomeMobile.Application {
         // Once AngularJs has loaded we'll wait for the Ionic platform's ready event.
         // This event will be fired once the device ready event fires via Cordova.
         $ionicPlatform.ready(function () {
-            ionicPlatform_ready($rootScope, $location, $ionicViewService, $ionicPlatform, Utilities, UiHelper, Preferences, MockApis);
+            ionicPlatform_ready($rootScope, $location, $ionicViewService, $ionicPlatform, UiHelper, Utilities, Preferences, MockApis);
         });
 
-        // Mock up APIs for the various platforms. This allows us to "polyfill" functionality
-        // that isn't available on all platforms.
-
         if (Utilities.isRipple) {
-            setTimeout(function () { MockApis.mockForRippleEmulator(); }, 1000);
-
             // If we are in the Ripple emulator, Cordova will never fire it's ready event which
             // means Ionic will never fire it's platform ready. We'll do it here manually.
-            ionicPlatform_ready($rootScope, $location, $ionicViewService, $ionicPlatform, Utilities, UiHelper, Preferences, MockApis);
+            ionicPlatform_ready($rootScope, $location, $ionicViewService, $ionicPlatform, UiHelper, Utilities, Preferences, MockApis);
         }
 
         // Mock up or allow HTTP responses.
@@ -190,11 +185,17 @@ module JustinCredible.SmartHomeMobile.Application {
      * Note that this will not fire in the Ripple emulator because it relies
      * on the Codrova device ready event.
      */
-    function ionicPlatform_ready($rootScope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockApis: Services.MockApis): void {
+    function ionicPlatform_ready($rootScope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, $ionicPlatform: Ionic.IPlatform, UiHelper: Services.UiHelper, Utilities: Services.Utilities, Preferences: Services.Preferences, MockApis: Services.MockApis): void {
 
-        // If we are running on the Android platform, mock up some additional APIs.
+        // Mock up APIs for the various platforms. This allows us to "polyfill" functionality
+        // that isn't available on all platforms.
+
+        if (Utilities.isRipple) {
+            setTimeout(function () { MockApis.mockForRippleEmulator(); }, 1000);
+        }
+
         if (Utilities.isAndroid) {
-            setTimeout(function () { MockApis.mockForAndroid(); }, 0);
+            setTimeout(function () { MockApis.mockForAndroid(); }, 1000);
         }
 
         // This makes the status bar not overlay the webview, but unfortunately
