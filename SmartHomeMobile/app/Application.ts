@@ -28,7 +28,7 @@ module JustinCredible.SmartHomeMobile.Application {
      * This is the main entry point for the application. It is used to setup Angular and
      * configure its controllers, services, etc.
      */
-    function main() {
+    function main(): void {
         var versionInfo: Interfaces.VersionInfo;
 
         // Set the default error handler for all uncaught exceptions.
@@ -254,7 +254,7 @@ module JustinCredible.SmartHomeMobile.Application {
      * Used to define all of the client-side routes for the application.
      * This maps routes to the controller/view that should be used.
      */
-    function setupAngularRoutes($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
+    function setupAngularRoutes($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider): void {
 
         // Setup an abstract state for the tabs directive.
         $stateProvider.state("app", {
@@ -487,7 +487,7 @@ module JustinCredible.SmartHomeMobile.Application {
      * Fired when the OS decides to minimize or pause the application. This usually
      * occurs when the user presses the device's home button or switches applications.
      */
-    function device_pause(Preferences: Services.Preferences) {
+    function device_pause(Preferences: Services.Preferences): void {
 
         if (!isShowingPinPrompt) {
             // Store the current date/time. This will be used to determine if we need to
@@ -501,7 +501,7 @@ module JustinCredible.SmartHomeMobile.Application {
      * when the user launches an app that is already open or uses the OS task manager
      * to switch back to the application.
      */
-    function device_resume($location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences) {
+    function device_resume($location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences): void {
 
         isShowingPinPrompt = true;
 
@@ -530,7 +530,7 @@ module JustinCredible.SmartHomeMobile.Application {
      * Fired when the menu hard (or soft) key is pressed on the device (eg Android menu key).
      * This isn't used for iOS devices because they do not have a menu button key.
      */
-    function device_menuButton($rootScope: ng.IScope) {
+    function device_menuButton($rootScope: ng.IScope): void {
         // Broadcast this event to all child scopes. This allows controllers for individual
         // views to handle this event and show a contextual menu etc.
         $rootScope.$broadcast("menubutton");
@@ -539,7 +539,7 @@ module JustinCredible.SmartHomeMobile.Application {
     /**
      * Fired when Angular's route/location (eg URL hash) is changing.
      */
-    function angular_locationChangeStart(event: ng.IAngularEvent, newRoute: string, oldRoute: string) {
+    function angular_locationChangeStart(event: ng.IAngularEvent, newRoute: string, oldRoute: string): void {
         console.log("Location change, old Route: " + oldRoute);
         console.log("Location change, new Route: " + newRoute);
     };
@@ -547,7 +547,7 @@ module JustinCredible.SmartHomeMobile.Application {
     /**
      * Fired when an unhandled JavaScript exception occurs outside of Angular.
      */
-    function window_onerror(message: any, uri: string, lineNumber: number, columnNumber?: number) {
+    function window_onerror(message: any, uri: string, lineNumber: number, columnNumber?: number): void {
         var Logger: Services.Logger;
 
         console.error("Unhandled JS Exception", message, uri, lineNumber, columnNumber);
@@ -574,7 +574,7 @@ module JustinCredible.SmartHomeMobile.Application {
      * 
      * This includes uncaught exceptions in ng-click methods for example.
      */
-    function angular_exceptionHandler(exception: Error, cause: string) {
+    function angular_exceptionHandler(exception: Error, cause: string): void {
         var message = exception.message,
             Logger: Services.Logger;
 
