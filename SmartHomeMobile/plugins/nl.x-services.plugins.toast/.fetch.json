@@ -1,1 +1,1 @@
-{"source":{"type":"local","path":"C:\\tmp\\plugins\\nl.x-services.plugins.toast"}}
+{"source":{"type":"git","url":"https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git","subdir":"."}}
