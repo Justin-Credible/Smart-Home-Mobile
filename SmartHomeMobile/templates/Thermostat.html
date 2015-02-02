@@ -100,7 +100,7 @@
                 <i class="icon ion-ios7-snowy"></i>
                 <input type="range" name="temperature"
                        min="{{viewModel.climate.minTargetTemperature}}" max="{{viewModel.climate.maxTargetTemperature}}" step="1"
-                       ng-model="viewModel.newTargetTemperature"
+                       ng-model="viewModel.temperatureSliderValue"
                        ng-change="controller.temperatureRange_change()" />
                 <i class="icon ion-flame"></i>
             </div>

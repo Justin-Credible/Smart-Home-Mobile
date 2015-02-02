@@ -48,6 +48,7 @@
             // If the state or mode is OFF then the target temperature will return "--" instead of null.
             if (typeof(this.viewModel.climate.targetTemperature) === "number") {
                 this.viewModel.newTargetTemperature = this.viewModel.climate.targetTemperature;
+                this.viewModel.temperatureSliderValue = this.viewModel.climate.targetTemperature + "";
             }
             else {
                 this.viewModel.newTargetTemperature = null;
@@ -92,6 +93,7 @@
             // default it here to be whatever the active temperature is.
             if (this.viewModel.newTargetTemperature == null) {
                 this.viewModel.newTargetTemperature = this.viewModel.climate.currentTemperature;
+                this.viewModel.temperatureSliderValue = this.viewModel.climate.currentTemperature + "";
             }
 
             this.viewModel.newOnOffState = Services.AlertMeApi.ClimateOnOffState.On;
@@ -106,6 +108,7 @@
             // default it here to be whatever the active temperature is.
             if (this.viewModel.newTargetTemperature == null) {
                 this.viewModel.newTargetTemperature = this.viewModel.climate.currentTemperature;
+                this.viewModel.temperatureSliderValue = this.viewModel.climate.currentTemperature + "";
             }
 
             this.viewModel.newOnOffState = Services.AlertMeApi.ClimateOnOffState.On;
@@ -124,6 +127,9 @@
 
         public temperatureRange_change(): void {
             this.viewModel.changesMade = true;
+
+            // The range input binds values as strings; here we ensure it gets parsed back into an number.
+            this.viewModel.newTargetTemperature = parseInt(this.viewModel.temperatureSliderValue, 10);
         }
 
         public down_click(): void {
@@ -272,6 +278,7 @@
             // If the state or mode is OFF then the target temperature will return "--" instead of null.
             if (typeof (this.viewModel.climate.targetTemperature) === "number") {
                 this.viewModel.newTargetTemperature = this.viewModel.climate.targetTemperature;
+                this.viewModel.temperatureSliderValue = this.viewModel.newTargetTemperature + "";
             }
             else {
                 this.viewModel.newTargetTemperature = null;
