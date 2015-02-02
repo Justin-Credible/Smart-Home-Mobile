@@ -204,7 +204,7 @@ module JustinCredible.SmartHomeMobile.Application {
         //window.StatusBar.overlaysWebView(false);
 
         // Subscribe to device events.
-        document.addEventListener("pause", _.bind(device_pause, null, Preferences));
+        document.addEventListener("pause", _.bind(device_pause, null, $rootScope, Preferences));
         document.addEventListener("resume", _.bind(device_resume, null, $location, $ionicViewService, Utilities, UiHelper, Preferences));
         document.addEventListener("menubutton", _.bind(device_menuButton, null, $rootScope));
 
@@ -487,7 +487,11 @@ module JustinCredible.SmartHomeMobile.Application {
      * Fired when the OS decides to minimize or pause the application. This usually
      * occurs when the user presses the device's home button or switches applications.
      */
-    function device_pause(Preferences: Services.Preferences): void {
+    function device_pause($rootScope: ng.IScope, Preferences: Services.Preferences): void {
+
+        // Broadcast this event to all child scopes. This allows controllers for individual
+        // views to handle this event and show a contextual menu etc.
+        $rootScope.$broadcast("device.pause");
 
         if (!isShowingPinPrompt) {
             // Store the current date/time. This will be used to determine if we need to
@@ -533,7 +537,7 @@ module JustinCredible.SmartHomeMobile.Application {
     function device_menuButton($rootScope: ng.IScope): void {
         // Broadcast this event to all child scopes. This allows controllers for individual
         // views to handle this event and show a contextual menu etc.
-        $rootScope.$broadcast("menubutton");
+        $rootScope.$broadcast("device.menubutton");
     }
 
     /**

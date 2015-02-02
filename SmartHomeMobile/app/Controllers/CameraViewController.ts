@@ -30,6 +30,8 @@
             this.$ionicViewService = $ionicViewService;
             this.Utilities = Utilities;
             this.Preferences = Preferences;
+
+            this.scope.$on("device.pause", _.bind(this.device_pause, this));
         }
 
         //#region BaseController Overrides
@@ -47,7 +49,15 @@
         }
 
         public view_leave(): void {
-            clearTimeout(this.pollingTimeout);
+            this.stopStreaming();
+        }
+
+        //#endregion
+
+        //#region Events
+
+        public device_pause(): void {
+            this.stopStreaming();
         }
 
         //#endregion
@@ -89,6 +99,17 @@
             return url;
         }
 
+        private stopStreaming(): void {
+
+            // Ensure that the URL is switched back to a local image. This stops the
+            // MJPEG stream from continuing to stream in the background.
+            this.viewModel.url = "images/place-holder.png";
+
+            // Ensure that the setTimeout is cleared. This stops the updating of the
+            // snapshot images.
+            clearTimeout(this.pollingTimeout);
+        }
+
         private refresh(): void {
             // Delegate to the buildUrl method to build the URL for the image tag.
             this.viewModel.url = this.buildUrl(this.viewModel.camera, false);
@@ -100,14 +121,8 @@
 
         public refresh_click(): void {
 
-            // Streaming cameras don't support refreshing because they are always streaming.
-            if (this.viewModel.camera.type === "STREAMING") {
-                return;
-            }
-
-            // Ensure that the queued up function to update the snapshot is cancelled since
-            // we are going to refresh immediately.
-            clearTimeout(this.pollingTimeout);
+            // Ensure that we aren't already streaming.
+            this.stopStreaming();
 
             // Refresh the image with a new URL.
             this.refresh();
@@ -115,15 +130,8 @@
 
         public refresher_refresh(): void {
 
-            // Streaming cameras don't support refreshing because they are always streaming.
-            if (this.viewModel.camera.type === "STREAMING") {
-                this.scope.$broadcast("scroll.refreshComplete");
-                return;
-            }
-
-            // Ensure that the queued up function to update the snapshot is cancelled since
-            // we are going to refresh immediately.
-            clearTimeout(this.pollingTimeout);
+            // Ensure that we aren't already streaming.
+            this.stopStreaming();
 
             // Refresh the image with a new URL.
             this.refresh();
