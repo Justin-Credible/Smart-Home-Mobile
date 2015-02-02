@@ -56,23 +56,29 @@
                  class="item item-icon-left item-toggle">
 
                 <i class="icon"
-                   ng-class="{'ion-ios7-lightbulb-outline': smartPlug.onOffState === 'on', 'ion-ios7-lightbulb': smartPlug.onOffState === 'off'}"></i>
+                   ng-class="{'ion-ios7-lightbulb-outline': smartPlug.onOffState === 'on', 'ion-ios7-lightbulb': smartPlug.onOffState === 'off', 'ion-help': smartPlug.onOffState === 'UNAVAILABLE'}"></i>
 
                 <span>{{smartPlug.name}}</span>
 
-                <label class="toggle toggle-positive">
-                    <input type="checkbox"
+                <label class="toggle toggle-positive" ng-hide="smartPlug.onOffState === 'UNAVAILABLE'">
+                    <input type="checkbox""
                            ng-model="smartPlug.onOffState"
                            ng-true-value="'on'" ng-false-value="'off'"
                            ng-click="controller.smartPlugToggle_click(smartPlug)" />
-                    <div class="track">
+                    <div class="track"">
                         <div class="handle"></div>
                     </div>
                 </label>
+
+                <span class="item-note"
+                        ng-show="smartPlug.onOffState === 'UNAVAILABLE'">
+                    Unavailable
+                </span>
             </div>
 
             <div class="item range range-positive"
-                 ng-if="controller.lighting_show && smartPlug.supportsIntensity">
+                 ng-if="controller.lighting_show && smartPlug.supportsIntensity"
+                 ng-hide="smartPlug.onOffState === 'UNAVAILABLE'">
                 <i class="icon ion-ios7-sunny-outline"></i>
                 <input type="range" name="volume"
                        min="0" max="100" step="1"
@@ -83,7 +89,7 @@
 
             <div class="item item-button-right"
                  ng-if="controller.lighting_show && smartPlug.supportsIntensity"
-                 ng-show="viewModel.showIntensityUpdateButton[smartPlug.id]"
+                 ng-show="viewModel.showIntensityUpdateButton[smartPlug.id] && smartPlug.onOffState !== 'UNAVAILABLE'"
                  ng-repeat-end="">
                 <span>Set intensity to {{smartPlug.intensity}}%</span>
                 <button class="button button-assertive icon ion-close-round"
@@ -104,7 +110,7 @@
 
                 <span>{{smartPlug.name}}</span>
 
-                <label class="toggle toggle-positive">
+                <label class="toggle toggle-positive" ng-hide="smartPlug.onOffState === 'UNAVAILABLE'">
                     <input type="checkbox"
                            ng-model="smartPlug.onOffState"
                            ng-true-value="'on'" ng-false-value="'off'"
@@ -113,6 +119,11 @@
                         <div class="handle"></div>
                     </div>
                 </label>
+
+                <span class="item-note"
+                      ng-show="smartPlug.onOffState === 'UNAVAILABLE'">
+                    Unavailable
+                </span>
             </div>
 
             <div class="item item-divider" ng-show="controller.otherDevices.length > 0">

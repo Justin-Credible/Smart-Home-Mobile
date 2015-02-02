@@ -40,7 +40,8 @@
          */
         public static SmartPlugOnOffState = {
             On: "on",
-            Off: "off"
+            Off: "off",
+            Unavailable: "UNAVAILABLE"
         };
 
         /**

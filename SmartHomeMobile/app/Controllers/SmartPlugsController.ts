@@ -171,13 +171,19 @@
             var oldOnOffState: string,
                 newOnOffState: string;
 
-            // Save this off, so the API call fails, we can set the value
-            // back to its original value.
-            oldOnOffState = device.onOffState;
+            // If this device was reported as unavailable, then there is nothing to do.
+            if (device.onOffState === Services.AlertMeApi.SmartPlugOnOffState.Unavailable) {
+                return;
+            }
+
+            // Determine what the original state was. Since we are in the click event
+            // the state must have already been changed, therefore the original state
+            // is simply the opposite of what is in the model.
+            oldOnOffState = device.onOffState === "on" ? Services.AlertMeApi.SmartPlugOnOffState.Off : Services.AlertMeApi.SmartPlugOnOffState.On;
 
             // Determine what lock state we need to pass to the API call
             // based on the current on/off state (we use the opposite).
-            newOnOffState = device.onOffState === "on" ? Services.AlertMeApi.SmartPlugOnOffState.Off : Services.AlertMeApi.SmartPlugOnOffState.On;
+            newOnOffState = device.onOffState === "on" ? Services.AlertMeApi.SmartPlugOnOffState.On : Services.AlertMeApi.SmartPlugOnOffState.Off;
 
             this.AlertMeApi.setSmartPlugState(device.id, newOnOffState).then(() => {
                 // If the API call succeeded, set the new on/off state into
@@ -221,7 +227,9 @@
             this.AlertMeApi.setSmartPlugState("all", Services.AlertMeApi.SmartPlugOnOffState.On).then(() => {
                 // If the API call succeeded, set the new on/off state into the view model.
                 this.viewModel.smartPlugs.forEach((device: AlertMeApiTypes.SmartPlugDevice) => {
-                    device.onOffState = Services.AlertMeApi.SmartPlugOnOffState.On;
+                    if (device.onOffState !== Services.AlertMeApi.SmartPlugOnOffState.Unavailable) {
+                        device.onOffState = Services.AlertMeApi.SmartPlugOnOffState.On;
+                    }
                 });
             }, () => {
                 // If the API call failed, then preserve the previous state.
@@ -243,10 +251,12 @@
                 oldOnOffStates.push(device.onOffState);
             });
 
-            this.AlertMeApi.setSmartPlugState("all", Services.AlertMeApi.SmartPlugOnOffState.On).then(() => {
+            this.AlertMeApi.setSmartPlugState("all", Services.AlertMeApi.SmartPlugOnOffState.Off).then(() => {
                 // If the API call succeeded, set the new on/off state into the view model.
                 this.viewModel.smartPlugs.forEach((device: AlertMeApiTypes.SmartPlugDevice) => {
-                    device.onOffState = Services.AlertMeApi.SmartPlugOnOffState.On;
+                    if (device.onOffState !== Services.AlertMeApi.SmartPlugOnOffState.Unavailable) {
+                        device.onOffState = Services.AlertMeApi.SmartPlugOnOffState.Off;
+                    }
                 });
             }, () => {
                 // If the API call failed, then preserve the previous state.
@@ -268,7 +278,7 @@
             devicesToUpdate = [];
 
             // Pass in the smart plugs array from the view model to the dialog.
-            options = new Models.DialogOptions(_.clone(this.viewModel.smartPlugs));
+            options = new Models.DialogOptions(_.clone(this.viewModel.smartPlugs, true));
 
             // Show the dialog.
             this.UiHelper.showDialog(this.UiHelper.DialogIds.SetMultipleSmartPlugsState, options).then((result: AlertMeApiTypes.SmartPlugDevice[]) => {
@@ -286,7 +296,8 @@
 
                     // If the on/off states no longer match (ie they were changed by the user inside
                     // of the dialog) then make a call to update its state.
-                    if (originalDevice.onOffState !== potentiallyUpdatedDevice.onOffState) {
+                    if (potentiallyUpdatedDevice.onOffState !== Services.AlertMeApi.SmartPlugOnOffState.Unavailable &&
+                        originalDevice.onOffState !== potentiallyUpdatedDevice.onOffState) {
                         this.AlertMeApi.setSmartPlugState(potentiallyUpdatedDevice.id, potentiallyUpdatedDevice.onOffState).then(() => {
                             // If the update succeeded, then update the on/off state for the device
                             // on the view model.

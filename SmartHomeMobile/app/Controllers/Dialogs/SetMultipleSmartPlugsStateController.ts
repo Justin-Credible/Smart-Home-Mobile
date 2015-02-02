@@ -75,7 +75,13 @@
             this.close(this.viewModel.smartPlugs);
         }
 
-        public smartPlugToggle_click(smartPlug: AlertMeApiTypes.SmartPlugDevice[]): void {
+        public smartPlugToggle_click(smartPlug: AlertMeApiTypes.SmartPlugDevice): void {
+
+            // If this device was reported as unavailable, then there is nothing to do.
+            if (smartPlug.onOffState === Services.AlertMeApi.SmartPlugOnOffState.Unavailable) {
+                return;
+            }
+
             this.viewModel.stateChanged = true;
         }
 

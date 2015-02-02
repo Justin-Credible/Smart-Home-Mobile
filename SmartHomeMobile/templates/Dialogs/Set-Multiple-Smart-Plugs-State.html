@@ -25,19 +25,24 @@
                  class="item item-icon-left item-toggle">
 
                 <i class="icon"
-                   ng-class="{'ion-ios7-lightbulb-outline': smartPlug.onOffState === 'on', 'ion-ios7-lightbulb': smartPlug.onOffState === 'off'}"></i>
+                   ng-class="{'ion-ios7-lightbulb-outline': smartPlug.onOffState === 'on', 'ion-ios7-lightbulb': smartPlug.onOffState === 'off', 'ion-help': smartPlug.onOffState === 'UNAVAILABLE'}"></i>
 
                 <span>{{smartPlug.name}}</span>
 
-                <label class="toggle toggle-positive">
+                <label class="toggle toggle-positive" ng-hide="smartPlug.onOffState === 'UNAVAILABLE'">
                     <input type="checkbox"
                            ng-model="smartPlug.onOffState"
                            ng-true-value="'on'" ng-false-value="'off'"
-                           ng-click="controller.smartPlugToggle_click(smartPlug)"/>
+                           ng-click="controller.smartPlugToggle_click(smartPlug)" />
                     <div class="track">
                         <div class="handle"></div>
                     </div>
                 </label>
+
+                <span class="item-note"
+                        ng-show="smartPlug.onOffState === 'UNAVAILABLE'">
+                    Unavailable
+                </span>
             </div>
 
             <div class="item item-divider" ng-show="controller.outlets_show">
@@ -51,15 +56,20 @@
 
                 {{smartPlug.name}}
 
-                <label class="toggle toggle-positive">
+                <label class="toggle toggle-positive" ng-hide="smartPlug.onOffState === 'UNAVAILABLE'">
                     <input type="checkbox"
                            ng-model="smartPlug.onOffState"
                            ng-true-value="'on'" ng-false-value="'off'"
-                           ng-click="controller.smartPlugToggle_click(smartPlug)"/>
+                           ng-click="controller.smartPlugToggle_click(smartPlug)" />
                     <div class="track">
                         <div class="handle"></div>
                     </div>
                 </label>
+
+                <span class="item-note"
+                        ng-show="smartPlug.onOffState === 'UNAVAILABLE'">
+                    Unavailable
+                </span>
             </div>
 
         </div>
