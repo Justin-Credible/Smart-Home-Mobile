@@ -209,10 +209,18 @@
 
                     // Now check to see if the target temperature needs to be updated.
                     if (this.viewModel.newTargetTemperature !== this.viewModel.climate.targetTemperature) {
-                        this.AlertMeApi.setClimateTargetTemperature(deviceId, this.viewModel.newTargetTemperature, temperatureUnit).then(() => {
-                            // The update was successful, so update the target temperature in the view model.
-                            this.viewModel.climate.targetTemperature = this.viewModel.newTargetTemperature;
-                        }, errorHandler);
+
+                        // We wait for a short period before kicking off this API because of what appears to be
+                        // a bug with the AlertMe API and/or hub communication with the thermostat device. If
+                        // the set mode and set target temperature calls are made too quickly, sometimes the
+                        // temperature isn't set even though the call has a 200 result. This fixes issue #13.
+                        setTimeout(() => {
+                            this.AlertMeApi.setClimateTargetTemperature(deviceId, this.viewModel.newTargetTemperature, temperatureUnit).then(() => {
+                                // The update was successful, so update the target temperature in the view model.
+                                this.viewModel.climate.targetTemperature = this.viewModel.newTargetTemperature;
+                                this.scope.$apply();
+                            }, errorHandler);
+                        }, 2000);
                     }
 
                 }, errorHandler);
@@ -240,13 +248,19 @@
                     // If everything went okay, then update the on/off flag in the climate model.
                     this.viewModel.climate.onOffState = Services.AlertMeApi.ClimateOnOffState.Off;
 
-                    // Since in the OFF state we don't know what the previous target temperature was,
-                    // we don't know if the new target temperature is the same or different. So here
-                    // we make a unconditional call to set the target temperature.
-                    this.AlertMeApi.setClimateTargetTemperature(deviceId, this.viewModel.newTargetTemperature, temperatureUnit).then(() => {
-                        // If everything went okay, then update the target temperature in the climate model.
-                        this.viewModel.climate.targetTemperature = this.viewModel.newTargetTemperature;
-                    }, errorHandler);
+                    // We wait for a short period before kicking off this API because of what appears to be
+                    // a bug with the AlertMe API and/or hub communication with the thermostat device. If
+                    // the set mode and set target temperature calls are made too quickly, sometimes the
+                    // temperature isn't set even though the call has a 200 result. This fixes issue #13.
+                    setTimeout(() => {
+                        // Since in the OFF state we don't know what the previous target temperature was,
+                        // we don't know if the new target temperature is the same or different. So here
+                        // we make a unconditional call to set the target temperature.
+                        this.AlertMeApi.setClimateTargetTemperature(deviceId, this.viewModel.newTargetTemperature, temperatureUnit).then(() => {
+                            // If everything went okay, then update the target temperature in the climate model.
+                            this.viewModel.climate.targetTemperature = this.viewModel.newTargetTemperature;
+                        }, errorHandler);
+                    }, 2000);
 
                 }, errorHandler);
             }
