@@ -195,7 +195,7 @@ module JustinCredible.SmartHomeMobile.Application {
         }
 
         if (Utilities.isAndroid) {
-            setTimeout(function () { MockApis.mockForAndroid(); }, 1000);
+            MockApis.mockForAndroid();
         }
 
         // This makes the status bar not overlay the webview, but unfortunately
