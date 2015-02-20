@@ -21,6 +21,19 @@
         private Utilities: Utilities;
         private Logger: Services.Logger;
 
+        /**
+         * Used to keep track of if this interceptor is in the middle of making a login
+         * request so that any API requests that are made during this period will not
+         * be made until the login request has completed.
+         */
+        private isLoginInProgress: boolean;
+
+        /**
+         * This holds any requests that came in while a login request was in progress.
+         * Once the login request completes these requests will be resolved.
+         */
+        private queue: Models.KeyValuePair<Interfaces.RequestConfig, ng.IDeferred<any>>[];
+
         constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $injector: ng.auto.IInjectorService, Preferences: Services.Preferences, Utilities: Services.Utilities, Logger: Services.Logger) {
             this.$rootScope = $rootScope;
             this.$q = $q;
@@ -28,6 +41,9 @@
             this.Preferences = Preferences;
             this.Utilities = Utilities;
             this.Logger = Logger;
+
+            this.isLoginInProgress = false;
+            this.queue = [];
         }
 
         /**
@@ -66,7 +82,7 @@
         /**
          * Fired when a response completes with a non-200 level status code.
          */
-        public responseError(responseOrError: any) {
+        public responseError(responseOrError: any): ng.IPromise<void> {
             var $http: ng.IHttpService,
                 AlertMeApi: Services.AlertMeApi,
                 httpResponse: ng.IHttpPromiseCallbackArg<any>,
@@ -102,29 +118,56 @@
                 return this.$q.reject(responseOrError);
             }
 
+            // If this API request failed with a 401 unauthorized, then lets see if we can handle it
+            // by re-authenticating and then re-issuing the orignial request.
             if (httpResponse.status === 401) {
 
-                // If this API request failed with a 401 unauthorized, then lets see if we can handle it
-                // by re-authenticating and then re-issuing the orignial request.
+                if (this.isLoginInProgress) {
+                    // If a login request is already in progress, then we'll push this request into the
+                    // queue so that it can be resolved after the login call completes.
+                    this.queue.push(new Models.KeyValuePair<Interfaces.RequestConfig, ng.IDeferred<any>>(config, q));
+                }
+                else {
+                    // Grab a reference to the AlertMeAPi service.
+                    AlertMeApi = this.$injector.get("AlertMeApi");
 
-                // Grab a reference to the AlertMeAPi service.
-                AlertMeApi = this.$injector.get("AlertMeApi");
+                    // Grab a reference to the HTTP service.
+                    $http = this.$injector.get("$http");
 
-                // Grab a reference to the HTTP service.
-                $http = this.$injector.get("$http");
+                    // Set the flag so any requests that come in while the login request is still outstanding
+                    // will be queues so we can resolve them later.
+                    this.isLoginInProgress = true;
 
-                // Make a call to re-authenticate.
-                AlertMeApi.login().then((loginResult: AlertMeApiTypes.LoginResult) => {
+                    // Make a call to re-authenticate.
+                    AlertMeApi.login().then((loginResult: AlertMeApiTypes.LoginResult) => {
 
-                    // If the re-authentication was successful, then re-issue the original request.
-                    $http(config).then((result: ng.IHttpPromiseCallbackArg<any>) => {
-                        q.resolve(result);
-                    }, q.reject);
+                        this.isLoginInProgress = false;
 
-                }, (loginError: any) => {
-                    // If the re-authentication failed, then issue a rejection.
-                    q.reject(loginError);
-                });
+                        // If the re-authentication was successful, then re-issue the original request.
+                        $http(config).then((result: ng.IHttpPromiseCallbackArg<any>) => {
+                            q.resolve(result);
+                        }, q.reject);
+
+                        // Re-issue all the requests that were queued (if any).
+                        this.queue.forEach((pair: Models.KeyValuePair<Interfaces.RequestConfig, ng.IDeferred<any>>) => {
+                            $http(pair.key).then((result: ng.IHttpPromiseCallbackArg <any>) => {
+                                pair.value.resolve(result);
+                            }, pair.value.reject);
+                        });
+
+                    }, (loginError: any) => {
+
+                        this.isLoginInProgress = false;
+
+                        // If the re-authentication failed, then issue a rejection.
+                        q.reject(loginError);
+
+                        // Reject all the pending requests (if any).
+                        this.queue.forEach((pair: Models.KeyValuePair<Interfaces.RequestConfig, ng.IDeferred<any>>) => {
+                            pair.value.reject(loginError);
+                        });
+                    });
+                }
             }
             else {
                 // We don't need to do anything special for non-401s.
