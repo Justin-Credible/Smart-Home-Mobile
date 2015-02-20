@@ -21,10 +21,6 @@
         private Utilities: Utilities;
         private Logger: Services.Logger;
 
-        private requestsInProgress: number;
-        private blockingRequestsInProgress: number;
-        private spinnerRequestsInProgress: number;
-
         constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $injector: ng.auto.IInjectorService, Preferences: Services.Preferences, Utilities: Services.Utilities, Logger: Services.Logger) {
             this.$rootScope = $rootScope;
             this.$q = $q;
@@ -32,10 +28,6 @@
             this.Preferences = Preferences;
             this.Utilities = Utilities;
             this.Logger = Logger;
-
-            this.requestsInProgress = 0;
-            this.blockingRequestsInProgress = 0;
-            this.spinnerRequestsInProgress = 0;
         }
 
         /**
