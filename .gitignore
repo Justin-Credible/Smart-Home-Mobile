@@ -14,6 +14,7 @@ packages/*/
 SmartHomeMobile/scripts/BuildVars.js
 
 # Visual Studio user preferences etc
+*.sln.ide/
 *.docstates
 *.suo
 *.jsproj.user
