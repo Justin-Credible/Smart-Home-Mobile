@@ -13,6 +13,9 @@
         private HubDataSource: Services.HubDataSource;
         private AlertMeApi: Services.AlertMeApi;
 
+        public static FORCE_ARM_OPEN_CONTACT_SENSOR_PROMPT = "A contact sensor appears to be open; are you sure you want to arm the alarm? If you continue, any open sensors will be ignored.";
+        public static FORCE_ARM_PROMPT = "A contact sensor appears to be open or a lock is unlocked; are you sure you want to arm the alarm? If you continue, any open sensors or unlocked locks will be ignored.";
+
         constructor($scope: ng.IScope, Utilities: Services.Utilities, UiHelper: Services.UiHelper, HubDataSource: Services.HubDataSource, AlertMeApi: Services.AlertMeApi) {
             super($scope, ViewModels.SecurityViewModel);
 
@@ -35,9 +38,15 @@
                 this.viewModel.alarmData = this.HubDataSource.alarm;
                 this.viewModel.alarmOverviewData = this.HubDataSource.alarmOverview;
                 this.viewModel.lockData = this.HubDataSource.locks;
+                this.viewModel.armingGracePeriodRemaining = 0;
+                this.viewModel.forceArm = false;
                 this.viewModel.isRefreshing = false;
                 this.viewModel.lastUpdated = this.HubDataSource.securityLastUpdated.toDate();
             }
+        }
+
+        public view_beforeLeave(): void {
+            clearInterval(this.viewModel.gracePeriodIntervalRef);
         }
 
         //#endregion
@@ -47,6 +56,9 @@
         private refresh(): void {
             this.viewModel.isRefreshing = true;
 
+            clearInterval(this.viewModel.gracePeriodIntervalRef);
+            this.viewModel.armingGracePeriodRemaining = 0;
+
             this.HubDataSource.refreshSecurity().then((result: ViewModels.SecurityViewModel) => {
                 this.viewModel.isRefreshing = false;
                 this.scope.$broadcast("scroll.refreshComplete");
@@ -54,16 +66,117 @@
                 this.viewModel.alarmData = result.alarmData;
                 this.viewModel.alarmOverviewData = result.alarmOverviewData;
                 this.viewModel.lockData = result.lockData;
+                this.viewModel.forceArm = false;
                 this.viewModel.lastUpdated = this.HubDataSource.securityLastUpdated.toDate();
+
+                // If the alarm is in one of these states, it generally is in a countdown before
+                // the alarm will actually be armed. In this case we'll guess the countdown as
+                // 15 seconds, and start counting down.
+                if (this.viewModel.alarmData.state === "ARM_GRACE"
+                    || this.viewModel.alarmData.state === "CONTACT_SENSOR_OPEN") {
+                    this.viewModel.armingGracePeriodRemaining = 15;
+                    this.viewModel.gracePeriodIntervalRef = setInterval(_.bind(this.graceCountdownIntervalCallback, this), 1000);
+                }
+                else {
+                    this.viewModel.armingGracePeriodRemaining = 0;
+                }
+
             }, () => {
                 this.viewModel.isRefreshing = false;
                 this.scope.$broadcast("scroll.refreshComplete");
             });
         }
 
+        private armAlarm(): void {
+            var contactSensorIsOpen = false,
+                lockIsUnlocked = false;
+
+            // If we aren't forcing the alarm to be armed then we need to check to see if any contact sensors
+            // are open or if any locks and not locked.
+            if (!this.viewModel.forceArm) {
+
+                contactSensorIsOpen = _.where(this.viewModel.alarmOverviewData.otherDevices, { type: "ContactSensor", state: "OPENED" }).length > 0
+                lockIsUnlocked = this.viewModel.lockData.atAGlance.unlocked > 0;
+
+                if (contactSensorIsOpen || lockIsUnlocked) {
+                    //TODO If any contact sensor is open, then prompt the user.
+                    this.UiHelper.confirm(SecurityController.FORCE_ARM_PROMPT).then((result: string) => {
+
+                        // The user indicated that they want to continue anyways.
+                        if (result === "Yes") {
+                            this.viewModel.forceArm = true;
+                            this.armAlarm();
+                        }
+                    });
+
+                    return;
+                }
+            }
+
+            // Reset the flag so we aren't using the force behavior next time.
+            this.viewModel.forceArm = false;
+
+            // Make the call to arm the alarm. We pass now as false and checkState as true so that if a contact
+            // sensor is open, the alarm will not be armed. Instead the failure callback will be executed where-in
+            // we can notify them and prompt if they want to continue anyways.
+            this.AlertMeApi.setAlarmMode(Services.AlertMeApi.AlarmMode.Away, false, true).then((result: AlertMeApiTypes.AlarmModePutResult) => {
+                this.viewModel.alarmData.state = result.state;
+                this.viewModel.armingGracePeriodRemaining = result.grace;
+
+                // If there was a grace period timeout in the result, then start the countdown in the UI.
+                if (result.grace) {
+                    this.viewModel.gracePeriodIntervalRef = setInterval(_.bind(this.graceCountdownIntervalCallback, this), 1000);
+                }
+            }, (error: any) => {
+                // If the alarm couldn't be armed because a contact sensor was open, prompt the user to continue.
+                // NOTE: [10-27-14] Currently this probably won't ever execute as the AlertMe v5 API implementation
+                // doesn't seem to be respecting the state of the now and checkState flags. This is why the same
+                // check is done above.
+                if (error && error.reason && error.reason === "CONTACT_SENSOR_OPEN") {
+                    // A contact sensor etc was open; let the user know.
+                    this.UiHelper.confirm(SecurityController.FORCE_ARM_OPEN_CONTACT_SENSOR_PROMPT).then((result: string) => {
+
+                        // The user indicated that they want to continue anyways.
+                        if (result === "Yes") {
+                            this.viewModel.forceArm = true;
+                            this.armAlarm();
+                        }
+                    });
+                }
+                else {
+                    this.UiHelper.alert("The alarm couldn't be armed due to an unknown error. Please try again.\n\n" + error.reason);
+                }
+            });
+        }
+
+        private graceCountdownIntervalCallback(): void {
+            this.viewModel.armingGracePeriodRemaining -= 1;
+
+            // After the countdown has completed, reset the interval and refresh the data.
+            if (this.viewModel.armingGracePeriodRemaining == 0) {
+                clearInterval(this.viewModel.gracePeriodIntervalRef);
+                this.refresh();
+            }
+
+            this.scope.$apply();
+        }
+
         //#endregion
 
         //#region Attribute/Expression Properties
+
+        get armButton_disabled(): boolean {
+
+            // If there is no view model data or it is refreshing, then the button should be disabled.
+            if (this.viewModel == null || this.viewModel.isRefreshing) {
+                return true;
+            }
+
+            return this.viewModel.alarmData.state === "ARMED"
+                || this.viewModel.alarmData.state === "arming"
+                || this.viewModel.alarmData.state === "CONTACT_SENSOR_OPEN"
+                || this.viewModel.alarmData.state === "ARM_GRACE";
+        }
 
         get lockAllButton_disabled(): boolean {
             var disabled = true;
@@ -120,35 +233,7 @@
         }
 
         public arm_click(): void {
-
-
-            // Make the call to arm the alarm. We pass now as false and checkState as true so that if a contact
-            // sensor is open, the alarm will not be armed. Instead the failure callback will be executed where-in
-            // we can notify them and prompt if they want to continue anyways.
-            this.AlertMeApi.setAlarmMode(Services.AlertMeApi.AlarmMode.Away, false, true).then((result: AlertMeApiTypes.AlarmModePutResult) => {
-                this.viewModel.alarmData.state = "ARMED";
-            }/*, (error: any) => {
-
-                // NOTE: [10-27-14] Commenting this out for now as the AlertMe v5 API implementation doesn't seem to be
-                // respecting the state of the now and checkState flags.
-
-                if (error && error.reason && error.reason === "CONTACT_SENSOR_OPEN") {
-                    // A contact sensor etc was open; let the user know.
-                    this.UiHelper.confirm("A contact sensor appears to be open; are you sure you want to arm the alarm?").then((result: string) => {
-
-                        // The user decided to cancel out.
-                        if (result === "No") {
-                            return;
-                        }
-
-                        // The user indicated that they want to continue anyways. Make the call again, but this time pass
-                        // now as true and checkState as false so the arming will ignore/bypass the open sensors.
-                        this.AlertMeApi.setAlarmMode(Services.AlertMeApi.AlarmMode.Away, true, false).then((result: AlertMeApiTypes.AlarmModePutResult) => {
-                            this.viewModel.alarmData.state = "ARMED";
-                        });
-                    });
-                }
-            }*/);
+            this.armAlarm();
         }
 
         public disarm_click(): void {

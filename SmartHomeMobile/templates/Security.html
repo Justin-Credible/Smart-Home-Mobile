@@ -28,11 +28,15 @@
             <div style="text-align: center; font-size: 24pt; font-weight: bold;">
                 {{viewModel.alarmData.state | TitleCase }}
             </div>
+            <div style="text-align: center; font-size: 12pt; padding-top: 20px;" class="icon-left" ng-show="viewModel.armingGracePeriodRemaining">
+                <i class="icon ion-loading-c"></i>
+                The alarm will be armed in {{viewModel.armingGracePeriodRemaining}} seconds...
+            </div>
         </div>
 
         <div class="row">
             <div class="col">
-                <button ng-disabled="viewModel.alarmData.state === 'ARMED' || viewModel.isRefreshing"
+                <button ng-disabled="controller.armButton_disabled"
                         class="button button-block button-assertive"
                         ng-click="controller.arm_click()">
                     Arm
