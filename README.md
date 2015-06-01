@@ -24,7 +24,7 @@ I also wanted to have an app that would be easily extensible so I can add suppor
 
 The mobile app is cross-platform and supports Android, iOS, Windows Phone 8 and Windows 8.x 'metro'.
 
-It is built with Ionic, TypeScript, and AngularJS (among others) using the [Ionic-TypeScript-MDHA-Starter](https://github.com/Justin-Credible/Ionic-TypeScript-MDHA-Starter) skeleton project.
+It is built with Ionic, TypeScript, and AngularJS (among others) using the [Ionic-TypeScript-Starter](https://github.com/Justin-Credible/Ionic-TypeScript-Starter) skeleton project.
 
 ## Integration APIs ##
 
@@ -46,6 +46,6 @@ I'm not taking code contributions at this point since this is mainly a hobby pro
 
 ## License ##
 
-Copyright © 2014 Justin Unterreiner.
+Copyright © 2015 Justin Unterreiner.
 
 Released under an MIT license; see [LICENSE](https://github.com/Justin-Credible/Ionic-TypeScript-MDHA-Starter/blob/master/LICENSE) for more information.
