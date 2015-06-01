@@ -1,0 +1,57 @@
+﻿<ion-view view-title="Camera Configuration">
+
+    <ion-nav-buttons side="right">
+        <a class="button icon ion-plus"
+           href="#/app/settings/camera/add"></a>
+    </ion-nav-buttons>
+
+    <ion-content class="has-header">
+
+        <div class="list">
+
+            <div class="item item-divider" ng-show="controller.snapshots_show">
+                Snapshot Cameras
+            </div>
+
+            <a ng-repeat="camera in viewModel.cameras | filter: { type: 'SNAPSHOT' }"
+                 ng-hide="viewModel.isRefreshing"
+                 href="#/app/settings/camera/edit/{{camera.id}}"
+                 class="item item-icon-left item-icon-right">
+
+                <i class="icon ion-ios-camera"></i>
+                <i class="icon ion-ios-arrow-forward"></i>
+                {{camera.name}}
+            </a>
+
+            <div class="item item-divider" ng-show="controller.streaming_show">
+                Streaming Cameras
+            </div>
+
+            <a ng-repeat="camera in viewModel.cameras | filter: { type: 'STREAMING' }"
+                 ng-hide="viewModel.isRefreshing"
+                 href="#/app/settings/camera/edit/{{camera.id}}"
+                 class="item item-icon-left item-icon-right">
+
+                <i class="icon ion-ios-videocam"></i>
+                <i class="icon ion-ios-arrow-forward"></i>
+                {{camera.name}}
+            </a>
+
+        </div>
+
+        <icon-panel name="empty-icon-panel"
+            icon="ion-ios-videocam-outline"
+            ng-show="viewModel.cameras.length === 0"
+            text="No cameras have been added yet. Tap the button below to add one!"></icon-panel>
+
+        <div class="padding">
+            <a class="button button-block button-positive"
+               ng-show="viewModel.cameras.length === 0"
+               href="#/app/settings/camera/add">
+                Add Camera
+            </a>
+        </div>
+
+    </ion-content>
+
+</ion-view>

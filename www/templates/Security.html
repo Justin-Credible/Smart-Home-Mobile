@@ -1,0 +1,133 @@
+﻿<ion-view view-title="Security">
+
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button icon ion-navicon phone-both-tablet-portrait"></button>
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <button class="button icon ion-loop" ng-click="controller.refresh_click()" ng-hide="blockingRequestInProgress || nonBlockingRequestInProgress"></button>
+    </ion-nav-buttons>
+
+    <ion-content class="has-header" scrolling="true" padding="true">
+
+        <ion-refresher pulling-text="Pull to refresh..."
+                       refreshing-text="Refreshing..."
+                       on-refresh="controller.refresher_refresh()">
+        </ion-refresher>
+
+        <div class="last-updated-row">Last updated at {{viewModel.lastUpdated | date: 'MM/dd/yyyy HH:mm:ss Z'}}</div>
+
+
+        <icon-panel name="unarmed-icon" icon="ion-ios-bell-outline"></icon-panel>
+
+        <div ng-show="viewModel.isRefreshing" style="text-align:center;">
+            <i class="icon ion-loading-c"></i>
+        </div>
+
+        <div ng-hide="viewModel.isRefreshing">
+            <div style="text-align: center; font-size: 24pt; font-weight: bold;">
+                {{viewModel.alarmData.state | TitleCase }}
+            </div>
+            <div style="text-align: center; font-size: 12pt; padding-top: 20px;" class="icon-left" ng-show="viewModel.armingGracePeriodRemaining">
+                <i class="icon ion-loading-c"></i>
+                The alarm will be armed in {{viewModel.armingGracePeriodRemaining}} seconds...
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <button ng-disabled="controller.armButton_disabled"
+                        class="button button-block button-assertive"
+                        ng-click="controller.arm_click()">
+                    Arm
+                </button>
+            </div>
+            <div class="col">
+                <button ng-disabled="viewModel.alarmData.state === 'DISARMED' || viewModel.isRefreshing"
+                        class="button button-block button-balanced"
+                        ng-click="controller.disarm_click()">
+                    Disarm
+                </button>
+            </div>
+            <div class="col col-25">
+                <button ng-disabled="viewModel.alarmOverviewData == null || viewModel.alarmOverviewData.summary == null || viewModel.isRefreshing"
+                        class="button button-block icon ion-ios-information-outline"
+                        ng-click="controller.info_click()"></button>
+            </div>
+        </div>
+
+        <div class="list">
+
+            <div class="item item-divider">
+                Locks
+            </div>
+
+            <div ng-repeat="lock in viewModel.lockData.locks"
+                 ng-hide="viewModel.isRefreshing"
+                 class="item item-icon-left item-toggle">
+
+                <i class="icon"
+                   ng-class="{'ion-ios-locked': lock.lockState === 'LOCKED', 'ion-ios-unlocked-outline': lock.lockState === 'UNLOCKED'}"></i>
+
+                {{lock.name}}
+
+                <label class="toggle toggle-positive">
+                    <input type="checkbox" ng-model="lock.lockState" ng-true-value="'LOCKED'" ng-false-value="'UNLOCKED'" ng-click="controller.lockToggle_click(lock)">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="item" ng-hide="viewModel.isRefreshing">
+                <div class="row">
+                    <div class="col-50">
+                        <button class="button button-block icon-left ion-ios-locked"
+                                ng-disabled="controller.lockAllButton_disabled"
+                                ng-click="controller.lockAll_click()">
+                            Lock All
+                        </button>
+                    </div>
+                    <div class="col-50">
+                        <button class="button button-block icon-left ion-ios-unlocked-outline"
+                                ng-disabled="controller.unlockAllButton_disabled"
+                                ng-click="controller.unlockAll_click()">
+                            Unlock All
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item item-divider">
+                Contact Sensors
+            </div>
+
+            <div ng-repeat="device in viewModel.alarmOverviewData.otherDevices | ObjectToArray | filter: { type: 'ContactSensor' }"
+                 ng-hide="viewModel.isRefreshing"
+                 class="item item-icon-right">
+                <i class="icon"
+                   ng-class="{ 'ion-checkmark-round': device.state === 'CLOSED', 'ion-close-round': device.state === 'OPENED', 'ion-alert-circled': device.state !== 'CLOSED' && device.status !== 'OPENED', 'assertive': device.state === 'OPENED' && viewModel.alarmData.state === 'ARMED', 'energized': device.state === 'OPENED' && viewModel.alarmData.state === 'DISARMED' }"></i>
+                {{ device.name }}
+            </div>
+
+            <div class="item item-divider">
+                Other Devices
+            </div>
+
+            <div ng-repeat="device in viewModel.alarmOverviewData.otherDevices | ObjectToArray | filter: { type: '!ContactSensor' }"
+                 ng-hide="viewModel.isRefreshing"
+                 class="item item-icon-right">
+                <i class="icon"
+                   ng-class="{ 'ion-checkmark-round': device.state === '', 'ion-alert-circled': device.status !== '', 'assertive': device.status === ''}"></i>
+                {{ device.name + controller.Utilities.toTitleCase(device.status) }}
+            </div>
+
+            <div class="item" ng-show="viewModel.isRefreshing" style="text-align:center;">
+                <i class="icon ion-loading-c"></i>
+            </div>
+
+        </div>
+
+    </ion-content>
+
+</ion-view>

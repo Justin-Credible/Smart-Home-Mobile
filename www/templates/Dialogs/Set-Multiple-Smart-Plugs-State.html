@@ -1,0 +1,79 @@
+﻿<div class="modal" ng-controller="SetMultipleSmartPlugsStateController">
+
+    <ion-header-bar class="bar bar-header bar-positive">
+        <div class="buttons">
+            <button class="button icon ion-close-round"
+                    ng-click="controller.done_click()"></button>
+        </div>
+        <h1 class="title">Set Multiple...</h1>
+        <div class="buttons">
+            <button class="button icon ion-checkmark-round"
+                    ng-click="controller.done_click()"
+                    ng-disabled="!viewModel.stateChanged"></button>
+        </div>
+    </ion-header-bar>
+
+    <ion-content class="has-header">
+
+        <div class="list">
+
+            <div class="item item-divider" ng-show="controller.lighting_show">
+                Lighting
+            </div>
+
+            <div ng-repeat="smartPlug in viewModel.smartPlugs | filter: { applianceType: 'LIGHTS' }"
+                 class="item item-icon-left item-toggle">
+
+                <i class="icon"
+                   ng-class="{'ion-ios-lightbulb-outline': smartPlug.onOffState === 'on', 'ion-ios-lightbulb': smartPlug.onOffState === 'off', 'ion-help': smartPlug.onOffState === 'UNAVAILABLE'}"></i>
+
+                <span>{{smartPlug.name}}</span>
+
+                <label class="toggle toggle-positive" ng-hide="smartPlug.onOffState === 'UNAVAILABLE'">
+                    <input type="checkbox"
+                           ng-model="smartPlug.onOffState"
+                           ng-true-value="'on'" ng-false-value="'off'"
+                           ng-click="controller.smartPlugToggle_click(smartPlug)" />
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+
+                <span class="item-note"
+                        ng-show="smartPlug.onOffState === 'UNAVAILABLE'">
+                    Unavailable
+                </span>
+            </div>
+
+            <div class="item item-divider" ng-show="controller.outlets_show">
+                Outlets
+            </div>
+
+            <div ng-repeat="smartPlug in viewModel.smartPlugs | filter: { applianceType: 'SMARTPLUG' }"
+                 class="item item-icon-left item-toggle">
+
+                <i class="icon ion-outlet"></i>
+
+                {{smartPlug.name}}
+
+                <label class="toggle toggle-positive" ng-hide="smartPlug.onOffState === 'UNAVAILABLE'">
+                    <input type="checkbox"
+                           ng-model="smartPlug.onOffState"
+                           ng-true-value="'on'" ng-false-value="'off'"
+                           ng-click="controller.smartPlugToggle_click(smartPlug)" />
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+
+                <span class="item-note"
+                        ng-show="smartPlug.onOffState === 'UNAVAILABLE'">
+                    Unavailable
+                </span>
+            </div>
+
+        </div>
+
+    </ion-content>
+
+</div>

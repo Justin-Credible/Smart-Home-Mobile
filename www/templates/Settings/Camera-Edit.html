@@ -1,0 +1,109 @@
+﻿<ion-view view-title="{{viewModel.title}}">
+
+    <ion-nav-buttons side="left">
+    </ion-nav-buttons>
+
+    <ion-content class="has-header" scrolling="true" padding="false">
+
+        <div class="list">
+
+            <div class="item item-divider">
+                General Information
+            </div>
+
+            <label class="item item-input">
+                <span class="input-label">Name</span>
+                <input type="text"
+                       ng-model="viewModel.camera.name"
+                       ng-change="viewModel.showSaveButton = true" />
+            </label>
+
+            <div class="item item-divider item-icon-right item-small-icon">
+                Stream Type
+                <i class="icon ion-ios-help-outline"
+                   ng-click="controller.typeInfo_click()"></i>
+            </div>
+
+            <label class="item item-radio">
+                <input type="radio"
+                       name="cameraType"
+                       ng-model="viewModel.camera.type"
+                       value="SNAPSHOT">
+                <div class="item-content item-icon-left">
+                    <i class="radio-icon ion-ios-camera"></i>
+                    Snapshot / Slideshow
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+            </label>
+
+            <label class="item item-radio">
+                <input type="radio"
+                       name="cameraType"
+                       ng-model="viewModel.camera.type"
+                       value="STREAMING">
+                <div class="item-content item-icon-left">
+                    <i class="radio-icon ion-ios-videocam"></i>
+                    Streaming Video (mjpeg)
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+            </label>
+
+            <div class="item item-divider item-icon-right item-small-icon">
+                Image / Video URL
+                <i class="icon ion-ios-help-outline"
+                   ng-click="controller.urlInfo_click()"></i>
+            </div>
+
+            <label class="item item-input">
+                <span class="input-label">URL</span>
+                <input type="text"
+                       ng-model="viewModel.camera.url"
+                       ng-change="viewModel.showSaveButton = true" />
+            </label>
+
+            <div class="item item-divider item-icon-right item-small-icon">
+                Credentials
+                <i class="icon ion-ios-help-outline"
+                   ng-click="controller.credentialsInfo_click()"></i>
+            </div>
+
+            <label class="item item-input">
+                <span class="input-label">User Name</span>
+                <input type="text"
+                       ng-model="viewModel.camera.userName"
+                       ng-change="viewModel.showSaveButton = true" />
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Password</span>
+                <input type="password"
+                       ng-model="viewModel.camera.password"
+                       ng-change="viewModel.showSaveButton = true; viewModel.showConfirmPassword = true;" />
+            </label>
+
+            <label class="item item-input" ng-show="viewModel.showConfirmPassword">
+                <span class="input-label">Confirm Password</span>
+                <input type="password"
+                       ng-model="viewModel.confirmPassword"
+                       ng-change="viewModel.showSaveButton = true;" />
+            </label>
+
+        </div>
+
+        <div class="padding">
+            <button class="button button-block button-positive"
+                    ng-disabled="!viewModel.camera.url"
+                    ng-click="controller.testCamera_click()">
+                Test Camera
+            </button>
+
+            <button class="button button-block button-balanced"
+                    ng-show="viewModel.showSaveButton"
+                    ng-click="controller.save_click()">
+                Save Changes
+            </button>
+        </div>
+
+    </ion-content>
+
+</ion-view>

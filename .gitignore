@@ -1,33 +1,17 @@
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
 
-# Build working directories
-SmartHomeMobile/bin
-SmartHomeMobile/bld
+# Toolchain
+/node_modules
+/bower_components
+/platforms
+/plugins
+/typings
 
-# Generated TypeScript artifacts
-SmartHomeMobile/app/**/*.js
-SmartHomeMobile/app/**/*.js.map
-
-# Local nu-get packages
-packages/*/
-
-# Build-time variables
-SmartHomeMobile/scripts/BuildVars.js
-
-# Visual Studio user preferences etc
-*.sln.ide/
-*.docstates
-*.suo
-*.jsproj.user
-
-# Windows thumbnail cache
-Thumbs.db
-
-# Windows folder config
-Desktop.ini
-
-# Mac OS Stuff
-.DS_Store
-
-# Misc temp files
-*.tmp
-*.bak
+# Development Artifacts
+/www/lib
+/www/js/bundle.*
+/www/js/BuildVars.js
+/www/js/src/
+/src/tsd.d.ts
+/chrome
