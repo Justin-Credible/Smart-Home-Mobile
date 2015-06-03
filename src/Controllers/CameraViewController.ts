@@ -66,7 +66,7 @@
 
         private buildUrl(camera: Models.Camera, includeCredentials: boolean): string {
             var url: string,
-                uri: URIOptions;
+                uri: uri.URIOptions;
 
             if (!camera) {
                 return "";
