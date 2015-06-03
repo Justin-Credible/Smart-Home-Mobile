@@ -517,8 +517,8 @@
                 new ViewModels.CategoryItemViewModel("Security", "#/app/security", "ion-locked", 0),
                 new ViewModels.CategoryItemViewModel("Thermostat", "#/app/thermostat", "ion-thermometer", 1),
                 new ViewModels.CategoryItemViewModel("Lighting / Power", "#/app/smart-plugs", "ion-ios-lightbulb", 2),
-                new ViewModels.CategoryItemViewModel("Cameras", "#/app/cameras", "ion-ios-videocam", 3),
-                new ViewModels.CategoryItemViewModel("Irrigation", "#/app/irrigation", "ion-ios-rainy", 4)
+                new ViewModels.CategoryItemViewModel("Cameras", "#/app/cameras", "ion-ios-videocam", 3)
+                //new ViewModels.CategoryItemViewModel("Irrigation", "#/app/irrigation", "ion-ios-rainy", 4)
             ];
 
             // If the user has ordering preferences, then apply their custom ordering.
