@@ -1,34 +1,49 @@
 ﻿module JustinCredible.SmartHomeMobile.Services {
 
     /**
-    * This is a custom interceptor for Angular's $httpProvider.
-    * 
-    * It allows us to inject the token into the header, log request and responses,
-    * and handle the showing and hiding of the user blocking UI elements, progress
-    * bar and spinner.
-    */
+     * This is a custom interceptor for Angular's $httpProvider.
+     * 
+     * It allows us to inject the token into the header, log request and responses,
+     * and handle the showing and hiding of the user blocking UI elements, progress
+     * bar and spinner.
+     * 
+     * Note: The $injector service is used to obtain most of the other services that
+     * this service depends on so we can avoid circular dependency references on startup.
+     */
     export class HttpInterceptor {
 
         private $rootScope: ng.IRootScopeService;
+        private $injector: ng.auto.IInjectorService;
         private $q: ng.IQService;
-        private Preferences: Services.Preferences;
-        private Utilities: Utilities;
-        private Logger: Services.Logger;
 
         private requestsInProgress: number;
         private blockingRequestsInProgress: number;
         private spinnerRequestsInProgress: number;
 
-        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, Preferences: Services.Preferences, Utilities: Services.Utilities, Logger: Services.Logger) {
+        constructor($rootScope: ng.IRootScopeService, $injector: ng.auto.IInjectorService, $q: ng.IQService) {
             this.$rootScope = $rootScope;
+            this.$injector = $injector;
             this.$q = $q;
-            this.Preferences = Preferences;
-            this.Utilities = Utilities;
-            this.Logger = Logger;
 
             this.requestsInProgress = 0;
             this.blockingRequestsInProgress = 0;
             this.spinnerRequestsInProgress = 0;
+        }
+
+        private get Utilities(): Services.Utilities {
+            return this.$injector.get("Utilities");
+        }
+
+        private get UiHelper(): Services.UiHelper {
+            return this.$injector.get("UiHelper");
+        }
+
+        private get Preferences(): Services.Preferences {
+            return this.$injector.get("Preferences");
+        }
+
+        private get Logger(): Services.Logger {
+            return this.$injector.get("Logger");
         }
 
         /**
@@ -44,9 +59,9 @@
 
             // Angular expects the factory function to return the object that is used
             // for the factory when it is injected into other objects.
-            factory = function ($rootScope: ng.IRootScopeService, $q: ng.IQService, Preferences: Services.Preferences, Utilities: Services.Utilities, Logger: Services.Logger) {
+            factory = function ($rootScope: ng.IRootScopeService, $injector: ng.auto.IInjectorService, $q: ng.IQService, Preferences: Services.Preferences, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Logger: Services.Logger) {
                 // Create an instance our strongly-typed service.
-                var instance = new HttpInterceptor($rootScope, $q, Preferences, Utilities, Logger);
+                var instance = new HttpInterceptor($rootScope, $injector, $q);
 
                 // Return an object that exposes the functions that we want to be exposed.
                 // We use bind here so that the correct context is used (Angular normally
@@ -60,7 +75,7 @@
             };
 
             // Annotate the factory function with the things that should be injected.
-            factory.$inject = ["$rootScope", "$q", "Preferences", "Utilities", "Logger"];
+            factory.$inject = ["$rootScope", "$injector", "$q"];
 
             return factory;
         }
@@ -240,15 +255,15 @@
                 // If this wasn't the first blocking HTTP request, we need to hide the previous
                 // blocking progress indicator before we show the new one.
                 if (this.blockingRequestsInProgress > 1) {
-                    window.ProgressIndicator.hide();
+                    this.UiHelper.progressIndicator.hide();
                 }
 
                 // Show the blocking progress indicator with or without text.
                 if (config.blockingText) {
-                    window.ProgressIndicator.showSimpleWithLabel(true, config.blockingText);
+                    this.UiHelper.progressIndicator.showSimpleWithLabel(true, config.blockingText);
                 }
                 else {
-                    window.ProgressIndicator.showSimple(true);
+                    this.UiHelper.progressIndicator.showSimple(true);
                 }
 
                 // Let the rest of the application know that blocking requests are in progress.
@@ -288,7 +303,7 @@
             this.blockingRequestsInProgress = 0;
             this.spinnerRequestsInProgress = 0;
             NProgress.done();
-            window.ProgressIndicator.hide();
+            this.UiHelper.progressIndicator.hide();
         }
 
         /**
@@ -311,7 +326,7 @@
 
             // If there are no more blocking requests in progress, then hide the blocker.
             if (config.blocking && this.blockingRequestsInProgress === 0) {
-                window.ProgressIndicator.hide();
+                this.UiHelper.progressIndicator.hide();
 
                 // Let the rest of the application know that all blocking requests are finished.
                 /* tslint:disable:no-string-literal */

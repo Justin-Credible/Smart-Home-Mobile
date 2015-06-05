@@ -79,26 +79,27 @@
         /**
          * Used to check if the current platform is Windows Phone 8.x.
          */
-        public isWindowsPhone8(): boolean {
+        public get isWindowsPhone8(): boolean {
             return typeof(device) !== "undefined" && device.platform === "WP8";
         }
 
         /**
          * Used to check if the current platform is Windows 8 (desktop OS).
          */
-        public isWindows8(): boolean {
+        public get isWindows8(): boolean {
             return typeof(device) !== "undefined" && device.platform === "Windows8";
         }
 
-        //#endregion
-
-        //#region Plug-ins
-
         /**
-         * Exposes an API for working with the operating system's clipboard.
-         */
-        get clipboard(): ICordovaClipboardPlugin {
-            return cordova.plugins.clipboard;
+        * Used to return the name of the platform as specified via Cordova.
+        */
+        public get platform(): string {
+            if (typeof (device) === "undefined") {
+                return typeof(window.ripple) !== "undefined" ? "Ripple" : "Unknown";
+            }
+            else {
+                return device.platform;
+            }
         }
 
         //#endregion

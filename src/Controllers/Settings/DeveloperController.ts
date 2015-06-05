@@ -6,7 +6,7 @@
 
     export class DeveloperController extends BaseController<ViewModels.DeveloperViewModel> implements IDeveloperController {
 
-        public static $inject = ["$scope", "$http", "Utilities", "UiHelper", "FileUtilities", "Logger", "Preferences", "MockApis", "AlertMeApi"];
+        public static $inject = ["$scope", "$http", "Utilities", "UiHelper", "FileUtilities", "Logger", "Preferences"];
 
         private $http: ng.IHttpService;
         private Utilities: Services.Utilities;
@@ -14,12 +14,11 @@
         private FileUtilities: Services.FileUtilities;
         private Logger: Services.Logger;
         private Preferences: Services.Preferences;
-        private MockApis: Services.MockApis;
         private AlertMeApi: Services.AlertMeApi;
 
         private thermostat_deviceId: string;
 
-        constructor($scope: ng.IScope, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, FileUtilities: Services.FileUtilities, Logger: Services.Logger, Preferences: Services.Preferences, MockApis: Services.MockApis, AlertMeApi: Services.AlertMeApi) {
+        constructor($scope: ng.IScope, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, FileUtilities: Services.FileUtilities, Logger: Services.Logger, Preferences: Services.Preferences, AlertMeApi: Services.AlertMeApi) {
             super($scope, ViewModels.DeveloperViewModel);
 
             this.$http = $http;
@@ -28,7 +27,6 @@
             this.FileUtilities = FileUtilities;
             this.Logger = Logger;
             this.Preferences = Preferences;
-            this.MockApis = MockApis;
             this.AlertMeApi = AlertMeApi;
         }
 
@@ -37,7 +35,7 @@
         public view_beforeEnter(): void {
             this.viewModel.mockApiRequests = this.Preferences.enableMockHttpCalls;
 
-            this.viewModel.devicePlatform = device.platform;
+            this.viewModel.devicePlatform = this.Utilities.platform;
             this.viewModel.loggingToLocalStorage = this.Logger.getLogToLocalStorage() + "";
             this.viewModel.defaultStoragePathId = this.FileUtilities.getDefaultRootPathId();
             this.viewModel.defaultStoragePath = this.FileUtilities.getDefaultRootPath();
@@ -287,20 +285,20 @@
                     return;
                 }
 
-                this.Utilities.clipboard.copy(result.value, () => {
+                this.UiHelper.clipboard.copy(result.value, () => {
                     this.UiHelper.alert("Copy OK!");
                 }, (err: Error) => {
-                        this.UiHelper.alert("Copy Failed!\n\n" + (err ? err.message : "Unknown Error"));
-                    });
+                    this.UiHelper.alert("Copy Failed!\n\n" + (err ? err.message : "Unknown Error"));
+                });
             });
         }
 
         public clipboard_paste(): void {
-            this.Utilities.clipboard.paste((result: string) => {
+            this.UiHelper.clipboard.paste((result: string) => {
                 this.UiHelper.alert("Paste OK! Value retrieved is:\n\n" + result);
             }, (err: Error) => {
-                    this.UiHelper.alert("Paste Failed!\n\n" + (err ? err.message : "Unknown Error"));
-                });
+                this.UiHelper.alert("Paste Failed!\n\n" + (err ? err.message : "Unknown Error"));
+            });
         }
 
         public startProgress_click() {
