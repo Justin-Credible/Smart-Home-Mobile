@@ -105,7 +105,7 @@
          * @returns True if the credentials have been configured, false otherwise.
          */
         private areCredentialsSpecified(): boolean {
-            return !!this.Preferences.alertMeUserName && !!this.Preferences.alertMePassword;
+            return !!this.Preferences.alertMeApiUserName && !!this.Preferences.alertMeApiPassword;
         }
 
         /**
@@ -172,8 +172,8 @@
                 url: this.Preferences.alertMeApiUrl + "/login",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 data: this.transformRequest({
-                    username: this.Preferences.alertMeUserName,
-                    password: this.Preferences.alertMePassword,
+                    username: this.Preferences.alertMeApiUserName,
+                    password: this.Preferences.alertMeApiPassword,
                     caller: "JustinCredible.SmartHomeMobile"
                 })
             };
@@ -225,7 +225,7 @@
                 return q.promise;
             }
 
-            url = this.Utilities.format("{0}/users/{1}/widgets/homeStatus", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName);
+            url = this.Utilities.format("{0}/users/{1}/widgets/homeStatus", this.Preferences.alertMeApiUrl, this.Preferences.alertMeApiUserName);
 
             httpConfig = {
                 method: "GET",
@@ -256,7 +256,7 @@
                 return q.promise;
             }
 
-            url = this.Utilities.format("{0}/users/{1}/widgets/alarm", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName);
+            url = this.Utilities.format("{0}/users/{1}/widgets/alarm", this.Preferences.alertMeApiUrl, this.Preferences.alertMeApiUserName);
 
             httpConfig = {
                 method: "GET",
@@ -284,7 +284,7 @@
                 return q.promise;
             }
 
-            url = this.Utilities.format("{0}/users/{1}/widgets/alarm/overview", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName);
+            url = this.Utilities.format("{0}/users/{1}/widgets/alarm/overview", this.Preferences.alertMeApiUrl, this.Preferences.alertMeApiUserName);
 
             httpConfig = {
                 method: "GET",
@@ -311,7 +311,7 @@
                 return q.promise;
             }
 
-            url = this.Utilities.format("{0}/users/{1}/widgets/locks", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName);
+            url = this.Utilities.format("{0}/users/{1}/widgets/locks", this.Preferences.alertMeApiUrl, this.Preferences.alertMeApiUserName);
 
             httpConfig = {
                 method: "GET",
@@ -343,7 +343,7 @@
                 return q.promise;
             }
 
-            url = this.Utilities.format("{0}/users/{1}/widgets/locks/{2}/lockState", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName, deviceId);
+            url = this.Utilities.format("{0}/users/{1}/widgets/locks/{2}/lockState", this.Preferences.alertMeApiUrl, this.Preferences.alertMeApiUserName, deviceId);
 
             httpConfig = {
                 method: "PUT",
@@ -379,7 +379,7 @@
                 return q.promise;
             }
 
-            url = this.Utilities.format("{0}/users/{1}/widgets/alarm/mode", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName);
+            url = this.Utilities.format("{0}/users/{1}/widgets/alarm/mode", this.Preferences.alertMeApiUrl, this.Preferences.alertMeApiUserName);
 
             httpConfig = {
                 method: "PUT",
@@ -412,7 +412,7 @@
                 return q.promise;
             }
 
-            url = this.Utilities.format("{0}/users/{1}/widgets/smartplugs", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName);
+            url = this.Utilities.format("{0}/users/{1}/widgets/smartplugs", this.Preferences.alertMeApiUrl, this.Preferences.alertMeApiUserName);
 
             httpConfig = {
                 method: "GET",
@@ -444,7 +444,7 @@
                 return q.promise;
             }
 
-            url = this.Utilities.format("{0}/users/{1}/widgets/smartplugs/{2}/onOffState", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName, deviceId);
+            url = this.Utilities.format("{0}/users/{1}/widgets/smartplugs/{2}/onOffState", this.Preferences.alertMeApiUrl, this.Preferences.alertMeApiUserName, deviceId);
 
             httpConfig = {
                 method: "PUT",
@@ -479,7 +479,7 @@
                 return q.promise;
             }
 
-            url = this.Utilities.format("{0}/users/{1}/widgets/climate", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName);
+            url = this.Utilities.format("{0}/users/{1}/widgets/climate", this.Preferences.alertMeApiUrl, this.Preferences.alertMeApiUserName);
 
             if (deviceId) {
                 url += "/" + deviceId;
@@ -515,7 +515,7 @@
                 return q.promise;
             }
 
-            url = this.Utilities.format("{0}/users/{1}/widgets/climate/{2}/onOffState", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName, deviceId);
+            url = this.Utilities.format("{0}/users/{1}/widgets/climate/{2}/onOffState", this.Preferences.alertMeApiUrl, this.Preferences.alertMeApiUserName, deviceId);
 
             httpConfig = {
                 method: "PUT",
@@ -547,7 +547,7 @@
                 return q.promise;
             }
 
-            url = this.Utilities.format("{0}/users/{1}/widgets/climate/{2}/mode", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName, deviceId);
+            url = this.Utilities.format("{0}/users/{1}/widgets/climate/{2}/mode", this.Preferences.alertMeApiUrl, this.Preferences.alertMeApiUserName, deviceId);
 
             httpConfig = {
                 method: "PUT",
@@ -580,7 +580,7 @@
                 return q.promise;
             }
 
-            url = this.Utilities.format("{0}/users/{1}/widgets/climate/{2}/targetTemperature", this.Preferences.alertMeApiUrl, this.Preferences.alertMeUserName, deviceId);
+            url = this.Utilities.format("{0}/users/{1}/widgets/climate/{2}/targetTemperature", this.Preferences.alertMeApiUrl, this.Preferences.alertMeApiUserName, deviceId);
 
             httpConfig = {
                 method: "PUT",

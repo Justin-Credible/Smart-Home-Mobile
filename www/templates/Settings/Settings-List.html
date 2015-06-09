@@ -27,10 +27,18 @@
             </ion-item>
             -->
 
-            <ion-item href="#/app/settings/configure-pin" class="item-icon-left item-icon-right">
+            <ion-item href="#/app/settings/configure-pin" class="item-icon-left item-icon-right"
+                ng-show="viewModel.showPin">
                 <i class="icon ion-ios-locked-outline"></i>
                 <i class="icon ion-ios-arrow-forward"></i>
                 Security PIN
+            </ion-item>
+
+            <ion-item href="#/app/settings/configure-passphrase" class="item-icon-left item-icon-right"
+                ng-show="viewModel.showPassphrase">
+                <i class="icon ion-ios-locked-outline"></i>
+                <i class="icon ion-ios-arrow-forward"></i>
+                Security Passphrase
             </ion-item>
 
             <ion-item href="#/app/settings/logs" class="item-icon-left item-icon-right">

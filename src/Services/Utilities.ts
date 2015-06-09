@@ -5,21 +5,18 @@
      */
     export class Utilities {
 
-        public static $inject = ["isRipple", "isCordova", "isDebug", "isChromeExtension", "Preferences"];
-
-        private Preferences: Services.Preferences;
+        public static $inject = ["isRipple", "isCordova", "isDebug", "isChromeExtension"];
 
         private _isRipple: boolean;
         private _isCordova: boolean;
         private _isDebug: boolean;
         private _isChromeExtension: boolean;
 
-        constructor(isRipple: boolean, isCordova: boolean, isDebug: boolean, isChromeExtension: boolean, Preferences: Services.Preferences) {
+        constructor(isRipple: boolean, isCordova: boolean, isDebug: boolean, isChromeExtension: boolean) {
             this._isRipple = isRipple;
             this._isCordova = isCordova;
             this._isDebug = isDebug;
             this._isChromeExtension = isChromeExtension;
-            this.Preferences = Preferences;
         }
 
         //#region Platforms
@@ -506,46 +503,6 @@
             }
 
             return guid;
-        }
-
-        /**
-         * Returns the categories for the application in their default sort order.
-         */
-        public get categories(): ViewModels.CategoryItemViewModel[] {
-
-            // Define the default set of categories.
-            var categories = [
-                new ViewModels.CategoryItemViewModel("Security", "#/app/security", "ion-locked", 0),
-                new ViewModels.CategoryItemViewModel("Thermostat", "#/app/thermostat", "ion-thermometer", 1),
-                new ViewModels.CategoryItemViewModel("Lighting / Power", "#/app/smart-plugs", "ion-ios-lightbulb", 2),
-                new ViewModels.CategoryItemViewModel("Cameras", "#/app/cameras", "ion-ios-videocam", 3)
-                //new ViewModels.CategoryItemViewModel("Irrigation", "#/app/irrigation", "ion-ios-rainy", 4)
-            ];
-
-            // If the user has ordering preferences, then apply their custom ordering.
-            if (this.Preferences.categoryOrder) {
-                this.Preferences.categoryOrder.forEach((categoryName: string, index: number) => {
-                    var categoryItem = _.where(categories, { name: categoryName })[0];
-
-                    if (categoryItem) {
-                        categoryItem.order = index;
-                    }
-                });
-            }
-
-            // Ensure the list is sorted by the order.
-            categories = _.sortBy(categories, "order");
-
-            return categories;
-        }
-
-        /**
-         * Returns the view that is set as the default.
-         * 
-         * Currently, this is the category that is set in the first position.
-         */
-        public get defaultCategory(): ViewModels.CategoryItemViewModel {
-            return this.categories[0];
         }
 
         //#endregion

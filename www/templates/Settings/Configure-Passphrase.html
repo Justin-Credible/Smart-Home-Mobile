@@ -1,0 +1,54 @@
+<ion-view view-title="Configure Passphrase">
+
+    <ion-nav-buttons side="left">
+    </ion-nav-buttons>
+
+    <ion-content class="has-header" scrolling="true" padding="true">
+
+        <p class="configure-pin-lock-icon">
+            <i class="icon ion-locked"></i>
+        </p>
+
+        <p>A security passphrase is used to encrypt the access credentials to your smart home devices and platforms. You will be prompted for the security passphrase once per Chrome session.</p>
+
+        <p>The security passphrase will remain in effect until it is removed or the application is re-installed.</p>
+
+        <div class="list list-inset">
+
+            <label class="item item-input" ng-show="viewModel.showField1">
+                <input type="password"
+                    placeholder="Current Passphrase"
+                    ng-model="viewModel.passphrase1">
+            </label>
+
+            <label class="item item-input" ng-show="viewModel.showField2">
+                <input type="password"
+                    placeholder="New Passphrase"
+                    ng-model="viewModel.passphrase2">
+            </label>
+
+            <label class="item item-input" ng-show="viewModel.showField3">
+                <input type="password"
+                    placeholder="Confirm New Passphrase"
+                    ng-model="viewModel.passphrase3">
+            </label>
+
+        </div>
+
+        <p>
+            <button class="button button-block button-positive"
+                ng-show="viewModel.showSetButton"
+                ng-click="controller.setPassphrase_click()">Set Passphrase</button>
+
+            <button class="button button-block button-positive"
+                ng-show="viewModel.showChangeButton"
+                ng-click="controller.changePassphrase_click()">Change Passphrase</button>
+
+            <button class="button button-block button-assertive"
+                ng-show="viewModel.showRemoveButton"
+                ng-click="controller.removePassphrase_click()">Remove Passphrase</button>
+        </p>
+
+    </ion-content>
+
+</ion-view>

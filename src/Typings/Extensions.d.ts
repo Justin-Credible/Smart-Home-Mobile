@@ -81,4 +81,25 @@ interface Plugins {
     toast: ICordovaToastPlugin;
 }
 
+/**
+ * The window object for the background page when running as a Chrome Extension.
+ */
+interface ChromeExtensionBackgroundWindow extends Window {
 
+    /**
+     * Global extension state
+     */
+    state: {
+
+        /**
+         * The user's security passphrase.
+         * 
+         * When running as a Chrome extension the user can enter a passphrase that will encrypt
+         * the AlertMe API password so it isn't stored in cleartext in local storage. The user
+         * must enter their passphrase at least once so it will be available.
+         * 
+         * It is a transient, in-memory only variable that does not persist between sessions.
+         */
+        passphrase: string;
+    };
+}

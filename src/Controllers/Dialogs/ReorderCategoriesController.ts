@@ -6,15 +6,14 @@
 
     export class ReorderCategoriesController extends BaseDialogController<ViewModels.ReorderCategoriesViewModel, void, void> implements IReorderCategoriesController {
 
-        public static $inject = ["$scope", "Utilities", "Preferences", "UiHelper"];
+        public static $inject = ["$scope", "Preferences", "UiHelper"];
 
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
 
-        constructor($scope: ng.IScope, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
+        constructor($scope: ng.IScope, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
             super($scope, ViewModels.ReorderCategoriesViewModel, UiHelper.DialogIds.ReorderCategories);
 
-            this.Utilities = Utilities;
             this.Preferences = Preferences;
         }
 
@@ -22,7 +21,7 @@
 
         public dialog_shown(): void {
             // Grab the available categories.
-            this.viewModel.categories = this.Utilities.categories;
+            this.viewModel.categories = this.Preferences.categories;
         }
 
         //#endregion

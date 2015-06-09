@@ -1,16 +1,22 @@
 {
     "manifest_version": 2,
 
-    "name": "Sample App",
-    "description": "SampleApp: A starter application using Ionic and TypeScript.",
-    "version": "1.0",
+    "name": "Smart Home Mobile",
+    "description": "Used to control home automation devices.",
+    "version": "1.0.3",
 
     "browser_action": {
         "default_icon": "icon.png",
         "default_popup": "index.html",
-        "default_title": "Sample App"
+        "default_title": "Smart Home Mobile"
     },
+
+    "background": {
+        "scripts": ["js/chrome-ext-background.js"]
+    },
+
     "permissions": [
-        "https://ajax.googleapis.com/"
+        "https://*/",
+        "http://*/"
     ]
 }

@@ -25,7 +25,7 @@
             this.Preferences = Preferences;
             this.AlertMeApi = AlertMeApi;
 
-            this.viewModel.categories = this.Utilities.categories;
+            this.viewModel.categories = this.Preferences.categories;
 
             $scope.$on("http.error", _.bind(this.http_error, this));
             $scope.$on(Services.AlertMeApi.URL_NOT_SPECIFIED_EVENT, _.bind(this.alertMeApi_urlNotSpecified, this));
@@ -63,7 +63,7 @@
             this.UiHelper.showDialog(this.UiHelper.DialogIds.ReorderCategories).then(() => {
                 // After the re-order dialog is closed, re-populate the category
                 // items since they may have been re-ordered.
-                this.viewModel.categories = this.Utilities.categories;
+                this.viewModel.categories = this.Preferences.categories;
             });
         }
 

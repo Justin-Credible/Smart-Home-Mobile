@@ -98,6 +98,7 @@ module JustinCredible.SmartHomeMobile.Application {
         ngModule.controller("DeveloperController", Controllers.DeveloperController);
         ngModule.controller("AboutController", Controllers.AboutController);
         ngModule.controller("ConfigurePinController", Controllers.ConfigurePinController);
+        ngModule.controller("ConfigurePassphraseController", Controllers.ConfigurePassphraseController);
 
         // Specify the initialize/run and configuration functions.
         ngModule.run(angular_initialize);
@@ -189,7 +190,7 @@ module JustinCredible.SmartHomeMobile.Application {
         // Now that the platform is ready, we'll delegate to the resume event.
         // We do this so the same code that fires on resume also fires when the
         // application is started for the first time.
-        device_resume($location, $ionicViewService, Utilities, UiHelper);
+        device_resume($location, $ionicViewService, Preferences, UiHelper);
     }
 
     /**
@@ -362,12 +363,42 @@ module JustinCredible.SmartHomeMobile.Application {
             }
         });
 
-        $stateProvider.state("app.cloud-sync", {
-            url: "/settings/cloud-sync",
+        $stateProvider.state("app.hub", {
+            url: "/settings/hub",
             views: {
                 "menuContent": {
-                    templateUrl: "templates/Settings/Cloud-Sync.html",
-                    controller: "CloudSyncController"
+                    templateUrl: "templates/Settings/Hub.html",
+                    controller: "HubController"
+                }
+            }
+        });
+
+        $stateProvider.state("app.cameras-list", {
+            url: "/settings/cameras",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Settings/Cameras-List.html",
+                    controller: "CamerasListController"
+                }
+            }
+        });
+
+        $stateProvider.state("app.camera-add", {
+            url: "/settings/camera/add",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Settings/Camera-Edit.html",
+                    controller: "CameraEditController"
+                }
+            }
+        });
+
+        $stateProvider.state("app.camera-edit", {
+            url: "/settings/camera/edit/:id",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Settings/Camera-Edit.html",
+                    controller: "CameraEditController"
                 }
             }
         });
@@ -378,6 +409,16 @@ module JustinCredible.SmartHomeMobile.Application {
                 "menuContent": {
                     templateUrl: "templates/Settings/Configure-Pin.html",
                     controller: "ConfigurePinController"
+                }
+            }
+        });
+
+        $stateProvider.state("app.configure-passphrase", {
+            url: "/settings/configure-passphrase",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Settings/Configure-Passphrase.html",
+                    controller: "ConfigurePassphraseController"
                 }
             }
         });
@@ -451,7 +492,7 @@ module JustinCredible.SmartHomeMobile.Application {
      * when the user launches an app that is already open or uses the OS task manager
      * to switch back to the application.
      */
-    function device_resume($location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper): void {
+    function device_resume($location: ng.ILocationService, $ionicViewService: any, Preferences: Services.Preferences, UiHelper: Services.UiHelper): void {
 
         isShowingPinPrompt = true;
 
@@ -470,7 +511,7 @@ module JustinCredible.SmartHomeMobile.Application {
                 });
 
                 // Navigate the user to their default view.
-                $location.path(Utilities.defaultCategory.href.substring(1));
+                $location.path(Preferences.defaultCategory.href.substring(1));
                 $location.replace();
             }
         });

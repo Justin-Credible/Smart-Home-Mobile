@@ -29,8 +29,8 @@
         public view_beforeEnter(): void {
             this.viewModel.showSaveButton = false;
             this.viewModel.apiUrl = this.Preferences.alertMeApiUrl;
-            this.viewModel.userName = this.Preferences.alertMeUserName;
-            this.viewModel.password = this.Preferences.alertMePassword;
+            this.viewModel.userName = this.Preferences.alertMeApiUserName;
+            this.viewModel.password = this.Preferences.alertMeApiPassword;
         }
 
         //#endregion
@@ -73,8 +73,8 @@
 
             // Update the values in the preferences.
             this.Preferences.alertMeApiUrl = this.viewModel.apiUrl;
-            this.Preferences.alertMeUserName = this.viewModel.userName;
-            this.Preferences.alertMePassword = this.viewModel.password;
+            this.Preferences.alertMeApiUserName = this.viewModel.userName;
+            this.Preferences.alertMeApiPassword = this.viewModel.password;
 
             // Kick the user back to the settings list view.
             this.UiHelper.toast.showShortBottom("Changes have been saved.");

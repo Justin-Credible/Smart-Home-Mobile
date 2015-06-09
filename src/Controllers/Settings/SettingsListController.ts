@@ -23,6 +23,8 @@
         public view_beforeEnter(): void {
             this.viewModel.isDebugMode = this.Utilities.isDebugMode;
             this.viewModel.isDeveloperMode = this.Preferences.enableDeveloperTools;
+            this.viewModel.showPin = !this.Utilities.isChromeExtension;
+            this.viewModel.showPassphrase = this.Utilities.isChromeExtension;
         }
 
         //#endregion
