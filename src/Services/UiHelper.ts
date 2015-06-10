@@ -32,6 +32,7 @@
         public DialogIds = {
             ReorderCategories: "REORDER_CATEGORIES_DIALOG",
             PinEntry: "PIN_ENTRY_DIALOG",
+            PassphraseEntry: "PASSPHRASE_ENTRY_DIALOG",
             SetMultipleSmartPlugsState: "SET_MULTIPLE_SMART_PLUGS_STATE_DIALOG"
         };
 
@@ -43,6 +44,7 @@
         private static dialogTemplateMap = {
             "REORDER_CATEGORIES_DIALOG": "templates/Dialogs/Reorder-Categories.html",
             "PIN_ENTRY_DIALOG": "templates/Dialogs/Pin-Entry.html",
+            "PASSPHRASE_ENTRY_DIALOG": "templates/Dialogs/Passphrase-Entry.html",
             "SET_MULTIPLE_SMART_PLUGS_STATE_DIALOG": "templates/Dialogs/Set-Multiple-Smart-Plugs-State.html"
         };
 
@@ -57,8 +59,6 @@
         private MockPlatformApis: Services.MockPlatformApis;
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
-
-        private isPinEntryOpen = false;
 
         constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, $ionicModal: any, MockPlatformApis: Services.MockPlatformApis, Utilities: Services.Utilities, Preferences: Services.Preferences) {
             this.$rootScope = $rootScope;
@@ -492,30 +492,51 @@
 
         //#region Helpers for the device_resume event
 
-        public showPinEntryAfterResume(): ng.IPromise<void> {
-            var q = this.$q.defer<void>(),
-                resumedAt: moment.Moment,
-                options: Models.DialogOptions,
-                model: Models.PinEntryDialogModel;
-
-            // If the PIN entry dialog then there is nothing to do.
-            if (this.isPinEntryOpen) {
-                q.reject(UiHelper.DIALOG_ALREADY_OPEN);
-                return q.promise;
+        public showSecurityPromptAfterResume(): ng.IPromise<void> {
+            // Determine which security prompt we need to show based on if we are running
+            // as a Chrome extension or a standard mobile application.
+            if (this.Utilities.isChromeExtension) {
+                return this.showPassphraseEntryAfterResume();
             }
+            else {
+                return this.showPinEntryAfterResume();
+            }
+        }
+
+        private showPassphraseEntryAfterResume(): ng.IPromise<void> {
+            var q = this.$q.defer<void>();
+
+            // If a passphrase has been configured, but hasn't yet been entered for this session
+            // then we need to show the passphrase entry dialog.
+            if (this.Preferences.isPassphraseConfigured && !this.Preferences.isPassphraseForSessionSet) {
+                this.showDialog(this.DialogIds.PassphraseEntry).then(() => {
+                    // Once a vaild passphrase is entered, then we can continue.
+                    q.resolve();
+                });
+            }
+            else {
+                // If we don't need to show the passphrase screen, then immediately resolve.
+                q.resolve();
+            }
+
+            return q.promise;
+        }
+
+        private showPinEntryAfterResume(): ng.IPromise<void> {
+            var q = this.$q.defer<void>();
 
             // If there is a PIN set and a last paused time then we need to determine if we
             // need to show the lock screen.
             if (this.Preferences.pin && this.Preferences.lastPausedAt != null && this.Preferences.lastPausedAt.isValid()) {
                 // Get the current time.
-                resumedAt = moment();
+                var resumedAt = moment();
 
                 // If the time elapsed since the last pause event is greater than the threshold,
                 // then we need to show the lock screen.
                 if (resumedAt.diff(this.Preferences.lastPausedAt, "minutes") > this.Preferences.requirePinThreshold) {
 
-                    model = new Models.PinEntryDialogModel("PIN Required", this.Preferences.pin, false);
-                    options = new Models.DialogOptions(model);
+                    var model = new Models.PinEntryDialogModel("PIN Required", this.Preferences.pin, false);
+                    var options = new Models.DialogOptions(model);
                     options.backdropClickToClose = false;
                     options.hardwareBackButtonClose = false;
                     options.showBackground = false;

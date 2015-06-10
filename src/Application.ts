@@ -9,12 +9,12 @@ module JustinCredible.SmartHomeMobile.Application {
     var ngModule: ng.IModule;
 
     /**
-     * Indicates if the PIN entry dialog is currently being shown. This is used to determine
-     * if the device_pause event should update the lastPausedAt timestamp (we don't want to
-     * update the timestamp if the dialog is open because it will allow the user to pause
-     * and then kill the app and bypass the PIN entry screen on next resume).
+     * Indicates if the PIN or passphrase entry dialogs are currently being shown. This is
+     * used to determine if the device_pause event should update the lastPausedAt timestamp
+     * (we don't want to update the timestamp if the dialog is open because it will allow the
+     * user to pause and then kill the app and bypass the PIN entry screen on next resume).
      */
-    var isShowingPinPrompt: boolean;
+    var isShowingSecurityPrompt: boolean;
 
     //#endregion
 
@@ -76,29 +76,40 @@ module JustinCredible.SmartHomeMobile.Application {
         ngModule.filter("Thousands", getFilterFactoryFunction(Filters.ThousandsFilter.filter));
 
         // Define each of the controllers.
+
+        // Root View
         ngModule.controller("MenuController", Controllers.MenuController);
+
+        // Main Views
         ngModule.controller("SecurityController", Controllers.SecurityController);
         ngModule.controller("ThermostatController", Controllers.ThermostatController);
         ngModule.controller("SmartPlugsController", Controllers.SmartPlugsController);
         ngModule.controller("CamerasController", Controllers.CamerasController);
         ngModule.controller("CameraViewController", Controllers.CameraViewController);
         //ngModule.controller("IrrigationController", Controllers.IrrigationController);
-        ngModule.controller("ReorderCategoriesController", Controllers.ReorderCategoriesController);
-        ngModule.controller("PinEntryController", Controllers.PinEntryController);
-        ngModule.controller("SetMultipleSmartPlugsStateController", Controllers.SetMultipleSmartPlugsStateController);
+
+        // Settings
+        ngModule.controller("SettingsListController", Controllers.SettingsListController);
         ngModule.controller("DevicesListController", Controllers.DevicesListController);
         ngModule.controller("DevicesHubInfoController", Controllers.DevicesHubInfoController);
         ngModule.controller("DevicesInfoController", Controllers.DevicesInfoController);
-        ngModule.controller("SettingsListController", Controllers.SettingsListController);
         ngModule.controller("HubController", Controllers.HubController);
         ngModule.controller("CamerasListController", Controllers.CamerasListController);
         ngModule.controller("CameraEditController", Controllers.CameraEditController);
+        ngModule.controller("ConfigurePinController", Controllers.ConfigurePinController);
+        ngModule.controller("ConfigurePassphraseController", Controllers.ConfigurePassphraseController);
+        ngModule.controller("AboutController", Controllers.AboutController);
+
+        // Dialogs
+        ngModule.controller("PinEntryController", Controllers.PinEntryController);
+        ngModule.controller("SetMultipleSmartPlugsStateController", Controllers.SetMultipleSmartPlugsStateController);
+        ngModule.controller("ReorderCategoriesController", Controllers.ReorderCategoriesController);
+        ngModule.controller("PassphraseEntryController", Controllers.PassphraseEntryController);
+
+        // Developer
         ngModule.controller("LogsController", Controllers.LogsController);
         ngModule.controller("LogEntryController", Controllers.LogEntryController);
         ngModule.controller("DeveloperController", Controllers.DeveloperController);
-        ngModule.controller("AboutController", Controllers.AboutController);
-        ngModule.controller("ConfigurePinController", Controllers.ConfigurePinController);
-        ngModule.controller("ConfigurePassphraseController", Controllers.ConfigurePassphraseController);
 
         // Specify the initialize/run and configuration functions.
         ngModule.run(angular_initialize);
@@ -480,7 +491,7 @@ module JustinCredible.SmartHomeMobile.Application {
      */
     function device_pause(Preferences: Services.Preferences): void {
 
-        if (!isShowingPinPrompt) {
+        if (!isShowingSecurityPrompt) {
             // Store the current date/time. This will be used to determine if we need to
             // show the PIN lock screen the next time the application is resumed.
             Preferences.lastPausedAt = moment();
@@ -494,11 +505,11 @@ module JustinCredible.SmartHomeMobile.Application {
      */
     function device_resume($location: ng.ILocationService, $ionicViewService: any, Preferences: Services.Preferences, UiHelper: Services.UiHelper): void {
 
-        isShowingPinPrompt = true;
+        isShowingSecurityPrompt = true;
 
         // Potentially display the PIN screen.
-        UiHelper.showPinEntryAfterResume().then(() => {
-            isShowingPinPrompt = false;
+        UiHelper.showSecurityPromptAfterResume().then(() => {
+            isShowingSecurityPrompt = false;
 
             // If the user is still at the blank sreen, then push them to their default view.
             if ($location.url() === "/app/blank") {

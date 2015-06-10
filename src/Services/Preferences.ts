@@ -248,6 +248,23 @@
             return backgroundPageWindow.state.passphrase;
         }
 
+        /**
+         * Indicates if a passphrase has been set for the current session.
+         */
+        public get isPassphraseForSessionSet(): boolean {
+
+            if (!this.Utilities.isChromeExtension) {
+                throw new Error("isPassphraseForSessionSet() is only applicable when running as a Chrome extension.");
+            }
+
+            // Grab the background page for our extension.
+            var backgroundPageWindow = <ChromeExtensionBackgroundWindow>chrome.extension.getBackgroundPage();
+
+            // Retrieve the unencrypted passphrase from the in-memory state object.
+            // Cast it to a boolean value which indicates if it is set or not.
+            return !!backgroundPageWindow.state.passphrase;
+        }
+
         public isPassphraseValid(passphrase: string): boolean {
 
             if (!this.Utilities.isChromeExtension) {
