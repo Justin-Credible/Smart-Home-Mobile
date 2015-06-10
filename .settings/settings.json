@@ -10,5 +10,8 @@
 		"www/js/src",
 		"chrome",
 		"Resources/misc"
-	]
+	],
+	
+	"editor.tabSize": 4,
+	"editor.insertSpaces": true
 }
