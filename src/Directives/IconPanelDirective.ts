@@ -9,6 +9,8 @@
         getName(): string;
         getIcon(): string;
         setIcon(icon: string): void;
+        getIconSize(): number;
+        setIconSize(size: number): void;
         getText(): string;
         setText(text: string): void;
     }
@@ -19,6 +21,7 @@
     export interface IIconPanelDirectiveScope extends ng.IScope {
         name: string;
         icon: string;
+        iconSize: string;
         text: string;
     }
 
@@ -37,6 +40,7 @@
         public static scope = {
             name: "@",
             icon: "@",
+            iconSize: "@",
             text: "@"
         };
 
@@ -58,6 +62,7 @@
 
             // Watch for the changing of the value attributes.
             this.scope.$watch(() => { return this.scope.icon; }, _.bind(this.icon_listener, this));
+            this.scope.$watch(() => { return this.scope.iconSize; }, _.bind(this.iconSize_listener, this));
             this.scope.$watch(() => { return this.scope.text; }, _.bind(this.text_listener, this));
 
             // Fire a created event sending along this directive instance.
@@ -72,7 +77,7 @@
         }
 
         /**
-         * Used to render the chart. This will cause any animations to re-animate as well.
+         * Used to render the icon panel.
          */
         public render(): void {
 
@@ -105,6 +110,11 @@
             return this._currentIcon;
         }
 
+        /**
+         * Sets the icon class for this instance.
+         * 
+         * This should be one of the Ionic icon class names (eg ion-ios-bell-outline).
+         */
         public setIcon(icon: string): void {
 
             if (this._currentIcon) {
@@ -117,12 +127,30 @@
         }
 
         /**
-         * Returns the text for this instance.
+         * Returns the font size in points used for the icon.
+         */
+        public getIconSize(): number {
+            return parseInt(this.scope.iconSize, 10);
+        }
+
+        /**
+         * Sets the font size in points used for the icon.
+         */
+        public setIconSize(size: number): void {
+            this.scope.iconSize = (size ? size + "" : "0");
+            this._iconElement.css("font-size", this.scope.iconSize + "pt");
+        }
+
+        /**
+         * Returns the display text for this instance.
          */
         public getText(): string {
             return this.scope.text;
         }
 
+        /**
+         * Sets the display text for this instance.
+         */
         public setText(text: string): void {
             this._textContainer.text(text);
         }
@@ -135,6 +163,12 @@
             if (this._iconElement != null) {
                 this._iconElement.removeClass(oldValue);
                 this._iconElement.addClass(newValue);
+            }
+        }
+
+        private iconSize_listener(newValue: string, oldValue: string, scope: IIconPanelDirectiveScope) {
+            if (this._iconElement != null) {
+                this._iconElement.css("font-size", newValue + "pt");
             }
         }
 
