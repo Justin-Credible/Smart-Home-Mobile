@@ -472,7 +472,7 @@
                 localStorage.setItem(Preferences.CAMERAS, JSON.stringify(value));
             }
         }
-        
+
         //#endregion
 
         //#region User Interface

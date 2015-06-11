@@ -122,7 +122,7 @@ module JustinCredible.SmartHomeMobile.Controllers {
             // Reset this view.
             this.resetViewModel();
         }
-        
+
         protected removePassphrase_click(): void {
 
             // If we are not in the passphrase removal mode, enter it.
