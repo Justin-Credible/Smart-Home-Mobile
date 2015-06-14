@@ -17,7 +17,9 @@
 
         <div class="list list-inset">
             <label class="item item-input">
-                <input type="password" ng-model="viewModel.passphrase"/>
+                <input type="password" autofocus
+                    ng-model="viewModel.passphrase"
+                    ng-keyup="$event.keyCode == 13 && controller.ok_click()"/>
             </label>
         </div>
 
