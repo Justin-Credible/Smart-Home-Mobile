@@ -8,7 +8,7 @@ if (typeof (chrome) !== "undefined" && typeof (chrome.runtime) !== "undefined" &
     var style, css;
     style = document.createElement("style");
     style.type = "text/css";
-    css = "body { width: 320px; height: 568px; }";
+    css = "body { width: 400px; height: 600px; }";
     style.appendChild(document.createTextNode(css));
     document.head.appendChild(style);
 }
