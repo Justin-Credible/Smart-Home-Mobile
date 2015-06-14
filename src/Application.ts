@@ -528,7 +528,8 @@ module JustinCredible.SmartHomeMobile.Application {
                 });
 
                 // Navigate the user to their default view.
-                $location.path(Preferences.defaultCategory.href.substring(1));
+                var category = Preferences.getCategoryByName(Preferences.defaultCategoryName);
+                $location.path(category.href.substring(1));
                 $location.replace();
             }
         });

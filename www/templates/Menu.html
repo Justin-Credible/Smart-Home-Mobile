@@ -20,7 +20,9 @@
                 <ion-item class="item-divider">Smart Home</ion-item>
 
                 <ion-item ng-repeat="category in viewModel.categories"
-                          class="item menu-close item-icon-left" href="{{category.href}}">
+                    class="item menu-close item-icon-left"
+                    ng-click="controller.category_click(category)"
+                    href="{{category.href}}">
                     <i class="icon {{category.icon}}"></i>
                     {{category.name}}
                 </ion-item>

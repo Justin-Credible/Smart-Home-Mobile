@@ -22,6 +22,7 @@
         private static LAST_PAUSED_AT = "LAST_PAUSED_AT";
         private static PIN = "PIN";
 
+        private static DEFAULT_CATEGORY_NAME = "DEFAULT_CATEGORY_NAME";
         private static CATEGORY_ORDER = "CATEGORY_ORDER";
 
         private static ALERT_ME_API_URL = "ALERT_ME_API_URL";
@@ -529,12 +530,40 @@
         }
 
         /**
-         * Returns the view that is set as the default.
+         * Used to find a category by name. If a category with the given name is
+         * not found, null will be returned.
          * 
-         * Currently, this is the category that is set in the first position.
+         * @returns A category with the match name, or null.
          */
-        public get defaultCategory(): ViewModels.CategoryItemViewModel {
-            return this.categories[0];
+        public getCategoryByName(name: string): ViewModels.CategoryItemViewModel {
+            return _.findWhere(this.categories, { name: name });
+        }
+
+        /**
+         * Returns the name of the category that is set as the default.
+         * If a default hasn't been set, then it will use first category's name.
+         */
+        public get defaultCategoryName(): string {
+            var value = localStorage.getItem(Preferences.DEFAULT_CATEGORY_NAME);
+
+            if (value == null) {
+                return this.categories[0].name;
+            }
+            else {
+                return value;
+            }
+        }
+
+        /**
+         * Sets the name of the category that should be the default.
+         */
+        public set defaultCategoryName(value: string) {
+            if (value == null) {
+                localStorage.removeItem(Preferences.DEFAULT_CATEGORY_NAME);
+            }
+            else {
+                localStorage.setItem(Preferences.DEFAULT_CATEGORY_NAME, value);
+            }
         }
 
         //#endregion

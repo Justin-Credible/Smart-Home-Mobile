@@ -59,7 +59,14 @@
 
         //#region Controller Methods
 
-        public reorder_click() {
+        protected category_click(category: ViewModels.CategoryItemViewModel): void {
+            // Update the default category whenever the user changes categories.
+            // This ensures that the next time the application is started they'll
+            // start out on the category that they were on last.
+            this.Preferences.defaultCategoryName = category.name;
+        }
+
+        protected reorder_click() {
             this.UiHelper.showDialog(this.UiHelper.DialogIds.ReorderCategories).then(() => {
                 // After the re-order dialog is closed, re-populate the category
                 // items since they may have been re-ordered.
