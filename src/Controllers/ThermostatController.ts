@@ -78,17 +78,17 @@
 
         //#endregion
 
-        //#region Events
+        //#region Controller Events
 
-        public refresh_click(): void {
+        protected refresh_click(): void {
             this.refresh();
         }
 
-        public refresher_refresh(): void {
+        protected refresher_refresh(): void {
             this.refresh();
         }
 
-        public cool_click(): void {
+        protected cool_click(): void {
 
             // If we are going from OFF to ON, then the target temperature wasn't set, so we'll
             // default it here to be whatever the active temperature is.
@@ -103,7 +103,7 @@
             this.viewModel.changesMade = true;
         }
 
-        public heat_click(): void {
+        protected heat_click(): void {
 
             // If we are going from OFF to ON, then the target temperature wasn't set, so we'll
             // default it here to be whatever the active temperature is.
@@ -118,7 +118,7 @@
             this.viewModel.changesMade = true;
         }
 
-        public off_click(): void {
+        protected off_click(): void {
             this.viewModel.newTargetTemperature = null;
             this.viewModel.newOnOffState = Services.AlertMeApi.ClimateOnOffState.Off;
             this.viewModel.newMode = Services.AlertMeApi.ClimateMode.Off;
@@ -126,28 +126,28 @@
             this.viewModel.changesMade = true;
         }
 
-        public temperatureRange_change(): void {
+        protected temperatureRange_change(): void {
             this.viewModel.changesMade = true;
 
             // The range input binds values as strings; here we ensure it gets parsed back into an number.
             this.viewModel.newTargetTemperature = parseInt(this.viewModel.temperatureSliderValue, 10);
         }
 
-        public down_click(): void {
+        protected down_click(): void {
             if (this.viewModel.newTargetTemperature > this.viewModel.climate.minTargetTemperature) {
                 this.viewModel.newTargetTemperature -= 1;
                 this.viewModel.changesMade = true;
             }
         }
 
-        public up_click(): void {
+        protected up_click(): void {
             if (this.viewModel.newTargetTemperature < this.viewModel.climate.maxTargetTemperature) {
                 this.viewModel.newTargetTemperature += 1;
                 this.viewModel.changesMade = true;
             }
         }
 
-        public set_click(device: AlertMeApiTypes.SmartPlugDevice): void {
+        protected set_click(device: AlertMeApiTypes.SmartPlugDevice): void {
             var deviceId: string,
                 temperatureUnit: string,
                 errorHandler;
@@ -284,7 +284,7 @@
             this.viewModel.changesMade = false;
         }
 
-        public cancel_click(device: AlertMeApiTypes.SmartPlugDevice): void {
+        protected cancel_click(device: AlertMeApiTypes.SmartPlugDevice): void {
             this.viewModel.changesMade = false;
 
             this.viewModel.newOnOffState = this.viewModel.climate.onOffState;

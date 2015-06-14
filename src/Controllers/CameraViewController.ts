@@ -123,7 +123,7 @@
 
         //#region Controller Methods
 
-        public refresh_click(): void {
+        protected refresh_click(): void {
 
             // Ensure that we aren't already streaming.
             this.stopStreaming();
@@ -132,7 +132,7 @@
             this.refresh();
         }
 
-        public refresher_refresh(): void {
+        protected refresher_refresh(): void {
 
             // Ensure that we aren't already streaming.
             this.stopStreaming();
@@ -141,7 +141,7 @@
             this.refresh();
         }
 
-        public image_load(): void {
+        protected image_load(): void {
 
             // Now that the image has loaded, update the timestamp.
             this.viewModel.lastUpdated = moment().toDate();
@@ -166,7 +166,7 @@
          * 
          * http://stackoverflow.com/questions/25505110/alternative-to-showing-mjpeg-in-an-img-tag-with-basic-authentication
          */
-        public getIframeUrl(camera: Models.Camera): string {
+        protected getIframeUrl(camera: Models.Camera): string {
 
             if (!camera) {
                 return "";

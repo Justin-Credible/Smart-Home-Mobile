@@ -67,7 +67,7 @@
 
         //#region Controller Helpers
 
-        public GetDeviceTypeIcon(deviceType: string): string {
+        protected GetDeviceTypeIcon(deviceType: string): string {
 
             if (!deviceType) {
                 return "ion-help";
@@ -101,13 +101,13 @@
 
         //#endregion
 
-        //#region Events
+        //#region Controller Events
 
-        public refresh_click(): void {
+        protected refresh_click(): void {
             this.refresh();
         }
 
-        public refresher_refresh(): void {
+        protected refresher_refresh(): void {
             this.refresh();
         }
 

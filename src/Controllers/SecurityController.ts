@@ -168,7 +168,7 @@
 
         //#region Attribute/Expression Properties
 
-        get armButton_disabled(): boolean {
+        protected get armButton_disabled(): boolean {
 
             // If there is no view model data or it is refreshing, then the button should be disabled.
             if (this.viewModel == null || this.viewModel.alarmData == null || this.viewModel.isRefreshing) {
@@ -181,7 +181,7 @@
                 || this.viewModel.alarmData.state === "ARM_GRACE";
         }
 
-        get lockAllButton_disabled(): boolean {
+        protected get lockAllButton_disabled(): boolean {
             var disabled = true;
 
             // If there is no view model data, then the button should be disabled.
@@ -202,7 +202,7 @@
             return disabled;
         }
 
-        get unlockAllButton_disabled(): boolean {
+        protected get unlockAllButton_disabled(): boolean {
             var disabled = true;
 
             // If there is no view model data, then the button should be disabled.
@@ -227,25 +227,25 @@
 
         //#region Events
 
-        public refresh_click(): void {
+        protected refresh_click(): void {
             this.refresh();
         }
 
-        public refresher_refresh(): void {
+        protected refresher_refresh(): void {
             this.refresh();
         }
 
-        public arm_click(): void {
+        protected arm_click(): void {
             this.armAlarm();
         }
 
-        public disarm_click(): void {
+        protected disarm_click(): void {
             this.AlertMeApi.setAlarmMode(Services.AlertMeApi.AlarmMode.Home, true, false).then((result: AlertMeApiTypes.AlarmModePutResult) => {
                 this.viewModel.alarmData.state = "DISARMED";
             });
         }
 
-        public info_click(): void {
+        protected info_click(): void {
             var info: string,
                 summary = this.viewModel.alarmOverviewData.summary,
                 triggerTime: number,
@@ -274,7 +274,7 @@
             this.UiHelper.alert(info);
         }
 
-        public lockToggle_click(device: AlertMeApiTypes.LockDevice): void {
+        protected lockToggle_click(device: AlertMeApiTypes.LockDevice): void {
             var oldLockState: string,
                 newLockState: string;
 
@@ -296,7 +296,7 @@
             });
         }
 
-        public lockAll_click(): void {
+        protected lockAll_click(): void {
             var oldLockStates: string[] = [];
 
             // Save this off, so the API call fails, we can set the value
@@ -323,7 +323,7 @@
             });
         }
 
-        public unlockAll_click(): void {
+        protected unlockAll_click(): void {
             var oldLockStates: string[] = [];
 
             // Save this off, so the API call fails, we can set the value

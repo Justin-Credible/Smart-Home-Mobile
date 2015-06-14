@@ -56,25 +56,25 @@
 
         //#region Controller Methods
 
-        public typeInfo_click(): void {
+        protected typeInfo_click(): void {
             var infoMessage = "A 'Snapshot/Slideshow' camera exposes a single static image which needs to be refreshed every few seconds using polling. A 'Streaming Video (mjpeg)' camera exposes a MJPEG video feed that can be streamed directly without polling.";
 
             this.UiHelper.alert(infoMessage, "Stream Type Info");
         }
 
-        public urlInfo_click(): void {
+        protected urlInfo_click(): void {
             var infoMessage = "For snapshot/slideshow cameras, this should be a URL which returns a response of image/* when a GET request is made to it. For motion JPEG cameras, this should be a URL that returns a motion JPEG video stream (image/mjpeg).";
 
             this.UiHelper.alert(infoMessage, "Image / Video URL Info");
         }
 
-        public credentialsInfo_click(): void {
+        protected credentialsInfo_click(): void {
             var infoMessage = "For cameras that are secured with HTTP basic authentication, these credentials will be used.";
 
             this.UiHelper.alert(infoMessage, "Camera Credentials Info");
         }
 
-        public save_click(): void {
+        protected save_click(): void {
             var cameras: Models.Camera[],
                 cameraToUpdate: Models.Camera;
 

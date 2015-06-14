@@ -39,7 +39,7 @@
 
         //#region Controller Methods
 
-        public apiInfo_click(): void {
+        protected apiInfo_click(): void {
             var infoMessage1 = "The hub is responsible for controlling communicating with the smart home devices, such as security, locks, power, thermostat, etc.";
             var infoMessage2 = "Currently supported hubs are ones that use the AlertMe API (such as Lowe's Iris Smart Home platform). This should be a URL to the root of the AlertMe API such as: https://api.alertme.com/v5";
             var promptMessage = "Would you like to use the default URL for Lowe's Iris Smart Home platform? (https://www.irissmarthome.com/v5)";
@@ -56,7 +56,7 @@
             });
         }
 
-        public save_click(): void {
+        protected save_click(): void {
 
             if (!this.viewModel.apiUrl || !this.viewModel.userName || !this.viewModel.password) {
                 this.UiHelper.alert("Please ensure all fields are populated.");

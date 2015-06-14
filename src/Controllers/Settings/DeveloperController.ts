@@ -65,7 +65,7 @@
 
         //#region Controller Methods
 
-        public mockApiRequests_change() {
+        protected mockApiRequests_change() {
             var message: string;
 
             this.Preferences.enableMockHttpCalls = this.viewModel.mockApiRequests;
@@ -79,23 +79,23 @@
             });
         }
 
-        public alertMeApiLogin() {
+        protected alertMeApiLogin() {
             this.AlertMeApi.login().then((result: AlertMeApiTypes.LoginResult) => {
                 this.UiHelper.alert("Hub ID: " + result.hubIds[0]);
             });
         }
 
-        public alertMeApiLogout() {
+        protected alertMeApiLogout() {
             this.AlertMeApi.logout();
         }
 
-        public alertMeApiHomeStatus() {
+        protected alertMeApiHomeStatus() {
             this.AlertMeApi.getHomeStatus().then((result: any) => {
                 console.log(result);
             });
         }
 
-        public thermostat_info() {
+        protected thermostat_info() {
             this.AlertMeApi.getClimate().then((result: AlertMeApiTypes.ClimateGetResult) => {
                 var text = this.Utilities.format("State: {0}\nMode: {1}\nTemp: {2}\n", result.onOffState, result.mode, result.targetTemperature);
                 this.thermostat_deviceId = result.deviceId;
@@ -103,7 +103,7 @@
             });
         }
 
-        public thermostat_state_on() {
+        protected thermostat_state_on() {
             this.AlertMeApi.setClimateOnOffState(this.thermostat_deviceId, Services.AlertMeApi.ClimateOnOffState.On).then(() => {
                 alert("OK!");
             }, (err) => {
@@ -111,7 +111,7 @@
             });
         }
 
-        public thermostat_state_off() {
+        protected thermostat_state_off() {
             this.AlertMeApi.setClimateOnOffState(this.thermostat_deviceId, Services.AlertMeApi.ClimateOnOffState.Off).then(() => {
                 alert("OK!");
             }, (err) => {
@@ -119,7 +119,7 @@
             });
         }
 
-        public thermostat_mode_cool() {
+        protected thermostat_mode_cool() {
             this.AlertMeApi.setClimateMode(this.thermostat_deviceId, Services.AlertMeApi.ClimateMode.Cool).then(() => {
                 alert("OK!");
             }, (err) => {
@@ -127,7 +127,7 @@
             });
         }
 
-        public thermostat_mode_heat() {
+        protected thermostat_mode_heat() {
             this.AlertMeApi.setClimateMode(this.thermostat_deviceId, Services.AlertMeApi.ClimateMode.Heat).then(() => {
                 alert("OK!");
             }, (err) => {
@@ -135,7 +135,7 @@
             });
         }
 
-        public thermostat_mode_off() {
+        protected thermostat_mode_off() {
             this.AlertMeApi.setClimateMode(this.thermostat_deviceId, Services.AlertMeApi.ClimateMode.Off).then(() => {
                 alert("OK!");
             }, (err) => {
@@ -143,7 +143,7 @@
             });
         }
 
-        public thermostat_setTemperature() {
+        protected thermostat_setTemperature() {
             this.UiHelper.prompt("Enter a temperature in degrees F.").then((dialogResult: Models.KeyValuePair<string, string>) => {
                 if (dialogResult.key === "OK") {
                     this.AlertMeApi.setClimateTargetTemperature(this.thermostat_deviceId, parseInt(dialogResult.value, 10), Services.AlertMeApi.ClimateTemperatureUnit.Fahrenheit).then(() => {
@@ -155,7 +155,7 @@
             });
         }
 
-        public setLoggingMode_click() {
+        protected setLoggingMode_click() {
             var message: string;
 
             message = "Enable exception logging to local storage? Current setting is " + this.Logger.getLogToLocalStorage();
@@ -175,7 +175,7 @@
             });
         }
 
-        public setHttpLoggingMode_click() {
+        protected setHttpLoggingMode_click() {
             var message: string;
 
             message = "Enable logging of all HTTP requests (even non-errors)? Current setting is " + this.Preferences.enableFullHttpLogging;
@@ -194,7 +194,7 @@
             });
         }
 
-        public addModulesToGlobalScope_click() {
+        protected addModulesToGlobalScope_click() {
             /* tslint:disable:no-string-literal */
             window["__FileUtilities"] = this.FileUtilities;
             window["__Logger"] = this.Logger;
@@ -206,7 +206,7 @@
             this.UiHelper.alert("Added the following services to the global window scope: __FileUtilities, __Logger, __Utilities, __UiHelper, __Preferences");
         }
 
-        public setRequirePinThreshold_click() {
+        protected setRequirePinThreshold_click() {
             var message: string;
 
             message = this.Utilities.format("Enter the value (in minutes) for PIN prompt threshold? Current setting is {0} minutes.", this.Preferences.requirePinThreshold);
@@ -228,7 +228,7 @@
             });
         }
 
-        public resetPinTimeout_click() {
+        protected resetPinTimeout_click() {
             var message: string;
 
             this.Preferences.lastPausedAt = moment("01-01-2000", "MM-DD-yyyy");
@@ -238,7 +238,7 @@
             this.UiHelper.alert(message, "Reset PIN Timeout");
         }
 
-        public testJsException_click() {
+        protected testJsException_click() {
             /* tslint:disable:no-string-literal */
 
             // Cause an exception by referencing an undefined variable.
@@ -250,7 +250,7 @@
             /* tslint:enable:no-string-literal */
         }
 
-        public testAngularException_click() {
+        protected testAngularException_click() {
             /* tslint:disable:no-string-literal */
 
             // Cause an exception by referencing an undefined variable.
@@ -259,7 +259,7 @@
             /* tslint:enable:no-string-literal */
         }
 
-        public showFullScreenBlock_click() {
+        protected showFullScreenBlock_click() {
             this.UiHelper.progressIndicator.showSimpleWithLabel(true, "Authenticating...");
 
             setTimeout(() => {
@@ -267,19 +267,19 @@
             }, 4000);
         }
 
-        public showToast_top(): void {
+        protected showToast_top(): void {
             this.UiHelper.toast.showShortTop("This is a test toast notification.");
         }
 
-        public showToast_center(): void {
+        protected showToast_center(): void {
             this.UiHelper.toast.showShortCenter("This is a test toast notification.");
         }
 
-        public showToast_bottom(): void {
+        protected showToast_bottom(): void {
             this.UiHelper.toast.showShortBottom("This is a test toast notification.");
         }
 
-        public clipboard_copy(): void {
+        protected clipboard_copy(): void {
 
             this.UiHelper.prompt("Enter a value to copy to the clipboard.").then((result: Models.KeyValuePair<string, string>) => {
 
@@ -295,7 +295,7 @@
             });
         }
 
-        public clipboard_paste(): void {
+        protected clipboard_paste(): void {
             this.UiHelper.clipboard.paste((result: string) => {
                 this.UiHelper.alert("Paste OK! Value retrieved is:\n\n" + result);
             }, (err: Error) => {
@@ -303,19 +303,19 @@
             });
         }
 
-        public startProgress_click() {
+        protected startProgress_click() {
             NProgress.start();
         }
 
-        public incrementProgress_click() {
+        protected incrementProgress_click() {
             NProgress.inc();
         }
 
-        public doneProgress_click() {
+        protected doneProgress_click() {
             NProgress.done();
         }
 
-        public showPinEntry_click() {
+        protected showPinEntry_click() {
             var options: Models.DialogOptions,
                 model: Models.PinEntryDialogModel;
 
@@ -327,7 +327,7 @@
             });
         }
 
-        public showPinEntry1234_click() {
+        protected showPinEntry1234_click() {
             var options: Models.DialogOptions,
                 model: Models.PinEntryDialogModel;
 
@@ -339,7 +339,7 @@
             });
         }
 
-        public readFile_click() {
+        protected readFile_click() {
             this.UiHelper.prompt("Enter file name to read from", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
                 if (result.key !== "OK") {
@@ -352,7 +352,7 @@
             });
         }
 
-        public writeFile_click() {
+        protected writeFile_click() {
             var path: string,
                 contents: string;
 
@@ -379,7 +379,7 @@
             });
         }
 
-        public appendFile_click() {
+        protected appendFile_click() {
             var path: string,
                 contents: string;
 
@@ -404,7 +404,7 @@
             });
         }
 
-        public createDir_click() {
+        protected createDir_click() {
             var path: string;
 
             this.UiHelper.prompt("Enter dir name to create", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
@@ -421,7 +421,7 @@
             });
         }
 
-        public listFiles_click() {
+        protected listFiles_click() {
             var path: string,
                 list = "";
 
@@ -450,7 +450,7 @@
             });
         }
 
-        public listDirs_click() {
+        protected listDirs_click() {
             var path: string,
                 list = "";
 
@@ -479,7 +479,7 @@
             });
         }
 
-        public deleteFile_click() {
+        protected deleteFile_click() {
             var path: string;
 
             this.UiHelper.prompt("Enter path to delete file", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
@@ -496,7 +496,7 @@
             });
         }
 
-        public deleteDir_click() {
+        protected deleteDir_click() {
             var path: string;
 
             this.UiHelper.prompt("Enter path to delete dir", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {

@@ -69,11 +69,11 @@
 
         //#region Controller Helpers
 
-        public getVersionDisplayText(versionString: string): string {
+        protected getVersionDisplayText(versionString: string): string {
             return versionString === "VERSION_UNAVAILABLE" ? "(Version Unavailable)" : versionString;
         }
 
-        public getBatteryIconClassName(batteryPercentage: number): string {
+        protected getBatteryIconClassName(batteryPercentage: number): string {
             var classNames = "";
 
             if (!batteryPercentage) {
@@ -101,23 +101,23 @@
             return classNames;
         }
 
-        public getProtocolDisplayList(protocols: string[]): string {
+        protected getProtocolDisplayList(protocols: string[]): string {
             return protocols == null ? "" : protocols.join(", ");
         }
 
-        public getMissingProtocolDisplayList(missingProtocols: { [id: string]: string }): string {
+        protected getMissingProtocolDisplayList(missingProtocols: { [id: string]: string }): string {
             return missingProtocols == null ? "" : _.values(missingProtocols).join(", ");
         }
 
         //#endregion
 
-        //#region Events
+        //#region Controller Events
 
-        public refresh_click(): void {
+        protected refresh_click(): void {
             this.refresh();
         }
 
-        public refresher_refresh(): void {
+        protected refresher_refresh(): void {
             this.refresh();
         }
 

@@ -31,7 +31,7 @@
 
         //#region Attribute/Expression Properties
 
-        get lighting_show(): boolean {
+        protected get lighting_show(): boolean {
             var outlets: AlertMeApiTypes.SmartPlugDevice[];
 
             // If there is no view model data, then the section shouldn't be visible.
@@ -48,7 +48,7 @@
             return outlets.length > 0;
         }
 
-        get outlets_show(): boolean {
+        protected get outlets_show(): boolean {
             var outlets: AlertMeApiTypes.SmartPlugDevice[];
 
             // If there is no view model data, then the section shouldn't be visible.
@@ -69,15 +69,15 @@
 
         //#region Controller Methods
 
-        public cancel_click(): void {
+        protected cancel_click(): void {
             this.close();
         }
 
-        public done_click(): void {
+        protected done_click(): void {
             this.close(this.viewModel.smartPlugs);
         }
 
-        public smartPlugToggle_click(smartPlug: AlertMeApiTypes.SmartPlugDevice): void {
+        protected smartPlugToggle_click(smartPlug: AlertMeApiTypes.SmartPlugDevice): void {
 
             // If this device was reported as unavailable, then there is nothing to do.
             if (smartPlug.onOffState === Services.AlertMeApi.SmartPlugOnOffState.Unavailable) {

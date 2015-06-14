@@ -28,7 +28,7 @@ module JustinCredible.SmartHomeMobile.Controllers {
 
         //#region Controller Methods
 
-        public ok_click() {
+        protected ok_click() {
             if (this.Preferences.isPassphraseValid(this.viewModel.passphrase)) {
                 this.Preferences.setPassphraseForSession(this.viewModel.passphrase);
                 this.close();

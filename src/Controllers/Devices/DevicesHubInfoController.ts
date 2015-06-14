@@ -63,11 +63,11 @@
 
         //#region Controller Helpers
 
-        public getVersionDisplayText(versionString: string): string {
+        protected getVersionDisplayText(versionString: string): string {
             return versionString === "VERSION_UNAVAILABLE" ? "(Version Unavailable)" : versionString;
         }
 
-        public getBatteryIconClassName(batteryPercentage: number): string {
+        protected getBatteryIconClassName(batteryPercentage: number): string {
             var classNames = "";
 
             if (!batteryPercentage) {
@@ -95,7 +95,7 @@
             return classNames;
         }
 
-        public getFormattedDate(timestamp: number): string {
+        protected getFormattedDate(timestamp: number): string {
 
             if (!timestamp) {
                 return "N/A";
@@ -104,7 +104,7 @@
             return moment.unix(timestamp).format("MMM Do YYYY, h:mm a");
         }
 
-        public getFormattedUpTime(upTimeTotalSeconds: number): string {
+        protected getFormattedUpTime(upTimeTotalSeconds: number): string {
             var days: number;
 
             if (!upTimeTotalSeconds) {
@@ -118,13 +118,13 @@
 
         //#endregion
 
-        //#region Events
+        //#region Controller Events
 
-        public refresh_click(): void {
+        protected refresh_click(): void {
             this.refresh();
         }
 
-        public refresher_refresh(): void {
+        protected refresher_refresh(): void {
             this.refresh();
         }
 

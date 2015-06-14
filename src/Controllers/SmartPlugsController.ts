@@ -72,7 +72,7 @@
 
         //#region Attribute/Expression Properties
 
-        get allOnButton_disabled(): boolean {
+        protected get allOnButton_disabled(): boolean {
             var devices: AlertMeApiTypes.SmartPlugDevice[];
 
             // If there is no view model data, then just return true so the button is disabled.
@@ -89,7 +89,7 @@
             return _.all(devices, { onOffState: Services.AlertMeApi.SmartPlugOnOffState.On });
         }
 
-        get allOffButton_disabled(): boolean {
+        protected get allOffButton_disabled(): boolean {
             var devices: AlertMeApiTypes.SmartPlugDevice[];
 
             // If there is no view model data, then just return true so the button is disabled.
@@ -106,7 +106,7 @@
             return _.all(devices, { onOffState: Services.AlertMeApi.SmartPlugOnOffState.Off });
         }
 
-        get lighting_show(): boolean {
+        protected get lighting_show(): boolean {
             var outlets: AlertMeApiTypes.SmartPlugDevice[];
 
             // If there is no view model data, then the section shouldn't be visible.
@@ -123,7 +123,7 @@
             return outlets.length > 0;
         }
 
-        get outlets_show(): boolean {
+        protected get outlets_show(): boolean {
             var outlets: AlertMeApiTypes.SmartPlugDevice[];
 
             // If there is no view model data, then the section shouldn't be visible.
@@ -140,7 +140,7 @@
             return outlets.length > 0;
         }
 
-        get otherDevices(): AlertMeApiTypes.SmartPlugDevice[] {
+        protected get otherDevices(): AlertMeApiTypes.SmartPlugDevice[] {
 
             // If there is no view model data, then just return an empty array.
             if (this.viewModel == null || this.viewModel.smartPlugs == null) {
@@ -152,7 +152,7 @@
             });
         }
 
-        //get intensitySlider_show(device: AlertMeApiTypes.SmartPlugDevice): boolean {
+        //protected get intensitySlider_show(device: AlertMeApiTypes.SmartPlugDevice): boolean {
         //    return this.viewModel != null && this.viewModel.showIntensityUpdateButton[device.deviceId];
         //}
 
@@ -160,15 +160,15 @@
 
         //#region Events
 
-        public refresh_click(): void {
+        protected refresh_click(): void {
             this.refresh();
         }
 
-        public refresher_refresh(): void {
+        protected refresher_refresh(): void {
             this.refresh();
         }
 
-        public smartPlugToggle_click(device: AlertMeApiTypes.SmartPlugDevice): void {
+        protected smartPlugToggle_click(device: AlertMeApiTypes.SmartPlugDevice): void {
             var oldOnOffState: string,
                 newOnOffState: string;
 
@@ -196,12 +196,12 @@
             });
         }
 
-        public intensityRange_change(device: AlertMeApiTypes.SmartPlugDevice): void {
+        protected intensityRange_change(device: AlertMeApiTypes.SmartPlugDevice): void {
             // Show the update section.
             this.viewModel.showIntensityUpdateButton[device.id] = true;
         }
 
-        public cancelIntensityChange_click(device: AlertMeApiTypes.SmartPlugDevice): void {
+        protected cancelIntensityChange_click(device: AlertMeApiTypes.SmartPlugDevice): void {
             // Restore the original value.
             device.intensity = this.viewModel.originalIntensityValues[device.id];
 
@@ -209,7 +209,7 @@
             this.viewModel.showIntensityUpdateButton[device.id] = false;
         }
 
-        public acceptIntensityChange_click(device: AlertMeApiTypes.SmartPlugDevice): void {
+        protected acceptIntensityChange_click(device: AlertMeApiTypes.SmartPlugDevice): void {
 
             //TODO: Make the webservice call here.
 
@@ -217,7 +217,7 @@
             this.viewModel.showIntensityUpdateButton[device.id] = false;
         }
 
-        public allOn_click(): void {
+        protected allOn_click(): void {
             var oldOnOffStates: string[] = [];
 
             // Save this off, so the API call fails, we can set the value back to its original value.
@@ -244,7 +244,7 @@
             });
         }
 
-        public allOff_click(): void {
+        protected allOff_click(): void {
             var oldOnOffStates: string[] = [];
 
             // Save this off, so the API call fails, we can set the value back to its original value.
@@ -271,7 +271,7 @@
             });
         }
 
-        public setMultiple_click(): void {
+        protected setMultiple_click(): void {
             var options: Models.DialogOptions,
                 devicesToUpdate: AlertMeApiTypes.SmartPlugDevice[];
 

@@ -38,7 +38,7 @@
 
         //#region Attribute/Expression Properties
 
-        get snapshots_show(): boolean {
+        protected get snapshots_show(): boolean {
             var snapshotCameras: Models.Camera[];
 
             // If there is no view model data, then the section shouldn't be visible.
@@ -55,7 +55,7 @@
             return snapshotCameras.length > 0;
         }
 
-        get streaming_show(): boolean {
+        protected get streaming_show(): boolean {
             var streamingCameras: Models.Camera[];
 
             // If there is no view model data, then the section shouldn't be visible.
