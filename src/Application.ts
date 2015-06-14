@@ -67,7 +67,7 @@ module JustinCredible.SmartHomeMobile.Application {
         ngModule.service("HubDataSource", Services.HubDataSource);
 
         // Define each of the directives.
-        ngModule.directive("iconPanel", getDirectiveFactoryFunction(Directives.IconPanelDirective));
+        ngModule.directive("iconPanel", getElementDirectiveFactoryFunction(Directives.IconPanelDirective));
         ngModule.directive("shmOnLoad", ["$parse", ($parse: ng.IParseService) => { return new Directives.OnLoadDirective($parse); }]);
         //ngModule.directive("ngModelOnblur", () => { return new Directives.ModelOnBlurDirective(); });
 
@@ -121,11 +121,12 @@ module JustinCredible.SmartHomeMobile.Application {
 
     /**
      * Used to create a function that returns a data structure describing an Angular directive
-     * from one of our own classes implementing IDirective. It handles creating the 
+     * for an element from one of our own classes implementing IElementDirective. It handles
+     * creating an instance and invoked the render method when linking is invoked.
      * 
-     * @param Directive A class reference (not instance) to a directive class that implements Directives.IDirective.
+     * @param Directive A class reference (not instance) to a element directive class that implements Directives.IElementDirective.
      */
-    function getDirectiveFactoryFunction(Directive: Directives.IDirectiveClass): () => ng.IDirective {
+    function getElementDirectiveFactoryFunction(Directive: Directives.IElementDirectiveClass): () => ng.IDirective {
         var descriptor: ng.IDirective = {};
 
         /* tslint:disable:no-string-literal */
@@ -138,6 +139,10 @@ module JustinCredible.SmartHomeMobile.Application {
         descriptor.transclude = Directive["transclude"];
         descriptor.scope = Directive["scope"];
 
+        if (descriptor.restrict !== "E") {
+            console.warn("BaseElementDirectives were meant to restrict only to element types.");
+        }
+
         /* tslint:enable:no-string-literal */
 
         // Here we define the link function that Angular invokes when it is linking the
@@ -145,7 +150,7 @@ module JustinCredible.SmartHomeMobile.Application {
         descriptor.link = (scope: ng.IScope, instanceElement: ng.IAugmentedJQuery, instanceAttributes: ng.IAttributes, controller: any, transclude: ng.ITranscludeFunction): void => {
 
             // New up the instance of our directive class.
-            var instance = <Directives.IDirective>new Directive(scope, instanceElement, instanceAttributes, controller, transclude);
+            var instance = <Directives.IElementDirective>new Directive(scope, instanceElement, instanceAttributes, controller, transclude);
 
             // Delegate to the render method.
             instance.render();

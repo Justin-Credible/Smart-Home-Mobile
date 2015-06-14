@@ -3,15 +3,15 @@
     /**
      * Describes what our directive objects look like.
      */
-    export interface IDirective {
-        initialize(): void;
-        render(): void;
+    export interface IElementDirective {
+        initialize();
+        render();
     }
 
     /**
      * Describes the constructor for the an class implementing IDirective.
      */
-    export interface IDirectiveClass {
+    export interface IElementDirectiveClass {
         new (scope: ng.IScope, instanceElement: ng.IAugmentedJQuery, instanceAttributes: ng.IAttributes, controller: any, transclude: ng.ITranscludeFunction);
     }
 
@@ -22,7 +22,7 @@
      * 
      * T - The parameter type for the scope.
      */
-    export class BaseDirective<T extends ng.IScope> implements IDirective {
+    export class BaseElementDirective<T extends ng.IScope> implements IElementDirective {
 
         public scope: T;
         public element: ng.IAugmentedJQuery;
@@ -41,11 +41,11 @@
             this.initialize();
         }
 
-        public initialize(): void {
+        public initialize() {
             throw new Error("Directives that extend BaseDirective should implement their own initialize method.");
         }
 
-        public render(): void {
+        public render() {
             throw new Error("Directives that extend BaseDirective should implement their own render method.");
         }
     }

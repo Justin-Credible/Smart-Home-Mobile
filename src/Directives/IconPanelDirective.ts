@@ -16,7 +16,7 @@
     }
 
     /**
-     * Describes the scope object for the Chart directive.
+     * Describes the scope object for the IconPanel directive.
      */
     export interface IIconPanelDirectiveScope extends ng.IScope {
         name: string;
@@ -28,9 +28,9 @@
     //#endregion
 
     /**
-     * A simple directive for showing a large icon centered, with optional text below it.
+     * A simple element for showing a large icon centered, with optional text below it.
      */
-    export class IconPanelDirective extends BaseDirective<IIconPanelDirectiveScope> implements IIconPanelDirectiveInstance {
+    export class IconPanelDirective extends BaseElementDirective<IIconPanelDirectiveScope> implements IIconPanelDirectiveInstance {
 
         //#region Angular Directive Options
 
@@ -67,7 +67,7 @@
 
             // Fire a created event sending along this directive instance.
             // Parent scopes can listen for this so they can obtain a reference
-            // to the chart instance so they can call getters/setters etc.
+            // to the instance so they can call getters/setters etc.
             if (this.scope.name) {
                 this.scope.$emit("icon-panel." + this.scope.name + ".created", <IIconPanelDirectiveInstance>this);
             }
