@@ -26,7 +26,9 @@
 
         //#region BaseController Overrides
 
-        public view_beforeEnter(): void {
+        protected view_beforeEnter(): void {
+            super.view_beforeEnter();
+
             this.viewModel.showSaveButton = false;
             this.viewModel.apiUrl = this.Preferences.alertMeApiUrl;
             this.viewModel.userName = this.Preferences.alertMeApiUserName;

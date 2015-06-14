@@ -18,7 +18,9 @@ module JustinCredible.SmartHomeMobile.Controllers {
 
         //#region BaseController Overrides
 
-        public dialog_shown() {
+        protected dialog_shown() {
+            super.dialog_shown();
+
             this.viewModel.passphrase = "";
         }
 

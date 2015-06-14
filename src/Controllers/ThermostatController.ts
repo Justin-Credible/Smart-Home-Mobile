@@ -24,7 +24,8 @@
 
         //#region Controller Events
 
-        public view_beforeEnter(): void {
+        protected view_beforeEnter(): void {
+            super.view_beforeEnter();
 
             if (this.HubDataSource.climate == null
                 || this.HubDataSource.climateLastUpdated == null

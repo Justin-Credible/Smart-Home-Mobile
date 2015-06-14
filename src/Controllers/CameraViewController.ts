@@ -36,7 +36,9 @@
 
         //#region BaseController Overrides
 
-        public view_beforeEnter(): void {
+        protected view_beforeEnter(): void {
+            super.view_beforeEnter();
+
             // Grab the camera from the preferences by ID.
             this.viewModel.camera = _.where(this.Preferences.cameras, { id: this.stateParams.id })[0];
 
@@ -48,7 +50,9 @@
             this.refresh();
         }
 
-        public view_leave(): void {
+        protected view_leave(): void {
+            super.view_leave();
+
             this.stopStreaming();
         }
 

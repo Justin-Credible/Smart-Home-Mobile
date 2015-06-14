@@ -20,7 +20,9 @@
 
         //#Region BaseDialogController Overrides
 
-        public dialog_shown(): void {
+        protected dialog_shown(): void {
+            super.dialog_shown();
+
             this.viewModel.stateChanged = false;
             this.viewModel.smartPlugs = this.getData();
         }

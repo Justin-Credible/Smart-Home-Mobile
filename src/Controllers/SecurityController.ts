@@ -27,7 +27,8 @@
 
         //#region Controller Events
 
-        public view_beforeEnter(): void {
+        protected view_beforeEnter(): void {
+            super.view_beforeEnter();
 
             if (this.HubDataSource.security == null
                 || this.HubDataSource.securityLastUpdated == null
@@ -45,7 +46,9 @@
             }
         }
 
-        public view_beforeLeave(): void {
+        protected view_beforeLeave(): void {
+            super.view_beforeLeave();
+
             clearInterval(this.viewModel.gracePeriodIntervalRef);
         }
 
