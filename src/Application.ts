@@ -32,6 +32,7 @@ module JustinCredible.SmartHomeMobile.Application {
 
         versionInfo = {
             applicationName: "Smart Home Mobile",
+            copyrightInfoUrl: "https://github.com/Justin-Credible/Smart-Home-Mobile/blob/master/LICENSE",
             websiteUrl: "http://www.justin-credible.net",
             githubUrl: "https://github.com/Justin-Credible",
             email: "justin.unterreiner@gmail.com",
