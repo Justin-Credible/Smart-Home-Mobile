@@ -46,9 +46,10 @@
                 Communication
             </ion-item>
 
-            <ion-item>
+            <ion-item class="item-icon-right">
                 <h2>Signal</h2>
-                <p ng-class="{ 'assertive': viewModel.device.lowSignal }">Stength: {{viewModel.device.signal}}%</p>
+                <p ng-class="{ 'assertive': viewModel.device.lowSignal || viewModel.device.signal === 0 }">Stength: {{viewModel.device.signal}}%</p>
+                <i class="icon assertive ion-alert-circled" ng-show="viewModel.device.signal === 0"></i>
             </ion-item>
 
             <ion-item>

@@ -479,7 +479,9 @@ module JustinCredible.SmartHomeMobile.Services {
                 },
                 "messageIcon": null,
                 "message": "Outside temperature 54°F",
+                //"message": "Your thermostat is currently unavailable",
                 "widgetStatus": "OK",
+                //"widgetStatus": "DEVICE_MISSING",
                 "widgetVisible": true
             };
         }
@@ -871,7 +873,7 @@ module JustinCredible.SmartHomeMobile.Services {
                     "batteryPercentage": 100,
                     "mains": false,
                     "power": null,
-                    "signal": 100,
+                    "signal": 0,
                     "presence": true,
                     "temperature": 32,
                     "version": "2.8r16",
@@ -879,10 +881,10 @@ module JustinCredible.SmartHomeMobile.Services {
                     "upgradeStatus": "Ok",
                     "isGeneric": false,
                     "hasBattery": true,
-                    "state": "CLOSED",
+                    "state": null,
                     "standalone": false,
                     "upgrade": "INELIGIBLE",
-                    "reason": "ALREADY_AT_LATEST_VERSION",
+                    "reason": "DEVICE_IN_LIMBO",
                     "hardwareRevision": "1.0",
                     "id": "00-00-00-00-00-00-00-0E"
                 },

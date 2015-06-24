@@ -68,6 +68,10 @@
                 this.viewModel.isRefreshing = false;
                 this.scope.$broadcast("scroll.refreshComplete");
 
+                if (result.widgetStatus === Services.AlertMeApi.WidgetStatus.DeviceMissing) {
+                    this.UiHelper.toast.showLongBottom(result.message);
+                }
+
                 this.populateViewModel(result, this.HubDataSource.climateLastUpdated);
 
             }, () => {

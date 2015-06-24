@@ -70,6 +70,14 @@
             Fahrenheit: "F"
         };
 
+        /**
+         * The statues for a given widget.
+         */
+        public static WidgetStatus = {
+            DeviceMissing: "DEVICE_MISSING",
+            OK: "OK"
+        };
+
         //#endregion
 
         public static $inject = ["$rootScope", "$q", "$http", "Preferences", "Utilities"];
