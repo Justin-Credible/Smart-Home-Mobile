@@ -40,9 +40,24 @@ IrrigationCaddy also does not provide a public API, but using an HTTP debugging 
 
 While each IP camera can be quite different, they usually all have at least one thing in common: an HTTP daemon serving up static images and/or mjpeg content. The mobile app allows the user to enter these URLs (static or streaming) for each camera.
 
-## Contributions ##
+## Getting Started ##
 
-I'm not taking code contributions at this point since this is mainly a hobby project to support the specific set of devices I currently own (I'm not planning to support all of the Iris devices). This may change at some point, but for now I wanted to share the code for others who may be interested in doing similar projects.
+Install [Node.js](https://nodejs.org/) (I've tested with version 0.10.38), clone the project, and then install the node packages:
+
+    $ git clone https://github.com/Justin-Credible/Smart-Home-Mobile.git
+    $ cd Smart-Home-Mobile
+    $ npm install
+
+Now you can use the various gulp tasks to obtain Cordova plugins, install third party libraries via Bower, download TypeScript definition files and compile the TypeScript code.
+
+    $ gulp libs
+    $ gulp plugins
+    $ gulp tsd
+    $ gulp ts
+
+*You can also just run `gulp` without any arguments which will run the above targets.*
+
+While there are no unit tests the TypeScript code can be linted by using `gulp lint`.
 
 ## License ##
 
