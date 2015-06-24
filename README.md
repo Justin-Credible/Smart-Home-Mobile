@@ -14,6 +14,8 @@ A cross-platform mobile application used to control several smart home devices.
 
 *This is currently a work in progress; more documentation and details will be added as the app progresses.*
 
+[![Build Status](https://travis-ci.org/Justin-Credible/Smart-Home-Mobile.svg?branch=master)](https://travis-ci.org/Justin-Credible/Smart-Home-Mobile)
+
 ## Why? ##
 
 I wanted to have a single mobile app to control all of my smart home devices. While Iris has a mobile app, it lacks a few features that I wanted (direct streaming of IP cameras) and only works with Iris devices.
