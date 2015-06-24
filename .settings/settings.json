@@ -8,6 +8,7 @@
 		"www/js/bundle.js",
 		"www/js/bundle.js.map",
 		"www/js/src",
+		"www/lib",
 		"chrome",
 		"Resources/misc"
 	],
