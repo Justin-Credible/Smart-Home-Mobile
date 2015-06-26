@@ -89,12 +89,12 @@
          */
         public request(config: Interfaces.RequestConfig): Interfaces.RequestConfig {
 
-            console.log("HttpInterceptor.request: " + config.url, [config]);
-
             // Do nothing for Angular's template requests.
             if (this.Utilities.endsWith(config.url, ".html")) {
                 return config;
             }
+
+            console.log("HttpInterceptor.request: " + config.url, [config]);
 
             // Log the request data to disk.
             if (this.Preferences.enableFullHttpLogging) {
@@ -113,8 +113,6 @@
         public response(httpResponse: ng.IHttpPromiseCallbackArg<any>): ng.IHttpPromiseCallbackArg<any> {
             var config: Interfaces.RequestConfig;
 
-            console.log("HttpInterceptor.response: " + httpResponse.config.url, [httpResponse]);
-
             // Cast to our custom type which includes some extra flags.
             config = <Interfaces.RequestConfig>httpResponse.config;
 
@@ -122,6 +120,8 @@
             if (this.Utilities.endsWith(config.url, ".html")) {
                 return httpResponse;
             }
+
+            console.log("HttpInterceptor.response: " + httpResponse.config.url, [httpResponse]);
 
             // Log the response data to disk.
             if (this.Preferences.enableFullHttpLogging) {
