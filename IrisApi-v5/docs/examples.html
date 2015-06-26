@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- Mirrored from api.irissmarttest.com/v5/docs/examples by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <base  />
+    <link rel="stylesheet" type="text/css" href="css.css" />
+    <title>AlertMe.com API v5 Documentation :: examples :: DRAFT</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+  </head>
+  <body>
+    <h1>
+      API v5 Documentation <span>draft</span>
+    </h1>
+    <div class="menu">
+      <ul class="menu">
+   <li><h4><a href="../docs.html">overview</a></h4>
+      <ul>
+         <li><a href="responses.html">responses</a></li>
+         <li><a href="errors.html">errors</a></li>
+         <li><a href="examples.html">examples</a></li>
+
+      </ul>
+   </li>
+   <li><h4>calls</h4>
+      <ul>
+
+         <li><a href="calls/sessions.html">sessions</a></li>
+
+         <li><a href="calls/users.html">users</a>
+            <ul>
+
+               <li><a href="calls/users/systemalerts.html">system alerts</a></li>
+
+               <li><a href="calls/questions.html">questions</a></li>
+
+               <li><a href="calls/hubs.html">hubs</a>
+                  <ul>
+                     <li><a href="calls/hubs/activityLog.html">activity log (history)</a></li>
+                     <li><a href="calls/devices.html">devices</a>
+                       <ul>
+
+                           <li><a href="calls/devices/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+                     <li><a href="calls/hubs/profiles.html">profiles</a></li>
+
+                     <li>rules
+                        <ul>
+                           <li><a href="calls/rules/actions.html">actions</a></li>
+                           <li><a href="actions.html">action types</a></li>                           
+                           <li><a href="calls/rules/wizard.html">wizard</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="calls/services.html">services</a>
+                        <ul>
+
+                           <li><a href="calls/services/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+
+                  </ul>
+               </li>
+
+               <li><a href="calls/widgets.html">widgets</a>
+                  <ul>
+                     <li><a href="calls/widgets/alarm.html">alarm</a></li>
+                     <li><a href="calls/widgets/care.html">care</a></li>
+                     <li><a href="calls/widgets/cameras.html">cameras</a></li>
+                     <li><a href="calls/widgets/climate.html">climate</a></li>
+                     <li><a href="calls/widgets/dashboard.html">dashboard</a></li>
+                     <li><a href="calls/widgets/heating.html">heating</a></li>
+                     <li><a href="calls/widgets/locks.html">locks</a></li>
+                     <li><a href="calls/widgets/homestatus.html">homestatus</a></li>
+
+                     <li><a href="calls/widgets/presence.html">presence</a></li>
+                     <li><a href="calls/widgets/smartplugs.html">smartplugs</a></li>
+                     <li><a href="calls/widgets/swingometer.html">swingometer</a></li>
+                     <li><a href="calls/widgets/temperature.html">temperature</a></li>
+                     <li><a href="calls/widgets/usage.html">usage</a></li>
+                     <li><a href="calls/widgets/petdoors.html">petdoors</a></li>
+                     <li><a href="calls/widgets/group.html">groups</a></li>
+                     <li><a href="calls/widgets/history.html">history</a></li>
+                     <li><a href="calls/widgets/irrigation.html">irrigation</a></li>
+                     <li><a href="calls/widgets/secondaryuser.html">secondaryuser</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+</ul>
+    </div>
+    <div class="doc examples_page">
+      
+<div class="section">
+   <h2>Example installation sequence</h2>
+
+   <ol>
+
+   <li><p>Use the management API to create a new account for the user.</p></li>
+
+   <li><p>Log into the Web API (getting session cookie and user id).</p>
+   <pre>
+      POST /login
+   </pre></li>
+
+   <li><p>Authorize the hub.</p>
+   <pre>
+      POST /users/:userId/hubs
+   </pre></li>
+
+   <li><p>Retrieve the hub details repeatedly (at five second intervals), until the hub is reported as available. (This indicates that the hub has completed authorization).</p>
+   <pre>
+      GET /users/:userId/hubs/:hubId
+   </pre></li>
+
+   <li><p>If the "latestVersion" value from the last call is later than the "version" value, then the hub may be eligible for an upgrade.  Check whether the hub can be upgraded.</p>
+   <pre>
+      // Check for upgrade=ELIGIBLE in the response.
+      GET /users/:userId/hubs/:hubId/version
+   </pre></li>
+
+   <li><p>(if hub is eligible for upgrade and the user approves it) Instruct the hub to upgrade itself.</p>
+   <pre>
+      PUT version=LATEST to /users/:userId/hubs/:hubId/version
+   </pre></li>
+
+   <li><p>(while upgrading hub) Confirm that the hub has received the upgrade instruction.</p>
+   <pre>
+      // Poll this resource with a timeout to check that the upgrade=UPGRADING message is received.
+      GET /users/:userId/hubs/:hubId/version
+   </pre></li>
+
+   <li><p>(while upgrading hub) Determine whether the hub has finished upgrading.  If the hub had devices, it would regain contact with them after the upgrade. However, as the devices haven't been installed yet, in this example, it doesn't do this. Instead, when the upgrade is complete, the hub state will return to INELIGIBLE (with reason 'ALREADY_AT_LATEST_VERSION').</p>
+   <pre>
+      // Repeatedly poll this resource with a timeout until the "upgrade=INELIGIBLE, reason=ALREADY_AT_LATEST_VERSION" message is received.
+      GET /users/:userId/hubs/:hubId/version
+   </pre></li>
+
+   <li><p>Set hub acquisition mode to "acquiring" repeatedly (at ten second intervals) to search for new devices. (Typically this should be done until the user states that they have found all expected devices.) At the end, set hub acquisition mode to "finished".</p>
+   <pre>
+      while (user still wants to add more devices to the hub) {
+         deviceList = (PUT mode=acquiring to /users/:uid/hubs/:hubid/acquisition)
+         updateDisplay(deviceList)
+         sleep (10 secs)
+      }
+
+      PUT mode=finished to /users/:uid/hubs/:hubid/acquisition
+   </pre></li>
+
+   <li><p>The upgrade status of the devices should be checked.</p>
+   <pre>
+      // Check for upgrade=ELIGIBLE for any of the individual devices in the response.
+      GET /devices/all/all/version
+   </pre></li>
+
+   <li><p>(if device upgrades are available and the user approves some or all of them) instruct the hub to upgrade those devices which the user approves.</p>
+   <pre>
+      // For each device:
+      PUT version=LATEST to /devices/:deviceType/:deviceId/version
+   </pre></li>
+
+   <li><p>(while upgrading devices) Check the progress of the upgrades.  The hubs do not currently support being instructed in which order to upgrade devices, so the client should check the status of all devices which haven't completed a requested upgrade.</p>
+   <pre>
+      // For the device being upgraded (or the devices that were last time listed as state=IN_UPGRADE_QUEUE or state=UPGRADING):-
+      GET /devices/:deviceType/:deviceId/version
+      // The response for the upgrade=UPGRADING device will also contain a "progress" field, which is an integer representing a percentage.
+   </pre></li>
+
+   <li><p>At the end of the device upgrades, all of the devices will be listed in either the INELIGIBLE, FAILED or FATAL state.  A state of INELIGIBLE (with reason 'ALREADY_AT_LATEST_VERSION') indicates that the device has been upgraded to the latest version, FAILED indicates that the upgrade could not start (but may work if attempted again), and FATAL indicates that the device probably needs to be replaced (an upgrade shouldn't be offered).</p></li>
+
+   <li><p>(optional) Name each of the devices.</p>
+   <pre>
+      PUT /devices/:deviceType/:deviceId/name
+   </pre></li>
+
+   <li><p>(optional) Place each device.</p>
+   <pre>
+      PUT mode=placing to /devices/:deviceType/:deviceId/mode
+      // Wait for user to position the device in their home
+      PUT mode=normal to /devices/:deviceType/:deviceId/mode
+   </pre></li>
+
+   </ol>
+
+</div>
+    </div>
+  </body>
+
+<!-- Mirrored from api.irissmarttest.com/v5/docs/examples by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+</html>

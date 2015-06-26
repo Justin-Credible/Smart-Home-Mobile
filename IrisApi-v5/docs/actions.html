@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- Mirrored from api.irissmarttest.com/v5/docs/actions by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <base  />
+    <link rel="stylesheet" type="text/css" href="css.css" />
+    <title>AlertMe.com API v5 Documentation :: actions :: DRAFT</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+  </head>
+  <body>
+    <h1>
+      API v5 Documentation <span>draft</span>
+    </h1>
+    <div class="menu">
+      <ul class="menu">
+   <li><h4><a href="../docs.html">overview</a></h4>
+      <ul>
+         <li><a href="responses.html">responses</a></li>
+         <li><a href="errors.html">errors</a></li>
+         <li><a href="examples.html">examples</a></li>
+
+      </ul>
+   </li>
+   <li><h4>calls</h4>
+      <ul>
+
+         <li><a href="calls/sessions.html">sessions</a></li>
+
+         <li><a href="calls/users.html">users</a>
+            <ul>
+
+               <li><a href="calls/users/systemalerts.html">system alerts</a></li>
+
+               <li><a href="calls/questions.html">questions</a></li>
+
+               <li><a href="calls/hubs.html">hubs</a>
+                  <ul>
+                     <li><a href="calls/hubs/activityLog.html">activity log (history)</a></li>
+                     <li><a href="calls/devices.html">devices</a>
+                       <ul>
+
+                           <li><a href="calls/devices/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+                     <li><a href="calls/hubs/profiles.html">profiles</a></li>
+
+                     <li>rules
+                        <ul>
+                           <li><a href="calls/rules/actions.html">actions</a></li>
+                           <li><a href="actions.html">action types</a></li>                           
+                           <li><a href="calls/rules/wizard.html">wizard</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="calls/services.html">services</a>
+                        <ul>
+
+                           <li><a href="calls/services/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+
+                  </ul>
+               </li>
+
+               <li><a href="calls/widgets.html">widgets</a>
+                  <ul>
+                     <li><a href="calls/widgets/alarm.html">alarm</a></li>
+                     <li><a href="calls/widgets/care.html">care</a></li>
+                     <li><a href="calls/widgets/cameras.html">cameras</a></li>
+                     <li><a href="calls/widgets/climate.html">climate</a></li>
+                     <li><a href="calls/widgets/dashboard.html">dashboard</a></li>
+                     <li><a href="calls/widgets/heating.html">heating</a></li>
+                     <li><a href="calls/widgets/locks.html">locks</a></li>
+                     <li><a href="calls/widgets/homestatus.html">homestatus</a></li>
+
+                     <li><a href="calls/widgets/presence.html">presence</a></li>
+                     <li><a href="calls/widgets/smartplugs.html">smartplugs</a></li>
+                     <li><a href="calls/widgets/swingometer.html">swingometer</a></li>
+                     <li><a href="calls/widgets/temperature.html">temperature</a></li>
+                     <li><a href="calls/widgets/usage.html">usage</a></li>
+                     <li><a href="calls/widgets/petdoors.html">petdoors</a></li>
+                     <li><a href="calls/widgets/group.html">groups</a></li>
+                     <li><a href="calls/widgets/history.html">history</a></li>
+                     <li><a href="calls/widgets/irrigation.html">irrigation</a></li>
+                     <li><a href="calls/widgets/secondaryuser.html">secondaryuser</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+</ul>
+    </div>
+    <div class="doc actions_page">
+      <div class="section">
+ <h2>List of available actions</h2>
+ <ul>
+  <li><a href="actions.html#PlaySound">PlaySound</a></li>
+  <li><a href="actions.html#SendSms">SendSms</a></li>
+  <li><a href="actions.html#SendEmail">SendEmail</a></li>
+  <li><a href="actions.html#MakePhonecall">MakePhonecall</a></li>
+  <li><a href="actions.html#ControlLamp">ControlLamp</a></li>
+  <li><a href="actions.html#ControlCamera">ControlCamera</a></li>
+  <li><a href="actions.html#ControlSmartPlug">ControlSmartPlug</a></li>
+  <li><a href="actions.html#ControlIntruderAlarm">ControlIntruderAlarm</a></li>
+  <li><a href="actions.html#WriteLogEntry">WriteLogEntry</a></li>
+ </ul>
+</div>
+
+<div class="section">
+ <p class="note">These actions are only for use with the <a href="calls/services/events.html">service events</a> and <a href="calls/devices/events.html">device events</a> calls.</p>
+</div>
+
+<div class="section" id="PlaySound">
+ <h2>PlaySound</h2>
+ <p>Plays (or stops) a sound, which could be a doorbell, a siren or some spoken words.</p>
+ <div class="sample">
+  <h3>Fields:</h3>
+  <dl>
+   <dt>type</dt><dd>"PlaySound"</dd>
+   <dt>sound</dt><dd>"STOP" to stop playing, or the name of a sound to start playing</dd>
+   <dt>repeat</dt><dd>Number of times to repeat, range:1..10 or "UNTIL_CHANGED" to loop continuously.</dd>
+  </dl>
+ </div>
+ <div>
+  <p>Named sounds are</p>
+  <ul>
+   <li>DOORBELL1</li>
+   <li>DOORBELL2</li>
+   <li>DOORBELL_AND_DOG</li>
+   <li>DOORBELL_DOG</li>
+   <li>EMERGENCY_SIREN</li>
+   <li>EMERGENCY_ENDED</li>
+   <li>INTRUDER_SIREN</li>
+   <li>INTRUDER_ARMED_TO_NIGHT</li>
+   <li>INTRUDER_DISARMED_FROM_NIGHT</li>
+   <li>INTRUDER_ARMED_TO_AWAY</li>
+   <li>INTRUDER_DISARMED_FROM_AWAY</li>
+   <li>PANIC_SIREN</li>
+  </ul>
+ </div>
+</div>
+
+<div class="section" id="SendSms">
+ <h2>SendSms</h2>
+ <p>Sends an SMS (text) message - note that this uses the "mobile" number of the contact.</p>
+ <div class="sample">
+  <h3>Fields:</h3>
+  <dl>
+   <dt>type</dt><dd>"SendSms"</dd>
+   <dt>to</dt><dd>"me" or a contactId.</dd>
+   <dt>message</dt><dd>Plain text string, maximum length is 140 characters Latin-1/ASCII or 70 characters UTF-8.</dd>
+   <dt>template</dt><dd>(instead of message) the name of a prebuilt template.</dd>
+  </dl>
+ </div>
+</div>
+
+<div class="section" id="SendEmail">
+ <h2>SendEmail</h2>
+ <p>Sends an email</p>
+ <div class="sample">
+  <h3>Fields:</h3>
+  <dl>
+   <dt>type</dt><dd>"SendEmail"</dd>
+   <dt>to</dt><dd>"me" or a contactId.</dd>
+   <dt>message</dt><dd>Plain text string, maximum 250 characters.</dd>
+  </dl>
+ </div>
+</div>
+
+<div class="section" id="MakePhonecall">
+ <h2>MakePhonecall</h2>
+ <p>Phones the specified person - note this uses the "phone" number of the contact.</p>
+ <div class="sample">
+  <h3>Fields:</h3>
+  <dl>
+   <dt>type</dt><dd>"MakePhonecall"</dd>
+   <dt>to</dt><dd>"me" or a contactId.</dd>
+   <dt>message</dt><dd>Plain text string, maximum 250 characters.</dd>
+   <dt>template</dt><dd>(instead of message) the name of a prebuilt template.</dd>
+  </dl>
+ </div>
+</div>
+
+<div class="section" id="ControlLamp">
+ <h2>ControlLamp</h2>
+ <p>Changes the color(s) of a lamp.</p>
+ <div class="sample">
+  <h3>Fields:</h3>
+  <dl>
+   <dt>type</dt><dd>"ControlLamp"</dd>
+   <dt>style</dt><dd>"COLOR" or "PARTY" or "STOP" or "OFF".</dd>
+   <dt>color</dt><dd>(when style is "COLOR") a named CSS color e.g. "DarkRed" ("DARK_RED" format also allowed) or a hex RGB code e.g. "#11BB7F".</dd>
+   <dt>flashing</dt><dd>(only when style is "COLOR") "TRUE" or "FALSE" (optional, will default to "FALSE").</dd>
+   <dt>duration</dt><dd>Duration for which the new style is to be displayed (in seconds), range:1..1800 or "UNTIL_CHANGED".</dd>
+  </dl>
+ </div>
+</div>
+
+<div class="section" id="ControlCamera">
+ <h2>ControlCamera</h2>
+ <div class="sample">
+  <h3>Fields:</h3>
+  <dl>
+   <dt>type</dt><dd>"ControlCamera"</dd>
+   <dt>deviceId</dt><dd>The device ID of the camera to control.</dd>
+   <dt>recording</dt><dd>"STOP" or "START".</dd>
+   <dt>duration</dt><dd>(when recording is "START") Duration to record, range:1..1800 or "UNTIL_CHANGED".</dd>
+  </dl>
+ </div>
+ <p class="note">Note that duration may be treated as an approximate duration under some circumstances.</p>
+</div>
+
+<div class="section" id="ControlSmartPlug">
+ <h2>ControlSmartPlug</h2>
+ <div class="sample">
+  <h3>Fields:</h3>
+  <dl>
+   <dt>type</dt><dd>"ControlSmartPlug"</dd>
+   <dt>deviceId</dt><dd>The device ID of the SmartPlug you wish to control.</dd>
+   <dt>state</dt><dd>"ON" or "OFF".</dd>
+   <dt>duration</dt><dd>(when state is "ON") the duration for the relay to stay on (in seconds), range: 1..1800 or "UNTIL_CHANGED".</dd>
+  </dl>
+ </div>
+</div>
+
+<div class="section" id="ControlIntruderAlarm">
+ <h2>ControlIntruderAlarm</h2>
+ <div class="sample">
+  <h3>Fields:</h3>
+  <dl>
+   <dt>type</dt><dd>"ControlIntruderAlarm"</dd>
+   <dt>behavior</dt><dd>The behavior to activate: "HOME", "AWAY", or "NIGHT".</dd>
+  </dl>
+ </div>
+</div>
+
+<div class="section" id="WriteLogEntry">
+ <h2>WriteLogEntry</h2>
+ <div class="sample">
+  <h3>Fields:</h3>
+  <dl>
+   <dt>type</dt><dd>"WriteLogEntry"</dd>
+   <dt>message</dt><dd>Plain text string to record in the hub's log, maximum 250 characters.</dd>
+  </dl>
+ </div>
+</div>
+    </div>
+  </body>
+
+<!-- Mirrored from api.irissmarttest.com/v5/docs/actions by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+</html>

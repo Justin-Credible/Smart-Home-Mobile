@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/widgets/group by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <base  />
+    <link rel="stylesheet" type="text/css" href="../../css.css" />
+    <title>AlertMe.com API v5 Documentation :: calls/widgets/group :: DRAFT</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+  </head>
+  <body>
+    <h1>
+      API v5 Documentation <span>draft</span>
+    </h1>
+    <div class="menu">
+      <ul class="menu">
+   <li><h4><a href="../../../docs.html">overview</a></h4>
+      <ul>
+         <li><a href="../../responses.html">responses</a></li>
+         <li><a href="../../errors.html">errors</a></li>
+         <li><a href="../../examples.html">examples</a></li>
+
+      </ul>
+   </li>
+   <li><h4>calls</h4>
+      <ul>
+
+         <li><a href="../sessions.html">sessions</a></li>
+
+         <li><a href="../users.html">users</a>
+            <ul>
+
+               <li><a href="../users/systemalerts.html">system alerts</a></li>
+
+               <li><a href="../questions.html">questions</a></li>
+
+               <li><a href="../hubs.html">hubs</a>
+                  <ul>
+                     <li><a href="../hubs/activityLog.html">activity log (history)</a></li>
+                     <li><a href="../devices.html">devices</a>
+                       <ul>
+
+                           <li><a href="../devices/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+                     <li><a href="../hubs/profiles.html">profiles</a></li>
+
+                     <li>rules
+                        <ul>
+                           <li><a href="../rules/actions.html">actions</a></li>
+                           <li><a href="../../actions.html">action types</a></li>                           
+                           <li><a href="../rules/wizard.html">wizard</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="../services.html">services</a>
+                        <ul>
+
+                           <li><a href="../services/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+
+                  </ul>
+               </li>
+
+               <li><a href="../widgets.html">widgets</a>
+                  <ul>
+                     <li><a href="alarm.html">alarm</a></li>
+                     <li><a href="care.html">care</a></li>
+                     <li><a href="cameras.html">cameras</a></li>
+                     <li><a href="climate.html">climate</a></li>
+                     <li><a href="dashboard.html">dashboard</a></li>
+                     <li><a href="heating.html">heating</a></li>
+                     <li><a href="locks.html">locks</a></li>
+                     <li><a href="homestatus.html">homestatus</a></li>
+
+                     <li><a href="presence.html">presence</a></li>
+                     <li><a href="smartplugs.html">smartplugs</a></li>
+                     <li><a href="swingometer.html">swingometer</a></li>
+                     <li><a href="temperature.html">temperature</a></li>
+                     <li><a href="usage.html">usage</a></li>
+                     <li><a href="petdoors.html">petdoors</a></li>
+                     <li><a href="group.html">groups</a></li>
+                     <li><a href="history.html">history</a></li>
+                     <li><a href="irrigation.html">irrigation</a></li>
+                     <li><a href="secondaryuser.html">secondaryuser</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+</ul>
+    </div>
+    <div class="doc calls widgets group_page">
+      <div class="section">
+   <p>All calls listed below follow <span class="call">/users/<em>:username</em>/widgets</span> in the URI;
+      this prefix has been omitted for conciseness</p>
+</div>
+
+<div class="section">
+   <h2>GET <span class="call">/groups</span></h2>
+
+   <p>Returns the list of  groups.</p>
+
+   <div class="sample">
+      <h3>Sample Response:</h3>
+
+      <p class="json">
+{
+   "id": 1,
+   "name": "bedroom",
+   "devicesOn": 6,
+   "devicesOff": 2,
+   "hasDimmers": true,
+   "devices" : {
+               "0" : "00-0D-6F-00-00-1D-6C-71",
+               "1" : "AD-05-00-E4-AF-FF-92-0A"
+               }
+},
+{
+   "id": 3,
+   "name": "livingroom",
+   "devicesOn": 4,
+   "devicesOff": 0,
+   "hasDimmers": false,
+   "devices" : {
+               "0" : "00-0D-6F-00-00-1D-6C-71",
+               "1" : "AD-05-00-E4-AF-FF-92-0A"
+               }
+}
+      </p>
+   </div>
+</div>
+
+<div class="section">
+   <h2>PUT <span class="call">/groups/<em>:groupId</em>/onOffState</span></h2>
+
+   <p>Changes the on/off state of the group.</p>
+
+   <div class="args">
+      <h3>Body:</h3>
+      <dl>
+         <dt>onOffState</dt>
+         <dd>"on" to on, "off" to off</dd>
+      </dl>
+   </div>
+
+   <div class="sample">
+      <h3>Sample Response:</h3>
+
+      <p class="header">
+HTTP 204 All Ok
+      </p>
+   </div>
+</div>
+
+<div class="section">
+   <h2>GET <span class="call">/groups/<em>:groupId</em></span></h2>
+
+   <p>Return information about the group with specified ID.</p>
+
+   <div class="sample">
+      <h3>Sample Response:</h3>
+
+      <p class="json">
+{
+   "id": 3,
+   "name": "livingroom",
+   "devicesOn": 4,
+   "devicesOff": 0,
+   "hasDimmers": true,
+   "devices" : {
+               "0" : "00-0D-6F-00-00-1D-6C-71",
+               "1" : "AD-05-00-E4-AF-FF-92-0A"
+               }
+}
+      </p>
+   </div>
+</div>
+
+<div class="section">
+   <h2>PUT <span class="call">/groups/<em>:groupId</em>/dimmerlevelup</span></h2>
+
+   <p>Increment group dimmer level by ten.</p>
+
+   <div class="sample">
+      <h3>Sample Response:</h3>
+
+      <p class="header">
+HTTP 204 All Ok
+      </p>
+   </div>
+</div>
+
+<div class="section">
+   <h2>PUT <span class="call">/groups/<em>:groupId</em>/dimmerleveldown</span></h2>
+
+   <p>Decrement group dimmer level by ten.</p>
+
+   <div class="sample">
+      <h3>Sample Response:</h3>
+
+      <p class="header">
+HTTP 204 All Ok
+      </p>
+   </div>
+</div>
+
+<div class="section">
+   <h2>GET <span class="call">/groups/<em>:groupId</em>/actions</span></h2>
+
+   <p>Returns information on all timed actions of the (simple) group and the events that trigger those actions.</p>
+
+   <div class="sample">
+      <h3>Sample Response:</h3>
+
+      <p class="json">
+[
+   {
+      "id" : 1,
+      "action" : "ON",
+      "time" : "10:30",
+      "days" : [
+         "MONDAY",
+         "FRIDAY"
+      ],
+      "date" : null
+   },
+   {
+      "id" : 2,
+      "action" : "OFF",
+      "time" : "20:00",
+      "days" : null,
+      "date" : "2012-04-06"
+   }
+]
+      </p>
+
+      <p class="note">id is an action ID in the database</p>
+      <p class="note">days is either an array of days of week or null</p>
+      <p class="note">date is either a date in ISO-8601 format or null</p>
+   </div>
+
+   <div class="errors">
+      <h3>Returned errors:</h3>
+      <dl>
+         <dt>403 FORBIDDEN</dt>   <dd>Either <em>PLUGS_SCHEDULING</em> or <em>SIMPLE_GROUPS</em> TRAP setting is not enabled</dd>
+         <dt>404 INVALID_PARAMETER</dt>   <dd>A group with <em>:groupId</em> was not found</dd>
+      </dl>
+   </div>
+</div>
+
+<div class="section">
+   <h2>PUT <span class="call">/groups/<em>:groupId</em>/actions</span></h2>
+
+   <p>Creates a new action for the simple group. If there is no existing event for this action, a new event is created</p>
+
+   <div class="args">
+      <h3>Arguments:</h3>
+      <dl>
+         <dt>action</dt>
+         <dd>[mandatory] An action to do, e.g. ON, OFF</dd>
+
+         <dt>time</dt>
+         <dd>[mandatory] A time in 24-hour format the event should be fired at</dd>
+
+         <dt>repeat</dt>
+         <dd>[mandatory] A string indicating how often an event should be triggered. Valid values: days, date.</dd>
+
+         <dt>days[]</dt>
+         <dd>[optional] An array of days the event should be fired on. Valid values: days of the
+            week (SUNDAY - SATURDAY) or one of the periods: ALL (every day), WEEKDAYS (Monday-Friday), WEEKENDS (Saturday, Sunday).
+            See also <em>Sample requests</em> section for how to use this parameter
+         </dd>
+
+         <dt>date</dt>
+         <dd>[optional] A certain date the event should be fired at. The date should be in ISO-8601 format, for example 2012-04-06</dd>
+      </dl>
+   </div>
+
+   <div class="sample">
+      <h3>Sample requests:</h3>
+
+      <p class="call">/groups/2/actions?action=ON&amp;time=10:30&amp;repeat=days&amp;days[]=MONDAY&amp;days[]=FRIDAY</p>
+      <p class="call">Creates a new ON action scheduled to repeat every week on Mondays and Fridays at 10:30</p>
+
+      <p class="call">/groups/2/actions?action=ON&amp;time=20:00&amp;repeat=days&amp;days[]=WEEKDAYS</p>
+      <p class="call">Creates a new ON action scheduled to repeat on weekdays at 20:00</p>
+
+      <p class="call">/groups/2/actions?action=OFF&amp;time=20:00&amp;repeat=days&amp;days[]=WEEKENDS</p>
+      <p class="call">Creates a new OFF action scheduled to repeat on weekends at 20:00</p>
+
+      <p class="call">/groups/2/actions?action=OFF&amp;time=20:00&amp;repeat=days&amp;days[]=ALL</p>
+      <p class="call">Creates a new OFF action scheduled to repeat every day at 20:00</p>
+
+      <p class="call">/groups/2/actions?action=ON&amp;time=10:30&amp;repeat=date&amp;date=2012-04-06</p>
+      <p class="call">Creates a new ON action which is to be fired only once on the 6th of April 2012 at 10:30</p>
+   </div>
+
+   <div class="sample">
+      <h3>Sample response:</h3>
+      <p class="json">
+{
+   "id" : 120,
+   "action" : "ON",
+   "time" : "10:30",
+   "days" : [
+      "MONDAY",
+      "FRIDAY"
+   ],
+   "date" : null
+}
+      </p>
+   </div>
+
+   <div class="errors">
+      <h3>Returned errors:</h3>
+      <dl>
+         <dt>403 FORBIDDEN</dt>   <dd>Either <em>PLUGS_SCHEDULING</em> or <em>SIMPLE_GROUPS</em> TRAP setting is not enabled</dd>
+         <dt>404 DATE_CONFLICT</dt>   <dd>Some dates are conflicting</dd>
+         <dt>500 INVALID_PARAMETER</dt>   <dd>The <em>repeat</em> parameter is invalid</dd>
+         <dt>500 INTERNAL_ERROR</dt>  <dd>Either the group with <em>:groupId</em> was not found or
+         the event is invalid or an error occurred while saving the action.</dd>
+      </dl>
+   </div>
+</div>
+
+<div class="section">
+   <h2>PUT <span class="call">/groups/<em>:groupId</em>/actions/<em>:actionId</em></span></h2>
+
+   <p>Updates an action with ID <em>:actionId</em> for (simple) group <em>:groupId</em></p>
+
+   <div class="args">
+      <h3>Arguments:</h3>
+      <p>See </p>
+      <p class="call">/groups/<em>:groupId</em>/actions</p>
+   </div>
+
+   <div class="sample">
+      <h3>Sample requests:</h3>
+
+      <p class="call">/group/2/actions/108?action=ON&amp;time=10:30&amp;repeat=days&amp;days[]=MONDAY&amp;days[]=FRIDAY</p>
+      <p class="call">Update the action with ID 108: set name to ON, repeat every week on Mondays and Fridays at 10:30</p>
+   </div>
+
+   <div class="sample">
+      <h3>Sample response:</h3>
+      <p class="header">
+         204 Updating action with ID <em>:actionId</em>
+      </p>
+   </div>
+
+   <div class="errors">
+      <h3>Returned errors:</h3>
+      <dl>
+         <dt>403 FORBIDDEN</dt>   <dd>Either <em>PLUGS_SCHEDULING</em> or <em>SIMPLE_GROUPS</em> TRAP setting is not enabled</dd>
+         <dt>404 DATE_CONFLICT</dt>   <dd>Some dates are conflicting</dd>
+         <dt>500 INVALID_PARAMETER</dt>   <dd>Either <em>repeat</em> or <em>actionId</em> is invalid.
+         See the error message for details</dd>
+         <dt>500 INTERNAL_ERROR</dt>   <dd>Either the group with ID <em>:groupId</em> was not found
+         or the event is invalid or an error occurred while updating the action.</dd>
+      </dl>
+   </div>
+</div>
+
+<div class="section">
+   <h2>GET <span class="call">/groups/<em>:groupId</em>/actions/<em>:actionId</em></span></h2>
+
+   <p>Returns detailed information on the action with the specified ID</p>
+
+   <p class="note">actionId is an ID of the action in the database</p>
+
+   <div class="sample">
+      <h3>Sample response:</h3>
+      <p class="json">
+{
+   "id" : 108,
+   "action" : "ON",
+   "time" : "21:00",
+   "days" : null,
+   "date" : "2012-04-06"
+}
+      </p>
+
+      <p class="note">id is an action ID in the database</p>
+      <p class="note">days is either an array of days of week or null</p>
+      <p class="note">date is either a date in ISO-8601 format or null</p>
+   </div>
+
+   <div class="errors">
+      <h3>Returned errors:</h3>
+      <dl>
+         <dt>403 FORBIDDEN</dt>   <dd>Either <em>PLUGS_SCHEDULING</em> or <em>SIMPLE_GROUPS</em> TRAP setting is not enabled</dd>
+         <dt>404 INVALID_PARAMETER</dt>   <dd>Invalid <em>:actionId</em> or <em>:groupId</em> parameter</dd>
+         <dt>500 INTERNAL_ERROR</dt>   <dd>An internal error has occurred.
+This might be either because a group with ID <em>:deviceId</em> was not found or an event is invalid.</dd>
+      </dl>
+   </div>
+</div>
+
+<div class="section">
+   <h2>DELETE <span class="call">/groups/<em>:groupId</em>/actions/<em>:actionId</em></span></h2>
+
+   <p>Removes the action with ID <em>:actionId</em> for group with <em>:groupId</em>.
+      If the corresponding event has no more actions, it's deleted as well</p>
+
+   <div class="sample">
+      <h3>Sample response:</h3>
+      <p class="header">
+         204 Removing action with ID <em>:actionId</em>
+      </p>
+   </div>
+
+   <div class="errors">
+      <h3>Returned errors:</h3>
+
+      <dl>
+         <dt>403 FORBIDDEN</dt>   <dd>Either <em>PLUGS_SCHEDULING</em> or <em>SIMPLE_GROUPS</em> TRAP setting is not enabled</dd>
+         <dt>500 MISSING_PARAMETER</dt>   <dd>The <em>:actionId</em> parameter is missing</dd>
+         <dt>404 INVALID_PARAMETER</dt>   <dd>If the group with <em>:groupId</em> was not found</dd>
+      </dl>
+   </div>
+</div>    </div>
+  </body>
+
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/widgets/group by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+</html>

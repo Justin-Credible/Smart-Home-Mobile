@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/widgets/alarm by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <base  />
+    <link rel="stylesheet" type="text/css" href="../../css.css" />
+    <title>AlertMe.com API v5 Documentation :: calls/widgets/alarm :: DRAFT</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+  </head>
+  <body>
+    <h1>
+      API v5 Documentation <span>draft</span>
+    </h1>
+    <div class="menu">
+      <ul class="menu">
+   <li><h4><a href="../../../docs.html">overview</a></h4>
+      <ul>
+         <li><a href="../../responses.html">responses</a></li>
+         <li><a href="../../errors.html">errors</a></li>
+         <li><a href="../../examples.html">examples</a></li>
+
+      </ul>
+   </li>
+   <li><h4>calls</h4>
+      <ul>
+
+         <li><a href="../sessions.html">sessions</a></li>
+
+         <li><a href="../users.html">users</a>
+            <ul>
+
+               <li><a href="../users/systemalerts.html">system alerts</a></li>
+
+               <li><a href="../questions.html">questions</a></li>
+
+               <li><a href="../hubs.html">hubs</a>
+                  <ul>
+                     <li><a href="../hubs/activityLog.html">activity log (history)</a></li>
+                     <li><a href="../devices.html">devices</a>
+                       <ul>
+
+                           <li><a href="../devices/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+                     <li><a href="../hubs/profiles.html">profiles</a></li>
+
+                     <li>rules
+                        <ul>
+                           <li><a href="../rules/actions.html">actions</a></li>
+                           <li><a href="../../actions.html">action types</a></li>                           
+                           <li><a href="../rules/wizard.html">wizard</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="../services.html">services</a>
+                        <ul>
+
+                           <li><a href="../services/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+
+                  </ul>
+               </li>
+
+               <li><a href="../widgets.html">widgets</a>
+                  <ul>
+                     <li><a href="alarm.html">alarm</a></li>
+                     <li><a href="care.html">care</a></li>
+                     <li><a href="cameras.html">cameras</a></li>
+                     <li><a href="climate.html">climate</a></li>
+                     <li><a href="dashboard.html">dashboard</a></li>
+                     <li><a href="heating.html">heating</a></li>
+                     <li><a href="locks.html">locks</a></li>
+                     <li><a href="homestatus.html">homestatus</a></li>
+
+                     <li><a href="presence.html">presence</a></li>
+                     <li><a href="smartplugs.html">smartplugs</a></li>
+                     <li><a href="swingometer.html">swingometer</a></li>
+                     <li><a href="temperature.html">temperature</a></li>
+                     <li><a href="usage.html">usage</a></li>
+                     <li><a href="petdoors.html">petdoors</a></li>
+                     <li><a href="group.html">groups</a></li>
+                     <li><a href="history.html">history</a></li>
+                     <li><a href="irrigation.html">irrigation</a></li>
+                     <li><a href="secondaryuser.html">secondaryuser</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+</ul>
+    </div>
+    <div class="doc calls widgets alarm_page">
+      <div class="section">
+    <p>
+        All calls listed below follow
+        <span class="call">/users/<em>:userId</em>/widgets</span>
+        in the URI;
+        this prefix has been omitted for conciseness
+    </p>
+</div>
+
+<div class="section">
+   <h2>GET <span class="call">/alarm</span></h2>
+
+   <p>Returns summary of the alarm status for an alarm widget.</p>
+
+   <div class="args">
+      <h3>Arguments:</h3>
+      <dl>
+         <dt>detail</dt>
+         <dd>(optional) Level of details, specified as one or more of the flags listed below, concatenated with plus sign (+)
+            <dl><dt>overviewInfo</dt><dd>Alarm status and associated devices</dd></dl>
+         </dd>
+      </dl>
+   </div>
+
+   <div class="sample">
+   <h3>Sample Response:</h3>
+
+   <p class="json">
+{
+   "behavior":"HOME",
+   "behaviors":["HOME","AWAY","NIGHT"],
+   "showSlider":true,
+   "targetBehavior":"HOME",
+   "showCancel":false,
+   "state":"DISARMED",
+   "status":{"message":"DISARMED","time":"1297432798","deviceName":'UNKNOWN',"deviceType":false,"alarm":"Care","deviceName2":"null","deviceType2":false},
+   "widgetStatus":"OK",
+   "widgetVisible":true
+}
+    </p>
+    </div>
+    
+   <div class="args">
+      <h3>Returned value explanation</h3>
+      <dl>
+         <dt>behavior</dt>
+         <dd>current behavior of alarm</dd>
+         <dt>behaviors</dt>
+         <dd>all available behaviors</dd>
+         <dt>showSlider</dt>
+         <dd>whether or not to show the behavior change slider in the UI</dd>
+         <dt>targetBehavior</dt>
+         <dd>current behavior or the behavior to be applied shortly</dd>
+         <dt>showCancel</dt>
+         <dd>whether to show the alarm cancel button or not (when alarm is triggered)</dd>
+         <dt>state</dt>
+         <dd>current state of alarm</dd>
+         <dt>status</dt>
+         <dd>information when the state was last changed</dd>
+         <dt>widgetStatus</dt>
+         <dd>returns status as in subscription/widgets/status & dashboard widget</dd>
+         <dt>widgetVisible</dt>
+         <dd>returns flag for widget's visibility</dd>
+      </dl>
+   </div>
+   
+   <div class="args">
+      <h3>Possible status messages</h3>
+      <dl class="wide">
+         <dt>PROBLEM</dt>
+         <dd>There is a problem with the alarm system</dd>
+         <dt>HUB_UNAVAILABLE</dt>
+         <dd>The hub cannot be contacted</dd>
+         <dt>HUB_ONLINE</dt>
+         <dd>The hub is online</dd>
+         <dt>HUB_UPGRADING</dt>
+         <dd>The hub is updating at the moment</dd>
+         <dt>HUB_CONFIGURING</dt>
+         <dd>The hub is currently configuring</dd>
+         <dt>NO_ALARMS</dt>
+         <dd>There are currently no active alarms installed</dd>
+         <dt>MULTIPLE_ALARMS_TRIGGERED</dt>
+         <dd>Multiple alarms have currently triggered (i.e. Intruder and Panic)</dd>
+         <dt>TRIGGERED</dt>
+         <dd>An alarm is currently triggered</dd>
+         <dt>TRIGGER_GRACE</dt>
+         <dd>The alarm is in grace mode and is about to be triggered, unless canceled</dd>
+         <dt>WAITING_FOR_DEVICES</dt>
+         <dd>The hub is waiting for devices to be ready before it can arm</dd>
+         <dt>ARMING</dt>
+         <dd>An alarm is currently arming</dd>
+         <dt>ARMED</dt>
+         <dd>The alarm is currently armed</dd>
+         <dt>DISARMED</dt>
+         <dd>The alarm is currently disarmed</dd>
+         <dt>NEVER</dt>
+         <dd>The alarm has never been used</dd>
+         <dt>OPERATIONAL</dt>
+         <dd>No alarms detected</dd>
+      </dl>
+   </div>
+   
+   <div class="args">
+      <h3>Possible states</h3>
+      <dl class="wide">
+         <dt>HUB_UNAVAILABLE</dt>
+         <dd>The hub is not connected to the network or there is a network problem or hub is unplugged with no/empty battery</dd>
+         <dt>HUB_CONFIGURING</dt>
+         <dd>A config is currently being applied to the hub, changing of mode is not available at this time</dd>
+         <dt>UNKNOWN</dt>
+         <dd>(very unlikely to occur) the system is in an uknown state or a temporary problem has occured preventing checking of current state</dd>
+         <dt>TRIGGERED</dt>
+         <dd>One or more alarms has been triggered</dd>
+         <dt>TRIGGER_GRACE</dt>
+         <dd>One of more alarms will be triggered shortly (the relevant device(s) has(/have) been activated)</dd>
+         <dt>DISARMED</dt>
+         <dd>The user has an intruder alarm and current behavior is HOME</dd>
+         <dt>ARMED</dt>
+         <dd>The user has an intruder alarm and it's either set to NIGHT or AWAY behavior</dd>
+         <dt>ARMING</dt>
+         <dd>The system is in the process of arming to AWAY or NIGHT - see targetBehavior</dd>
+         <dt>NO_ALARMS</dt>
+         <dd>The user has no installed alarms</dd>
+         <dt>PASSIVE</dt>
+         <dd>The user doesn't have an intruder alarm but does have panic and/or emergency alarm(s); no alarms are currently triggered</dd>
+         <dt>CONTACT_SENSOR_OPEN</dt>
+         <dd>At least one ContactSensor has been left open - user should be prompted to arm anyway or to cancel arming</dd>
+      </dl>
+   </div>
+
+   <div class="args">
+       <h3>Possible widgetStatuses</h3>
+       <dl class="wide">
+           <dt>OK</dt>
+           <dd>Widget able to prepare all data</dd>
+           <dt>NOT_AVAILABLE</dt>
+           <dd>Widget is not available due user's subscription</dd>
+           <dt>NO_DEVICE</dt>
+           <dd>No device assigned to this widget</dd>
+           <dt>DEVICE_MISSING</dt>
+           <dd>Assigned devices are missing</dd>
+           <dt>NO_DATA</dt>
+           <dd>Inner error, data cannot be prepared correctly</dd>
+       </dl>
+   </div>
+</div>
+
+<div class="section">
+   <h2>GET <span class="call">/alarm/overview</span></h2>
+
+   <p>Returns alarm status and associated devices.</p>
+   <div class="sample">
+   <h3>Sample Response:</h3>
+
+   <p class="json">
+{
+   "summary":{
+      "message":"LAST_TRIGGERED",
+      "alarm":"Panic",
+      "triggerTime":"1297423440",
+      "clearedFrom":"WEBSITE",
+      "clearedBy":"",
+      "clearTime":"1297423515",
+      "deviceType":"Button",
+      "deviceName":"Button 1"
+   },
+   "triggeredDevices":[],
+   "otherDevices":{
+      "00-00-00-00-00-00-00-00":{
+         "name":"Door\/Window Sensor 1",
+         "type":"ContactSensor",
+         "alarm":"Intruder",
+         "presence":true,
+         "state":"OPENED"
+      },
+      "00-00-00-00-01-01-01-01":{
+         "name":"Button 1",
+         "type":"Button",
+         "alarm":"Panic",
+         "presence":true,
+         "state":null
+      }
+   }
+}
+    </p>
+    </div>
+    
+    <div class="args">
+      <h3>Returned value explanation</h3>
+      <dl>
+         <dt>summary</dt>
+         <dd>information about current state of alarm and when it was last triggered</dd>
+         <dt>triggeredDevices</dt>
+         <dd>devices that are currently alarmed</dd>
+         <dt>otherDevices</dt>
+         <dd>all other devices that are not currently triggered</dd>
+      </dl>
+   </div>
+
+    <div class="args">
+      <h3>Possible summary messages</h3>
+      <dl>
+         <dt>NEVER_TRIGGERED</dt>
+         <dd>The alarm has never been triggered - probably only seen on new installs as most people will at least test their alarm</dd>
+         <dt>CURRENTLY_TRIGGERED (and alarm is MULTIPLE)</dt>
+         <dd>Multiple alarms are currently triggered</dd>
+         <dt>CURRENTLY_TRIGGERED (and alarm is a single, named alarm)</dt>
+         <dd>A single alarm is currently triggered - the time it was triggered will be included</dd>
+         <dt>LAST_TRIGGERED</dt>
+         <dd>Information will be included about the last triggered alarm: triggerTime, deviceName &amp; deviceType (for the triggering device), clearedBy and clearedFrom (KEYFOB, WEBSITE, CUSTOM ('source'), UNKNWON)</dd>
+         <dt>PROBLEM</dt>
+         <dd>There is a problem with the alarm system</dd>
+      </dl>
+   </div>
+</div>
+
+<div class="section">
+    <h2>GET <span class="call">/alarm/devices</span></h2>
+
+   <p>Returns a list of alarm devices.</p>
+   <div class="sample">
+   <h3>Sample Response:</h3>
+
+    <p class="json">
+{
+   "Intruder":{
+      "00-00-00-00-00-00-00-00":{
+         "name":"Door\/Window Sensor 1",
+         "type":"ContactSensor",
+         "modes":["AWAY","NIGHT"]
+      }
+   },
+   "Panic":{
+      "00-00-00-00-00-01-01-01":{
+         "name":"Button 1",
+         "type":"Button",
+         "modes":["HOME","AWAY","NIGHT"]
+      }
+   }
+}
+    </p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>GET <span class="call">/alarm/settings</span></h2>
+
+   <p>Get system settings for alarm</p>
+   <div class="sample">
+   <h3>Sample Response:</h3>
+
+   <p class="json">
+{
+   "Intruder":{
+      "AWAY":{
+         "armDelay":45,
+         "triggerDelay":15,
+         "devicesRequired":1,
+         "playArmingSounds":true
+      },
+      "NIGHT":{
+         "armDelay":45,
+         "triggerDelay":15,
+         "devicesRequired":1,
+         "playArmingSounds":true
+      }
+   }
+}
+    </p>
+    </div>
+</div>
+
+<div class="section">
+   <h2>GET <span class="call">/alarm/alerts</span></h2>
+
+   <p>Get configured alerts for alarm</p>
+   <div class="sample">
+   <h3>Sample Response:</h3>
+
+   <p class="json">
+{
+   "Intruder":{
+      "AWAY":[
+         {
+            "to":"me",
+            "message":"RULES_IA_SMSALARMED",
+            "method":"SendSms",
+            "contactName":"AnyName"
+         },
+         {
+            "to":"me",
+            "template":"[template:intruder]",
+            "method":"SendEmail",
+            "contactName":"AnyName"
+         }
+      ],
+      "NIGHT":[
+         {
+            "to":"me",
+            "message":"RULES_IA_SMSALARMEDNIGHT",
+            "method":"SendSms",
+            "contactName":"Test"
+         },
+         {
+            "to":"me",
+            "template":"[template:intruder]",
+            "method":"SendEmail",
+            "contactName":"Test"
+         }
+      ]
+   }
+}
+   </p>
+   </div>
+    
+   <div class="args">
+      <h3>Returned value explanation</h3>
+      <dl>
+         <dt>to</dt>
+         <dd>id of contact</dd>
+         <dt>template</dt>
+         <dd>template of message to be sent</dd>    
+         <dt>method</dt>
+         <dd>notification method (SendEmail/SendSms)</dd>  
+         <dt>contactName</dt>
+         <dd>name of contact</dd>       
+      </dl>
+   </div>
+</div>
+
+<div class="section">
+    <h2>GET <span class="call">/alarm/alerts/available</span></h2>
+
+    <p>Get all possible alerts and contacts</p>
+   <div class="sample">
+   <h3>Sample Response:</h3>
+
+    <p class="json">
+{
+   "alarms":{
+      "ANY":[
+         "ANY","HOME","AWAY","NIGHT"
+      ],
+      "Intruder":[
+         "ANY","AWAY","NIGHT"
+      ],
+      "Panic":[
+         "ANY","HOME","AWAY","NIGHT"
+      ]
+   },
+   "contacts":{
+      "me":{
+         "name":"Test contact",
+         "methods":["SendSms","SendEmail"]
+      },
+      "OtherUser":{
+         "name":"Test",
+         "methods":["SendSms","SendEmail"]
+      }
+   },
+   "alerts":[
+      "MakePhonecall","SendSms","SendEmail"
+   ]
+}
+    </p>
+   </div>
+</div>
+
+<div class="section">
+    <h2>PUT <span class="call">/alarm/mode</span></h2>
+
+    <p>Updates the alarm mode. </p>
+
+    <h3>Arguments:</h3>
+    <dl>
+        <dt>mode</dt>
+        <dd>one of HOME, AWAY, NIGHT</dd>
+    </dl>
+    <dl>
+        <dt>now</dt>
+        <dd>true or false. This parameter is optional, default value is false. If the parameter is true alarm is set immediately</dd>
+    </dl>
+    <dl>
+        <dt>checkState</dt>
+        <dd>true or false. This parameter is optional, default value is false. If the parameter is true call can return errors described below</dd>
+    </dl>
+
+   <div class="sample">
+   <h3>Sample Response:</h3>
+   <p class="json">
+
+{
+   "state":"disarmed",
+   "grace":0
+}
+    </p>
+   </div>    
+   
+   <div class="args">
+      <h3>Returned value explanation</h3>
+      <dl>
+         <dt>state</dt>
+         <dd>the current mode of the alarm (after the update) or hub upgrading state</dd>
+         <dt>grace</dt>
+         <dd>grace period (in seconds) until the alarm will be armed (if arming).</dd>        
+      </dl>
+   </div>
+
+   <div class="sample">
+      <h3>Sample Response:</h3>
+      <span>This can be returned only if "checkState" param is true</span>
+      <p class="json">
+{
+   "error": {
+      "reason": "ALARM_NOT_AVAILABLE"
+   }
+}
+      </p>
+   </div>
+
+   <div class="sample">
+      <h3>Sample Response:</h3>
+      <span>This can be returned only if "checkState" param is true</span>
+      <p class="json">
+{
+   "error": {
+      "reason": "CONTACT_SENSOR_OPEN"
+   }
+}
+      </p>
+   </div>
+</div>
+
+<div class="section">
+    <h2>PUT <span class="call">/alarm/settings</span></h2>
+
+    <p>Updates system settings for alarm</p>
+    
+    <div class="args">
+      <h3>Sample arguments</h3>
+      <dl class="wide">
+         <dt>settings[<em>:type</em>][<em>:mode</em>][<em>:value</em>]</dt>
+         <dd>(required) settings for this alarm mode</dd>
+      </dl>
+      <h3>Possible <em>:type</em> values, one of:</h3>
+      <dl>
+         <dt>Intruder</dt>
+         <dd>Intruder Alarm</dd>
+         <dt>Panic</dt>
+         <dd>Panic Alarm</dd>
+         <dt>Emergency</dt>
+         <dd>Emergency Alarm</dd>
+      </dl>
+      <h3>Possible <em>:mode</em> values, one of:</h3>
+      <dl>
+         <dt>HOME</dt>
+         <dd>Alarm in Home mode</dd>
+         <dt>AWAY</dt>
+         <dd>Alarm in Away mode</dd>
+         <dt>NIGHT</dt>
+         <dd>Alarm in Night mode</dd>
+      </dl>
+      <h3>Possible <em>:value</em> values:</h3>
+      <dl>
+         <dt>armDelay</dt>
+         <dd>(required) delay between setting the alarm and arming</dd>
+         <dt>triggerDelay</dt>
+         <dd>(required) delay between triggering the alarm and siren going off</dd>
+         <dt>devicesRequired</dt>
+         <dd>(required) minimum number of devices required to trigger the alarm</dd>
+         <dt>playArmingSounds</dt>
+         <dd>(required) whether to play arming sounds while arming or not</dd>
+      </dl>
+    </div>
+    
+    <div class="sample">
+       <h3>Sample request body</h3>
+       settings[Intruder][AWAY][armDelay]=10&amp;settings[Intruder][AWAY][triggerDelay]=5&amp;settings[Intruder][AWAY][devicesRequired]=1&amp;settings[Intruder][AWAY][playArmingSounds]=false&amp;settings[Intruder][NIGHT][armDelay]=5&amp;settings[Intruder][NIGHT][triggerDelay]=5&amp;settings[Intruder][NIGHT][devicesRequired]=1&amp;settings[Intruder][NIGHT][playArmingSounds]=false
+    </div>
+
+    <div class="sample">
+       <h3>Sample Response:</h3>
+   
+       <p class="json">
+{
+    "result" : true
+}
+       </p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>PUT <span class="call">/alarm/devices</span></h2>
+
+    <p>Updates devices that trigger alerts</p>
+    
+    <div class="args">
+      <h3>Sample arguments</h3>
+      <dl class="wide">
+         <dt>devices[<em>:type</em>][<em>:mode</em>]</dt>
+         <dd>(required) array of device IDs</dd>
+      </dl>
+      <h3>Possible <em>:type</em> values, one of:</h3>
+      <dl>
+         <dt>Intruder</dt>
+         <dd>Intruder Alarm</dd>
+         <dt>Panic</dt>
+         <dd>Panic Alarm</dd>
+         <dt>Emergency</dt>
+         <dd>Emergency Alarm</dd>
+      </dl>
+      <h3>Possible <em>:mode</em> values, one of:</h3>
+      <dl>
+         <dt>HOME</dt>
+         <dd>Alarm in Home mode</dd>
+         <dt>AWAY</dt>
+         <dd>Alarm in Away mode</dd>
+         <dt>NIGHT</dt>
+         <dd>Alarm in Night mode</dd>
+      </dl>
+    </div>
+    
+    <div class="sample">
+       <h3>Sample request body</h3>
+       devices[Intruder][AWAY][]=00-0D-6F-00-00-1B-6C-2C&amp;devices[Intruder][NIGHT][]=00-0D-6F-00-00-1B-6C-2C&amp;devices[Panic][AWAY][]=00-0D-6F-00-00-1C-9C-FF&amp;devices[Panic][HOME][]=00-0D-6F-00-00-1C-9C-FF&amp;devices[Panic][NIGHT][]=00-0D-6F-00-00-1C-9C-FF
+    </div>
+
+    <div class="sample">
+       <h3>Sample Response:</h3>
+   
+       <p class="json">
+{
+    "result" : true
+}
+       </p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>PUT <span class="call">/alarm/alerts</span></h2>
+
+    <p>Updates alerts being sent when alarms trigger</p>
+    
+    <div class="args">
+      <h3>Sample arguments</h3>
+      <dl>
+         <dt>contactId</dt>
+         <dd>(required) ID of contact to send alert to</dd>
+         <dt>alarm</dt>
+         <dd>(required) type of alarm (Intruder/Panic/Emergency)</dd>
+         <dt>mode</dt>
+         <dd>(required) mode of alarm (AWAY/HOME/NIGHT)</dd>    
+         <dt>methods</dt>
+         <dd>(required) notification methods (SendSms, SendEmail)</dd>               
+      </dl>
+    </div>
+    
+    <div class="sample">
+       <h3>Sample request body</h3>
+       contactId=me&amp;alarm=Intruder&amp;mode=AWAY&amp;methods[]=SendSms
+    </div>
+
+    <div class="sample">
+       <h3>Sample Response:</h3>
+   
+       <p class="json">
+{
+    "result" : true
+}
+       </p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>DELETE <span class="call">/alarm/alerts</span></h2>
+
+    <p>Deletes configured alerts</p>
+    
+    <div class="args">
+      <h3>Sample arguments</h3>
+      <dl>
+         <dt>contactId</dt>
+         <dd>(required) ID of contact to delete alert for</dd>
+         <dt>alarm</dt>
+         <dd>(required) type of alarm (Intruder/Panic/Emergency)</dd>
+         <dt>mode</dt>
+         <dd>(required) mode of alarm (AWAY/HOME/NIGHT)</dd>    
+         <dt>method</dt>
+         <dd>(required) notification method (SendSms, SendEmail)</dd>               
+      </dl>
+    </div>
+    
+    <div class="sample">
+       <h3>Sample request body</h3>
+       contactId=me&amp;alarm=Intruder&amp;mode=AWAY&amp;method=SendSms
+    </div>
+
+    <div class="sample">
+       <h3>Sample Response:</h3>
+   
+       <p class="json">
+{
+    "result" : true
+}
+       </p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>POST <span class="call">/alarm/clear</span></h2>
+
+    <p>Clears triggered alarms</p>
+    
+    <div class="args">
+      <h3>Sample arguments</h3>
+      <dl>
+         <dt>alarms</dt>
+         <dd>(required) array of alarms to be cleared (Intruder/Panic/Emergency)</dd>            
+      </dl>
+    </div>
+    
+    <div class="sample">
+       <h3>Sample request body</h3>
+       alarms[]=Intruder&amp;alarms[]=Panic&amp;alarms[]=Emergency
+    </div>
+
+    <div class="sample">
+       <h3>Sample Response:</h3>
+   
+       <p class="json">
+{
+    "result" : true
+}
+       </p>
+    </div>
+</div>
+    </div>
+  </body>
+
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/widgets/alarm by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+</html>

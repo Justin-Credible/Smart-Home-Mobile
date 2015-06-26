@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/widgets/usage by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <base  />
+    <link rel="stylesheet" type="text/css" href="../../css.css" />
+    <title>AlertMe.com API v5 Documentation :: calls/widgets/usage :: DRAFT</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+  </head>
+  <body>
+    <h1>
+      API v5 Documentation <span>draft</span>
+    </h1>
+    <div class="menu">
+      <ul class="menu">
+   <li><h4><a href="../../../docs.html">overview</a></h4>
+      <ul>
+         <li><a href="../../responses.html">responses</a></li>
+         <li><a href="../../errors.html">errors</a></li>
+         <li><a href="../../examples.html">examples</a></li>
+
+      </ul>
+   </li>
+   <li><h4>calls</h4>
+      <ul>
+
+         <li><a href="../sessions.html">sessions</a></li>
+
+         <li><a href="../users.html">users</a>
+            <ul>
+
+               <li><a href="../users/systemalerts.html">system alerts</a></li>
+
+               <li><a href="../questions.html">questions</a></li>
+
+               <li><a href="../hubs.html">hubs</a>
+                  <ul>
+                     <li><a href="../hubs/activityLog.html">activity log (history)</a></li>
+                     <li><a href="../devices.html">devices</a>
+                       <ul>
+
+                           <li><a href="../devices/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+                     <li><a href="../hubs/profiles.html">profiles</a></li>
+
+                     <li>rules
+                        <ul>
+                           <li><a href="../rules/actions.html">actions</a></li>
+                           <li><a href="../../actions.html">action types</a></li>                           
+                           <li><a href="../rules/wizard.html">wizard</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="../services.html">services</a>
+                        <ul>
+
+                           <li><a href="../services/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+
+                  </ul>
+               </li>
+
+               <li><a href="../widgets.html">widgets</a>
+                  <ul>
+                     <li><a href="alarm.html">alarm</a></li>
+                     <li><a href="care.html">care</a></li>
+                     <li><a href="cameras.html">cameras</a></li>
+                     <li><a href="climate.html">climate</a></li>
+                     <li><a href="dashboard.html">dashboard</a></li>
+                     <li><a href="heating.html">heating</a></li>
+                     <li><a href="locks.html">locks</a></li>
+                     <li><a href="homestatus.html">homestatus</a></li>
+
+                     <li><a href="presence.html">presence</a></li>
+                     <li><a href="smartplugs.html">smartplugs</a></li>
+                     <li><a href="swingometer.html">swingometer</a></li>
+                     <li><a href="temperature.html">temperature</a></li>
+                     <li><a href="usage.html">usage</a></li>
+                     <li><a href="petdoors.html">petdoors</a></li>
+                     <li><a href="group.html">groups</a></li>
+                     <li><a href="history.html">history</a></li>
+                     <li><a href="irrigation.html">irrigation</a></li>
+                     <li><a href="secondaryuser.html">secondaryuser</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+</ul>
+    </div>
+    <div class="doc calls widgets usage_page">
+      <div class="section root">
+    <p>
+        All calls listed below follow
+        <span class="call">/users/<em>:userId</em>/widgets</span>
+        in the URI;
+        this prefix has been omitted for conciseness
+    </p>
+</div>
+
+<div class="section">
+    <h2>GET <span class="call">/usage/cost</span></h2>
+
+    <p>Returns summary of the usage.</p>
+
+    <p class="note">electricityHourly, gasHourly, predictedThisMonth and lastMonth is in terms of money (currency value)</p>
+    <p class="note">howAmIDoing is int with range 1-7</p>
+    <p class="note">percentageChangeSinceYesterday will be positive for an increase, or negative for a decrease</p>
+
+
+    <div class="sample">
+        <h3>Sample Response:</h3>
+
+        <p class="json">
+{
+    "electricityHourly"              : 0.25,
+    "gasHourly"                      : 1.12,
+    "predictedThisMonth"             : 54.33,
+    "lastMonth"                      : 37.33,
+    "howAmIDoing"                    : 4,
+    "percentageChangeSinceYesterday" : -30,
+    "currency"                       : "GBP"
+}
+        </p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>GET <span class="call">/usage/cost/<em>:energyType</em></span></h2>
+
+    <p>Returns cost of the usage for <span class="call"><em>:energyType</em></span>.</p>
+
+    <p><span class="call"><em>:energyType</em></span> can be one of: <span class="call">gas</span>
+    or <span class="call">electricity</span></p>
+
+    <p class="note">predictedThisMonth, todaySoFar, dailyAverage and lastMonth is in terms of money (currency value)</p>
+    <p class="note">howAmIDoing is int with range 1-7</p>
+    <p class="note">percentageChangeSinceYesterday will be positive for an increase, or negative for a decrease</p>
+
+    <div class="sample">
+        <h3>Sample Response:</h3>
+
+        <p class="json">
+{
+    "predictedThisMonth"             : 54.33,
+    "todaySoFar"                     : 0.97,
+    "dailyAverage"                   : 1.32,
+    "lastMonth"                      : 37.33,
+    "howAmIDoing"                    : 4,
+    "percentageChangeSinceYesterday" : -30,
+    "currency"                       : "GBP"
+}
+        </p>
+    </div>
+
+    <div class="errors">
+       <h3>Returned errors:</h3>
+       <dl><dt>404 INVALID_PARAMETER</dt>    <dd>The requested <em>:energyType</em> is not valid. Must be <em>gas</em> or <em>electricity</em></dd></dl>
+    </div>
+</div>
+
+<div class="section">
+    <h2>GET <span class="call">/usage/cost/detail</span></h2>
+
+    <p>Returns summary of the usage cost.</p>
+
+    <p class="note">totalLastMonth, predictedThisMonth, predictedThisQuarter and predictedThisYear is in terms of money (currency value)</p>
+
+    <div class="sample">
+        <h3>Sample Response:</h3>
+
+        <p class="json">
+{
+    "totalLastMonth"       : 12.40,
+    "predictedThisMonth"   : 54.33,
+    "predictedThisQuarter" : 150.33,
+    "predictedThisYear"    : 623.40,
+    "currency"             : "GBP"
+}
+        </p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>GET <span class="call">/usage/cost/<em>:energyType</em>/detail</span></h2>
+
+    <p>Returns detailed information on the costs for <span class="call"><em>:energyType</em></span>.</p>
+
+    <p><span class="call"><em>:energyType</em></span> can be one of: <span class="call">gas</span>,
+    <span class="call">electricity</span>.</p>
+
+    <p class="note">cost, predictedThisMonth, predictedThisQuarter and predictedThisYear is in terms of money (currency value)</p>
+    <p class="note">period is the current displayed period</p>
+    <p class="note">periods is a list of all available periods</p>
+    <p class="note">type is one of the following: ESTIMATED, ACTUAL, PREDICTED</p>
+
+    <div class="args">
+        <h3>Arguments:</h3>
+        <dl>
+            <dt>period</dt>
+            <dd>one of hourView, today, yesterday, dayView, thisWeek, weekView, thisMonth, lastMonth, monthView, thisYear,
+                yearView, custom
+            </dd>
+            <dt>year</dt>
+            <dd>is a full numeric representation of a year, 4 digits. Should be presented when the period argument is
+                one of the following: hourView, dayView, weekView, monthView, yearView
+            </dd>
+            <dt>month</dt>
+            <dd>is a numeric representation of a month, 1 or 2 digits. Should be presented when the period argument is
+                one of the following: hourView, dayView, monthView
+            </dd>
+            <dt>day</dt>
+            <dd>is a day of the day, 1 or 2 digits. Should be presented when the period argument is one of the
+                following: hourView, dayView
+            </dd>
+            <dt>week</dt>
+            <dd>is week number of year, weeks starting on Monday, week zero is the week containing 1st January. Should be presented when the period argument
+                is weekView
+            </dd>
+            <dt>hour</dt>
+            <dd>is 24-hour format of an hour, 1 or 2 digits</dd>
+            <dt>year_from</dt>
+            <dd>is a full numeric representation of a year, 4 digits. Should be presented when the period argument is
+                custom
+            </dd>
+            <dt>month_from</dt>
+            <dd>is a numeric representation of a month, 1 or 2 digits. Should be presented when the period argument is
+                custom
+            </dd>
+            <dt>day_from</dt>
+            <dd>is a day of the day, 1 or 2 digits. Should be presented when the period argument is custom</dd>
+            <dt>hour_from</dt>
+            <dd>is 24-hour format of an hour, 1 or 2 digits. Should be presented when the period argument is custom</dd>
+            <dt>year_to</dt>
+            <dd>is a full numeric representation of a year, 4 digits. Should be presented when the period argument is
+                custom
+            </dd>
+            <dt>month_to</dt>
+            <dd>is a numeric representation of a month, 1 or 2 digits. Should be presented when the period argument is
+                custom
+            </dd>
+            <dt>day_to</dt>
+            <dd>is a day of the day, 1 or 2 digits. Should be presented when the period argument is custom</dd>
+            <dt>hour_to</dt>
+            <dd>is 24-hour format of an hour, 1 or 2 digits. Should be presented when the period argument is custom</dd>
+        </dl>
+    </div>
+
+    <div class="sample">
+        <h3>Sample Requests:</h3>
+        <p class="call">/usage/cost/electricity/detail?period=thisYear</p>
+        <p class="call">returns costs of electricity for current year by months</p><br />
+        <p class="call">/usage/cost/gas/detail?period=thisMonth</p>
+        <p class="call">returns costs of gas for current month by days</p><br />
+        <p class="call">/usage/cost/electricity/detail?period=thisWeek</p>
+        <p class="call">returns costs of electricity for current week by days</p><br />
+        <p class="call">/usage/cost/gas/detail?period=today</p>
+        <p class="call">returns costs of gas for today by hours</p><br />
+        <p class="call">/usage/cost/gas/detail?period=yesterday</p>
+        <p class="call">returns costs of gas for yesterday by hours</p><br />
+        <p class="call">/usage/cost/electricity/detail?period=thisHour</p>
+        <p class="call">returns costs of electricity for current hour by minutes</p><br />
+        <p class="call">/usage/cost/gas/detail?period=thisHour</p>
+        <p class="call">returns costs of gas for current hour by 30 minutes</p><br />
+        <p class="call">/usage/cost/gas/detail?period=yearView&amp;year=2010</p>
+        <p class="call">returns costs of gas for 2010 year by months</p><br />
+        <p class="call">/usage/cost/electricity/detail?period=monthView&amp;year=2010&amp;month=11</p>
+        <p class="call">returns costs of electricity for November 2010 by days</p><br />
+        <p class="call">/usage/cost/gas/detail?period=weekView&amp;year=2010&amp;week=36</p>
+        <p class="call">returns costs of gas for the 36th week of 2010 by days</p><br />
+        <p class="call">/usage/cost/electricity/detail?period=dayView&amp;year=2010&amp;month=11&amp;day=23</p>
+        <p class="call">returns costs of electricity for 23.11.2010 by hours</p><br />
+        <p class="call">/usage/cost/gas/detail?period=hourView&amp;year=2010&amp;month=11&amp;day=23&amp;hour=15</p>
+        <p class="call">returns costs of gas for 3 PM of 23.11.2010 by 30 minutes</p><br />
+        <p class="call">/usage/cost/electricity/detail?period=custom&amp;year_from=2010&amp;month_from=10&amp;day_from=17&amp;hour_from=13&amp;year_to=2010&amp;month_to=10&amp;day_to=22&amp;hour_to=17</p>
+        <p class="call">returns costs of electricity from 1 PM 17.10.2010 to 5 PM 22.10.2010 by days</p><br />
+    </div>
+
+    <div class="sample">
+        <h3>Sample Response:</h3>
+        
+        <p class="json">
+{
+    "period"         : "monthView",
+    "periods"        : [
+                           "thisHour",
+                           "hourView",
+                           "today",
+                           "yesterday",
+                           "dayView",
+                           "thisWeek",
+                           "weekView",
+                           "thisMonth",
+                           "lastMonth",
+                           "monthView",
+                           "thisYear",
+                           "yearView",
+                           "custom"
+                       ],
+    "data"                 : [
+                                 {"date": "2010-05-01", "cost" : 1.1, "type" : "ACTUAL"},
+                                 {"date": "2010-05-02", "cost" : 1.5, "type" : "ACTUAL"},
+                                 {"date": "2010-05-03", "cost" : 1.2, "type" : "ACTUAL"},
+                                 ...,
+                                 {"date": "2010-05-28", "cost" : 0.9, "type" : "PREDICTED"},
+                                 {"date": "2010-05-29", "cost" : 0.8, "type" : "PREDICTED"},
+                                 {"date": "2010-05-30", "cost" : 1.3, "type" : "PREDICTED"}
+                             ],
+    "predictedThisMonth"   : 54.33,
+    "predictedThisQuarter" : 150.33,
+    "predictedThisYear"    : 623.40,
+    "currency"             : "GBP"
+}
+        </p>
+
+       <p class="note">hourView, dayView, weekView, monthView and yearView will appear/disappear corresponding to
+          request (request should contain appropriate argument)</p>
+    </div>
+
+    <div class="errors">
+        <h3>Returned errors:</h3>
+        <dl>
+            <dt>404 INVALID_PARAMETER</dt>    <dd>The requested <em>:energyType</em> is not valid. Must be <em>gas</em> or <em>electricity</em></dd>
+            <dt>404 INVALID_PERIOD</dt>  <dd>:period is invalid</dd>
+            <dt>400 MISSING_PARAMETER</dt>  <dd>One of :year, :month, :day, :week, :hour, :year_from, :month_from, :day_from, :year_to, :month_to, :day_to is missing from request</dd>
+            <dt>400 INVALID_PARAMETER</dt>  <dd>One of :year, :month, :day, :week, :hour, :year_from, :month_from, :day_from, :year_to, :month_to, :day_to is invalid</dd>
+            <dt>404 NO_DATA</dt>  <dd>There was no stored data to return in the request period specified.</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="section">
+    <h2>GET <span class="call">/usage/energy</span></h2>
+
+    <p>Returns summary of the usage right now.</p>
+
+    <p class="note">rightNow, average, maximum and alwaysOn is in kWh</p>
+    <p class="note">soFarToday is in kWh</p>
+    <p class="note">howAmIDoing is int with range 1-7</p>
+
+    <div class="sample">
+        <h3>Sample Response:</h3>
+
+        <p class="json">
+{
+    "electricity" : {
+                        "rightNow"                       : 3.8,
+                        "soFarToday"                     : 43.6,
+                        "average"                        : 54.33,
+                        "maximum"                        : 101.54,
+                        "alwaysOn"                       : 0.32,
+                        "howAmIDoing"                    : 4,
+                        "percentageChangeSinceYesterday" : -30
+                    },
+    "gas"         : {
+                        "rightNow"                       : 3.8,
+                        "soFarToday"                     : 43.6,
+                        "average"                        : 54.33,
+                        "maximum"                        : 101.54,
+                        "alwaysOn"                       : 0.32,
+                        "howAmIDoing"                    : 4,
+                        "percentageChangeSinceYesterday" : -25
+                    }
+}
+        </p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>GET <span class="call">/usage/energy/<em>:energyType</em>/detail</span></h2>
+
+    <p>Returns detailed information on the usage for <span class="call"><em>:energyType</em></span>.</p>
+
+    <p><span class="call"><em>:energyType</em></span> can be one of: <span class="call">gas</span>,
+    <span class="call">electricity</span></p>
+
+    <p class="note">highestToday and highestYesterday is in W</p>
+    <p class="note">usage and alwaysOn is in kWh</p>
+
+    <div class="args">
+        <h3>Arguments:</h3>
+        <p>See </p>
+        <p><span class="call">/usage/cost/<em>:energyType</em>/detail</span></p>
+    </div>
+
+    <div class="args">
+        <h3>Sample Requests:</h3>
+        <p>See </p>
+        <p><span class="call">/usage/cost/<em>:energyType</em>/detail</span></p>
+        <p>Use <em>energy</em> instead of <em>cost</em></p>
+    </div>
+    
+    <div class="sample">
+        <h3>Sample Response:</h3>
+
+        <p class="json">
+{
+    "period"         : "yearView",
+    "periods"        : [
+                           "thisHour",
+                           "hourView",
+                           "today",
+                           "yesterday",
+                           "dayView",
+                           "thisWeek",
+                           "weekView",
+                           "thisMonth",
+                           "lastMonth",
+                           "monthView",
+                           "thisYear",
+                           "yearView",
+                           "custom"
+                       ],
+    "data"           : [
+                           {"date": "2010-03", "usage" : 0.34, "alwaysOn" : 0.1},
+                           {"date": "2010-04", "usage" : 1.22, "alwaysOn" : 0.2},
+                           ...,
+                           {"date": "2011-02", "usage" : 1.23, "alwaysOn" : 0.5}
+                       ],
+    "highestToday"     : 2.4,
+    "highestYesterday" : 6.4,
+    "meterReading"     : 456987.12
+}
+        </p>
+
+       <p class="note">hourView, dayView, weekView, monthView and yearView will appear/disappear corresponding to
+          request (request should contain appropriate argument)</p>
+    </div>
+
+    <div class="errors">
+       <h3>Returned errors:</h3>
+       <dl>
+            <dt>404 INVALID_PARAMETER</dt>    <dd>The requested <em>:energyType</em> is not valid. Must be <em>gas</em> or <em>electricity</em></dd>
+            <dt>404 INVALID_PERIOD</dt>  <dd>:period is invalid</dd>
+            <dt>400 MISSING_PARAMETER</dt>  <dd>One of :year, :month, :day, :week, :hour, :year_from, :month_from, :day_from, :year_to, :month_to, :day_to is missing from request</dd>
+            <dt>400 INVALID_PARAMETER</dt>  <dd>One of :year, :month, :day, :week, :hour, :year_from, :month_from, :day_from, :year_to, :month_to, :day_to is invalid</dd>
+            <dt>404 NO_DATA</dt>  <dd>There was no stored data to return in the request period specified.</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="section">
+    <h2>GET <span class="call">/usage/carbon</span></h2>
+
+    <p>POSTPONED</p>
+
+    <p class="note">now,  predictedThisMonth and nationalAverage is in KG of carbon dioxide</p>
+
+    <div class="sample">
+        <h3>Sample Response:</h3>
+
+        <p class="json">
+{
+        "now"                : 18.2,
+        "predictedThisMonth" : 189,
+        "nationalAverage"    : 150,
+        "analogy"            : {
+                                   "description"    : "",
+                                   "representation" : ""
+                               }
+}
+        </p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>GET <span class="call">/usage/carbon/<em>:energyType</em>/detail</span></h2>
+
+    <p>Returns detailed information on the usage for <span class="call"><em>:energyType</em></span>.</p>
+
+    <p><span class="call"><em>:energyType</em></span> can be one of: <span class="call">gas</span>,
+    <span class="call">electricity</span> or <span class="call">combined</span></p>
+
+    <p class="note">carbon, totalThisMonth and  predictedThisYear is in KG of carbon dioxide</p>
+
+    <div class="args">
+        <h3>Arguments:</h3>
+        <p>See </p>
+        <p><span class="call">/usage/cost/<em>:energyType</em>/detail</span></p>
+    </div>
+
+    <div class="args">
+        <h3>Sample Requests:</h3>
+        <p>See </p>
+        <p><span class="call">/usage/cost/<em>:energyType</em>/detail</span></p>
+        <p>Use <em>carbon</em> instead of <em>cost</em></p>
+    </div>
+
+    <div class="sample">
+        <h3>Sample Response:</h3>
+
+        <p class="json">
+{
+    "period"         : "dayView",
+    "periods"        : [
+                           "thisHour",
+                           "hourView",
+                           "today",
+                           "yesterday",
+                           "dayView",
+                           "thisWeek",
+                           "weekView",
+                           "thisMonth",
+                           "lastMonth",
+                           "monthView",
+                           "thisYear",
+                           "yearView",
+                           "custom"
+                       ],
+    "data"           : [
+                           {"date": "2010-05-01 0", "carbon" : 68.5},
+                           {"date": "2010-05-01 1", "carbon" : 44.2},
+                           ...,
+                           {"date": "2010-05-01 22", "carbon" : 68.5},
+                           {"date": "2010-05-01 23", "carbon" : 44.2}
+                       ],
+    "totalThisMonth"    : 120,
+    "predictedThisYear" : 5599,
+    "bestDayThisWeek"   : "MONDAY"
+}
+        </p>
+
+       <p class="note">hourView, dayView, weekView, monthView and yearView will appear/disappear corresponding to
+          request (request should contain appropriate argument)</p>
+    </div>
+
+    <div class="errors">
+       <h3>Returned errors:</h3>
+       <dl>
+            <dt>404 INVALID_PARAMETER</dt>    <dd>The requested <em>:energyType</em> is not valid. Must be <em>gas</em> or <em>electricity</em></dd>
+            <dt>404 INVALID_PERIOD</dt>  <dd>:period is invalid</dd>
+            <dt>400 MISSING_PARAMETER</dt>  <dd>One of :year, :month, :day, :week, :hour, :year_from, :month_from, :day_from, :year_to, :month_to, :day_to is missing from request</dd>
+            <dt>400 INVALID_PARAMETER</dt>  <dd>One of :year, :month, :day, :week, :hour, :year_from, :month_from, :day_from, :year_to, :month_to, :day_to is invalid</dd>
+            <dt>404 NO_DATA</dt>  <dd>There was no stored data to return in the request period specified.</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="section">
+    <h2>GET <span class="call">/usage/compare</span></h2>
+
+    <p>'Compare Me' data.</p>
+
+    <p class="note">predictedToday and usage is in terms of money (currency value)</p>
+
+    <div class="sample">
+        <h3>Sample Response:</h3>
+
+        <p class="json">
+{
+    "predictedToday" : 0.41,
+    "typical"        : { "usage" : 0.2, "day" : "MONDAY" },
+    "currency"       : "GBP"
+}
+        </p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>GET <span class="call">/usage/compare/details</span></h2>
+
+    <p>Returns detailed 'Compare Me' data.</p>
+
+    <p class="note">average is in terms of money (currency value)</p>
+
+    <div class="sample">
+        <h3>Sample Response:</h3>
+
+        <p class="json">
+{
+    "average"      : 10,
+    "table"        : {
+                        "last_week"    : [ 9, 3.5, 10, 6, 4, 7.34, 7],
+                        "typical_week" : [ 1, 4, 7, 3, 8, 5.6, 6.6 ]
+                     },
+    "currency"     : "GBP"
+}
+        </p>
+    </div>
+</div>
+
+<!-- sections 18 and 19 seem to be outside of this API's scope -->
+    </div>
+  </body>
+
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/widgets/usage by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+</html>

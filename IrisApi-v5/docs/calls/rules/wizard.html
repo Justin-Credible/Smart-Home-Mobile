@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/rules/wizard by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <base  />
+    <link rel="stylesheet" type="text/css" href="../../css.css" />
+    <title>AlertMe.com API v5 Documentation :: calls/rules/wizard :: DRAFT</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+  </head>
+  <body>
+    <h1>
+      API v5 Documentation <span>draft</span>
+    </h1>
+    <div class="menu">
+      <ul class="menu">
+   <li><h4><a href="../../../docs.html">overview</a></h4>
+      <ul>
+         <li><a href="../../responses.html">responses</a></li>
+         <li><a href="../../errors.html">errors</a></li>
+         <li><a href="../../examples.html">examples</a></li>
+
+      </ul>
+   </li>
+   <li><h4>calls</h4>
+      <ul>
+
+         <li><a href="../sessions.html">sessions</a></li>
+
+         <li><a href="../users.html">users</a>
+            <ul>
+
+               <li><a href="../users/systemalerts.html">system alerts</a></li>
+
+               <li><a href="../questions.html">questions</a></li>
+
+               <li><a href="../hubs.html">hubs</a>
+                  <ul>
+                     <li><a href="../hubs/activityLog.html">activity log (history)</a></li>
+                     <li><a href="../devices.html">devices</a>
+                       <ul>
+
+                           <li><a href="../devices/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+                     <li><a href="../hubs/profiles.html">profiles</a></li>
+
+                     <li>rules
+                        <ul>
+                           <li><a href="actions.html">actions</a></li>
+                           <li><a href="../../actions.html">action types</a></li>                           
+                           <li><a href="wizard.html">wizard</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="../services.html">services</a>
+                        <ul>
+
+                           <li><a href="../services/events.html">events</a></li>
+
+                        </ul>
+                     </li>
+
+                  </ul>
+               </li>
+
+               <li><a href="../widgets.html">widgets</a>
+                  <ul>
+                     <li><a href="../widgets/alarm.html">alarm</a></li>
+                     <li><a href="../widgets/care.html">care</a></li>
+                     <li><a href="../widgets/cameras.html">cameras</a></li>
+                     <li><a href="../widgets/climate.html">climate</a></li>
+                     <li><a href="../widgets/dashboard.html">dashboard</a></li>
+                     <li><a href="../widgets/heating.html">heating</a></li>
+                     <li><a href="../widgets/locks.html">locks</a></li>
+                     <li><a href="../widgets/homestatus.html">homestatus</a></li>
+
+                     <li><a href="../widgets/presence.html">presence</a></li>
+                     <li><a href="../widgets/smartplugs.html">smartplugs</a></li>
+                     <li><a href="../widgets/swingometer.html">swingometer</a></li>
+                     <li><a href="../widgets/temperature.html">temperature</a></li>
+                     <li><a href="../widgets/usage.html">usage</a></li>
+                     <li><a href="../widgets/petdoors.html">petdoors</a></li>
+                     <li><a href="../widgets/group.html">groups</a></li>
+                     <li><a href="../widgets/history.html">history</a></li>
+                     <li><a href="../widgets/irrigation.html">irrigation</a></li>
+                     <li><a href="../widgets/secondaryuser.html">secondaryuser</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+</ul>
+    </div>
+    <div class="doc calls rules wizard_page">
+      <div class="section root">
+ <p>All calls listed below follow <span class="call">/users/<em>:userId</em>/hubs/<em>:hubId</em></span> in the URI; this prefix has been omitted for conciseness.</p>
+</div>
+
+<div class="section">
+ <p>The rules wizard works by appending each step choice to the URL to get the next set of choices until the final step is reached, then you simply keep the same URL and parameters but use POST instead of GET to then save it.</p>
+ <p>"when" choices are a superset of a union of <a href="../devices/events.html">device events</a> and <a href="../services/events.html">service events</a>; "then" step 1 choices are <a href="../../actions.html">action types</a>, "then" choices after step 1 are options for the action type chosen in "then" step 1.</p>
+</div>
+
+<div class="section">
+ <h2>GET <span class="call">/rules/wizard?startPoint=DEVICE&amp;deviceId=:deviceId</span></h2>
+ <p>Returns a list of all configured events/actions for the specified device and a list of events which are available to choose as the first step of wizard.</p>
+ <div class="sample">
+  <h3>Sample Response:</h3>
+  <p class="json">
+{
+    "configured": [
+       {
+          "when": {
+             "1": {
+                "choice": "Opened",
+                "id": "00-00-00-00-00-00-00-00",
+                "name": "Kitchen Door"
+             }
+          },
+          "then": {
+             "1": {
+                "choice": "ControlIntruderAlarm"
+             },
+             "2": {
+                "choice": "ArmToNight"
+             }
+          }
+       }
+    ],
+    "when": {
+        "step": 1,
+        "initialChoices": [
+            {
+               "choice": "Opened",
+               "name": "Front Door"
+            },
+            {
+               "choice": "Closed",
+               "name": "Front Door"
+            }
+        ],
+        "moreChoices": [
+           {
+              
+           },
+           {
+              
+           }
+        ]
+    },
+    "changeDevice": [
+       {
+          "id": "00-00-00-00-00-00-00-00",
+          "name": "Kitchen Door"
+       },
+       {
+          "id": "00-00-00-00-00-00-00-01",
+          "name": "Back Door"
+       }
+    ]
+}
+  </p>
+  <p>The levels immediately beneath "configured" are :eventName and :behavior, within :behavior are all event options plus an array of actions; the actions array contains "thenFields" in addition to normal action fields to facilitate editing of rules (see below).</p>
+  <p class="note">"moreChoices" currently only applies for some step 1 "when"s; it's not currently used for any later steps.</p>
+  <p>The set of available choices to submit for this step of wizard is a union of initialChoices and moreChoices - the web UI should initially display initialChoices, then display moreChoices upon user request for such.</p>
+  <p>changeDevice is included if applicable and any changes to the selection thereof need to be put into :deviceId in URL.</p>
+ </div>
+</div>
+
+<div class="section">
+ <h2>GET <span class="call">/rules/wizard?startPoint=WIDGET&amp;widget=:widget</span></h2>
+ <p>Returns a list of all configured events/actions relating to the specified widget and a list of events which are available to choose as the first step of wizard.</p>
+ <p>Valid :widget values for rules: ALARM, TEMPERATURE, POWER, PRESENCE, CAMERA, APPLIANCES.</p>
+ <div class="sample">
+  <h3>Sample Response:</h3>
+  <p class="json">
+{
+    "configured": {
+        
+    },
+    "when": {
+        "step": 1,
+        "initialChoices": [
+            {
+               "choice": "Arrived",
+               "options": [
+                  {
+                     "option": "deviceId",
+                     "type": "device",
+                     "devices": [
+                        { 
+                           "id": "00-00-00-00-00-00-00-11",
+                           "name": "Joe's Keyfob"
+                        },
+                        { 
+                           "id": "00-00-00-00-00-00-00-22",
+                           "name": "Joanne's Keyfob"
+                        }
+                     ]
+                  }
+               ]
+            },
+            {
+               "choice": "Departed",
+               "options": [
+                  {
+                     "option": "deviceId",
+                     "type": "device",
+                     "devices": [
+                        { 
+                           "id": "00-00-00-00-00-00-00-11",
+                           "name": "Joe's Keyfob"
+                        },
+                        { 
+                           "id": "00-00-00-00-00-00-00-22",
+                           "name": "Joanne's Keyfob"
+                        }
+                     ]
+                  }
+               ]
+            }
+        ],
+        "moreChoices": [
+           {
+              
+           },
+           {
+              
+           }
+        ]
+    }
+}
+  </p>
+ </div>
+ <p class="note">"moreChoices" and "configured" will each only be included if applicable.</p>
+</div>
+
+<div class="section">
+ <h2>GET <span class="call">/rules/wizard?startPoint=HUB</span></h2>
+ <p>Returns a list of all configured actions for playing sounds and a list of events which are available to choose as the first step of wizard.</p>
+ <div class="sample">
+  <h3>Sample Response:</h3>
+  <p class="json">
+{
+    "configured": {
+           
+    },
+    "when": {
+        "step": 1,
+        "initialChoices": [
+             {
+                 "choice": "AllKeyfobsDeparted"
+             },
+             {
+                 "choice": "AllKeyfobsArrived"
+             }
+        ],
+        "moreChoices": [
+            {
+                "choice": "Devices"
+            }
+        ]
+    }
+}
+  </p>
+ </div>
+ <p class="note">"moreChoices" and "configured" will each only be included if applicable.</p>
+</div>
+
+<div class="section">
+ <h2>GET <span class="call">/rules/wizard?startPoint=:startPoint&amp;:start=:startValue&amp;when[1][choice]=:when</span></h2>
+ <p class="note">:startPoint is WIDGET or DEVICE (see above) - :start (either widget or deviceId) is dependent on :startPoint and :startValue is either a widget name or a device id.</p>
+ <p>See above for details of startPoint/widget/device; after the first step all additions to URL for the API call are additions to the URL you started with and work the same regardless of starting point.</p>
+ <p class="note">Step counts are separate for "when" and "then".</p>
+ <div class="sample">
+  <h3>Sample Response (if there's another "when" step):</h3>
+  <p class="json">
+{
+    "when": {
+        "step": 2,
+        "initialChoices": [
+            {
+               "choice": "Intruder"
+            },
+            {
+               "choice": "Panic"
+            },
+            {
+               "choice": "Emergency"
+            }
+        ]
+    }
+}
+  </p>
+ </div>
+ <div class="sample">
+  <h3>Sample Response (if no more "when" steps):</h3>
+  <p class="json">
+{
+    "then": {
+        "step": 1,
+        "initialChoices": [
+            {
+               "choice": "ControlLamp"
+            },
+            {
+               "choice": "PlaySound"
+            }
+        ]
+    }
+}
+  </p>
+ </div>
+</div>
+
+<div class="section">
+ <p>The process continues adding "when"s and "then"s as applicable e.g. &amp;when[:step][choice]=:choice</p>
+ <p>The options (where applicable) for each step should be appended to the URL as e.g. &amp;when[:step][:optionName]=:value</p>
+ <p>If there is an "id" at the same level as "choice" then you must include that in URL as e.g. &amp;when[:step][id]=:id</p>
+</div>
+
+<div class="section">
+ <h2>GET <span class="call">/rules/wizard?startPoint=:startPoint&amp;:start=:startValue&amp;when[1][choice]=:when1&amp;when[2][choice]=:when2&amp;when[3][choice]=:when3&amp;then[1][choice]=:then1&amp;then[2][choice]=:then2&amp;then[3][choice]=:then3</span></h2>
+ <p class="note">:startPoint is WIDGET or DEVICE (see above) - :start (either widget or deviceId) is dependent on :startPoint and :startValue is either a widget name or a device id.</p>
+ <p>See above for details of startPoint/widget/device; 3 "when"s and 3 "then"s are shown in this URL; currently there's a maximum of 3 "when" parts and 4 "then" parts.</p>
+ <p class="note">You could reach this final step with less "when"s and "then"s in URL depending on choices.</p>
+ <div class="sample">
+  <h3>Sample Response (when called without a behavior):</h3>
+  <p class="json">
+{
+    "behaviors": ["HOME", "AWAY", "NIGHT"],
+    "canSave": true
+}
+  </p>
+ </div>
+  <div class="sample">
+  <h3>Sample Response (when called with a behavior e.g. &amp;behavior=AWAY OR there are no behaviors to choose from):</h3>
+  <p class="json">
+{
+    "canSave": true
+}
+  </p>
+ </div>
+</div>
+
+<div class="section">
+ <h2>POST <span class="call">/rules/wizard</span></h2>
+ <div class="args">
+  <h3>Arguments</h3>
+  <div class="args">
+   <dl>
+    <dt>startPoint</dt> <dd>:startPoint</dd>
+    <dt>:start</dt> <dd>:startValue</dd>
+    <dt>when[1][choice]</dt> <dd>:when1</dd>
+    <dt>when[2][choice]</dt> <dd>:when2</dd>
+    <dt>when[3][choice]</dt> <dd>:when3</dd>
+    <dt>then[1][choice]</dt> <dd>:then1</dd>
+    <dt>then[2][choice]</dt> <dd>:then2</dd>
+    <dt>then[3][choice]</dt> <dd>:then3</dd>
+    <dt>then[4][choice]</dt> <dd>:then4</dd>
+    <dt>behavior</dt> <dd>:behavior (optional; range: HOME, AWAY, NIGHT, ALL; default: ALL)</dd>
+    <dt>original[when][...]</dt> <dd>all "when" fields from original rule (only when editing a rule)</dd>
+    <dt>original[then][...]</dt> <dd>all "then" fields from original rule (only when editing a rule)</dd>
+   </dl>
+  </div>
+ </div>
+ <p>"behavior" is optional (default = ALL) and depends on user choice, there may be less "when"s and "then"s than the arguments illustrate, but there must be at least one of each.</p>
+ <p class="note">The arguments to this POST are the same as to the final GET (see immediately above).</p>
+ <div class="sample">
+  <h3>Sample Response:</h3>
+  <p class="json">
+{
+    "configured" : {
+        ...
+    }
+}
+  </p>
+ </div>
+ <p>"configured" in response returns the new set of configured rules, as per those returned within GET response for initial step (see above).</p>
+ <p class="note">When editing a rule you must include all fields from "original" rule - see below</p>
+</div>
+
+<div class="section">
+ <h2>GET <span class="call">/rules/wizard?startPoint=:startPoint&amp;:start=:startValue&amp;when[1][choice]=:when1&amp;then[1][choice]=then1&amp;original[when][1][choice]=:originalWhen1&amp;original[then][1][choice]=:originalThen1</span></h2>
+ <p>When editing rules, you must provide all fields of rule being edited within the array called "original"; the edited rule accumulates in the "when" and "then" parameters as per creating new rules</p>
+ <p class="note">As rules do not have unique IDs, all existing "when"s and "then"s (including their options) must be part of the URL (within "original") for editing to work.</p>
+</div>
+
+<div class="section">
+ <h2>DELETE <span class="call">/rules/wizard?startPoint=:startPoint&amp;:start=:startValue&amp;when[1][choice]=:when1&amp;then[2][choice]=:when2&amp;then[1][choice]=then1</span></h2>
+ <p>Deletes the rule matching all "when" and "then" criteria; you can only delete a single rule at a time, if the parameters you specify don't match exactly one rule you will get an error.</p>
+ <p class="note">As rules do not have unique IDs, all existing "when"s and "then"s (including their options) must be part of the URL for editing to work.</p>
+</div>
+    </div>
+  </body>
+
+<!-- Mirrored from api.irissmarttest.com/v5/docs/calls/rules/wizard by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 18 Feb 2014 21:37:15 GMT -->
+</html>
