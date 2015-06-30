@@ -1,10 +1,6 @@
 ﻿module JustinCredible.SmartHomeMobile.Controllers {
 
-    export interface ISmartPlugsController {
-        viewModel: ViewModels.SmartPlugsViewModel;
-    }
-
-    export class SmartPlugsController extends BaseController<ViewModels.SmartPlugsViewModel> implements ISmartPlugsController {
+    export class SmartPlugsController extends BaseController<ViewModels.SmartPlugsViewModel> {
 
         public static $inject = ["$scope", "Utilities", "UiHelper", "HubDataSource", "AlertMeApi"];
 

@@ -1,10 +1,6 @@
 ﻿module JustinCredible.SmartHomeMobile.Controllers {
 
-    export interface ISecurityController {
-        viewModel: ViewModels.SecurityViewModel;
-    }
-
-    export class SecurityController extends BaseController<ViewModels.SecurityViewModel> implements ISecurityController {
+    export class SecurityController extends BaseController<ViewModels.SecurityViewModel> {
 
         public static $inject = ["$scope", "Utilities", "UiHelper", "HubDataSource", "AlertMeApi"];
 

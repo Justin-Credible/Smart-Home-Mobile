@@ -4,11 +4,7 @@
         id: string;
     }
 
-    export interface ICameraEditController {
-        viewModel: ViewModels.CameraEditViewModel;
-    }
-
-    export class CameraEditController extends BaseController<ViewModels.CameraEditViewModel> implements ICameraEditController {
+    export class CameraEditController extends BaseController<ViewModels.CameraEditViewModel> {
 
         public static $inject = ["$scope", "$stateParams", "$location", "$ionicViewService", "Utilities", "Preferences", "UiHelper"];
 

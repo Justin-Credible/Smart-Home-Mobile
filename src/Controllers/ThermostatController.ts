@@ -1,10 +1,6 @@
 ﻿module JustinCredible.SmartHomeMobile.Controllers {
 
-    export interface IThermostatController {
-        viewModel: ViewModels.ThermostatViewModel;
-    }
-
-    export class ThermostatController extends BaseController<ViewModels.ThermostatViewModel> implements IThermostatController {
+    export class ThermostatController extends BaseController<ViewModels.ThermostatViewModel> {
 
         public static $inject = ["$scope", "Utilities", "UiHelper", "HubDataSource", "AlertMeApi"];
 

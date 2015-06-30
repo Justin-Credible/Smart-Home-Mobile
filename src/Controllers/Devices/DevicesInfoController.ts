@@ -4,11 +4,7 @@
         deviceId: string;
     }
 
-    export interface IDevicesInfoController {
-        viewModel: ViewModels.DevicesInfoViewModel;
-    }
-
-    export class DevicesInfoController extends BaseController<ViewModels.DevicesInfoViewModel> implements IDevicesInfoController {
+    export class DevicesInfoController extends BaseController<ViewModels.DevicesInfoViewModel> {
 
         public static $inject = ["$scope", "$stateParams", "HubDataSource", "Utilities", "Preferences"];
 

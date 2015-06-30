@@ -1,10 +1,6 @@
 ﻿module JustinCredible.SmartHomeMobile.Controllers {
 
-    export interface IDevicesHubInfoController {
-        viewModel: ViewModels.DevicesHubInfoViewModel;
-    }
-
-    export class DevicesHubInfoController extends BaseController<ViewModels.DevicesHubInfoViewModel> implements IDevicesHubInfoController {
+    export class DevicesHubInfoController extends BaseController<ViewModels.DevicesHubInfoViewModel> {
 
         public static $inject = ["$scope", "HubDataSource", "Utilities", "Preferences"];
 

@@ -1,10 +1,6 @@
 ﻿module JustinCredible.SmartHomeMobile.Controllers {
 
-    export interface ISetMultipleSmartPlugsState {
-        viewModel: ViewModels.SetMultipleSmartPlugsStateViewModel;
-    }
-
-    export class SetMultipleSmartPlugsStateController extends BaseDialogController<ViewModels.SetMultipleSmartPlugsStateViewModel, AlertMeApiTypes.SmartPlugDevice[], AlertMeApiTypes.SmartPlugDevice[]> implements ISetMultipleSmartPlugsState {
+    export class SetMultipleSmartPlugsStateController extends BaseDialogController<ViewModels.SetMultipleSmartPlugsStateViewModel, AlertMeApiTypes.SmartPlugDevice[], AlertMeApiTypes.SmartPlugDevice[]> {
 
         public static $inject = ["$scope", "Utilities", "Preferences", "UiHelper"];
 

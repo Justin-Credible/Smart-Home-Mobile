@@ -1,10 +1,6 @@
 ﻿module JustinCredible.SmartHomeMobile.Controllers {
 
-    export interface IAboutController {
-        viewModel: ViewModels.AboutViewModel;
-    }
-
-    export class AboutController extends BaseController<ViewModels.AboutViewModel> implements IAboutController {
+    export class AboutController extends BaseController<ViewModels.AboutViewModel> {
 
         public static $inject = ["$scope", "$location", "$ionicViewService", "Utilities", "Preferences", "UiHelper", "versionInfo"];
 
