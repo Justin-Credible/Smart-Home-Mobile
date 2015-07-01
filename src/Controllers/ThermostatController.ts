@@ -2,6 +2,8 @@
 
     export class ThermostatController extends BaseController<ViewModels.ThermostatViewModel> {
 
+        public static ID = "ThermostatController";
+
         public static $inject = ["$scope", "Utilities", "UiHelper", "HubDataSource", "AlertMeApi"];
 
         private Utilities: Services.Utilities;

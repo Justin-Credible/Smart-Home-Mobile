@@ -5,6 +5,8 @@
      */
     export class HubDataSource {
 
+        public static ID = "HubDataSource";
+
         public static $inject = ["$rootScope", "$q", "AlertMeApi"];
 
         private $rootScope: ng.IRootScopeService;

@@ -14,6 +14,8 @@
      */
     export class AlertMeApiHttpInteceptor {
 
+        public static ID = "AlertMeApiHttpInteceptor";
+
         private $rootScope: ng.IRootScopeService;
         private $q: ng.IQService;
         private $injector: ng.auto.IInjectorService;

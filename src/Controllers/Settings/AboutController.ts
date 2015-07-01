@@ -2,6 +2,8 @@
 
     export class AboutController extends BaseController<ViewModels.AboutViewModel> {
 
+        public static ID = "AboutController";
+
         public static $inject = ["$scope", "$location", "$ionicViewService", "Utilities", "Preferences", "UiHelper", "versionInfo"];
 
         private $location: ng.ILocationService;

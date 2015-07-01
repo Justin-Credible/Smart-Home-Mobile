@@ -10,6 +10,8 @@
      */
     export class ObjectToArrayFilter {
 
+        public static ID = "ObjectToArray";
+
         public static filter(obj: any): any[] {
 
             var array = [];

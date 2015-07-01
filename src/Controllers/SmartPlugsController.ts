@@ -2,6 +2,8 @@
 
     export class SmartPlugsController extends BaseController<ViewModels.SmartPlugsViewModel> {
 
+        public static ID = "SmartPlugsController";
+
         public static $inject = ["$scope", "Utilities", "UiHelper", "HubDataSource", "AlertMeApi"];
 
         private Utilities: Services.Utilities;

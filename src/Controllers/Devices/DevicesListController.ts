@@ -2,6 +2,8 @@
 
     export class DevicesListController extends BaseController<ViewModels.DevicesListViewModel> {
 
+        public static ID = "DevicesListController";
+
         public static $inject = ["$scope", "Utilities", "UiHelper", "HubDataSource", "AlertMeApi"];
 
         private Utilities: Services.Utilities;

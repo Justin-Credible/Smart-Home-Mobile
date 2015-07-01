@@ -6,6 +6,8 @@
 
     export class DevicesInfoController extends BaseController<ViewModels.DevicesInfoViewModel> {
 
+        public static ID = "DevicesInfoController";
+
         public static $inject = ["$scope", "$stateParams", "HubDataSource", "Utilities", "Preferences"];
 
         private stateParams: IDevicesInfoControllerStateParams;

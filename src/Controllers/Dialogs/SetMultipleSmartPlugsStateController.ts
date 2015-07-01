@@ -2,6 +2,8 @@
 
     export class SetMultipleSmartPlugsStateController extends BaseDialogController<ViewModels.SetMultipleSmartPlugsStateViewModel, AlertMeApiTypes.SmartPlugDevice[], AlertMeApiTypes.SmartPlugDevice[]> {
 
+        public static ID = "SetMultipleSmartPlugsStateController";
+
         public static $inject = ["$scope", "Utilities", "Preferences", "UiHelper"];
 
         private Utilities: Services.Utilities;

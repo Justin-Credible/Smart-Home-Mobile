@@ -2,6 +2,8 @@
 
     export class DevicesHubInfoController extends BaseController<ViewModels.DevicesHubInfoViewModel> {
 
+        public static ID = "DevicesHubInfoController";
+
         public static $inject = ["$scope", "HubDataSource", "Utilities", "Preferences"];
 
         private HubDataSource: Services.HubDataSource;

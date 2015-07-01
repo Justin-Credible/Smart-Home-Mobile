@@ -6,6 +6,8 @@
 
     export class CameraEditController extends BaseController<ViewModels.CameraEditViewModel> {
 
+        public static ID = "CameraEditController";
+
         public static $inject = ["$scope", "$stateParams", "$location", "$ionicViewService", "Utilities", "Preferences", "UiHelper"];
 
         private stateParams: ICameraEditControllerStateParams;

@@ -2,6 +2,8 @@
 
     export class HubController extends BaseController<ViewModels.HubViewModel> {
 
+        public static ID = "HubController";
+
         public static $inject = ["$scope", "$location", "$ionicViewService", "Utilities", "Preferences", "UiHelper"];
 
         private $location: ng.ILocationService;

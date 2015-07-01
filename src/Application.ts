@@ -53,64 +53,11 @@ module JustinCredible.SmartHomeMobile.Application {
         ngModule.constant("isChromeExtension", typeof (chrome) !== "undefined" && typeof (chrome.runtime) !== "undefined" && typeof (chrome.runtime.id) !== "undefined");
         ngModule.constant("versionInfo", versionInfo);
 
-        // Define each of the services.
-        ngModule.service("Utilities", Services.Utilities);
-        ngModule.service("FileUtilities", Services.FileUtilities);
-        ngModule.service("Logger", Services.Logger);
-        ngModule.service("Preferences", Services.Preferences);
-        ngModule.service("MockPlatformApis", Services.MockPlatformApis);
-        ngModule.service("MockHttpApis", Services.MockHttpApis);
-        ngModule.factory("HttpInterceptor", Services.HttpInterceptor.getFactory());
-        ngModule.factory("AlertMeApiHttpInteceptor", Services.AlertMeApiHttpInteceptor.getFactory());
-        ngModule.service("UiHelper", Services.UiHelper);
-        ngModule.service("AlertMeApi", Services.AlertMeApi);
-        ngModule.service("HubDataSource", Services.HubDataSource);
-
-        // Define each of the directives.
-        ngModule.directive("iconPanel", getElementDirectiveFactoryFunction(Directives.IconPanelDirective));
-        ngModule.directive("shmOnLoad", ["$parse", ($parse: ng.IParseService) => { return new Directives.OnLoadDirective($parse); }]);
-        //ngModule.directive("ngModelOnblur", () => { return new Directives.ModelOnBlurDirective(); });
-
-        // Define each of the filters.
-        ngModule.filter("ObjectToArray", getFilterFactoryFunction(Filters.ObjectToArrayFilter.filter));
-        ngModule.filter("TitleCase", getFilterFactoryFunction(Filters.TitleCaseFilter.filter));
-        ngModule.filter("Thousands", getFilterFactoryFunction(Filters.ThousandsFilter.filter));
-
-        // Define each of the controllers.
-
-        // Root View
-        ngModule.controller("MenuController", Controllers.MenuController);
-
-        // Main Views
-        ngModule.controller("SecurityController", Controllers.SecurityController);
-        ngModule.controller("ThermostatController", Controllers.ThermostatController);
-        ngModule.controller("SmartPlugsController", Controllers.SmartPlugsController);
-        ngModule.controller("CamerasController", Controllers.CamerasController);
-        ngModule.controller("CameraViewController", Controllers.CameraViewController);
-        //ngModule.controller("IrrigationController", Controllers.IrrigationController);
-
-        // Settings
-        ngModule.controller("SettingsListController", Controllers.SettingsListController);
-        ngModule.controller("DevicesListController", Controllers.DevicesListController);
-        ngModule.controller("DevicesHubInfoController", Controllers.DevicesHubInfoController);
-        ngModule.controller("DevicesInfoController", Controllers.DevicesInfoController);
-        ngModule.controller("HubController", Controllers.HubController);
-        ngModule.controller("CamerasListController", Controllers.CamerasListController);
-        ngModule.controller("CameraEditController", Controllers.CameraEditController);
-        ngModule.controller("ConfigurePinController", Controllers.ConfigurePinController);
-        ngModule.controller("ConfigurePassphraseController", Controllers.ConfigurePassphraseController);
-        ngModule.controller("AboutController", Controllers.AboutController);
-
-        // Dialogs
-        ngModule.controller("PinEntryController", Controllers.PinEntryController);
-        ngModule.controller("SetMultipleSmartPlugsStateController", Controllers.SetMultipleSmartPlugsStateController);
-        ngModule.controller("ReorderCategoriesController", Controllers.ReorderCategoriesController);
-        ngModule.controller("PassphraseEntryController", Controllers.PassphraseEntryController);
-
-        // Developer
-        ngModule.controller("LogsController", Controllers.LogsController);
-        ngModule.controller("LogEntryController", Controllers.LogEntryController);
-        ngModule.controller("DeveloperController", Controllers.DeveloperController);
+        // Register the services, directives, filters, and controllers with Angular.
+        registerServices(ngModule);
+        registerDirectives(ngModule);
+        registerFilters(ngModule);
+        registerControllers(ngModule);
 
         // Specify the initialize/run and configuration functions.
         ngModule.run(angular_initialize);
@@ -120,11 +67,108 @@ module JustinCredible.SmartHomeMobile.Application {
     //#region Helpers
 
     /**
+     * Used construct an instance of an object using the new operator with the given constructor
+     * function and arguments.
+     * 
+     * http://stackoverflow.com/a/1608546/4005811
+     * 
+     * @param constructor The constructor function to invoke with the new keyword.
+     * @param args The arguments to be passed into the constructor function.
+     */
+    function construct(constructor, args) {
+        function F(): void {
+            return constructor.apply(this, args);
+        };
+        F.prototype = constructor.prototype;
+        return new F();
+    }
+
+    /**
+     * Used to register each of the services that exist in the Service namespace
+     * with the given Angular module.
+     * 
+     * @param ngModule The Angular module with which to register.
+     */
+    function registerServices(ngModule: ng.IModule): void {
+        // Register each of the services that exist in the Service namespace.
+        _.each(Services, (Service: any) => {
+            // A static ID property is required to register a service.
+            if (Service.ID) {
+                if (typeof(Service.getFactory) === "function") {
+                    // If a static method named getFactory() is available we'll invoke it
+                    // to get a factory function to register as a factory.
+                    console.log("Registering factory " + Service.ID + "...");
+                    ngModule.factory(Service.ID, Service.getFactory());
+                }
+                else {
+                    console.log("Registering service " + Service.ID + "...");
+                    ngModule.service(Service.ID, Service);
+                }
+            }
+        });
+    }
+
+    /**
+     * Used to register each of the directives that exist in the Directives namespace
+     * with the given Angular module.
+     * 
+     * @param ngModule The Angular module with which to register.
+     */
+    function registerDirectives(ngModule: ng.IModule): void {
+
+        _.each(Directives, (Directive: any) => {
+            if (Directive.ID) {
+                if (Directive.__BaseElementDirective) {
+                    console.log("Registering element directive " + Directive.ID + "...");
+                    ngModule.directive(Directive.ID, getElementDirectiveFactoryFunction(Directive));
+                }
+                else {
+                    ngModule.directive(Directive.ID, getDirectiveFactoryParameters(Directive));
+                }
+            }
+        });
+    }
+
+    /**
+     * Used to register each of the filters that exist in the Filters namespace
+     * with the given Angular module.
+     * 
+     * @param ngModule The Angular module with which to register.
+     */
+    function registerFilters(ngModule: ng.IModule): void {
+
+        _.each(Filters, (Filter: any) => {
+            if (Filter.ID && typeof(Filter.filter) === "function") {
+                console.log("Registering filter " + Filter.ID + "...");
+                ngModule.filter(Filter.ID, getFilterFactoryFunction(Filter.filter));
+            }
+        });
+    }
+
+    /**
+     * Used to register each of the controllers that exist in the Controller namespace
+     * with the given Angular module.
+     * 
+     * @param ngModule The Angular module with which to register.
+     */
+    function registerControllers(ngModule: ng.IModule): void {
+
+        // Register each of the controllers that exist in the Controllers namespace.
+        _.each(Controllers, (Controller: any) => {
+            if (Controller.ID) {
+                console.log("Registering controller " + Controller.ID + "...");
+                ngModule.controller(Controller.ID, Controller);
+            }
+        });
+    }
+
+    /**
      * Used to create a function that returns a data structure describing an Angular directive
      * for an element from one of our own classes implementing IElementDirective. It handles
      * creating an instance and invoked the render method when linking is invoked.
      * 
      * @param Directive A class reference (not instance) to a element directive class that implements Directives.IElementDirective.
+     * @returns A factory function that can be used by Angular to create an instance of the element directive.
      */
     function getElementDirectiveFactoryFunction(Directive: Directives.IElementDirectiveClass): () => ng.IDirective {
         var descriptor: ng.IDirective = {};
@@ -139,11 +183,11 @@ module JustinCredible.SmartHomeMobile.Application {
         descriptor.transclude = Directive["transclude"];
         descriptor.scope = Directive["scope"];
 
+        /* tslint:enable:no-string-literal */
+
         if (descriptor.restrict !== "E") {
             console.warn("BaseElementDirectives were meant to restrict only to element types.");
         }
-
-        /* tslint:enable:no-string-literal */
 
         // Here we define the link function that Angular invokes when it is linking the
         // directive to the element.
@@ -158,6 +202,38 @@ module JustinCredible.SmartHomeMobile.Application {
 
         // Finally, return a function that returns this Angular directive descriptor object.
         return function () { return descriptor; };
+    }
+
+    /**
+     * Used to create an array of injection property names followed by a function that will be
+     * used by Angular to create an instance of the given directive.
+     * 
+     * @param Directive A class reference (not instance) to a directive class.
+     * @returns An array of injection property names followed by a factory function for use by Angular.
+     */
+    function getDirectiveFactoryParameters(Directive: ng.IDirective): any[] {
+
+        var params = [];
+
+        /* tslint:disable:no-string-literal */
+
+        // If the directive is annotated with an injection array, we'll add the injection
+        // array's values to the list first.
+        if (Directive["$inject"]) {
+            params = params.concat(Directive["$inject"]);
+        }
+
+        /* tslint:enable:no-string-literal */
+
+        // The last parameter in the array is the function that will be executed by Angular
+        // when the directive is being used.
+        params.push(function () {
+            // Create a new instance of the directive, passing along the arguments (which
+            // will be the values injected via the $inject annotation).
+            return construct(Directive, arguments);
+        });
+
+        return params;
     }
 
     /**
@@ -232,11 +308,11 @@ module JustinCredible.SmartHomeMobile.Application {
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|ms-appx|x-wmapp0):|data:image\//);
 
         // Register our custom interceptor with the HTTP provider so we can hook into AJAX request events.
-        $httpProvider.interceptors.push("HttpInterceptor");
+        $httpProvider.interceptors.push(Services.HttpInterceptor.ID);
 
         // Register our custom interceptor with the HTTP provider so we can seamlessly handle 401s and
         // re-authentication for the AlertMe API requests.
-        $httpProvider.interceptors.push("AlertMeApiHttpInteceptor");
+        $httpProvider.interceptors.push(Services.AlertMeApiHttpInteceptor.ID);
 
         // Setup all of the client side routes and their controllers and views.
         RouteConfig.setupRoutes($stateProvider, $urlRouterProvider);

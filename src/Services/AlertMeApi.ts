@@ -5,6 +5,8 @@
      */
     export class AlertMeApi {
 
+        public static ID = "AlertMeApi";
+
         //#region Event Constants
 
         public static URL_NOT_SPECIFIED_EVENT = "AlertMeApi.URL_NOT_SPECIFIED";

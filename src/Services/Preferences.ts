@@ -8,6 +8,8 @@
      */
     export class Preferences {
 
+        public static ID = "Preferences";
+
         public static $inject = ["Utilities"];
 
         public Utilities: Services.Utilities;

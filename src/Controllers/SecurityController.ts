@@ -2,6 +2,8 @@
 
     export class SecurityController extends BaseController<ViewModels.SecurityViewModel> {
 
+        public static ID = "SecurityController";
+
         public static $inject = ["$scope", "Utilities", "UiHelper", "HubDataSource", "AlertMeApi"];
 
         private Utilities: Services.Utilities;

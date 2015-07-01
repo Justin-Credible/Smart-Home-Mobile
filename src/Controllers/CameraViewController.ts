@@ -6,6 +6,8 @@
 
     export class CameraViewController extends BaseController<ViewModels.CameraViewViewModel> {
 
+        public static ID = "CameraViewController";
+
         public static $inject = ["$scope", "$stateParams", "$location", "$sce", "$ionicViewService", "Utilities", "Preferences"];
 
         private stateParams: ICameraViewControllerStateParams;

@@ -2,6 +2,8 @@ module JustinCredible.SmartHomeMobile.Controllers {
 
     export class ConfigurePassphraseController extends BaseController<ViewModels.ConfigurePassphraseViewModel> {
 
+        public static ID = "ConfigurePassphraseController";
+
         private static USER_PASSPHRASE_ARBITRARY_VALUE = "JustinCredible.SmartHomeMobile.Passphrase.ArbitraryValue";
 
         public static $inject = ["$scope", "Utilities", "UiHelper", "Preferences"];

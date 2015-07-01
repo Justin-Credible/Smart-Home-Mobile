@@ -2,6 +2,8 @@
 
     export class CamerasListController extends BaseController<ViewModels.CamerasListViewModel> {
 
+        public static ID = "CamerasListController";
+
         public static $inject = ["$scope", "$location", "Utilities", "Preferences", "UiHelper"];
 
         private $location: ng.ILocationService;

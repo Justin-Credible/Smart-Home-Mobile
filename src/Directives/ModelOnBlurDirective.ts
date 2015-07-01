@@ -7,6 +7,8 @@
      */
     export class ModelOnBlurDirective implements ng.IDirective {
 
+        public static ID = "modelOnBlur";
+
         public restrict = "A";
         public require = "ngModel";
         public priority = 100;

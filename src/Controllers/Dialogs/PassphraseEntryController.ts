@@ -2,6 +2,8 @@ module JustinCredible.SmartHomeMobile.Controllers {
 
     export class PassphraseEntryController extends BaseDialogController<ViewModels.PassphraseEntryViewModel, any, any> {
 
+        public static ID = "PassphraseEntryController";
+
         public static $inject = ["$scope", "Utilities", "Preferences", "UiHelper"];
 
         private Utilities: Services.Utilities;

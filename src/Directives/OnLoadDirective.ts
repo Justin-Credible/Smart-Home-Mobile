@@ -7,6 +7,10 @@
      */
     export class OnLoadDirective implements ng.IDirective {
 
+        public static ID = "shmOnLoad";
+
+        public static $inject = ["$parse"];
+
         private $parse: ng.IParseService;
 
         public restrict = "A";

@@ -12,6 +12,8 @@
      */
     export class TitleCaseFilter {
 
+        public static ID = "TitleCase";
+
         public static filter(s: string, fromCamelCase: boolean): string {
             s = (typeof(s) === "undefined" || s === null) ? "" : s;
             fromCamelCase = (typeof (fromCamelCase) === "undefined" || fromCamelCase === null) ? false : fromCamelCase;
