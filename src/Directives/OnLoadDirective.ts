@@ -7,7 +7,7 @@
      */
     export class OnLoadDirective implements ng.IDirective {
 
-        public static ID = "shmOnLoad";
+        public static ID = "onLoad";
 
         public static $inject = ["$parse"];
 
@@ -26,10 +26,10 @@
 
         public link(scope: ng.IScope, element: ng.IAugmentedJQuery, attributes: ng.IAttributes, controller: any, transclude: ng.ITranscludeFunction): void {
 
-            // Parse the value of the shm-on-load property; this will be a function
-            // that the user has set on the element for example: <img smh-on-load="load()"/>
+            // Parse the value of the on-load property; this will be a function
+            // that the user has set on the element for example: <img on-load="load()"/>
             /* tslint:disable:no-string-literal */
-            var fn = this.$parse(attributes["shmOnLoad"]);
+            var fn = this.$parse(attributes["onLoad"]);
             /* tslint:enable:no-string-literal */
 
             // Subscribe to the load event of the image element.

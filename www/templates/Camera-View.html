@@ -21,7 +21,7 @@
             Last updated at {{viewModel.lastUpdated | date: 'MM/dd/yyyy HH:mm:ss Z'}}
         </div>
 
-        <img ng-src="{{viewModel.url}}" class="camera-image" shm-on-load="controller.image_load()" />
+        <img ng-src="{{viewModel.url}}" class="camera-image" on-load="controller.image_load()" />
 
         <icon-panel icon="ion-loading-b"
                     ng-show="viewModel.showLoadingPanel"
