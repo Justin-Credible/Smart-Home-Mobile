@@ -6,7 +6,9 @@ module JustinCredible.SmartHomeMobile.Controllers {
 
         private static USER_PASSPHRASE_ARBITRARY_VALUE = "JustinCredible.SmartHomeMobile.Passphrase.ArbitraryValue";
 
-        public static $inject = ["$scope", "Utilities", "UiHelper", "Preferences"];
+        public static get $inject(): string[] {
+            return ["$scope", Services.Utilities.ID, Services.UiHelper.ID, Services.Preferences.ID];
+        }
 
         private Utilities: Services.Utilities;
         private UiHelper: Services.UiHelper;

@@ -8,7 +8,9 @@
 
         public static ID = "CameraViewController";
 
-        public static $inject = ["$scope", "$stateParams", "$location", "$sce", "$ionicViewService", "Utilities", "Preferences"];
+        public static get $inject(): string[] {
+            return ["$scope", "$stateParams", "$location", "$sce", "$ionicViewService", Services.Utilities.ID, Services.Preferences.ID];
+        }
 
         private stateParams: ICameraViewControllerStateParams;
         private $location: ng.ILocationService;

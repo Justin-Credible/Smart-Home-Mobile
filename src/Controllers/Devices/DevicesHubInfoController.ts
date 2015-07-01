@@ -4,7 +4,9 @@
 
         public static ID = "DevicesHubInfoController";
 
-        public static $inject = ["$scope", "HubDataSource", "Utilities", "Preferences"];
+        public static get $inject(): string[] {
+            return ["$scope", Services.HubDataSource.ID, Services.Utilities.ID, Services.Preferences.ID];
+        }
 
         private HubDataSource: Services.HubDataSource;
         private Utilities: Services.Utilities;

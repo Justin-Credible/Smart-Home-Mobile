@@ -7,7 +7,9 @@
 
         public static ID = "Utilities";
 
-        public static $inject = ["isRipple", "isCordova", "isDebug", "isChromeExtension"];
+        public static get $inject(): string[] {
+            return ["isRipple", "isCordova", "isDebug", "isChromeExtension"];
+        }
 
         private _isRipple: boolean;
         private _isCordova: boolean;

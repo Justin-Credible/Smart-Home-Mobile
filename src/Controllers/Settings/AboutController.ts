@@ -4,7 +4,9 @@
 
         public static ID = "AboutController";
 
-        public static $inject = ["$scope", "$location", "$ionicViewService", "Utilities", "Preferences", "UiHelper", "versionInfo"];
+        public static get $inject(): string[] {
+            return ["$scope", "$location", "$ionicViewService", Services.Utilities.ID, Services.Preferences.ID, Services.UiHelper.ID, "versionInfo"];
+        }
 
         private $location: ng.ILocationService;
         private $ionicViewService: any;

@@ -32,20 +32,20 @@
             this.spinnerRequestsInProgress = 0;
         }
 
-        private get Utilities(): Services.Utilities {
-            return this.$injector.get("Utilities");
+        private get Utilities(): Utilities {
+            return this.$injector.get(Utilities.ID);
         }
 
-        private get UiHelper(): Services.UiHelper {
-            return this.$injector.get("UiHelper");
+        private get UiHelper(): UiHelper {
+            return this.$injector.get(UiHelper.ID);
         }
 
-        private get Preferences(): Services.Preferences {
-            return this.$injector.get("Preferences");
+        private get Preferences(): Preferences {
+            return this.$injector.get(Preferences.ID);
         }
 
-        private get Logger(): Services.Logger {
-            return this.$injector.get("Logger");
+        private get Logger(): Logger {
+            return this.$injector.get(Logger.ID);
         }
 
         /**
@@ -61,7 +61,7 @@
 
             // Angular expects the factory function to return the object that is used
             // for the factory when it is injected into other objects.
-            factory = function ($rootScope: ng.IRootScopeService, $injector: ng.auto.IInjectorService, $q: ng.IQService, Preferences: Services.Preferences, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Logger: Services.Logger) {
+            factory = function ($rootScope: ng.IRootScopeService, $injector: ng.auto.IInjectorService, $q: ng.IQService, Preferences: Preferences, Utilities: Utilities, UiHelper: UiHelper, Logger: Logger) {
                 // Create an instance our strongly-typed service.
                 var instance = new HttpInterceptor($rootScope, $injector, $q);
 

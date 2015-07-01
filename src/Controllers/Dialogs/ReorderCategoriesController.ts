@@ -4,7 +4,9 @@
 
         public static ID = "ReorderCategoriesController";
 
-        public static $inject = ["$scope", "Preferences", "UiHelper"];
+        public static get $inject(): string[] {
+            return ["$scope", Services.Preferences.ID, Services.UiHelper.ID];
+        }
 
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;

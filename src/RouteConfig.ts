@@ -13,7 +13,7 @@ module JustinCredible.SmartHomeMobile {
                 url: "/app",
                 abstract: true,
                 templateUrl: "templates/Menu.html",
-                controller: "MenuController"
+                controller: Controllers.MenuController.ID
             });
 
             // An blank view useful as a place holder etc.
@@ -33,7 +33,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Security.html",
-                        controller: "SecurityController"
+                        controller: Controllers.SecurityController.ID
                     }
                 }
             });
@@ -43,7 +43,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Thermostat.html",
-                        controller: "ThermostatController"
+                        controller: Controllers.ThermostatController.ID
                     }
                 }
             });
@@ -53,7 +53,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Smart-Plugs.html",
-                        controller: "SmartPlugsController"
+                        controller: Controllers.SmartPlugsController.ID
                     }
                 }
             });
@@ -63,7 +63,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Cameras.html",
-                        controller: "CamerasController"
+                        controller: Controllers.CamerasController.ID
                     }
                 }
             });
@@ -73,7 +73,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Camera-View.html",
-                        controller: "CameraViewController"
+                        controller: Controllers.CameraViewController.ID
                     }
                 }
             });
@@ -84,7 +84,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Irrigation.html",
-                        controller: "IrrigationController"
+                        controller: Controllers.IrrigationController.ID
                     }
                 }
             });
@@ -95,7 +95,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Devices/Devices-List.html",
-                        controller: "DevicesListController"
+                        controller: Controllers.DevicesListController.ID
                     }
                 }
             });
@@ -105,7 +105,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Devices/Devices-Hub-Info.html",
-                        controller: "DevicesHubInfoController"
+                        controller: Controllers.DevicesHubInfoController.ID
                     }
                 }
             });
@@ -115,7 +115,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Devices/Devices-Info.html",
-                        controller: "DevicesInfoController"
+                        controller: Controllers.DevicesInfoController.ID
                     }
                 }
             });
@@ -129,7 +129,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Settings-List.html",
-                        controller: "SettingsListController"
+                        controller: Controllers.SettingsListController.ID
                     }
                 }
             });
@@ -139,7 +139,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Hub.html",
-                        controller: "HubController"
+                        controller: Controllers.HubController.ID
                     }
                 }
             });
@@ -149,7 +149,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Cameras-List.html",
-                        controller: "CamerasListController"
+                        controller: Controllers.CamerasListController.ID
                     }
                 }
             });
@@ -159,7 +159,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Camera-Edit.html",
-                        controller: "CameraEditController"
+                        controller: Controllers.CameraEditController.ID
                     }
                 }
             });
@@ -169,7 +169,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Camera-Edit.html",
-                        controller: "CameraEditController"
+                        controller: Controllers.CameraEditController.ID
                     }
                 }
             });
@@ -179,7 +179,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Configure-Pin.html",
-                        controller: "ConfigurePinController"
+                        controller: Controllers.ConfigurePinController.ID
                     }
                 }
             });
@@ -189,7 +189,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Configure-Passphrase.html",
-                        controller: "ConfigurePassphraseController"
+                        controller: Controllers.ConfigurePassphraseController.ID
                     }
                 }
             });
@@ -199,7 +199,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Developer.html",
-                        controller: "DeveloperController"
+                        controller: Controllers.DeveloperController.ID
                     }
                 }
             });
@@ -209,7 +209,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Logs.html",
-                        controller: "LogsController"
+                        controller: Controllers.LogsController.ID
                     }
                 }
             });
@@ -219,7 +219,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Log-Entry.html",
-                        controller: "LogEntryController"
+                        controller: Controllers.LogEntryController.ID
                     }
                 }
             });
@@ -229,7 +229,7 @@ module JustinCredible.SmartHomeMobile {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/About.html",
-                        controller: "AboutController"
+                        controller: Controllers.AboutController.ID
                     }
                 }
             });

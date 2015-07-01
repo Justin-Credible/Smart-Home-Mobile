@@ -74,7 +74,7 @@
             };
 
             // Annotate the factory function with the things that should be injected.
-            factory.$inject = ["$rootScope", "$q", "$injector", "Preferences", "Utilities", "Logger"];
+            factory.$inject = ["$rootScope", "$q", "$injector", Services.Preferences.ID, Services.Utilities.ID, Services.Logger.ID];
 
             return factory;
         }
@@ -131,7 +131,7 @@
                 }
                 else {
                     // Grab a reference to the AlertMeAPi service.
-                    AlertMeApi = this.$injector.get("AlertMeApi");
+                    AlertMeApi = this.$injector.get(Services.AlertMeApi.ID);
 
                     // Grab a reference to the HTTP service.
                     $http = this.$injector.get("$http");

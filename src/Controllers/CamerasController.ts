@@ -4,7 +4,9 @@
 
         public static ID = "CamerasController";
 
-        public static $inject = ["$scope", "$location", "Utilities", "Preferences", "UiHelper"];
+        public static get $inject(): string[] {
+            return ["$scope", "$location", Services.Utilities.ID, Services.Preferences.ID, Services.UiHelper.ID];
+        }
 
         private $location: ng.ILocationService;
         private Utilities: Services.Utilities;

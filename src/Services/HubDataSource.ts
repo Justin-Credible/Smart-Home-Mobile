@@ -7,13 +7,15 @@
 
         public static ID = "HubDataSource";
 
-        public static $inject = ["$rootScope", "$q", "AlertMeApi"];
+        public static get $inject(): string[] {
+            return ["$rootScope", "$q", AlertMeApi.ID];
+        }
 
         private $rootScope: ng.IRootScopeService;
         private $q: ng.IQService;
-        private AlertMeApi: Services.AlertMeApi;
+        private AlertMeApi: AlertMeApi;
 
-        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, AlertMeApi: Services.AlertMeApi) {
+        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, AlertMeApi: AlertMeApi) {
             this.$rootScope = $rootScope;
             this.$q = $q;
             this.AlertMeApi = AlertMeApi;

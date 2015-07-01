@@ -9,7 +9,9 @@
 
         public static ID = "onLoad";
 
-        public static $inject = ["$parse"];
+        public static get $inject(): string[] {
+            return ["$parse"];
+        }
 
         private $parse: ng.IParseService;
 

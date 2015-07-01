@@ -82,15 +82,17 @@
 
         //#endregion
 
-        public static $inject = ["$rootScope", "$q", "$http", "Preferences", "Utilities"];
+        public static get $inject(): string[] {
+            return ["$rootScope", "$q", "$http", Preferences.ID, Utilities.ID];
+        }
 
         private $rootScope: ng.IRootScopeService;
         private $q: ng.IQService;
         private $http: ng.IHttpService;
-        private Preferences: Services.Preferences;
-        private Utilities: Services.Utilities;
+        private Preferences: Preferences;
+        private Utilities: Utilities;
 
-        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, Preferences: Services.Preferences, Utilities: Services.Utilities) {
+        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, Preferences: Preferences, Utilities: Utilities) {
             this.$rootScope = $rootScope;
             this.$q = $q;
             this.$http = $http;

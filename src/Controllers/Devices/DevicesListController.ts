@@ -4,7 +4,9 @@
 
         public static ID = "DevicesListController";
 
-        public static $inject = ["$scope", "Utilities", "UiHelper", "HubDataSource", "AlertMeApi"];
+        public static get $inject(): string[] {
+            return ["$scope", Services.Utilities.ID, Services.UiHelper.ID, Services.HubDataSource.ID, Services.AlertMeApi.ID];
+        }
 
         private Utilities: Services.Utilities;
         private UiHelper: Services.UiHelper;

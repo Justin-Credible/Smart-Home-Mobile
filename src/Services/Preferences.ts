@@ -10,9 +10,11 @@
 
         public static ID = "Preferences";
 
-        public static $inject = ["Utilities"];
+        public static get $inject(): string[] {
+            return [Utilities.ID];
+        }
 
-        public Utilities: Services.Utilities;
+        public Utilities: Utilities;
 
         //#region Local Storage Keys
 
@@ -47,7 +49,7 @@
 
         //#endregion
 
-        constructor(Utilities: Services.Utilities) {
+        constructor(Utilities: Utilities) {
             this.Utilities = Utilities;
         }
 
