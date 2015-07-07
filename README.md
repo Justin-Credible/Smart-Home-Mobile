@@ -32,7 +32,7 @@ It is built with Ionic, TypeScript, and AngularJS (among others) using the [Ioni
 
 ### Iris ###
 
-I'm using the AlertMe v5 RESTful API for interacting with Iris. Lowe's does not provide public documentation on their API (which is based on the AlertMe API), but I've found that it is pretty close so far. I've included the API docs that I've found on the web in `resources/IrisApi-v5`.
+I'm using the AlertMe v5 RESTful API for interacting with Iris. Lowe's does not provide public documentation on their API (which is based on the AlertMe API), but I've found that it is pretty close so far. I've included the API docs that I've found on the web in `resources/misc/IrisApi-v5`.
 
 ### IrrigationCaddy ###
 
