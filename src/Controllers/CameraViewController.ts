@@ -9,25 +9,25 @@
         public static ID = "CameraViewController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$stateParams", "$location", "$sce", "$ionicViewService", Services.Utilities.ID, Services.Preferences.ID];
+            return ["$scope", "$stateParams", "$location", "$sce", "$ionicHistory", Services.Utilities.ID, Services.Preferences.ID];
         }
 
         private stateParams: ICameraViewControllerStateParams;
         private $location: ng.ILocationService;
         private $sce: ng.ISCEService;
-        private $ionicViewService: any;
+        private $ionicHistory: any;
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
 
         private pollingTimeout: number;
 
-        constructor($scope: ng.IScope, $stateParams: ICameraViewControllerStateParams, $location: ng.ILocationService, $sce: ng.ISCEService, $ionicViewService: any, Utilities: Services.Utilities, Preferences: Services.Preferences) {
+        constructor($scope: ng.IScope, $stateParams: ICameraViewControllerStateParams, $location: ng.ILocationService, $sce: ng.ISCEService, $ionicHistory: any, Utilities: Services.Utilities, Preferences: Services.Preferences) {
             super($scope, ViewModels.CameraViewViewModel);
 
             this.stateParams = $stateParams;
             this.$sce = $sce;
             this.$location = $location;
-            this.$ionicViewService = $ionicViewService;
+            this.$ionicHistory = $ionicHistory;
             this.Utilities = Utilities;
             this.Preferences = Preferences;
 

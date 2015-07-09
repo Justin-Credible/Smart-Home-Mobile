@@ -5,21 +5,19 @@
         public static ID = "AboutController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$location", "$ionicViewService", Services.Utilities.ID, Services.Preferences.ID, Services.UiHelper.ID, "versionInfo"];
+            return ["$scope", "$ionicHistory", Services.Utilities.ID, Services.Preferences.ID, Services.UiHelper.ID, "versionInfo"];
         }
 
-        private $location: ng.ILocationService;
-        private $ionicViewService: any;
+        private $ionicHistory: any;
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
         private UiHelper: Services.UiHelper;
         private versionInfo: Interfaces.VersionInfo;
 
-        constructor($scope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper, versionInfo: Interfaces.VersionInfo) {
+        constructor($scope: ng.IScope, $ionicHistory: any, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper, versionInfo: Interfaces.VersionInfo) {
             super($scope, ViewModels.AboutViewModel);
 
-            this.$location = $location;
-            this.$ionicViewService = $ionicViewService;
+            this.$ionicHistory = $ionicHistory;
             this.Utilities = Utilities;
             this.Preferences = Preferences;
             this.UiHelper = UiHelper;
@@ -55,7 +53,7 @@
             if (this.viewModel.logoClickCount > 9) {
                 this.Preferences.enableDeveloperTools = true;
                 this.UiHelper.toast.showShortBottom("Development Tools Enabled!");
-                this.$ionicViewService.getBackView().go();
+                this.$ionicHistory.goBack();
             }
         }
 

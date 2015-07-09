@@ -9,22 +9,22 @@
         public static ID = "CameraEditController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$stateParams", "$location", "$ionicViewService", Services.Utilities.ID, Services.Preferences.ID, Services.UiHelper.ID];
+            return ["$scope", "$stateParams", "$location", "$ionicHistory", Services.Utilities.ID, Services.Preferences.ID, Services.UiHelper.ID];
         }
 
         private stateParams: ICameraEditControllerStateParams;
         private $location: ng.ILocationService;
-        private $ionicViewService: any;
+        private $ionicHistory: any;
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
         private UiHelper: Services.UiHelper;
 
-        constructor($scope: ng.IScope, $stateParams: ICameraEditControllerStateParams, $location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
+        constructor($scope: ng.IScope, $stateParams: ICameraEditControllerStateParams, $location: ng.ILocationService, $ionicHistory: any, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
             super($scope, ViewModels.CameraEditViewModel);
 
             this.stateParams = $stateParams;
             this.$location = $location;
-            this.$ionicViewService = $ionicViewService;
+            this.$ionicHistory = $ionicHistory;
             this.Utilities = Utilities;
             this.Preferences = Preferences;
             this.UiHelper = UiHelper;
@@ -123,7 +123,7 @@
 
             // Kick the user back to the camera list view.
             this.UiHelper.toast.showShortBottom("Changes have been saved.");
-            this.$ionicViewService.getBackView().go();
+            this.$ionicHistory.goBack();
         }
 
         //#endregion

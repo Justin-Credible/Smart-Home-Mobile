@@ -276,12 +276,12 @@ module JustinCredible.SmartHomeMobile.Application {
     /**
      * The main initialize/run function for Angular; fired once the AngularJs framework is done loading.
      */
-    function angular_initialize($rootScope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockHttpApis: Services.MockHttpApis): void {
+    function angular_initialize($rootScope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockHttpApis: Services.MockHttpApis): void {
 
         // Once AngularJs has loaded we'll wait for the Ionic platform's ready event.
         // This event will be fired once the device ready event fires via Cordova.
         $ionicPlatform.ready(function () {
-            ionicPlatform_ready($rootScope, $location, $ionicViewService, $ionicPlatform, UiHelper, Utilities, Preferences);
+            ionicPlatform_ready($rootScope, $location, $ionicHistory, $ionicPlatform, UiHelper, Utilities, Preferences);
         });
 
         // Register all of the dialogs with the UiHelper.
@@ -297,11 +297,11 @@ module JustinCredible.SmartHomeMobile.Application {
      * Note that this will not fire in the Ripple emulator because it relies
      * on the Codrova device ready event.
      */
-    function ionicPlatform_ready($rootScope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, $ionicPlatform: Ionic.IPlatform, UiHelper: Services.UiHelper, Utilities: Services.Utilities, Preferences: Services.Preferences): void {
+    function ionicPlatform_ready($rootScope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, $ionicPlatform: Ionic.IPlatform, UiHelper: Services.UiHelper, Utilities: Services.Utilities, Preferences: Services.Preferences): void {
 
         // Subscribe to device events.
         document.addEventListener("pause", _.bind(device_pause, null, Preferences));
-        document.addEventListener("resume", _.bind(device_resume, null, $location, $ionicViewService, Utilities, UiHelper, Preferences));
+        document.addEventListener("resume", _.bind(device_resume, null, $location, $ionicHistory, Utilities, UiHelper, Preferences));
         document.addEventListener("menubutton", _.bind(device_menuButton, null, $rootScope));
 
         // Subscribe to Angular events.
@@ -310,7 +310,7 @@ module JustinCredible.SmartHomeMobile.Application {
         // Now that the platform is ready, we'll delegate to the resume event.
         // We do this so the same code that fires on resume also fires when the
         // application is started for the first time.
-        device_resume($location, $ionicViewService, Preferences, UiHelper);
+        device_resume($location, $ionicHistory, Preferences, UiHelper);
     }
 
     /**
@@ -373,7 +373,7 @@ module JustinCredible.SmartHomeMobile.Application {
      * when the user launches an app that is already open or uses the OS task manager
      * to switch back to the application.
      */
-    function device_resume($location: ng.ILocationService, $ionicViewService: any, Preferences: Services.Preferences, UiHelper: Services.UiHelper): void {
+    function device_resume($location: ng.ILocationService, $ionicHistory: any, Preferences: Services.Preferences, UiHelper: Services.UiHelper): void {
 
         isShowingSecurityPrompt = true;
 
@@ -386,7 +386,7 @@ module JustinCredible.SmartHomeMobile.Application {
 
                 // Tell Ionic to not animate and clear the history (hide the back button)
                 // for the next view that we'll be navigating to below.
-                $ionicViewService.nextViewOptions({
+                $ionicHistory.nextViewOptions({
                     disableAnimate: true,
                     disableBack: true
                 });
