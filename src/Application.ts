@@ -284,6 +284,9 @@ module JustinCredible.SmartHomeMobile.Application {
             ionicPlatform_ready($rootScope, $location, $ionicViewService, $ionicPlatform, UiHelper, Utilities, Preferences);
         });
 
+        // Register all of the dialogs with the UiHelper.
+        registerDialogs(Utilities, UiHelper);
+
         // Mock up or allow HTTP responses.
         MockHttpApis.mockHttpCalls(Preferences.enableMockHttpCalls);
     };

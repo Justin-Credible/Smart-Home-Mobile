@@ -428,7 +428,7 @@
             }
 
             // Lookup the template to use for this dialog based on the dialog ID.
-            template = UiHelper.dialogTemplateMap[dialogId];
+            template = this.dialogTemplateMap[dialogId];
 
             // If we were unable to find a dialog ID in the template map then we
             // can bail out here as there is nothing to do.
@@ -522,7 +522,7 @@
             // If a passphrase has been configured, but hasn't yet been entered for this session
             // then we need to show the passphrase entry dialog.
             if (this.Preferences.isPassphraseConfigured && !this.Preferences.isPassphraseForSessionSet) {
-                this.showDialog(this.DialogIds.PassphraseEntry).then(() => {
+                this.showDialog(Controllers.PassphraseEntryController.ID).then(() => {
                     // Once a vaild passphrase is entered, then we can continue.
                     q.resolve();
                 });
@@ -554,7 +554,7 @@
                     options.hardwareBackButtonClose = false;
                     options.showBackground = false;
 
-                    this.showDialog(this.DialogIds.PinEntry, options).then((result: Models.PinEntryDialogResultModel) => {
+                    this.showDialog(Controllers.PinEntryController.ID, options).then((result: Models.PinEntryDialogResultModel) => {
                         // Once a matching PIN is entered, then we can resolve.
                         q.resolve();
                     });
