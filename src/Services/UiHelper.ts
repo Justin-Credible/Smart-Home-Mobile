@@ -29,26 +29,12 @@
         private static openDialogIds: string[];
 
         /**
-         * Constant IDs for the dialogs. For use with the showDialog helper method.
-         */
-        public DialogIds = {
-            ReorderCategories: "REORDER_CATEGORIES_DIALOG",
-            PinEntry: "PIN_ENTRY_DIALOG",
-            PassphraseEntry: "PASSPHRASE_ENTRY_DIALOG",
-            SetMultipleSmartPlugsState: "SET_MULTIPLE_SMART_PLUGS_STATE_DIALOG"
-        };
-
-        /**
          * A map of dialog IDs to the templates that they use. Used by the showDialog helper method.
+         * Entries are added to this map via the registerDialog method.
          * 
          * The template's root element should have a controller that extends BaseDialogController.
          */
-        private static dialogTemplateMap = {
-            "REORDER_CATEGORIES_DIALOG": "templates/Dialogs/Reorder-Categories.html",
-            "PIN_ENTRY_DIALOG": "templates/Dialogs/Pin-Entry.html",
-            "PASSPHRASE_ENTRY_DIALOG": "templates/Dialogs/Passphrase-Entry.html",
-            "SET_MULTIPLE_SMART_PLUGS_STATE_DIALOG": "templates/Dialogs/Set-Multiple-Smart-Plugs-State.html"
-        };
+         private dialogTemplateMap: { [dialogId: string]: string } = {};
 
         //#endregion
 
@@ -362,8 +348,30 @@
         //#region Modal Dialogs
 
         /**
+         * Used to register a dialog for use with showDialog().
+         * 
+         * @param dialogId The unique identifier for the dialog.
+         * @param templatePath The path to the Angular HTML template for the dialog.
+         */
+        public registerDialog(dialogId: string, templatePath: string): void {
+
+            if (!dialogId) {
+                throw new Error("A dialogId is required when registering a dialog.");
+            }
+
+            if (!templatePath) {
+                throw new Error("A templatePath is required when registering a dialog.");
+            }
+
+            if (this.dialogTemplateMap[dialogId]) {
+                console.warn(this.Utilities.format("A dialog with ID {0} has already been registered; it will be overwritten.", dialogId));
+            }
+
+            this.dialogTemplateMap[dialogId] = templatePath;
+        }
+
+        /**
          * Used to open the modal dialog with the given dialog ID.
-         * Dialog IDs and templates can be set via UiHelper.DialogIds.
          * 
          * If a dialog with the given ID is already open, another will not be opened
          * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.
@@ -375,7 +383,6 @@
 
         /**
          * Used to open the modal dialog with the given dialog ID.
-         * Dialog IDs and templates can be set via UiHelper.DialogIds.
          * 
          * If a dialog with the given ID is already open, another will not be opened
          * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.
@@ -388,7 +395,6 @@
 
         /**
          * Used to open the modal dialog with the given dialog ID.
-         * Dialog IDs and templates can be set via UiHelper.DialogIds.
          * 
          * If a dialog with the given ID is already open, another will not be opened
          * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.

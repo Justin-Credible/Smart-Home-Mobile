@@ -3,6 +3,7 @@
     export class SetMultipleSmartPlugsStateController extends BaseDialogController<ViewModels.SetMultipleSmartPlugsStateViewModel, AlertMeApiTypes.SmartPlugDevice[], AlertMeApiTypes.SmartPlugDevice[]> {
 
         public static ID = "SetMultipleSmartPlugsStateController";
+        public static TemplatePath = "templates/Dialogs/Set-Multiple-Smart-Plugs-State.html";
 
         public static get $inject(): string[] {
             return ["$scope", Services.Utilities.ID, Services.Preferences.ID, Services.UiHelper.ID];
@@ -12,7 +13,7 @@
         private Preferences: Services.Preferences;
 
         constructor($scope: ng.IScope, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
-            super($scope, ViewModels.SetMultipleSmartPlugsStateViewModel, UiHelper.DialogIds.SetMultipleSmartPlugsState);
+            super($scope, ViewModels.SetMultipleSmartPlugsStateViewModel, SetMultipleSmartPlugsStateController.ID);
 
             this.Utilities = Utilities;
             this.Preferences = Preferences;

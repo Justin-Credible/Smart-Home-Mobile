@@ -282,7 +282,7 @@
             options = new Models.DialogOptions(_.clone(this.viewModel.smartPlugs, true));
 
             // Show the dialog.
-            this.UiHelper.showDialog(this.UiHelper.DialogIds.SetMultipleSmartPlugsState, options).then((result: AlertMeApiTypes.SmartPlugDevice[]) => {
+            this.UiHelper.showDialog(SetMultipleSmartPlugsStateController.ID, options).then((result: AlertMeApiTypes.SmartPlugDevice[]) => {
 
                 // If the user cancelled, then do nothing.
                 if (result == null) {

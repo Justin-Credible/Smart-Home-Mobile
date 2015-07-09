@@ -163,6 +163,30 @@ module JustinCredible.SmartHomeMobile.Application {
     }
 
     /**
+     * Used to register each of the Controller classes that extend BaseDialog as dialogs
+     * with the UiHelper.
+     * 
+     * @param Utilities The utilities instance; used to invoke derivesFrom().
+     * @param UiHelper The UiHelper instance; used to invoke registerDialog().
+     */
+    function registerDialogs(Utilities: Services.Utilities, UiHelper: Services.UiHelper): void {
+
+        // Loop over each of the controllers, and for any controller that dervies from BaseController
+        // register it as a dialog using its ID with the UiHelper.
+        _.each(Controllers, (Controller: any) => {
+
+            // Don't try to register the BaseDialogController since it is abstract.
+            if (Controller === Controllers.BaseDialogController) {
+                return; // Continue
+            }
+
+            if (Utilities.derivesFrom(Controller, Controllers.BaseDialogController)) {
+                UiHelper.registerDialog(Controller.ID, Controller.TemplatePath);
+            }
+        });
+    }
+
+    /**
      * Used to create a function that returns a data structure describing an Angular directive
      * for an element from one of our own classes implementing IElementDirective. It handles
      * creating an instance and invoked the render method when linking is invoked.

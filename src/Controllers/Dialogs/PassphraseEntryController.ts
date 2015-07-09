@@ -3,6 +3,7 @@ module JustinCredible.SmartHomeMobile.Controllers {
     export class PassphraseEntryController extends BaseDialogController<ViewModels.PassphraseEntryViewModel, any, any> {
 
         public static ID = "PassphraseEntryController";
+        public static TemplatePath = "templates/Dialogs/Passphrase-Entry.html";
 
         public static get $inject(): string[] {
             return ["$scope", Services.Utilities.ID, Services.Preferences.ID, Services.UiHelper.ID];
@@ -13,7 +14,7 @@ module JustinCredible.SmartHomeMobile.Controllers {
         private UiHelper: Services.UiHelper;
 
         constructor($scope: ng.IScope, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
-            super($scope, ViewModels.PassphraseEntryViewModel, UiHelper.DialogIds.PassphraseEntry);
+            super($scope, ViewModels.PassphraseEntryViewModel, PassphraseEntryController.ID);
 
             this.Utilities = Utilities;
             this.Preferences = Preferences;
