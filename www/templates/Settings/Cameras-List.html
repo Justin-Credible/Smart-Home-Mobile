@@ -2,7 +2,7 @@
 
     <ion-nav-buttons side="right">
         <a class="button icon ion-plus"
-           href="#/app/settings/camera/add"></a>
+           ui-sref="app.camera-add"></a>
     </ion-nav-buttons>
 
     <ion-content class="has-header">
@@ -15,7 +15,7 @@
 
             <a ng-repeat="camera in viewModel.cameras | filter: { type: 'SNAPSHOT' }"
                  ng-hide="viewModel.isRefreshing"
-                 href="#/app/settings/camera/edit/{{camera.id}}"
+                 ui-sref="app.camera-edit({ id: camera.id})"
                  class="item item-icon-left item-icon-right">
 
                 <i class="icon ion-ios-camera"></i>
@@ -29,7 +29,7 @@
 
             <a ng-repeat="camera in viewModel.cameras | filter: { type: 'STREAMING' }"
                  ng-hide="viewModel.isRefreshing"
-                 href="#/app/settings/camera/edit/{{camera.id}}"
+                 ui-sref="app.camera-edit({ id: camera.id})"
                  class="item item-icon-left item-icon-right">
 
                 <i class="icon ion-ios-videocam"></i>
@@ -47,7 +47,7 @@
         <div class="padding">
             <a class="button button-block button-positive"
                ng-show="viewModel.cameras.length === 0"
-               href="#/app/settings/camera/add">
+               ui-sref="app.camera-add">
                 Add Camera
             </a>
         </div>

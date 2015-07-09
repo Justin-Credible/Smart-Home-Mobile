@@ -19,7 +19,7 @@
 
             <a ng-repeat="camera in viewModel.cameras | filter: { type: 'SNAPSHOT' }"
                  ng-hide="viewModel.isRefreshing"
-                 href="#/app/camera/{{camera.id}}"
+                 ui-sref="app.camera({ id: camera.id})"
                  class="item item-icon-left item-icon-right">
 
                 <i class="icon ion-ios-camera"></i>
@@ -33,7 +33,7 @@
 
             <a ng-repeat="camera in viewModel.cameras | filter: { type: 'STREAMING' }"
                  ng-hide="viewModel.isRefreshing"
-                 href="#/app/camera/{{camera.id}}"
+                 ui-sref="app.camera({ id: camera.id})"
                  class="item item-icon-left item-icon-right">
 
                 <i class="icon ion-ios-videocam"></i>
