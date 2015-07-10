@@ -1,6 +1,10 @@
 Smart-Home-Mobile
 =============================
 
+[![Build Status](https://travis-ci.org/Justin-Credible/Smart-Home-Mobile.svg?branch=master)](https://travis-ci.org/Justin-Credible/Smart-Home-Mobile)
+![Dependencies](https://david-dm.org/Justin-Credible/Smart-Home-Mobile
+.svg)
+
 A cross-platform mobile application used to control several smart home devices.
 
 * [Iris Smart Home](http://www.lowes.com/cd_Iris_239939199_) (by Lowes)
@@ -13,8 +17,6 @@ A cross-platform mobile application used to control several smart home devices.
 * IP Video Cameras
 
 *This is currently a work in progress; more documentation and details will be added as the app progresses.*
-
-[![Build Status](https://travis-ci.org/Justin-Credible/Smart-Home-Mobile.svg?branch=master)](https://travis-ci.org/Justin-Credible/Smart-Home-Mobile)
 
 ## Why? ##
 
