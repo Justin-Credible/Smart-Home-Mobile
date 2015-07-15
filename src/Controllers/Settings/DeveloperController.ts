@@ -213,7 +213,7 @@
 
             this.UiHelper.prompt(message, "Require PIN Threshold", null, this.Preferences.requirePinThreshold.toString()).then((result: Models.KeyValuePair<string, string>) => {
 
-                if (result.key !== "OK") {
+                if (result.key !== Constants.Buttons.OK) {
                     return;
                 }
 
@@ -283,7 +283,7 @@
 
             this.UiHelper.prompt("Enter a value to copy to the clipboard.").then((result: Models.KeyValuePair<string, string>) => {
 
-                if (result.key !== "OK") {
+                if (result.key !== Constants.Buttons.OK) {
                     return;
                 }
 
@@ -342,7 +342,7 @@
         protected readFile_click() {
             this.UiHelper.prompt("Enter file name to read from", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
-                if (result.key !== "OK") {
+                if (result.key !== Constants.Buttons.OK) {
                     return;
                 }
 
@@ -358,7 +358,7 @@
 
             this.UiHelper.prompt("Enter file name to write to", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
-                if (result.key !== "OK") {
+                if (result.key !== Constants.Buttons.OK) {
                     return;
                 }
 
@@ -366,7 +366,7 @@
 
                 this.UiHelper.prompt("Enter file contents").then((result: Models.KeyValuePair<string, string>) => {
 
-                    if (result.key !== "OK") {
+                    if (result.key !== Constants.Buttons.OK) {
                         return;
                     }
 
@@ -385,13 +385,13 @@
 
             this.UiHelper.prompt("Enter file name to write to", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
-                if (result.key !== "OK") {
+                if (result.key !== Constants.Buttons.OK) {
                     return;
                 }
 
                 this.UiHelper.prompt("Enter file contents", "File I/O Test", null, " / ").then((result: Models.KeyValuePair<string, string>) => {
 
-                    if (result.key !== "OK") {
+                    if (result.key !== Constants.Buttons.OK) {
                         return;
                     }
 
@@ -409,7 +409,7 @@
 
             this.UiHelper.prompt("Enter dir name to create", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
-                if (result.key !== "OK") {
+                if (result.key !== Constants.Buttons.OK) {
                     return;
                 }
 
@@ -427,7 +427,7 @@
 
             this.UiHelper.prompt("Enter path to list files", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
-                if (result.key !== "OK") {
+                if (result.key !== Constants.Buttons.OK) {
                     return;
                 }
 
@@ -456,7 +456,7 @@
 
             this.UiHelper.prompt("Enter path to list dirs", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
-                if (result.key !== "OK") {
+                if (result.key !== Constants.Buttons.OK) {
                     return;
                 }
 
@@ -484,7 +484,7 @@
 
             this.UiHelper.prompt("Enter path to delete file", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
-                if (result.key !== "OK") {
+                if (result.key !== Constants.Buttons.OK) {
                     return;
                 }
 
@@ -501,7 +501,7 @@
 
             this.UiHelper.prompt("Enter path to delete dir", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
-                if (result.key !== "OK") {
+                if (result.key !== Constants.Buttons.OK) {
                     return;
                 }
 
