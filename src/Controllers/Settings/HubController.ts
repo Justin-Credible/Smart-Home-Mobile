@@ -47,7 +47,7 @@
             this.UiHelper.alert(infoMessage1, "Hub Info").then(() => {
                 this.UiHelper.alert(infoMessage2, "Hub Info").then(() => {
                     this.UiHelper.confirm(promptMessage, "Use Default").then((result: string) => {
-                        if (result === "Yes") {
+                        if (result === Constants.Buttons.Yes) {
                             this.viewModel.apiUrl = "https://www.irissmarthome.com/v5";
                             this.viewModel.showSaveButton = true;
                         }

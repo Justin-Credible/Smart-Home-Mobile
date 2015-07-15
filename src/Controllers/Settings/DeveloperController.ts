@@ -73,7 +73,7 @@
             message = "The application needs to be reloaded for changes to take effect.\n\nReload now?";
 
             this.UiHelper.confirm(message, "Confirm Reload").then((result: string) => {
-                if (result === "Yes") {
+                if (result === Constants.Buttons.Yes) {
                     document.location.href = "index.html";
                 }
             });
@@ -161,7 +161,7 @@
             message = "Enable exception logging to local storage? Current setting is " + this.Logger.getLogToLocalStorage();
 
             this.UiHelper.confirm(message).then((result: string) => {
-                var enable = result === "Yes";
+                var enable = result === Constants.Buttons.Yes;
 
                 this.viewModel.loggingToLocalStorage = enable + "";
                 this.Logger.setLogToLocalStorage(enable);
@@ -181,7 +181,7 @@
             message = "Enable logging of all HTTP requests (even non-errors)? Current setting is " + this.Preferences.enableFullHttpLogging;
 
             this.UiHelper.confirm(message).then((result: string) => {
-                var enable = result === "Yes";
+                var enable = result === Constants.Buttons.Yes;
 
                 this.Preferences.enableFullHttpLogging = enable;
 
