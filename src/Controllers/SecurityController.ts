@@ -106,7 +106,7 @@
                     this.UiHelper.confirm(SecurityController.FORCE_ARM_PROMPT).then((result: string) => {
 
                         // The user indicated that they want to continue anyways.
-                        if (result === "Yes") {
+                        if (result === Constants.Buttons.Yes) {
                             this.viewModel.forceArm = true;
                             this.armAlarm();
                         }
@@ -140,7 +140,7 @@
                     this.UiHelper.confirm(SecurityController.FORCE_ARM_OPEN_CONTACT_SENSOR_PROMPT).then((result: string) => {
 
                         // The user indicated that they want to continue anyways.
-                        if (result === "Yes") {
+                        if (result === Constants.Buttons.Yes) {
                             this.viewModel.forceArm = true;
                             this.armAlarm();
                         }
