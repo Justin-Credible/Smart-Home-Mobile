@@ -91,6 +91,37 @@
                 showText: _.bind(this.progressIndicator_show, this)
             };
         }
+        public getStatusBarPlugin(): StatusBar {
+            return {
+                overlaysWebView: _.bind(this.noOp, this),
+                styleDefault: _.bind(this.noOp, this),
+                styleLightContent: _.bind(this.noOp, this),
+                styleBlackTranslucent: _.bind(this.noOp, this),
+                styleBlackOpaque: _.bind(this.noOp, this),
+                backgroundColorByName: _.bind(this.noOp, this),
+                backgroundColorByHexString: _.bind(this.noOp, this),
+                hide: _.bind(this.noOp, this),
+                show: _.bind(this.noOp, this),
+                isVisible: false
+            };
+        }
+
+        public getKeyboardPlugin(): Ionic.Keyboard {
+            return {
+                hideKeyboardAccessoryBar: _.bind(this.noOp, this),
+                close:  _.bind(this.noOp, this),
+                disableScroll: _.bind(this.noOp, this),
+                isVisible: false
+            };
+        }
+
+        //#endregion
+
+        //#region Misc
+
+        private noOp(): void {
+            // No Op!
+        }
 
         //#endregion
 

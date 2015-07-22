@@ -287,6 +287,11 @@ module JustinCredible.SmartHomeMobile.Application {
         // Register all of the dialogs with the UiHelper.
         registerDialogs(Utilities, UiHelper);
 
+        // We use this combination of settings so prevent the visual jank that
+        // would otherwise occur when tapping an input that shows the keyboard.
+        UiHelper.keyboard.disableScroll(true);
+        UiHelper.keyboard.hideKeyboardAccessoryBar(true);
+
         // Mock up or allow HTTP responses.
         MockHttpApis.mockHttpCalls(Preferences.enableMockHttpCalls);
     };
