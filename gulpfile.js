@@ -296,30 +296,37 @@ gulp.task('libs', function(cb) {
  * This is equivalent to using the "cordova plugins add pluginName" command for each
  * of the plugins.
  */
-gulp.task('plugins', ['git-check'], function(cb) {
-  var pluginList = JSON.parse(fs.readFileSync('package.json', 'utf8')).cordovaPlugins;
-  
-  async.eachSeries(pluginList, function(plugin, eachCb) {
-    var pluginName;
-    
-    if (typeof(plugin) === "object" && typeof(plugin.locator) === "string") {
-      pluginName = plugin.locator;
-    }
-    else if (typeof(plugin) === "string") {
-      pluginName = plugin;
-    }
-    else {
-      cb(new Error("Unsupported plugin object type (must be string or object with a locator property)."));
-      return;
-    }
-    
-    exec("cordova plugin add " + pluginName, function (err, stdout, stderr) {
-      console.log(stdout);
-      console.log(stderr);
-      eachCb(err);
-    });
-    
-  }, cb);
+gulp.task("plugins", ["git-check"], function(cb) {
+    var pluginList = JSON.parse(fs.readFileSync("package.json", "utf8")).cordovaPlugins;
+
+    async.eachSeries(pluginList, function(plugin, eachCb) {
+        var pluginName,
+            additionalArguments = "";
+
+        if (typeof(plugin) === "object" && typeof(plugin.locator) === "string") {
+            pluginName = plugin.locator;
+
+            if (plugin.variables) {
+                Object.keys(plugin.variables).forEach(function (variable) {
+                    additionalArguments += " --variable " + variable + "=\"" + plugin.variables[variable] + "\"";
+                });
+            }
+        }
+        else if (typeof(plugin) === "string") {
+            pluginName = plugin;
+        }
+        else {
+            cb(new Error("Unsupported plugin object type (must be string or object with a locator property)."));
+            return;
+        }
+
+        exec("cordova plugin add " + pluginName + additionalArguments, function (err, stdout, stderr) {
+            console.log(stdout);
+            console.log(stderr);
+            eachCb(err);
+        });
+
+    }, cb);
 });
 
 /**
