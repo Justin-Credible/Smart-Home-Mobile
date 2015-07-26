@@ -2,10 +2,14 @@
 
     export class DeveloperViewModel {
         mockApiRequests: boolean;
+
+        enableFullHttpLogging: boolean;
+
+        logToLocalStorage: boolean;
+
         devicePlatform: string;
-        loggingToLocalStorage: string;
+
         defaultStoragePathId: string;
         defaultStoragePath: string;
     }
-
 }

@@ -5,7 +5,7 @@
         public static ID = "DeveloperController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$http", Services.Utilities.ID, Services.UiHelper.ID, Services.FileUtilities.ID, Services.Logger.ID, Services.Preferences.ID];
+            return ["$scope", "$http", Services.Utilities.ID, Services.UiHelper.ID, Services.FileUtilities.ID, Services.Logger.ID, Services.Preferences.ID, Services.MockPlatformApis.ID];
         }
 
         private $http: ng.IHttpService;
@@ -14,11 +14,9 @@
         private FileUtilities: Services.FileUtilities;
         private Logger: Services.Logger;
         private Preferences: Services.Preferences;
-        private AlertMeApi: Services.AlertMeApi;
+        private MockPlatformApis: Services.MockPlatformApis;
 
-        private thermostat_deviceId: string;
-
-        constructor($scope: ng.IScope, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, FileUtilities: Services.FileUtilities, Logger: Services.Logger, Preferences: Services.Preferences, AlertMeApi: Services.AlertMeApi) {
+        constructor($scope: ng.IScope, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, FileUtilities: Services.FileUtilities, Logger: Services.Logger, Preferences: Services.Preferences, MockPlatformApis: Services.MockPlatformApis) {
             super($scope, ViewModels.DeveloperViewModel);
 
             this.$http = $http;
@@ -27,7 +25,7 @@
             this.FileUtilities = FileUtilities;
             this.Logger = Logger;
             this.Preferences = Preferences;
-            this.AlertMeApi = AlertMeApi;
+            this.MockPlatformApis = MockPlatformApis;
         }
 
         //#region BaseController Overrides
@@ -37,8 +35,11 @@
 
             this.viewModel.mockApiRequests = this.Preferences.enableMockHttpCalls;
 
+            this.viewModel.enableFullHttpLogging = this.Preferences.enableFullHttpLogging;
+
+            this.viewModel.logToLocalStorage = this.Logger.getLogToLocalStorage();
+
             this.viewModel.devicePlatform = this.Utilities.platform;
-            this.viewModel.loggingToLocalStorage = this.Logger.getLogToLocalStorage() + "";
             this.viewModel.defaultStoragePathId = this.FileUtilities.getDefaultRootPathId();
             this.viewModel.defaultStoragePath = this.FileUtilities.getDefaultRootPath();
         }
@@ -65,12 +66,15 @@
 
         //#region Controller Methods
 
-        protected mockApiRequests_change() {
-            var message: string;
+        protected help_click(helpMessage: string): void {
+            this.UiHelper.alert(helpMessage, "Help");
+        }
+
+        protected mockApiRequests_change(): void {
 
             this.Preferences.enableMockHttpCalls = this.viewModel.mockApiRequests;
 
-            message = "The application needs to be reloaded for changes to take effect.\n\nReload now?";
+            var message = "The application needs to be reloaded for changes to take effect.\n\nReload now?";
 
             this.UiHelper.confirm(message, "Confirm Reload").then((result: string) => {
                 if (result === Constants.Buttons.Yes) {
@@ -79,137 +83,50 @@
             });
         }
 
-        protected alertMeApiLogin() {
-            this.AlertMeApi.login().then((result: AlertMeApiTypes.LoginResult) => {
-                this.UiHelper.alert("Hub ID: " + result.hubIds[0]);
-            });
+        protected enableFullHttpLogging_change(): void {
+            this.Preferences.enableFullHttpLogging = this.viewModel.enableFullHttpLogging;
         }
 
-        protected alertMeApiLogout() {
-            this.AlertMeApi.logout();
+        protected logResponseErrors_click(): void {
+            this.UiHelper.alert("HTTP response errors are always logged.");
         }
 
-        protected alertMeApiHomeStatus() {
-            this.AlertMeApi.getHomeStatus().then((result: any) => {
-                console.log(result);
-            });
+        protected logToLocalStorage_change(): void {
+            this.Logger.setLogToLocalStorage(this.viewModel.logToLocalStorage);
+
+            if (this.viewModel.logToLocalStorage) {
+                this.UiHelper.alert("Logs will now be written to local storage for this session only.");
+            }
         }
 
-        protected thermostat_info() {
-            this.AlertMeApi.getClimate().then((result: AlertMeApiTypes.ClimateGetResult) => {
-                var text = this.Utilities.format("State: {0}\nMode: {1}\nTemp: {2}\n", result.onOffState, result.mode, result.targetTemperature);
-                this.thermostat_deviceId = result.deviceId;
-                this.UiHelper.alert(text);
-            });
-        }
-
-        protected thermostat_state_on() {
-            this.AlertMeApi.setClimateOnOffState(this.thermostat_deviceId, Services.AlertMeApi.ClimateOnOffState.On).then(() => {
-                alert("OK!");
-            }, (err) => {
-                alert(err);
-            });
-        }
-
-        protected thermostat_state_off() {
-            this.AlertMeApi.setClimateOnOffState(this.thermostat_deviceId, Services.AlertMeApi.ClimateOnOffState.Off).then(() => {
-                alert("OK!");
-            }, (err) => {
-                alert(err);
-            });
-        }
-
-        protected thermostat_mode_cool() {
-            this.AlertMeApi.setClimateMode(this.thermostat_deviceId, Services.AlertMeApi.ClimateMode.Cool).then(() => {
-                alert("OK!");
-            }, (err) => {
-                alert(err);
-            });
-        }
-
-        protected thermostat_mode_heat() {
-            this.AlertMeApi.setClimateMode(this.thermostat_deviceId, Services.AlertMeApi.ClimateMode.Heat).then(() => {
-                alert("OK!");
-            }, (err) => {
-                alert(err);
-            });
-        }
-
-        protected thermostat_mode_off() {
-            this.AlertMeApi.setClimateMode(this.thermostat_deviceId, Services.AlertMeApi.ClimateMode.Off).then(() => {
-                alert("OK!");
-            }, (err) => {
-                alert(err);
-            });
-        }
-
-        protected thermostat_setTemperature() {
-            this.UiHelper.prompt("Enter a temperature in degrees F.").then((dialogResult: Models.KeyValuePair<string, string>) => {
-                if (dialogResult.key === "OK") {
-                    this.AlertMeApi.setClimateTargetTemperature(this.thermostat_deviceId, parseInt(dialogResult.value, 10), Services.AlertMeApi.ClimateTemperatureUnit.Fahrenheit).then(() => {
-                        alert("OK!");
-                    }, (err) => {
-                        alert(err);
-                    });
+        protected userToken_click(token: string): void {
+            this.UiHelper.confirm("Copy token to clipboard?").then((result: string) => {
+                if (result === Constants.Buttons.Yes) {
+                    this.UiHelper.clipboard.copy(token);
+                    this.UiHelper.toast.showShortBottom("Token copied to clipboard.");
                 }
             });
         }
 
-        protected setLoggingMode_click() {
-            var message: string;
+        protected addServicesToGlobalScope_click(): void {
 
-            message = "Enable exception logging to local storage? Current setting is " + this.Logger.getLogToLocalStorage();
-
-            this.UiHelper.confirm(message).then((result: string) => {
-                var enable = result === Constants.Buttons.Yes;
-
-                this.viewModel.loggingToLocalStorage = enable + "";
-                this.Logger.setLogToLocalStorage(enable);
-
-                if (enable) {
-                    this.UiHelper.alert("Logs will be written to local storage.");
-                }
-                else {
-                    this.UiHelper.alert("Logs will not be written to local storage; they will be stored in-memory only.");
-                }
-            });
-        }
-
-        protected setHttpLoggingMode_click() {
-            var message: string;
-
-            message = "Enable logging of all HTTP requests (even non-errors)? Current setting is " + this.Preferences.enableFullHttpLogging;
-
-            this.UiHelper.confirm(message).then((result: string) => {
-                var enable = result === Constants.Buttons.Yes;
-
-                this.Preferences.enableFullHttpLogging = enable;
-
-                if (enable) {
-                    this.UiHelper.alert("ALL HTTP requests and responses will be logged.");
-                }
-                else {
-                    this.UiHelper.alert("Only HTTP errors will be logged.");
-                }
-            });
-        }
-
-        protected addModulesToGlobalScope_click() {
             /* tslint:disable:no-string-literal */
-            window["__FileUtilities"] = this.FileUtilities;
-            window["__Logger"] = this.Logger;
-            window["__Utilities"] = this.Utilities;
-            window["__UiHelper"] = this.UiHelper;
-            window["__Preferences"] = this.Preferences;
+            window["__ngServices"] = {
+                "FileUtilities": this.FileUtilities,
+                "Logger": this.Logger,
+                "Utilities": this.Utilities,
+                "UiHelper": this.UiHelper,
+                "Preferences": this.Preferences,
+                "MockPlatformApis": this.MockPlatformApis
+            };
             /* tslint:enable:no-string-literal */
 
-            this.UiHelper.alert("Added the following services to the global window scope: __FileUtilities, __Logger, __Utilities, __UiHelper, __Preferences");
+            this.UiHelper.alert("Added services to the global variable __ngServices.");
         }
 
-        protected setRequirePinThreshold_click() {
-            var message: string;
+        protected setRequirePinThreshold_click(): void {
 
-            message = this.Utilities.format("Enter the value (in minutes) for PIN prompt threshold? Current setting is {0} minutes.", this.Preferences.requirePinThreshold);
+            var message = this.Utilities.format("Enter the value (in minutes) for PIN prompt threshold? Current setting is {0} minutes.", this.Preferences.requirePinThreshold);
 
             this.UiHelper.prompt(message, "Require PIN Threshold", null, this.Preferences.requirePinThreshold.toString()).then((result: Models.KeyValuePair<string, string>) => {
 
@@ -228,17 +145,29 @@
             });
         }
 
-        protected resetPinTimeout_click() {
-            var message: string;
+        protected resetPinTimeout_click(): void {
 
             this.Preferences.lastPausedAt = moment("01-01-2000", "MM-DD-yyyy");
 
-            message = "The PIN timeout has been set to more than 10 minutes ago. To see the PIN screen, terminate the application via the OS task manager (don't just background it), and then re-launch.";
+            var message = "The PIN timeout has been set to more than 10 minutes ago. To see the PIN screen, terminate the application via the OS task manager (don't just background it), and then re-launch.";
 
             this.UiHelper.alert(message, "Reset PIN Timeout");
         }
 
-        protected testJsException_click() {
+        protected reEnableOnboarding_click(): void {
+            //this.Preferences.hasCompletedOnboarding = false; //TODO: Uncomment once onboarding is implemented.
+            this.UiHelper.alert("Onboarding has been enabled and will occur upon next app boot.");
+        }
+
+        protected testNativeException_click(): void {
+            this.UiHelper.confirm("Are you sure you want to cause a native crash? This requires the Crashlytics plug-in to be installed.").then((result: string) => {
+                if (result === Constants.Buttons.Yes) {
+                    this.UiHelper.crashlytics.simulateCrash();
+                }
+            });
+        }
+
+        protected testJsException_click(): void {
             /* tslint:disable:no-string-literal */
 
             // Cause an exception by referencing an undefined variable.
@@ -250,7 +179,7 @@
             /* tslint:enable:no-string-literal */
         }
 
-        protected testAngularException_click() {
+        protected testAngularException_click(): void {
             /* tslint:disable:no-string-literal */
 
             // Cause an exception by referencing an undefined variable.
@@ -259,8 +188,8 @@
             /* tslint:enable:no-string-literal */
         }
 
-        protected showFullScreenBlock_click() {
-            this.UiHelper.progressIndicator.showSimpleWithLabel(true, "Authenticating...");
+        protected showFullScreenBlock_click(): void {
+            this.UiHelper.progressIndicator.showSimpleWithLabel(true, "Blocking...");
 
             setTimeout(() => {
                 this.UiHelper.progressIndicator.hide();
@@ -303,43 +232,19 @@
             });
         }
 
-        protected startProgress_click() {
+        protected startProgress_click(): void {
             NProgress.start();
         }
 
-        protected incrementProgress_click() {
+        protected incrementProgress_click(): void {
             NProgress.inc();
         }
 
-        protected doneProgress_click() {
+        protected doneProgress_click(): void {
             NProgress.done();
         }
 
-        protected showPinEntry_click() {
-            var options: Models.DialogOptions,
-                model: Models.PinEntryDialogModel;
-
-            model = new Models.PinEntryDialogModel("Testing new PIN entry", null, true);
-            options = new Models.DialogOptions(model);
-
-            this.UiHelper.showDialog(PinEntryController.ID, options).then((result: Models.PinEntryDialogResultModel) => {
-                this.UiHelper.alert("Cancelled: " + result.cancelled + " PIN matches: " + result.matches + " PIN entered: " + result.pin);
-            });
-        }
-
-        protected showPinEntry1234_click() {
-            var options: Models.DialogOptions,
-                model: Models.PinEntryDialogModel;
-
-            model = new Models.PinEntryDialogModel("Testing PIN matching (1234)", "1234", true);
-            options = new Models.DialogOptions(model);
-
-            this.UiHelper.showDialog(PinEntryController.ID, options).then((result: Models.PinEntryDialogResultModel) => {
-                this.UiHelper.alert("Cancelled: " + result.cancelled + " PIN matches: " + result.matches + " PIN entered: " + result.pin);
-            });
-        }
-
-        protected readFile_click() {
+        protected readFile_click(): void {
             this.UiHelper.prompt("Enter file name to read from", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
                 if (result.key !== Constants.Buttons.OK) {
@@ -352,7 +257,7 @@
             });
         }
 
-        protected writeFile_click() {
+        protected writeFile_click(): void {
             var path: string,
                 contents: string;
 
@@ -379,7 +284,7 @@
             });
         }
 
-        protected appendFile_click() {
+        protected appendFile_click(): void {
             var path: string,
                 contents: string;
 
@@ -404,7 +309,7 @@
             });
         }
 
-        protected createDir_click() {
+        protected createDir_click(): void {
             var path: string;
 
             this.UiHelper.prompt("Enter dir name to create", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
@@ -421,7 +326,16 @@
             });
         }
 
-        protected listFiles_click() {
+        protected defaultStoragePath_click(path: string): void {
+            this.UiHelper.confirm("Copy path to clipboard?").then((result: string) => {
+                if (result === Constants.Buttons.Yes) {
+                    this.UiHelper.clipboard.copy(path);
+                    this.UiHelper.toast.showShortBottom("Path copied to clipboard.");
+                }
+            });
+        }
+
+        protected listFiles_click(): void {
             var path: string,
                 list = "";
 
@@ -450,7 +364,7 @@
             });
         }
 
-        protected listDirs_click() {
+        protected listDirs_click(): void {
             var path: string,
                 list = "";
 
@@ -479,7 +393,7 @@
             });
         }
 
-        protected deleteFile_click() {
+        protected deleteFile_click(): void {
             var path: string;
 
             this.UiHelper.prompt("Enter path to delete file", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
@@ -496,7 +410,7 @@
             });
         }
 
-        protected deleteDir_click() {
+        protected deleteDir_click(): void {
             var path: string;
 
             this.UiHelper.prompt("Enter path to delete dir", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
