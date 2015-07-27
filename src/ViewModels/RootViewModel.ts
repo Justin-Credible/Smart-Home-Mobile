@@ -1,6 +1,6 @@
 ﻿module JustinCredible.SmartHomeMobile.ViewModels {
 
-    export class MenuViewModel {
+    export class RootViewModel {
         public categories: ViewModels.CategoryItemViewModel[];
     }
 
