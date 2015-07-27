@@ -49,13 +49,13 @@
 
             this.HubDataSource.refreshHomeStatus().then((result: AlertMeApiTypes.HomeStatusGetResult) => {
                 this.viewModel.isRefreshing = false;
-                this.scope.$broadcast("scroll.refreshComplete");
+                this.scope.$broadcast(Constants.Events.SCROLL_REFRESH_COMPLETE);
 
                 this.populateViewModel(result, this.HubDataSource.homeStatusLastUpdated);
 
             }, () => {
                 this.viewModel.isRefreshing = false;
-                this.scope.$broadcast("scroll.refreshComplete");
+                this.scope.$broadcast(Constants.Events.SCROLL_REFRESH_COMPLETE);
             });
         }
 

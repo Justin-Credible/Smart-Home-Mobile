@@ -47,7 +47,7 @@
 
             this.HubDataSource.refreshSmartPlugs().then((result: AlertMeApiTypes.SmartPlugDevice[]) => {
                 this.viewModel.isRefreshing = false;
-                this.scope.$broadcast("scroll.refreshComplete");
+                this.scope.$broadcast(Constants.Events.SCROLL_REFRESH_COMPLETE);
 
                 this.viewModel.smartPlugs = result;
                 this.viewModel.lastUpdated = this.HubDataSource.smartPlugsLastUpdated.toDate();
@@ -64,7 +64,7 @@
 
             }, () => {
                 this.viewModel.isRefreshing = false;
-                this.scope.$broadcast("scroll.refreshComplete");
+                this.scope.$broadcast(Constants.Events.SCROLL_REFRESH_COMPLETE);
             });
         }
 

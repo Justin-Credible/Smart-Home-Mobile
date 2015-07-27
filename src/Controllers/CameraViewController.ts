@@ -153,7 +153,7 @@
                     this.viewModel.showLoadingPanel = false;
                     this.refresh();
                     this.scope.$apply();
-                    this.scope.$broadcast("scroll.refreshComplete");
+                    this.scope.$broadcast(Constants.Events.SCROLL_REFRESH_COMPLETE);
                 }, 1000);
             }
         }

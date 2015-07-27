@@ -28,3 +28,16 @@ module JustinCredible.SmartHomeMobile.Constants.Buttons {
     export const OK = "OK";
     export const Cancel = "Cancel";
 }
+
+/**
+ * A collection of names of events used within the application.
+ */
+module JustinCredible.SmartHomeMobile.Constants.Events {
+    export const HTTP_ERROR = "http.error";
+    export const HTTP_BLOCKING_REQUEST_STARTED = "http.blocking-request-started";
+    export const HTTP_BLOCKING_REQUESTS_COMPLETED = "http.blocking-requests-completed";
+    export const HTTP_NON_BLOCKING_REQUEST_STARTED = "http.non-blocking-request-started";
+    export const HTTP_NON_BLOCKING_REQUESTS_COMPLETED = "http.non-blocking-requests-completed";
+    export const APP_MENU_BUTTON = "app.menuButton";
+    export const SCROLL_REFRESH_COMPLETE = "scroll.refreshComplete";
+}

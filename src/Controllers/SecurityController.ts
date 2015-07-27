@@ -64,7 +64,7 @@
 
             this.HubDataSource.refreshSecurity().then((result: ViewModels.SecurityViewModel) => {
                 this.viewModel.isRefreshing = false;
-                this.scope.$broadcast("scroll.refreshComplete");
+                this.scope.$broadcast(Constants.Events.SCROLL_REFRESH_COMPLETE);
 
                 this.viewModel.alarmData = result.alarmData;
                 this.viewModel.alarmOverviewData = result.alarmOverviewData;
@@ -86,7 +86,7 @@
 
             }, () => {
                 this.viewModel.isRefreshing = false;
-                this.scope.$broadcast("scroll.refreshComplete");
+                this.scope.$broadcast(Constants.Events.SCROLL_REFRESH_COMPLETE);
             });
         }
 

@@ -411,7 +411,7 @@ module JustinCredible.SmartHomeMobile.Application {
     function device_menuButton($rootScope: ng.IScope): void {
         // Broadcast this event to all child scopes. This allows controllers for individual
         // views to handle this event and show a contextual menu etc.
-        $rootScope.$broadcast("menubutton");
+        $rootScope.$broadcast(Constants.Events.APP_MENU_BUTTON);
     }
 
     /**

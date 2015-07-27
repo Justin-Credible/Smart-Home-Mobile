@@ -206,19 +206,8 @@
                 // Keep track of how many requests are still in progress and hide spinners etc.
                 this.handleResponseEnd(config);
 
-                // For certain response codes, we'll broadcast an event to the rest of the app
-                // so that it can handle the event in whatever way is appropriate.
-                if (httpResponse.status === 401) {
-                    this.$rootScope.$broadcast("http.unauthorized");
-                }
-                else if (httpResponse.status === 403) {
-                    this.$rootScope.$broadcast("http.forbidden");
-                }
-                else if (httpResponse.status === 404) {
-                    this.$rootScope.$broadcast("http.not_found");
-                }
-
-                this.$rootScope.$broadcast("http.error", httpResponse);
+                // Broadcast an error so other parts of the are aware.
+                this.$rootScope.$broadcast(Constants.Events.HTTP_ERROR, httpResponse);
             }
 
             return this.$q.reject(responseOrError);
@@ -270,7 +259,7 @@
 
                 // Let the rest of the application know that blocking requests are in progress.
                 /* tslint:disable:no-string-literal */
-                this.$rootScope.$broadcast("http.blocking-request-started");
+                this.$rootScope.$broadcast(Constants.Events.HTTP_BLOCKING_REQUEST_STARTED);
                 this.$rootScope["blockingRequestInProgress"] = true;
                 /* tslint:enable:no-string-literal */
             }
@@ -289,7 +278,7 @@
 
                 // Let the rest of the application know that non-blocking requests are in progress.
                 /* tslint:disable:no-string-literal */
-                this.$rootScope.$broadcast("http.non-blocking-request-started");
+                this.$rootScope.$broadcast(Constants.Events.HTTP_NON_BLOCKING_REQUEST_STARTED);
                 this.$rootScope["nonBlockingRequestInProgress"] = true;
                 /* tslint:enable:no-string-literal */
             }
@@ -332,7 +321,7 @@
 
                 // Let the rest of the application know that all blocking requests are finished.
                 /* tslint:disable:no-string-literal */
-                this.$rootScope.$broadcast("http.blocking-requests-completed");
+                this.$rootScope.$broadcast(Constants.Events.HTTP_BLOCKING_REQUESTS_COMPLETED);
                 this.$rootScope["blockingRequestInProgress"] = false;
                 /* tslint:enable:no-string-literal */
             }
@@ -343,7 +332,7 @@
 
                 // Let the rest of the application know that all non-blocking requests are finished.
                 /* tslint:disable:no-string-literal */
-                this.$rootScope.$broadcast("http.non-blocking-requests-completed");
+                this.$rootScope.$broadcast(Constants.Events.HTTP_NON_BLOCKING_REQUESTS_COMPLETED);
                 this.$rootScope["nonBlockingRequestInProgress"] = false;
                 /* tslint:enable:no-string-literal */
             }

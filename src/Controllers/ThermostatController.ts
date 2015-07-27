@@ -66,7 +66,7 @@
 
             this.HubDataSource.refreshClimate().then((result: AlertMeApiTypes.ClimateGetResult) => {
                 this.viewModel.isRefreshing = false;
-                this.scope.$broadcast("scroll.refreshComplete");
+                this.scope.$broadcast(Constants.Events.SCROLL_REFRESH_COMPLETE);
 
                 if (result.widgetStatus === Services.AlertMeApi.WidgetStatus.DeviceMissing) {
                     this.UiHelper.toast.showLongBottom(result.message);
@@ -76,7 +76,7 @@
 
             }, () => {
                 this.viewModel.isRefreshing = false;
-                this.scope.$broadcast("scroll.refreshComplete");
+                this.scope.$broadcast(Constants.Events.SCROLL_REFRESH_COMPLETE);
             });
         }
 

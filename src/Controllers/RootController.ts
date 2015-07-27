@@ -27,7 +27,7 @@
 
             this.viewModel.categories = this.Preferences.categories;
 
-            $scope.$on("http.error", _.bind(this.http_error, this));
+            $scope.$on(Constants.Events.HTTP_ERROR, _.bind(this.http_error, this));
             $scope.$on(Services.AlertMeApi.URL_NOT_SPECIFIED_EVENT, _.bind(this.alertMeApi_urlNotSpecified, this));
             $scope.$on(Services.AlertMeApi.CREDENTIALS_NOT_SPECIFIED_EVENT, _.bind(this.alertMeApi_credentialsNotSpecified, this));
         }
