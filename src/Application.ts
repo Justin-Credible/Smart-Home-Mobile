@@ -323,7 +323,7 @@ module JustinCredible.SmartHomeMobile.Application {
         // We use this combination of settings so prevent the visual jank that
         // would otherwise occur when tapping an input that shows the keyboard.
         UiHelper.keyboard.disableScroll(true);
-        UiHelper.keyboard.hideKeyboardAccessoryBar(true);
+        UiHelper.keyboard.hideKeyboardAccessoryBar(false);
 
         // Mock up or allow HTTP responses.
         MockHttpApis.mockHttpCalls(Preferences.enableMockHttpCalls);
