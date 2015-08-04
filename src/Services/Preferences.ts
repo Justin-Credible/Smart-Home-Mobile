@@ -18,12 +18,6 @@
 
         //#region Local Storage Keys
 
-        private static ENABLE_DEVELOPER_TOOLS = "ENABLE_DEVELOPER_TOOLS";
-        private static ENABLE_FULL_HTTP_LOGGING = "ENABLE_FULL_HTTP_LOGGING";
-        private static ENABLE_MOCK_HTTP_CALLS = "ENABLE_MOCK_HTTP_CALLS";
-
-        private static REQUIRE_PIN_THRESHOLD = "REQUIRE_PIN_THRESHOLD";
-        private static LAST_PAUSED_AT = "LAST_PAUSED_AT";
         private static PIN = "PIN";
 
         private static DEFAULT_CATEGORY_NAME = "DEFAULT_CATEGORY_NAME";
@@ -42,92 +36,11 @@
 
         //#endregion
 
-        //#region Defaults
-
-        // Default setting is 10 minutes.
-        private static REQUIRE_PIN_THRESHOLD_DEFAULT = 10;
-
-        //#endregion
-
         constructor(Utilities: Utilities) {
             this.Utilities = Utilities;
         }
 
-        //#region Development Tools
-
-        get enableDeveloperTools(): boolean {
-            return sessionStorage.getItem(Preferences.ENABLE_DEVELOPER_TOOLS) === "true";
-        }
-
-        set enableDeveloperTools(value: boolean) {
-            if (value == null) {
-                sessionStorage.removeItem(Preferences.ENABLE_DEVELOPER_TOOLS);
-            }
-            else {
-                sessionStorage.setItem(Preferences.ENABLE_DEVELOPER_TOOLS, value.toString());
-            }
-        }
-
-        get enableFullHttpLogging(): boolean {
-            return localStorage.getItem(Preferences.ENABLE_FULL_HTTP_LOGGING) === "true";
-        }
-
-        set enableFullHttpLogging(value: boolean) {
-            if (value == null) {
-                localStorage.removeItem(Preferences.ENABLE_FULL_HTTP_LOGGING);
-            }
-            else {
-                localStorage.setItem(Preferences.ENABLE_FULL_HTTP_LOGGING, value.toString());
-            }
-        }
-
-        get enableMockHttpCalls(): boolean {
-            return localStorage.getItem(Preferences.ENABLE_MOCK_HTTP_CALLS) === "true";
-        }
-
-        set enableMockHttpCalls(value: boolean) {
-            if (value == null) {
-                localStorage.removeItem(Preferences.ENABLE_MOCK_HTTP_CALLS);
-            }
-            else {
-                localStorage.setItem(Preferences.ENABLE_MOCK_HTTP_CALLS, value.toString());
-            }
-        }
-
-        //#endregion
-
         //#region PIN
-
-        get requirePinThreshold(): number {
-            var value = localStorage.getItem(Preferences.REQUIRE_PIN_THRESHOLD);
-            return value == null ? Preferences.REQUIRE_PIN_THRESHOLD_DEFAULT : parseInt(value, 10);
-        }
-
-        set requirePinThreshold(value: number) {
-            if (value == null) {
-                localStorage.removeItem(Preferences.REQUIRE_PIN_THRESHOLD);
-            }
-            else {
-                localStorage.setItem(Preferences.REQUIRE_PIN_THRESHOLD, value.toString());
-            }
-        }
-
-        set lastPausedAt(value: moment.Moment) {
-            if (value == null) {
-                localStorage.removeItem(Preferences.LAST_PAUSED_AT);
-            }
-            else {
-                localStorage.setItem(Preferences.LAST_PAUSED_AT, moment(value).format());
-            }
-        }
-
-        get lastPausedAt(): moment.Moment {
-            var lastPausedAt: string;
-
-            lastPausedAt = localStorage.getItem(Preferences.LAST_PAUSED_AT);
-
-            return moment(lastPausedAt).isValid() ? moment(lastPausedAt) : null;
-        }
 
         get pin(): string {
             return localStorage.getItem(Preferences.PIN);

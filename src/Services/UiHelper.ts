@@ -25,7 +25,7 @@
         //#endregion
 
         public static get $inject(): string[] {
-            return ["$rootScope", "$q", "$http", "$ionicModal", MockPlatformApis.ID, Utilities.ID, Preferences.ID];
+            return ["$rootScope", "$q", "$http", "$ionicModal", MockPlatformApis.ID, Utilities.ID, Preferences.ID, Configuration.ID];
         }
 
         private $rootScope: ng.IRootScopeService;
@@ -35,8 +35,9 @@
         private MockPlatformApis: MockPlatformApis;
         private Utilities: Utilities;
         private Preferences: Preferences;
+        private Configuration: Configuration;
 
-        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, $ionicModal: any, MockPlatformApis: MockPlatformApis, Utilities: Utilities, Preferences: Preferences) {
+        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, $ionicModal: any, MockPlatformApis: MockPlatformApis, Utilities: Utilities, Preferences: Preferences, Configuration: Services.Configuration) {
             this.$rootScope = $rootScope;
             this.$q = $q;
             this.$http = $http;
@@ -44,6 +45,7 @@
             this.MockPlatformApis = MockPlatformApis;
             this.Utilities = Utilities;
             this.Preferences = Preferences;
+            this.Configuration = Configuration;
         }
 
         //#region Plug-in Accessors
@@ -562,13 +564,13 @@
 
             // If there is a PIN set and a last paused time then we need to determine if we
             // need to show the lock screen.
-            if (this.Preferences.pin && this.Preferences.lastPausedAt != null && this.Preferences.lastPausedAt.isValid()) {
+            if (this.Preferences.pin && this.Configuration.lastPausedAt != null && this.Configuration.lastPausedAt.isValid()) {
                 // Get the current time.
                 var resumedAt = moment();
 
                 // If the time elapsed since the last pause event is greater than the threshold,
                 // then we need to show the lock screen.
-                if (resumedAt.diff(this.Preferences.lastPausedAt, "minutes") > this.Preferences.requirePinThreshold) {
+                if (resumedAt.diff(this.Configuration.lastPausedAt, "minutes") > this.Configuration.requirePinThreshold) {
 
                     var model = new Models.PinEntryDialogModel("PIN Required", this.Preferences.pin, false);
                     var options = new Models.DialogOptions(model);

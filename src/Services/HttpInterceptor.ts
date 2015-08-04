@@ -44,6 +44,10 @@
             return this.$injector.get(Preferences.ID);
         }
 
+        private get Configuration(): Configuration {
+            return this.$injector.get(Configuration.ID);
+        }
+
         private get Logger(): Logger {
             return this.$injector.get(Logger.ID);
         }
@@ -99,7 +103,7 @@
             console.log("HttpInterceptor.request: " + config.url, [config]);
 
             // Log the request data to disk.
-            if (this.Preferences.enableFullHttpLogging) {
+            if (this.Configuration.enableFullHttpLogging) {
                 this.Logger.logHttpRequestConfig(config);
             }
 
@@ -126,7 +130,7 @@
             console.log("HttpInterceptor.response: " + httpResponse.config.url, [httpResponse]);
 
             // Log the response data to disk.
-            if (this.Preferences.enableFullHttpLogging) {
+            if (this.Configuration.enableFullHttpLogging) {
                 this.Logger.logHttpResponse(httpResponse);
             }
 

@@ -49,7 +49,7 @@ module JustinCredible.SmartHomeMobile.Application {
         // Define our constants.
         ngModule.constant("isRipple", !!(window.parent && window.parent.ripple));
         ngModule.constant("isCordova", typeof(cordova) !== "undefined");
-        ngModule.constant("isDebug", window.buildVars.debug);
+        ngModule.constant("buildVars", window.buildVars);
         ngModule.constant("isChromeExtension", typeof (chrome) !== "undefined" && typeof (chrome.runtime) !== "undefined" && typeof (chrome.runtime.id) !== "undefined");
         ngModule.constant("versionInfo", versionInfo);
 
@@ -276,7 +276,7 @@ module JustinCredible.SmartHomeMobile.Application {
     /**
      * The main initialize/run function for Angular; fired once the AngularJs framework is done loading.
      */
-    function angular_initialize($rootScope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockHttpApis: Services.MockHttpApis): void {
+    function angular_initialize($rootScope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, Configuration: Services.Configuration, MockHttpApis: Services.MockHttpApis): void {
 
         // Once AngularJs has loaded we'll wait for the Ionic platform's ready event.
         // This event will be fired once the device ready event fires via Cordova.
@@ -293,7 +293,7 @@ module JustinCredible.SmartHomeMobile.Application {
         UiHelper.keyboard.hideKeyboardAccessoryBar(true);
 
         // Mock up or allow HTTP responses.
-        MockHttpApis.mockHttpCalls(Preferences.enableMockHttpCalls);
+        MockHttpApis.mockHttpCalls(Configuration.enableMockHttpCalls);
     };
 
     /**
@@ -364,12 +364,12 @@ module JustinCredible.SmartHomeMobile.Application {
      * Fired when the OS decides to minimize or pause the application. This usually
      * occurs when the user presses the device's home button or switches applications.
      */
-    function device_pause(Preferences: Services.Preferences): void {
+    function device_pause(Configuration: Services.Configuration): void {
 
         if (!isShowingSecurityPrompt) {
             // Store the current date/time. This will be used to determine if we need to
             // show the PIN lock screen the next time the application is resumed.
-            Preferences.lastPausedAt = moment();
+            Configuration.lastPausedAt = moment();
         }
     }
 

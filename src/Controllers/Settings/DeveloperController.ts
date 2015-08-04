@@ -5,7 +5,7 @@
         public static ID = "DeveloperController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$http", Services.Utilities.ID, Services.UiHelper.ID, Services.FileUtilities.ID, Services.Logger.ID, Services.Preferences.ID, Services.MockPlatformApis.ID];
+            return ["$scope", "$http", Services.Utilities.ID, Services.UiHelper.ID, Services.FileUtilities.ID, Services.Logger.ID, Services.Configuration.ID, Services.MockPlatformApis.ID];
         }
 
         private $http: ng.IHttpService;
@@ -13,10 +13,10 @@
         private UiHelper: Services.UiHelper;
         private FileUtilities: Services.FileUtilities;
         private Logger: Services.Logger;
-        private Preferences: Services.Preferences;
+        private Configuration: Services.Configuration;
         private MockPlatformApis: Services.MockPlatformApis;
 
-        constructor($scope: ng.IScope, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, FileUtilities: Services.FileUtilities, Logger: Services.Logger, Preferences: Services.Preferences, MockPlatformApis: Services.MockPlatformApis) {
+        constructor($scope: ng.IScope, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, FileUtilities: Services.FileUtilities, Logger: Services.Logger, Configuration: Services.Configuration, MockPlatformApis: Services.MockPlatformApis) {
             super($scope, ViewModels.DeveloperViewModel);
 
             this.$http = $http;
@@ -24,7 +24,7 @@
             this.UiHelper = UiHelper;
             this.FileUtilities = FileUtilities;
             this.Logger = Logger;
-            this.Preferences = Preferences;
+            this.Configuration = Configuration;
             this.MockPlatformApis = MockPlatformApis;
         }
 
@@ -33,9 +33,9 @@
         protected view_beforeEnter(): void {
             super.view_beforeEnter();
 
-            this.viewModel.mockApiRequests = this.Preferences.enableMockHttpCalls;
+            this.viewModel.mockApiRequests = this.Configuration.enableMockHttpCalls;
 
-            this.viewModel.enableFullHttpLogging = this.Preferences.enableFullHttpLogging;
+            this.viewModel.enableFullHttpLogging = this.Configuration.enableFullHttpLogging;
 
             this.viewModel.logToLocalStorage = this.Logger.getLogToLocalStorage();
 
@@ -72,7 +72,7 @@
 
         protected mockApiRequests_change(): void {
 
-            this.Preferences.enableMockHttpCalls = this.viewModel.mockApiRequests;
+            this.Configuration.enableMockHttpCalls = this.viewModel.mockApiRequests;
 
             var message = "The application needs to be reloaded for changes to take effect.\n\nReload now?";
 
@@ -84,7 +84,7 @@
         }
 
         protected enableFullHttpLogging_change(): void {
-            this.Preferences.enableFullHttpLogging = this.viewModel.enableFullHttpLogging;
+            this.Configuration.enableFullHttpLogging = this.viewModel.enableFullHttpLogging;
         }
 
         protected logResponseErrors_click(): void {
@@ -116,7 +116,7 @@
                 "Logger": this.Logger,
                 "Utilities": this.Utilities,
                 "UiHelper": this.UiHelper,
-                "Preferences": this.Preferences,
+                "Configuration": this.Configuration,
                 "MockPlatformApis": this.MockPlatformApis
             };
             /* tslint:enable:no-string-literal */
@@ -126,9 +126,9 @@
 
         protected setRequirePinThreshold_click(): void {
 
-            var message = this.Utilities.format("Enter the value (in minutes) for PIN prompt threshold? Current setting is {0} minutes.", this.Preferences.requirePinThreshold);
+            var message = this.Utilities.format("Enter the value (in minutes) for PIN prompt threshold? Current setting is {0} minutes.", this.Configuration.requirePinThreshold);
 
-            this.UiHelper.prompt(message, "Require PIN Threshold", null, this.Preferences.requirePinThreshold.toString()).then((result: Models.KeyValuePair<string, string>) => {
+            this.UiHelper.prompt(message, "Require PIN Threshold", null, this.Configuration.requirePinThreshold.toString()).then((result: Models.KeyValuePair<string, string>) => {
 
                 if (result.key !== Constants.Buttons.OK) {
                     return;
@@ -139,7 +139,7 @@
                     return;
                 }
 
-                this.Preferences.requirePinThreshold = parseInt(result.value, 10);
+                this.Configuration.requirePinThreshold = parseInt(result.value, 10);
 
                 this.UiHelper.alert(this.Utilities.format("PIN prompt threshold is now set to {0} minutes.", result.value));
             });
@@ -147,7 +147,7 @@
 
         protected resetPinTimeout_click(): void {
 
-            this.Preferences.lastPausedAt = moment("01-01-2000", "MM-DD-yyyy");
+            this.Configuration.lastPausedAt = moment("01-01-2000", "MM-DD-yyyy");
 
             var message = "The PIN timeout has been set to more than 10 minutes ago. To see the PIN screen, terminate the application via the OS task manager (don't just background it), and then re-launch.";
 
@@ -155,7 +155,7 @@
         }
 
         protected reEnableOnboarding_click(): void {
-            //this.Preferences.hasCompletedOnboarding = false; //TODO: Uncomment once onboarding is implemented.
+            //this.Configuration.hasCompletedOnboarding = false; //TODO: Uncomment once onboarding is implemented.
             this.UiHelper.alert("Onboarding has been enabled and will occur upon next app boot.");
         }
 
