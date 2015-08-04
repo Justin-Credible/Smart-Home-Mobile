@@ -1,7 +1,7 @@
 ﻿module JustinCredible.SmartHomeMobile.Directives {
 
     /**
-     * Describes what our directive objects look like.
+     * Describes what our element directive objects look like.
      */
     export interface IElementDirective {
         initialize();
@@ -9,14 +9,14 @@
     }
 
     /**
-     * Describes the constructor for the an class implementing IDirective.
+     * Describes the constructor for the an class implementing IElementDirective.
      */
     export interface IElementDirectiveClass {
         new (scope: ng.IScope, instanceElement: ng.IAugmentedJQuery, instanceAttributes: ng.IAttributes, controller: any, transclude: ng.ITranscludeFunction);
     }
 
     /**
-     * This is the base directive that all other directives should utilize.
+     * This is the base directive that all other directives for elements should utilize.
      * 
      * It handles saving references to the various objects in its constructor.
      * 
@@ -30,22 +30,11 @@
          */
         public static __BaseElementDirective = true;
 
-        public scope: T;
-        public element: ng.IAugmentedJQuery;
-        public attributes: ng.IAttributes;
-        public controller: any;
-        public transclude: ng.ITranscludeFunction;
-
-        constructor(scope: T, element: ng.IAugmentedJQuery, attributes: ng.IAttributes, controller: any, transclude: ng.ITranscludeFunction) {
-
-            this.scope = scope;
-            this.element = element;
-            this.attributes = attributes;
-            this.controller = controller;
-            this.transclude = transclude;
-
-            this.initialize();
-        }
+        protected scope: T;
+        protected element: ng.IAugmentedJQuery;
+        protected attributes: ng.IAttributes;
+        protected controller: any;
+        protected transclude: ng.ITranscludeFunction;
 
         public initialize() {
             throw new Error("Directives that extend BaseElementDirective should implement their own initialize method.");
