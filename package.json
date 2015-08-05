@@ -46,7 +46,9 @@
     "com.ionic.keyboard@1.0.4",
     "nl.x-services.plugins.toast@2.0.4",
     "com.verso.cordova.clipboard@0.1.0",
-    "org.pbernasconi.progressindicator@1.1.0"
+    {
+      "locator": "https://github.com/Justin-Credible/cordova-progressIndicator.git"
+    }
   ],
   "cordovaPlatforms": [
     "ios",
