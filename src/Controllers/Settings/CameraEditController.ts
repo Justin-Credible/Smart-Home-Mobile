@@ -6,29 +6,34 @@
 
     export class CameraEditController extends BaseController<ViewModels.CameraEditViewModel> {
 
+        //#region Injection
+
         public static ID = "CameraEditController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$stateParams", "$location", "$ionicHistory", Services.Utilities.ID, Services.Preferences.ID, Services.UiHelper.ID];
+            return [
+                "$scope",
+                "$stateParams",
+                "$location",
+                "$ionicHistory",
+                Services.Utilities.ID,
+                Services.Preferences.ID,
+                Services.UiHelper.ID
+            ];
         }
 
-        private stateParams: ICameraEditControllerStateParams;
-        private $location: ng.ILocationService;
-        private $ionicHistory: any;
-        private Utilities: Services.Utilities;
-        private Preferences: Services.Preferences;
-        private UiHelper: Services.UiHelper;
-
-        constructor($scope: ng.IScope, $stateParams: ICameraEditControllerStateParams, $location: ng.ILocationService, $ionicHistory: any, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
+        constructor(
+            $scope: ng.IScope,
+            private $stateParams: ICameraEditControllerStateParams,
+            private $location: ng.ILocationService,
+            private $ionicHistory: any,
+            private Utilities: Services.Utilities,
+            private Preferences: Services.Preferences,
+            private UiHelper: Services.UiHelper) {
             super($scope, ViewModels.CameraEditViewModel);
-
-            this.stateParams = $stateParams;
-            this.$location = $location;
-            this.$ionicHistory = $ionicHistory;
-            this.Utilities = Utilities;
-            this.Preferences = Preferences;
-            this.UiHelper = UiHelper;
         }
+
+        //#endregion
 
         //#region BaseController Overrides
 
@@ -37,10 +42,10 @@
 
             this.viewModel.showSaveButton = false;
 
-            if (this.stateParams.id) {
+            if (this.$stateParams.id) {
                 // If an ID is present, then we are editing an existing camera.
                 this.viewModel.title = "Edit Camera";
-                this.viewModel.camera = _.where(this.Preferences.cameras, { id: this.stateParams.id })[0];
+                this.viewModel.camera = _.where(this.Preferences.cameras, { id: this.$stateParams.id })[0];
                 this.viewModel.showConfirmPassword = false;
             }
             else {

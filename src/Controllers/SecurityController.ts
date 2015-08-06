@@ -2,28 +2,33 @@
 
     export class SecurityController extends BaseController<ViewModels.SecurityViewModel> {
 
+        //#region Injection
+
         public static ID = "SecurityController";
 
         public static get $inject(): string[] {
-            return ["$scope", Services.Utilities.ID, Services.UiHelper.ID, Services.HubDataSource.ID, Services.AlertMeApi.ID];
+            return [
+                "$scope",
+                Services.Utilities.ID,
+                Services.UiHelper.ID,
+                Services.HubDataSource.ID,
+                Services.AlertMeApi.ID
+            ];
         }
 
-        private Utilities: Services.Utilities;
-        private UiHelper: Services.UiHelper;
-        private HubDataSource: Services.HubDataSource;
-        private AlertMeApi: Services.AlertMeApi;
+        constructor(
+            $scope: ng.IScope,
+            private Utilities: Services.Utilities,
+            private UiHelper: Services.UiHelper,
+            private HubDataSource: Services.HubDataSource,
+            private AlertMeApi: Services.AlertMeApi) {
+            super($scope, ViewModels.SecurityViewModel);
+        }
+
+        //#endregion
 
         public static FORCE_ARM_OPEN_CONTACT_SENSOR_PROMPT = "A contact sensor appears to be open; are you sure you want to arm the alarm? If you continue, any open sensors will be ignored.";
         public static FORCE_ARM_PROMPT = "A contact sensor appears to be open or a lock is unlocked; are you sure you want to arm the alarm? If you continue, any open sensors or unlocked locks will be ignored.";
-
-        constructor($scope: ng.IScope, Utilities: Services.Utilities, UiHelper: Services.UiHelper, HubDataSource: Services.HubDataSource, AlertMeApi: Services.AlertMeApi) {
-            super($scope, ViewModels.SecurityViewModel);
-
-            this.Utilities = Utilities;
-            this.UiHelper = UiHelper;
-            this.HubDataSource = HubDataSource;
-            this.AlertMeApi = AlertMeApi;
-        }
 
         //#region Controller Events
 

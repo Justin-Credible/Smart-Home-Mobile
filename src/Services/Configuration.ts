@@ -13,13 +13,13 @@ module JustinCredible.SmartHomeMobile.Services {
         public static ID = "Configuration";
 
         public static get $inject(): string[] {
-            return ["buildVars"];
+            return [
+                "buildVars"
+            ];
         }
 
-        private _buildVars: BuildVars;
-
-        constructor(buildVars: BuildVars) {
-            this._buildVars = buildVars;
+        constructor(
+            private buildVars: BuildVars) {
         }
 
         //#endregion

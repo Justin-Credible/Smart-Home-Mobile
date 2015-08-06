@@ -2,35 +2,46 @@
 
     export class RootController extends BaseController<ViewModels.RootViewModel> {
 
+        //#region Injection
+
         public static ID = "RootController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$location", "$http", Services.Utilities.ID, Services.UiHelper.ID, Services.Preferences.ID, Services.AlertMeApi.ID];
+            return [
+                "$scope",
+                "$location",
+                "$http",
+                Services.Utilities.ID,
+                Services.UiHelper.ID,
+                Services.Preferences.ID,
+                Services.AlertMeApi.ID
+            ];
         }
 
-        private $location: ng.ILocationService;
-        private $http: ng.IHttpService;
-        private Utilities: Services.Utilities;
-        private UiHelper: Services.UiHelper;
-        private Preferences: Services.Preferences;
-        private AlertMeApi: Services.AlertMeApi;
-
-        constructor($scope: ng.IScope, $location: ng.ILocationService, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, AlertMeApi: Services.AlertMeApi) {
+        constructor(
+            $scope: ng.IScope,
+            private $location: ng.ILocationService,
+            private $http: ng.IHttpService,
+            private Utilities: Services.Utilities,
+            private UiHelper: Services.UiHelper,
+            private Preferences: Services.Preferences,
+            private AlertMeApi: Services.AlertMeApi) {
             super($scope, ViewModels.RootViewModel);
+        }
 
-            this.$location = $location;
-            this.$http = $http;
-            this.Utilities = Utilities;
-            this.UiHelper = UiHelper;
-            this.Preferences = Preferences;
-            this.AlertMeApi = AlertMeApi;
+        //#endregion
 
+        //#region BaseController Overrides
+
+        protected initialize(): void {
             this.viewModel.categories = this.Preferences.categories;
 
-            $scope.$on(Constants.Events.HTTP_ERROR, _.bind(this.http_error, this));
-            $scope.$on(Services.AlertMeApi.URL_NOT_SPECIFIED_EVENT, _.bind(this.alertMeApi_urlNotSpecified, this));
-            $scope.$on(Services.AlertMeApi.CREDENTIALS_NOT_SPECIFIED_EVENT, _.bind(this.alertMeApi_credentialsNotSpecified, this));
+            this.scope.$on(Constants.Events.HTTP_ERROR, _.bind(this.http_error, this));
+            this.scope.$on(Services.AlertMeApi.URL_NOT_SPECIFIED_EVENT, _.bind(this.alertMeApi_urlNotSpecified, this));
+            this.scope.$on(Services.AlertMeApi.CREDENTIALS_NOT_SPECIFIED_EVENT, _.bind(this.alertMeApi_credentialsNotSpecified, this));
         }
+
+        //#endregion
 
         //#region Event Handlers
 

@@ -6,41 +6,48 @@
 
     export class CameraViewController extends BaseController<ViewModels.CameraViewViewModel> {
 
+        //#region Injection
+
         public static ID = "CameraViewController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$stateParams", "$location", "$sce", "$ionicHistory", Services.Utilities.ID, Services.Preferences.ID];
+            return [
+                "$scope",
+                "$stateParams",
+                "$location",
+                "$sce",
+                "$ionicHistory",
+                Services.Utilities.ID,
+                Services.Preferences.ID
+            ];
         }
 
-        private stateParams: ICameraViewControllerStateParams;
-        private $location: ng.ILocationService;
-        private $sce: ng.ISCEService;
-        private $ionicHistory: any;
-        private Utilities: Services.Utilities;
-        private Preferences: Services.Preferences;
-
-        private pollingTimeout: number;
-
-        constructor($scope: ng.IScope, $stateParams: ICameraViewControllerStateParams, $location: ng.ILocationService, $sce: ng.ISCEService, $ionicHistory: any, Utilities: Services.Utilities, Preferences: Services.Preferences) {
+        constructor(
+            $scope: ng.IScope,
+            private $stateParams: ICameraViewControllerStateParams,
+            private $location: ng.ILocationService,
+            private $sce: ng.ISCEService,
+            private $ionicHistory: any,
+            private Utilities: Services.Utilities,
+            private Preferences: Services.Preferences) {
             super($scope, ViewModels.CameraViewViewModel);
-
-            this.stateParams = $stateParams;
-            this.$sce = $sce;
-            this.$location = $location;
-            this.$ionicHistory = $ionicHistory;
-            this.Utilities = Utilities;
-            this.Preferences = Preferences;
-
-            this.scope.$on("device.pause", _.bind(this.device_pause, this));
         }
+
+        //#endregion
+
+        private _pollingTimeout: number;
 
         //#region BaseController Overrides
+
+        protected initialize(): void {
+            this.scope.$on("device.pause", _.bind(this.device_pause, this));
+        }
 
         protected view_beforeEnter(): void {
             super.view_beforeEnter();
 
             // Grab the camera from the preferences by ID.
-            this.viewModel.camera = _.where(this.Preferences.cameras, { id: this.stateParams.id })[0];
+            this.viewModel.camera = _.where(this.Preferences.cameras, { id: this.$stateParams.id })[0];
 
             // Only show the loading panel if this is a snapshot camera (while the image is loading).
             // Streaming cameras should start populating immediately.
@@ -111,7 +118,7 @@
 
             // Ensure that the setTimeout is cleared. This stops the updating of the
             // snapshot images.
-            clearTimeout(this.pollingTimeout);
+            clearTimeout(this._pollingTimeout);
         }
 
         private refresh(): void {
@@ -149,7 +156,7 @@
             // If this is a snapshot camera, then we need to queue up a function call
             // to load the next image one second from now.
             if (this.viewModel.camera.type === "SNAPSHOT") {
-                this.pollingTimeout = setTimeout(() => {
+                this._pollingTimeout = setTimeout(() => {
                     this.viewModel.showLoadingPanel = false;
                     this.refresh();
                     this.scope.$apply();

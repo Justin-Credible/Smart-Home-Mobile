@@ -2,25 +2,30 @@ module JustinCredible.SmartHomeMobile.Controllers {
 
     export class ConfigurePassphraseController extends BaseController<ViewModels.ConfigurePassphraseViewModel> {
 
+        //#region Injection
+
         public static ID = "ConfigurePassphraseController";
 
         private static USER_PASSPHRASE_ARBITRARY_VALUE = "JustinCredible.SmartHomeMobile.Passphrase.ArbitraryValue";
 
         public static get $inject(): string[] {
-            return ["$scope", Services.Utilities.ID, Services.UiHelper.ID, Services.Preferences.ID];
+            return [
+                "$scope",
+                Services.Utilities.ID,
+                Services.UiHelper.ID,
+                Services.Preferences.ID
+            ];
         }
 
-        private Utilities: Services.Utilities;
-        private UiHelper: Services.UiHelper;
-        private Preferences: Services.Preferences;
-
-        constructor($scope: ng.IScope, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences) {
+        constructor(
+            $scope: ng.IScope,
+            private Utilities: Services.Utilities,
+            private UiHelper: Services.UiHelper,
+            private Preferences: Services.Preferences) {
             super($scope, ViewModels.ConfigurePassphraseViewModel);
-
-            this.Utilities = Utilities;
-            this.UiHelper = UiHelper;
-            this.Preferences = Preferences;
         }
+
+        //#endregion
 
         //#region BaseController Overrides
 

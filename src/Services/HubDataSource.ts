@@ -5,21 +5,25 @@
      */
     export class HubDataSource {
 
+        //#region Injection
+
         public static ID = "HubDataSource";
 
         public static get $inject(): string[] {
-            return ["$rootScope", "$q", AlertMeApi.ID];
+            return [
+                "$rootScope",
+                "$q",
+                AlertMeApi.ID
+            ];
         }
 
-        private $rootScope: ng.IRootScopeService;
-        private $q: ng.IQService;
-        private AlertMeApi: AlertMeApi;
-
-        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, AlertMeApi: AlertMeApi) {
-            this.$rootScope = $rootScope;
-            this.$q = $q;
-            this.AlertMeApi = AlertMeApi;
+        constructor(
+            private $rootScope: ng.IRootScopeService,
+            private $q: ng.IQService,
+            private AlertMeApi: AlertMeApi) {
         }
+
+        //#endregion
 
         //#region Security
 

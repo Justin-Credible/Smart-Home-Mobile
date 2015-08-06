@@ -2,25 +2,30 @@
 
     export class CamerasController extends BaseController<ViewModels.CamerasViewModel> {
 
+        //#region Injection
+
         public static ID = "CamerasController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$location", Services.Utilities.ID, Services.Preferences.ID, Services.UiHelper.ID];
+            return [
+                "$scope",
+                "$location",
+                Services.Utilities.ID,
+                Services.Preferences.ID,
+                Services.UiHelper.ID
+            ];
         }
 
-        private $location: ng.ILocationService;
-        private Utilities: Services.Utilities;
-        private Preferences: Services.Preferences;
-        private UiHelper: Services.UiHelper;
-
-        constructor($scope: ng.IScope, $location: ng.ILocationService, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
+        constructor(
+            $scope: ng.IScope,
+            private $location: ng.ILocationService,
+            private Utilities: Services.Utilities,
+            private Preferences: Services.Preferences,
+            private UiHelper: Services.UiHelper) {
             super($scope, ViewModels.CamerasViewModel);
-
-            this.$location = $location;
-            this.Utilities = Utilities;
-            this.Preferences = Preferences;
-            this.UiHelper = UiHelper;
         }
+
+        //#endregion
 
         //#region BaseController Overrides
 

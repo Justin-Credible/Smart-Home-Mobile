@@ -28,7 +28,7 @@
 
         //#region Events
 
-        private modal_shown(ngEvent: ng.IAngularEvent, instance: any): void {
+        private modal_shown(ngEvent: ng.IAngularEvent, instance: any) {
 
             // Only respond to modal.shown events for this dialog.
             if (this.dialogId !== instance.dialogId) {
@@ -45,7 +45,7 @@
             this.dialog_shown();
         }
 
-        private modal_hidden(eventArgs: ng.IAngularEvent, instance: any): void {
+        private modal_hidden(eventArgs: ng.IAngularEvent, instance: any) {
 
             // Only respond to modal.hidden events for this dialog.
             if (this.dialogId !== instance.dialogId) {

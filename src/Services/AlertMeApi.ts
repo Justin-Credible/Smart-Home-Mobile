@@ -5,7 +5,29 @@
      */
     export class AlertMeApi {
 
+        //#region Injection
+
         public static ID = "AlertMeApi";
+
+        public static get $inject(): string[] {
+            return [
+                "$rootScope",
+                "$q",
+                "$http",
+                Preferences.ID,
+                Utilities.ID
+            ];
+        }
+
+        constructor(
+            private $rootScope: ng.IRootScopeService,
+            private $q: ng.IQService,
+            private $http: ng.IHttpService,
+            private Preferences: Preferences,
+            private Utilities: Utilities) {
+        }
+
+        //#endregion
 
         //#region Event Constants
 
@@ -81,24 +103,6 @@
         };
 
         //#endregion
-
-        public static get $inject(): string[] {
-            return ["$rootScope", "$q", "$http", Preferences.ID, Utilities.ID];
-        }
-
-        private $rootScope: ng.IRootScopeService;
-        private $q: ng.IQService;
-        private $http: ng.IHttpService;
-        private Preferences: Preferences;
-        private Utilities: Utilities;
-
-        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, Preferences: Preferences, Utilities: Utilities) {
-            this.$rootScope = $rootScope;
-            this.$q = $q;
-            this.$http = $http;
-            this.Preferences = Preferences;
-            this.Utilities = Utilities;
-        }
 
         //#region Private Helpers
 

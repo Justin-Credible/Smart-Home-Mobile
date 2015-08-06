@@ -2,23 +2,28 @@
 
     export class DevicesHubInfoController extends BaseController<ViewModels.DevicesHubInfoViewModel> {
 
+        //#region Injection
+
         public static ID = "DevicesHubInfoController";
 
         public static get $inject(): string[] {
-            return ["$scope", Services.HubDataSource.ID, Services.Utilities.ID, Services.Preferences.ID];
+            return [
+                "$scope",
+                Services.HubDataSource.ID,
+                Services.Utilities.ID,
+                Services.Preferences.ID
+            ];
         }
 
-        private HubDataSource: Services.HubDataSource;
-        private Utilities: Services.Utilities;
-        private Preferences: Services.Preferences;
-
-        constructor($scope: ng.IScope, HubDataSource: Services.HubDataSource, Utilities: Services.Utilities, Preferences: Services.Preferences) {
+        constructor(
+            $scope: ng.IScope,
+            private HubDataSource: Services.HubDataSource,
+            private Utilities: Services.Utilities,
+            private Preferences: Services.Preferences) {
             super($scope, ViewModels.DevicesHubInfoViewModel);
-
-            this.HubDataSource = HubDataSource;
-            this.Utilities = Utilities;
-            this.Preferences = Preferences;
         }
+
+        //#endregion
 
         //#region BaseController Overrides
 

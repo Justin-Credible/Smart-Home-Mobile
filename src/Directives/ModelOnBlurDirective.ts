@@ -7,7 +7,11 @@
      */
     export class ModelOnBlurDirective implements ng.IDirective {
 
+        //#region Injection
+
         public static ID = "modelOnBlur";
+
+        //#endregion
 
         public restrict = "A";
         public require = "ngModel";

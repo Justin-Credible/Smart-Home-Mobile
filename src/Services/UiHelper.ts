@@ -5,14 +5,42 @@
      */
     export class UiHelper {
 
+        //#region Injection
+
         public static ID = "UiHelper";
+
+        public static get $inject(): string[] {
+            return [
+                "$rootScope",
+                "$q",
+                "$http",
+                "$ionicModal",
+                MockPlatformApis.ID,
+                Utilities.ID,
+                Preferences.ID,
+                Configuration.ID
+            ];
+        }
+
+        constructor(
+            private $rootScope: ng.IRootScopeService,
+            private $q: ng.IQService,
+            private $http: ng.IHttpService,
+            private $ionicModal: any,
+            private MockPlatformApis: MockPlatformApis,
+            private Utilities: Utilities,
+            private Preferences: Preferences,
+            private Configuration: Services.Configuration) {
+        }
+
+        //#endregion
 
         //#region Dialog Stuff
 
         /**
          * Keeps track of the currently open dialogs. Used by the showDialog helper method.
          */
-        private static openDialogIds: string[];
+        private static _openDialogIds: string[];
 
         /**
          * A map of dialog IDs to the templates that they use. Used by the showDialog helper method.
@@ -24,29 +52,7 @@
 
         //#endregion
 
-        public static get $inject(): string[] {
-            return ["$rootScope", "$q", "$http", "$ionicModal", MockPlatformApis.ID, Utilities.ID, Preferences.ID, Configuration.ID];
-        }
-
-        private $rootScope: ng.IRootScopeService;
-        private $q: ng.IQService;
-        private $http: ng.IHttpService;
-        private $ionicModal: any;
-        private MockPlatformApis: MockPlatformApis;
-        private Utilities: Utilities;
-        private Preferences: Preferences;
-        private Configuration: Configuration;
-
-        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, $ionicModal: any, MockPlatformApis: MockPlatformApis, Utilities: Utilities, Preferences: Preferences, Configuration: Services.Configuration) {
-            this.$rootScope = $rootScope;
-            this.$q = $q;
-            this.$http = $http;
-            this.$ionicModal = $ionicModal;
-            this.MockPlatformApis = MockPlatformApis;
-            this.Utilities = Utilities;
-            this.Preferences = Preferences;
-            this.Configuration = Configuration;
-        }
+        private isPinEntryOpen = false;
 
         //#region Plug-in Accessors
 
@@ -54,7 +60,7 @@
          * Exposes an API for showing toast messages.
          */
         get toast(): ICordovaToastPlugin {
-            if (window.plugins && window.plugins.toast) {
+            if (!this.Utilities.isRipple && window.plugins && window.plugins.toast) {
                 return window.plugins.toast;
             }
             else {
@@ -66,7 +72,7 @@
          * Exposes an API for working with progress indicators.
          */
         get progressIndicator(): ICordovaProgressIndicator {
-            if (window.ProgressIndicator && !this.Utilities.isAndroid) {
+            if (!this.Utilities.isRipple && window.ProgressIndicator && !this.Utilities.isAndroid) {
                 return window.ProgressIndicator;
             }
             else {
@@ -78,7 +84,7 @@
          * Exposes an API for working with the operating system's clipboard.
          */
         get clipboard(): ICordovaClipboardPlugin {
-            if (typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.clipboard) {
+            if (!this.Utilities.isRipple && typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.clipboard) {
                 return cordova.plugins.clipboard;
             }
             else if (this.Utilities.isChromeExtension) {
@@ -93,7 +99,7 @@
          * Exposes an API for manipulating the device's native status bar.
          */
         get statusBar(): StatusBar {
-            if (window.StatusBar) {
+            if (!this.Utilities.isRipple && window.StatusBar) {
                 return window.StatusBar;
             }
             else {
@@ -105,7 +111,7 @@
          * Exposes an API for adjusting keyboard behavior.
          */
         get keyboard(): Ionic.Keyboard {
-            if (typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.Keyboard) {
+            if (!this.Utilities.isRipple && typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.Keyboard) {
                 return cordova.plugins.Keyboard;
             }
             else {
@@ -117,7 +123,7 @@
          * Exposes an API for logging exception information to the Crashlytics backend service.
          */
         get crashlytics(): ICordovaCrashlyticsPlugin {
-            if (typeof(navigator) !== "undefined" && navigator.crashlytics) {
+            if (!this.Utilities.isRipple && typeof(navigator) !== "undefined" && navigator.crashlytics) {
                 return navigator.crashlytics;
             }
             else {
@@ -164,7 +170,7 @@
          * 
          * @param message The message text to display.
          * @param title The title of the dialog, defaults to "Alert".
-         * @param buttonName The label for the button, defaults to Buttons.OK
+         * @param buttonName The label for the button, defaults to Buttons.OK.
          * 
          * @returns A promise of void which will be resolved when the alert is closed.
          */
@@ -409,7 +415,7 @@
          * Used to open the modal dialog with the given dialog ID.
          * 
          * If a dialog with the given ID is already open, another will not be opened
-         * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.
+         * and the promise will be rejected with Constants.DIALOG_ALREADY_OPEN.
          * 
          * @param dialogId The ID of the dialog to show/open.
          * @param options The options to use when opening the dialog.
@@ -421,7 +427,7 @@
          * Used to open the modal dialog with the given dialog ID.
          * 
          * If a dialog with the given ID is already open, another will not be opened
-         * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.
+         * and the promise will be rejected with Constants.DIALOG_ALREADY_OPEN.
          * 
          * @param dialogId The ID of the dialog to show/open.
          * @param options The options to use when opening the dialog.
@@ -439,14 +445,14 @@
             }
 
             // Ensure the array is initialized.
-            if (UiHelper.openDialogIds == null) {
-                UiHelper.openDialogIds = [];
+            if (UiHelper._openDialogIds == null) {
+                UiHelper._openDialogIds = [];
             }
 
             // If a dialog with this ID is already open, we can reject immediately.
             // This ensures that only a single dialog with a given ID can be open
             // at one time.
-            if (_.contains(UiHelper.openDialogIds, dialogId)) {
+            if (_.contains(UiHelper._openDialogIds, dialogId)) {
                 this.$q.reject(Constants.DIALOG_ALREADY_OPEN);
                 return q.promise;
             }
@@ -463,7 +469,7 @@
             }
 
             // Add the ID of this dialog to the list of dialogs that are open.
-            UiHelper.openDialogIds.push(dialogId);
+            UiHelper._openDialogIds.push(dialogId);
 
             // Define the arguments that will be used to create the modal instance.
             creationArgs = {
@@ -513,7 +519,7 @@
                     }
 
                     // Remove this dialog's ID from the list of ones that are open.
-                    UiHelper.openDialogIds = _.without(UiHelper.openDialogIds, dialogId);
+                    UiHelper._openDialogIds = _.without(UiHelper._openDialogIds, dialogId);
 
                     // Once the dialog is closed, resolve the original promise
                     // using the result data object from the dialog (if any).

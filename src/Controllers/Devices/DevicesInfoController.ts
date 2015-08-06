@@ -6,25 +6,30 @@
 
     export class DevicesInfoController extends BaseController<ViewModels.DevicesInfoViewModel> {
 
+        //#region Injection
+
         public static ID = "DevicesInfoController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$stateParams", Services.HubDataSource.ID, Services.Utilities.ID, Services.Preferences.ID];
+            return [
+                "$scope",
+                "$stateParams",
+                Services.HubDataSource.ID,
+                Services.Utilities.ID,
+                Services.Preferences.ID
+            ];
         }
 
-        private stateParams: IDevicesInfoControllerStateParams;
-        private HubDataSource: Services.HubDataSource;
-        private Utilities: Services.Utilities;
-        private Preferences: Services.Preferences;
-
-        constructor($scope: ng.IScope, $stateParams: IDevicesInfoControllerStateParams, HubDataSource: Services.HubDataSource, Utilities: Services.Utilities, Preferences: Services.Preferences) {
+        constructor(
+            $scope: ng.IScope,
+            private $stateParams: IDevicesInfoControllerStateParams,
+            private HubDataSource: Services.HubDataSource,
+            private Utilities: Services.Utilities,
+            private Preferences: Services.Preferences) {
             super($scope, ViewModels.DevicesInfoViewModel);
-
-            this.stateParams = $stateParams;
-            this.HubDataSource = HubDataSource;
-            this.Utilities = Utilities;
-            this.Preferences = Preferences;
         }
+
+        //#endregion
 
         //#region BaseController Overrides
 
@@ -47,7 +52,7 @@
 
         private populateViewModel(homeStatus: AlertMeApiTypes.HomeStatusGetResult, homeStatusLastUpdated: moment.Moment): void {
             this.viewModel.lastUpdated = homeStatusLastUpdated.toDate();
-            this.viewModel.device = _.find(homeStatus.devices, { "id": this.stateParams.deviceId });
+            this.viewModel.device = _.find(homeStatus.devices, { "id": this.$stateParams.deviceId });
         }
 
         private refresh(): void {

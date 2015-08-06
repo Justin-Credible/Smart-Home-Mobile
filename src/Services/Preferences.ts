@@ -8,13 +8,21 @@
      */
     export class Preferences {
 
+        //#region Injection
+
         public static ID = "Preferences";
 
         public static get $inject(): string[] {
-            return [Utilities.ID];
+            return [
+                Utilities.ID
+            ];
         }
 
-        public Utilities: Utilities;
+        constructor(
+            private Utilities: Utilities) {
+        }
+
+        //#endregion
 
         //#region Local Storage Keys
 
@@ -35,10 +43,6 @@
         private static CAMERAS = "CAMERAS";
 
         //#endregion
-
-        constructor(Utilities: Utilities) {
-            this.Utilities = Utilities;
-        }
 
         //#region PIN
 

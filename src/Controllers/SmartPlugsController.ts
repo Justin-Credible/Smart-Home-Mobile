@@ -2,25 +2,30 @@
 
     export class SmartPlugsController extends BaseController<ViewModels.SmartPlugsViewModel> {
 
+        //#region Injection
+
         public static ID = "SmartPlugsController";
 
         public static get $inject(): string[] {
-            return ["$scope", Services.Utilities.ID, Services.UiHelper.ID, Services.HubDataSource.ID, Services.AlertMeApi.ID];
+            return [
+                "$scope",
+                Services.Utilities.ID,
+                Services.UiHelper.ID,
+                Services.HubDataSource.ID,
+                Services.AlertMeApi.ID
+            ];
         }
 
-        private Utilities: Services.Utilities;
-        private UiHelper: Services.UiHelper;
-        private HubDataSource: Services.HubDataSource;
-        private AlertMeApi: Services.AlertMeApi;
-
-        constructor($scope: ng.IScope, Utilities: Services.Utilities, UiHelper: Services.UiHelper, HubDataSource: Services.HubDataSource, AlertMeApi: Services.AlertMeApi) {
+        constructor(
+            $scope: ng.IScope,
+            private Utilities: Services.Utilities,
+            private UiHelper: Services.UiHelper,
+            private HubDataSource: Services.HubDataSource,
+            private AlertMeApi: Services.AlertMeApi) {
             super($scope, ViewModels.SmartPlugsViewModel);
-
-            this.Utilities = Utilities;
-            this.UiHelper = UiHelper;
-            this.HubDataSource = HubDataSource;
-            this.AlertMeApi = AlertMeApi;
         }
+
+        //#endregion
 
         //#region Controller Events
 

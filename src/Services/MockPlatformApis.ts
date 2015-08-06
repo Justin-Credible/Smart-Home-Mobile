@@ -5,27 +5,29 @@
      */
     export class MockPlatformApis {
 
+        //#region Injection
+
         public static ID = "MockPlatformApis";
 
         public static get $inject(): string[] {
-            return ["$q", "$ionicPopup", "$ionicLoading", Utilities.ID];
+            return [
+                "$q",
+                "$ionicPopup",
+                "$ionicLoading",
+                Utilities.ID
+            ];
         }
 
-        private $q: ng.IQService;
-        private Utilities: Utilities;
-        private $ionicPopup: any;
-        private $ionicLoading: any;
-
-        private isProgressIndicatorShown: boolean;
-
-        constructor($q: ng.IQService, $ionicPopup: any, $ionicLoading: any, Utilities: Utilities) {
-            this.$q = $q;
-            this.Utilities = Utilities;
-            this.$ionicPopup = $ionicPopup;
-            this.$ionicLoading = $ionicLoading;
-
-            this.isProgressIndicatorShown = false;
+        constructor(
+            private $q: ng.IQService,
+            private $ionicPopup: any,
+            private $ionicLoading: any,
+            private Utilities: Utilities) {
         }
+
+        //#endregion
+
+        private _isProgressIndicatorShown: boolean = false;
 
         //#region Public API
 
@@ -91,6 +93,7 @@
                 showText: _.bind(this.progressIndicator_show, this)
             };
         }
+
         public getStatusBarPlugin(): StatusBar {
             return {
                 overlaysWebView: _.bind(this.noOp, this),
@@ -109,7 +112,7 @@
         public getKeyboardPlugin(): Ionic.Keyboard {
             return {
                 hideKeyboardAccessoryBar: _.bind(this.noOp, this),
-                close:  _.bind(this.noOp, this),
+                close: _.bind(this.noOp, this),
                 disableScroll: _.bind(this.noOp, this),
                 isVisible: false
             };
@@ -427,7 +430,7 @@
             // happen after at least waiting one second.
             setTimeout(() => {
                 this.$ionicLoading.hide();
-                this.isProgressIndicatorShown = false;
+                this._isProgressIndicatorShown = false;
             }, 1000);
         }
 
@@ -435,11 +438,11 @@
             var label: string,
                 timeout: number;
 
-            if (this.isProgressIndicatorShown) {
+            if (this._isProgressIndicatorShown) {
                 return;
             }
 
-            this.isProgressIndicatorShown = true;
+            this._isProgressIndicatorShown = true;
 
             if (typeof (labelOrTimeout) === "string") {
                 label = labelOrTimeout;
@@ -459,7 +462,7 @@
 
             if (timeout) {
                 setTimeout(() => {
-                    this.isProgressIndicatorShown = false;
+                    this._isProgressIndicatorShown = false;
                     this.$ionicLoading.hide();
                 }, timeout);
             }
