@@ -1,0 +1,21 @@
+<ion-popover-view class="tabPop" style="height: 115px;">
+    <ion-content>
+        <ion-list>
+
+            <ion-item class="item-icon-left menu-close"
+                ng-click="controller.popover.hide()"
+                ui-sref="app.devices-list">
+                <i class="icon ion-ios-bolt"></i>
+                Device List
+            </ion-item>
+
+            <ion-item class="item-icon-left menu-close"
+                ng-click="controller.popover.hide()"
+                ui-sref="app.settings-list">
+                <i class="icon ion-android-settings"></i>
+                Settings
+            </ion-item>
+
+        </ion-list>
+    </ion-content>
+</ion-popover-view>

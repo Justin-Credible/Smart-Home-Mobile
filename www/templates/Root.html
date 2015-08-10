@@ -1,53 +1,34 @@
-<ion-side-menus>
 
-    <ion-pane ion-side-menu-content drag-content="true">
+<ion-nav-bar class="bar-dark">
+    <ion-nav-back-button>
+    </ion-nav-back-button>
+</ion-nav-bar>
 
-        <ion-nav-bar class="bar-positive nav-title-slide-ios7">
-            <ion-nav-back-button class="button-clear nav-back-button">
-                <i class="ion-ios-arrow-back"></i> Back
-            </ion-nav-back-button>
-        </ion-nav-bar>
+<ion-tabs class="tabs-icon-top tabs-dark">
 
-        <ion-nav-view name="root-view" animation="slide-left-right"></ion-nav-view>
+    <!-- An extra tab that is hidden from the toolbar; useful for one-off screens. -->
+    <ion-tab title="Extra" hidden="true">
+        <ion-nav-view name="tab-extra"></ion-nav-view>
+    </ion-tab>
 
-    </ion-pane>
+    <ion-tab title="Security" icon-off="ion-locked" icon-on="ion-locked" ui-sref="app.security">
+        <ion-nav-view name="tab-security"></ion-nav-view>
+    </ion-tab>
 
-    <ion-side-menu side="left" expose-aside-when="(min-width: 768px) and (orientation: landscape)">
-        <ion-content scroll="true">
+    <ion-tab title="Thermostat" icon-off="ion-thermometer" icon-on="ion-thermometer" ui-sref="app.thermostat">
+        <ion-nav-view name="tab-thermostat"></ion-nav-view>
+    </ion-tab>
 
-            <ion-list>
+    <ion-tab title="Lighting" icon-off="ion-ios-lightbulb" icon-on="ion-ios-lightbulb" ui-sref="app.smart-plugs">
+        <ion-nav-view name="tab-smart-plugs"></ion-nav-view>
+    </ion-tab>
 
-                <ion-item class="item-divider">Smart Home</ion-item>
+    <ion-tab title="Cameras" icon-off="ion-ios-videocam" icon-on="ion-ios-videocam" ui-sref="app.cameras">
+        <ion-nav-view name="tab-cameras"></ion-nav-view>
+    </ion-tab>
 
-                <ion-item ng-repeat="category in viewModel.categories"
-                    class="item menu-close item-icon-left"
-                    ng-click="controller.category_click(category)"
-                    href="{{category.href}}">
-                    <i class="icon {{category.icon}}"></i>
-                    {{category.name}}
-                </ion-item>
+    <ion-tab title="More" icon-off="ion-more" icon-on="ion-more" ng-click="controller.popover.show($event)">
+        <ion-nav-view name="tab-settings"></ion-nav-view>
+    </ion-tab>
 
-                <ion-item class="item-divider">Preferences</ion-item>
-
-                <ion-item class="item-icon-left menu-close" ng-click="controller.reorder_click()">
-                    <i class="icon ion-shuffle"></i>
-                    Reorder Menu
-                </ion-item>
-
-
-                <ion-item class="item-icon-left menu-close" ui-sref="app.devices-list">
-                    <i class="icon ion-ios-bolt"></i>
-                    Device List
-                </ion-item>
-
-                <ion-item class="item-icon-left menu-close" ui-sref="app.settings-list">
-                    <i class="icon ion-android-settings"></i>
-                    Settings
-                </ion-item>
-
-            </ion-list>
-
-        </ion-content>
-    </ion-side-menu>
-
-</ion-side-menus>
+</ion-tabs>

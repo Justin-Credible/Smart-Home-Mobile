@@ -20,7 +20,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.blank", {
                 url: "/blank",
                 views: {
-                    "root-view": {
+                    "tab-extra": {
                         templateUrl: "templates/Blank.html"
                     }
                 }
@@ -31,7 +31,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.security", {
                 url: "/security",
                 views: {
-                    "root-view": {
+                    "tab-security": {
                         templateUrl: "templates/Security.html",
                         controller: Controllers.SecurityController.ID
                     }
@@ -41,7 +41,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.thermostat", {
                 url: "/thermostat",
                 views: {
-                    "root-view": {
+                    "tab-thermostat": {
                         templateUrl: "templates/Thermostat.html",
                         controller: Controllers.ThermostatController.ID
                     }
@@ -51,7 +51,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.smart-plugs", {
                 url: "/smart-plugs",
                 views: {
-                    "root-view": {
+                    "tab-smart-plugs": {
                         templateUrl: "templates/Smart-Plugs.html",
                         controller: Controllers.SmartPlugsController.ID
                     }
@@ -61,7 +61,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.cameras", {
                 url: "/cameras",
                 views: {
-                    "root-view": {
+                    "tab-cameras": {
                         templateUrl: "templates/Cameras.html",
                         controller: Controllers.CamerasController.ID
                     }
@@ -71,7 +71,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.camera", {
                 url: "/camera/:id",
                 views: {
-                    "root-view": {
+                    "tab-cameras": {
                         templateUrl: "templates/Camera-View.html",
                         controller: Controllers.CameraViewController.ID
                     }
@@ -82,7 +82,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.irrigation", {
                 url: "/irrigation",
                 views: {
-                    "root-view": {
+                    "tab-irrigation": {
                         templateUrl: "templates/Irrigation.html",
                         controller: Controllers.IrrigationController.ID
                     }
@@ -93,7 +93,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.devices-list", {
                 url: "/devices/list",
                 views: {
-                    "root-view": {
+                    "tab-settings": {
                         templateUrl: "templates/Devices/Devices-List.html",
                         controller: Controllers.DevicesListController.ID
                     }
@@ -103,7 +103,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.devices-hub-info", {
                 url: "/devices/hub",
                 views: {
-                    "root-view": {
+                    "tab-settings": {
                         templateUrl: "templates/Devices/Devices-Hub-Info.html",
                         controller: Controllers.DevicesHubInfoController.ID
                     }
@@ -113,7 +113,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.devices-info", {
                 url: "/devices/info/:deviceId",
                 views: {
-                    "root-view": {
+                    "tab-settings": {
                         templateUrl: "templates/Devices/Devices-Info.html",
                         controller: Controllers.DevicesInfoController.ID
                     }
@@ -127,7 +127,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.settings-list", {
                 url: "/settings/list",
                 views: {
-                    "root-view": {
+                    "tab-settings": {
                         templateUrl: "templates/Settings/Settings-List.html",
                         controller: Controllers.SettingsListController.ID
                     }
@@ -137,7 +137,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.hub", {
                 url: "/settings/hub",
                 views: {
-                    "root-view": {
+                    "tab-settings": {
                         templateUrl: "templates/Settings/Hub.html",
                         controller: Controllers.HubController.ID
                     }
@@ -147,7 +147,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.cameras-list", {
                 url: "/settings/cameras",
                 views: {
-                    "root-view": {
+                    "tab-settings": {
                         templateUrl: "templates/Settings/Cameras-List.html",
                         controller: Controllers.CamerasListController.ID
                     }
@@ -157,7 +157,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.camera-add", {
                 url: "/settings/camera/add",
                 views: {
-                    "root-view": {
+                    "tab-settings": {
                         templateUrl: "templates/Settings/Camera-Edit.html",
                         controller: Controllers.CameraEditController.ID
                     }
@@ -167,7 +167,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.camera-edit", {
                 url: "/settings/camera/edit/:id",
                 views: {
-                    "root-view": {
+                    "tab-settings": {
                         templateUrl: "templates/Settings/Camera-Edit.html",
                         controller: Controllers.CameraEditController.ID
                     }
@@ -177,7 +177,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.configure-pin", {
                 url: "/settings/configure-pin",
                 views: {
-                    "root-view": {
+                    "tab-settings": {
                         templateUrl: "templates/Settings/Configure-Pin.html",
                         controller: Controllers.ConfigurePinController.ID
                     }
@@ -187,7 +187,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.configure-passphrase", {
                 url: "/settings/configure-passphrase",
                 views: {
-                    "root-view": {
+                    "tab-settings": {
                         templateUrl: "templates/Settings/Configure-Passphrase.html",
                         controller: Controllers.ConfigurePassphraseController.ID
                     }
@@ -197,7 +197,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.developer", {
                 url: "/settings/developer",
                 views: {
-                    "root-view": {
+                    "tab-settings": {
                         templateUrl: "templates/Settings/Developer.html",
                         controller: Controllers.DeveloperController.ID
                     }
@@ -207,7 +207,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.logs", {
                 url: "/settings/logs",
                 views: {
-                    "root-view": {
+                    "tab-settings": {
                         templateUrl: "templates/Settings/Logs.html",
                         controller: Controllers.LogsController.ID
                     }
@@ -217,7 +217,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.log-entry", {
                 url: "/settings/log-entry/:id",
                 views: {
-                    "root-view": {
+                    "tab-settings": {
                         templateUrl: "templates/Settings/Log-Entry.html",
                         controller: Controllers.LogEntryController.ID
                     }
@@ -227,7 +227,7 @@ module JustinCredible.SmartHomeMobile {
             $stateProvider.state("app.about", {
                 url: "/settings/about",
                 views: {
-                    "root-view": {
+                    "tab-settings": {
                         templateUrl: "templates/Settings/About.html",
                         controller: Controllers.AboutController.ID
                     }

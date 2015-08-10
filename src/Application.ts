@@ -16,6 +16,7 @@ module JustinCredible.SmartHomeMobile.Application {
         $rootScope: ng.IRootScopeService,
         $location: ng.ILocationService,
         $ionicHistory: any,
+        $ionicConfig: any,
         Utilities: Services.Utilities,
         UiHelper: Services.UiHelper,
         Preferences: Services.Preferences,
@@ -322,6 +323,7 @@ module JustinCredible.SmartHomeMobile.Application {
         $location: ng.ILocationService,
         $ionicHistory: any,
         $ionicPlatform: Ionic.IPlatform,
+        $ionicConfig: any,
         Utilities: Services.Utilities,
         UiHelper: Services.UiHelper,
         Preferences: Services.Preferences,
@@ -335,6 +337,7 @@ module JustinCredible.SmartHomeMobile.Application {
             $rootScope: $rootScope,
             $location: $location,
             $ionicHistory: $ionicHistory,
+            $ionicConfig: $ionicConfig,
             Utilities: Utilities,
             UiHelper: UiHelper,
             Preferences: Preferences,
@@ -342,6 +345,9 @@ module JustinCredible.SmartHomeMobile.Application {
             MockHttpApis: MockHttpApis,
             Logger: Logger
         };
+
+        // Force the tabs to show at the bottom on Android.
+        services.$ionicConfig.tabs.position("bottom");
 
         // Once AngularJs has loaded we'll wait for the Ionic platform's ready event.
         // This event will be fired once the device ready event fires via Cordova.

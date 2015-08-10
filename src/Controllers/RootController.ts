@@ -11,6 +11,7 @@
                 "$scope",
                 "$location",
                 "$http",
+                "$ionicPopover",
                 Services.Utilities.ID,
                 Services.UiHelper.ID,
                 Services.Preferences.ID,
@@ -22,6 +23,7 @@
             $scope: ng.IScope,
             private $location: ng.ILocationService,
             private $http: ng.IHttpService,
+            private $ionicPopover: any,
             private Utilities: Services.Utilities,
             private UiHelper: Services.UiHelper,
             private Preferences: Services.Preferences,
@@ -31,10 +33,18 @@
 
         //#endregion
 
+        protected popover: any;
+
         //#region BaseController Overrides
 
         protected initialize(): void {
             this.viewModel.categories = this.Preferences.categories;
+
+            this.$ionicPopover.fromTemplateUrl("templates/More-Menu.html", {
+                scope: this.scope
+            }).then((popover: any) => {
+                this.popover = popover;
+            });
 
             this.scope.$on(Constants.Events.HTTP_ERROR, _.bind(this.http_error, this));
             this.scope.$on(Services.AlertMeApi.URL_NOT_SPECIFIED_EVENT, _.bind(this.alertMeApi_urlNotSpecified, this));
