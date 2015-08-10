@@ -80,6 +80,14 @@ interface BuildVars {
     majorVersion: number;
     minorVersion: number;
     buildVersion: number;
+
+    /**
+     * The short SHA for the git commit that this build was created from.
+     * 
+     * Will be 'unknown' if the commit couldn't be determined or the machine
+     * that made the build did not have git installed.
+     */
+    commitShortSha: string;
 }
 
 /**

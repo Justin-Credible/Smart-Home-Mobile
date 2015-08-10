@@ -40,5 +40,6 @@ declare module JustinCredible.SmartHomeMobile.Interfaces {
         websiteUrl: string;
         githubUrl: string;
         email: string;
+        commitShortSha: string;
     }
 }

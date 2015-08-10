@@ -162,42 +162,66 @@ gulp.task('tsd', function (cb) {
  * 
  * The version number is taken from the config.xml file.
  */
-gulp.task('ts:vars', function (cb) {
-  var majorVersion = 0,
-      minorVersion = 0,
-      buildVersion = 0;
+gulp.task("ts:vars", function (cb) {
+    var
+        configXml,
+        configXmlDoc,
+        majorVersion = 0,
+        minorVersion = 0,
+        buildVersion = 0,
+        commitShortSha;
 
-  // Attempt to query and parse the version information from config.xml.
-  // Default to 0.0.0 if there are any problems.
-  try {
-    var configXml = fs.readFileSync('config.xml', 'utf8');
-    var configXmlDoc = new XmlDom().parseFromString(configXml);
-    var versionString = xpath.select1("/*[local-name() = 'widget']/@version", configXmlDoc).value;
-    var versionParts = versionString.split(".");
-    majorVersion = parseInt(versionParts[0], 10);
-    minorVersion = parseInt(versionParts[1], 10);
-    buildVersion = parseInt(versionParts[2], 10);
-  }
-  catch (err) {
-    console.log("Error parsing version from config.xml; using 0.0.0 instead.", err);
-  }
+    try {
+        configXml = fs.readFileSync('config.xml', 'utf8');
+        configXmlDoc = new XmlDom().parseFromString(configXml);
+    }
+    catch (err) {
+        console.log("Error opening and/or reading config.xml.");
+    }
 
-  // Create the structure of the buildVars variable.
-  var buildVarsJson = JSON.stringify({
-    majorVersion: majorVersion,
-    minorVersion: minorVersion,
-    buildVersion: buildVersion,
-    debug: isDebugScheme(),
-    buildTimestamp: (new Date()).toUTCString()
-  });
+    try {
+        configXml = fs.readFileSync('config.xml', 'utf8');
+        configXmlDoc = new XmlDom().parseFromString(configXml);
+    }
+    catch (err) {
+        console.log("Error opening and/or reading config.xml.");
+    }
 
-  // Write the buildVars variable with code that will define it as a global object.
-  var buildVarsJs = "window.buildVars = " + buildVarsJson  + ";";
+    // Attempt to query and parse the version information from config.xml.
+    // Default to 0.0.0 if there are any problems.
+    try {
+        var versionString = xpath.select1("/*[local-name() = 'widget']/@version", configXmlDoc).value;
+        var versionParts = versionString.split(".");
+        majorVersion = parseInt(versionParts[0], 10);
+        minorVersion = parseInt(versionParts[1], 10);
+        buildVersion = parseInt(versionParts[2], 10);
+    }
+    catch (err) {
+        console.log("Error parsing version from config.xml; using 0.0.0 instead.", err);
+    }
 
-  // Write the file out to disk.
-  fs.writeFileSync('www/js/BuildVars.js', buildVarsJs, { encoding: 'utf8' });
+    exec("git rev-parse --short HEAD", function (err, stdout, stderr) {
 
-  cb();
+        commitShortSha = err ? "unknown" : stdout.replace("\n", "");
+
+        // Create the structure of the buildVars variable.
+        var buildVarsJson = JSON.stringify({
+            majorVersion: majorVersion,
+            minorVersion: minorVersion,
+            buildVersion: buildVersion,
+            commitShortSha: commitShortSha,
+            debug: isDebugScheme(),
+            buildTimestamp: (new Date()).toUTCString()
+        });
+
+        // Write the buildVars variable with code that will define it as a global object.
+        var buildVarsJs = "window.buildVars = " + buildVarsJson  + ";";
+
+        // Write the file out to disk.
+        fs.writeFileSync('www/js/BuildVars.js', buildVarsJs, { encoding: 'utf8' });
+
+        cb(err);
+    });
 });
 
 /**

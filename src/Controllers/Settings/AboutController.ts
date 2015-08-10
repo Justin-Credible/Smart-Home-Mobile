@@ -39,6 +39,7 @@
             this.viewModel.applicationName = this.versionInfo.applicationName;
             this.viewModel.versionString = this.Utilities.format("{0}.{1}.{2}", this.versionInfo.majorVersion, this.versionInfo.minorVersion, this.versionInfo.buildVersion);
             this.viewModel.timestamp = this.versionInfo.buildTimestamp;
+            this.viewModel.commitShortSha = this.versionInfo.commitShortSha;
         }
 
         //#endregion

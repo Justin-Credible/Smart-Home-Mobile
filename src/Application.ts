@@ -57,7 +57,8 @@ module JustinCredible.SmartHomeMobile.Application {
             minorVersion: window.buildVars.minorVersion,
             buildVersion: window.buildVars.buildVersion,
             versionString: window.buildVars.majorVersion + "." + window.buildVars.minorVersion + "." + window.buildVars.buildVersion,
-            buildTimestamp: window.buildVars.buildTimestamp
+            buildTimestamp: window.buildVars.buildTimestamp,
+            commitShortSha: window.buildVars.commitShortSha
         };
 
         // Define the top level Angular module for the application.
