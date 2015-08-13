@@ -29,8 +29,8 @@
 
         //#region Controller Events
 
-        protected view_beforeEnter(): void {
-            super.view_beforeEnter();
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+            super.view_beforeEnter(event, eventArgs);
 
             if (this.HubDataSource.homeStatus == null
                 || this.HubDataSource.homeStatusLastUpdated == null

@@ -39,12 +39,14 @@
 
         //#region BaseController Overrides
 
-        protected initialize(): void {
+        protected view_loaded(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+            super.view_loaded(event, eventArgs);
+
             this.scope.$on("device.pause", _.bind(this.device_pause, this));
         }
 
-        protected view_beforeEnter(): void {
-            super.view_beforeEnter();
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+            super.view_beforeEnter(event, eventArgs);
 
             // Grab the camera from the preferences by ID.
             this.viewModel.camera = _.where(this.Preferences.cameras, { id: this.$stateParams.id })[0];
@@ -57,8 +59,8 @@
             this.refresh();
         }
 
-        protected view_leave(): void {
-            super.view_leave();
+        protected view_leave(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+            super.view_leave(event, eventArgs);
 
             this.stopStreaming();
         }

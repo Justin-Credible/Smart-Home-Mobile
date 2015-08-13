@@ -32,8 +32,8 @@
 
         //#region Controller Events
 
-        protected view_beforeEnter(): void {
-            super.view_beforeEnter();
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+            super.view_beforeEnter(event, eventArgs);
 
             if (this.HubDataSource.security == null
                 || this.HubDataSource.securityLastUpdated == null
@@ -51,8 +51,8 @@
             }
         }
 
-        protected view_beforeLeave(): void {
-            super.view_beforeLeave();
+        protected view_beforeLeave(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+            super.view_beforeLeave(event, eventArgs);
 
             clearInterval(this.viewModel.gracePeriodIntervalRef);
         }

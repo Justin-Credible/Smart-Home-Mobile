@@ -29,8 +29,8 @@ module JustinCredible.SmartHomeMobile.Controllers {
 
         //#region BaseController Overrides
 
-        protected view_beforeEnter(): void {
-            super.view_beforeEnter();
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+            super.view_beforeEnter(event, eventArgs);
 
             this.resetViewModel();
         }
