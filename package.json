@@ -22,8 +22,8 @@
     "gulp-tslint": "3.0.1-beta",
     "gulp-typescript": "2.7.5",
     "gulp-util": "2.2.14",
-    "ionic": "1.5.5",
-    "run-sequence": "^1.1.1",
+    "ionic": "1.6.4",
+    "run-sequence": "1.1.2",
     "shelljs": "0.3.0",
     "tsd": "0.6.1",
     "tslint": "2.2.0-beta",
@@ -44,6 +44,7 @@
     "cordova-plugin-inappbrowser@1.0.1",
     "cordova-plugin-statusbar@1.0.1",
     "com.ionic.keyboard@1.0.4",
+    "ionic-plugin-deploy@0.3.0",
     "nl.x-services.plugins.toast@2.0.4",
     "com.verso.cordova.clipboard@0.1.0",
     {

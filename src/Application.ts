@@ -62,7 +62,7 @@ module JustinCredible.SmartHomeMobile.Application {
         };
 
         // Define the top level Angular module for the application.
-        ngModule = angular.module("JustinCredible.SmartHomeMobile.Application", ["ui.router", "ionic", "ngMockE2E", "angular.filter"]);
+        ngModule = angular.module("JustinCredible.SmartHomeMobile.Application", ["ui.router", "ionic", "ionic.service.core", "ionic.service.deploy", "ngMockE2E", "angular.filter"]);
 
         // Define our constants.
         ngModule.constant("isRipple", !!(window.parent && window.parent.ripple));
