@@ -540,8 +540,8 @@
 
         public showSecurityPromptAfterResume(): ng.IPromise<void> {
             // Determine which security prompt we need to show based on if we are running
-            // as a Chrome extension or a standard mobile application.
-            if (this.Utilities.isChromeExtension) {
+            // as a Chrome extension or UWP app vs a standard mobile application.
+            if (this.Utilities.isChromeExtension || this.Utilities.isWindows) {
                 return this.showPassphraseEntryAfterResume();
             }
             else {

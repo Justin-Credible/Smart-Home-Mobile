@@ -30,8 +30,8 @@
 
             this.viewModel.isDebugMode = this.Utilities.isDebugMode;
             this.viewModel.isDeveloperMode = this.Configuration.enableDeveloperTools;
-            this.viewModel.showPin = !this.Utilities.isChromeExtension;
-            this.viewModel.showPassphrase = this.Utilities.isChromeExtension;
+            this.viewModel.showPin = !this.Utilities.isChromeExtension || this.Utilities.isWindows;
+            this.viewModel.showPassphrase = this.Utilities.isChromeExtension || this.Utilities.isWindows;
         }
 
         //#endregion
