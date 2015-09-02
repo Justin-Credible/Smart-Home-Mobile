@@ -32,7 +32,7 @@
 
             if (this.HubDataSource.homeStatus == null
                 || this.HubDataSource.homeStatusLastUpdated == null
-                || this.HubDataSource.homeStatusLastUpdated.diff(moment(), "minutes") > 10) {
+                || moment().diff(this.HubDataSource.homeStatusLastUpdated, "minutes") > 10) {
                 this.refresh();
             }
             else {

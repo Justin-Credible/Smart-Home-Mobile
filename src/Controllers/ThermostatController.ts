@@ -34,7 +34,7 @@
 
             if (this.HubDataSource.climate == null
                 || this.HubDataSource.climateLastUpdated == null
-                || this.HubDataSource.climateLastUpdated.diff(moment(), "minutes") > 10) {
+                || moment().diff(this.HubDataSource.climateLastUpdated, "minutes") > 10) {
                 this.refresh();
             }
             else {

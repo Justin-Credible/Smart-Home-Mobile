@@ -37,7 +37,7 @@
 
             if (this.HubDataSource.security == null
                 || this.HubDataSource.securityLastUpdated == null
-                || this.HubDataSource.securityLastUpdated.diff(moment(), "minutes") > 10) {
+                || moment().diff(this.HubDataSource.securityLastUpdated, "minutes") > 10) {
                 this.refresh();
             }
             else {
