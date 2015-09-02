@@ -283,13 +283,14 @@
             var oldLockState: string,
                 newLockState: string;
 
-            // Save this off, so the API call fails, we can set the value
-            // back to its original value.
-            oldLockState = device.lockState;
+            // Determine what the original state was. Since we are in the click event
+            // the state must have already been changed, therefore the original state
+            // is simply the opposite of what is in the model.
+            oldLockState = device.lockState === Services.AlertMeApi.LockState.Unlocked ? Services.AlertMeApi.LockState.Locked : Services.AlertMeApi.LockState.Unlocked;
 
             // Determine what lock state we need to pass to the API call
             // based on the current lock state (we use the opposite).
-            newLockState = device.lockState === "LOCKED" ? Services.AlertMeApi.LockState.Unlocked : Services.AlertMeApi.LockState.Locked;
+            newLockState = oldLockState === Services.AlertMeApi.LockState.Locked ? Services.AlertMeApi.LockState.Unlocked : Services.AlertMeApi.LockState.Locked;
 
             this.AlertMeApi.setLockState(device.id, newLockState).then(() => {
                 // If the API call succeeded, set the new lock state into
