@@ -170,7 +170,7 @@
                 <!-- The hub is currently installing the new version. -->
                 <h2 ng-if="viewModel.hub.upgrading">Updates Available</h2>
                 <p ng-if="viewModel.hub.upgrading">Upgrading to {{controller.getVersionDisplayText(viewModel.hub.latestVersion)}}</p>
-                <i ng-if="viewModel.hub.upgrading" class="icon ion-loading-c"></i>
+                <i ng-if="viewModel.hub.upgrading" class="icon ion-load-c ion-spin-animation"></i>
 
                 <!-- The hub is eligible for a newer version. -->
                 <h2 ng-if="!viewModel.hub.upgrading && viewModel.hub.upgrade == 'ELIGIBLE'">Updates Available</h2>

@@ -17,7 +17,7 @@
         <icon-panel name="unarmed-icon" icon="ion-ios-bell-outline"></icon-panel>
 
         <div ng-show="viewModel.isRefreshing" style="text-align:center;">
-            <i class="icon ion-loading-c"></i>
+            <i class="icon ion-load-c ion-spin-animation"></i>
         </div>
 
         <div ng-hide="viewModel.isRefreshing">
@@ -25,7 +25,7 @@
                 {{viewModel.alarmData.state | TitleCase }}
             </div>
             <div style="text-align: center; font-size: 12pt; padding-top: 20px;" class="icon-left" ng-show="viewModel.armingGracePeriodRemaining">
-                <i class="icon ion-loading-c"></i>
+                <i class="icon ion-load-c ion-spin-animation"></i>
                 The alarm will be armed in {{viewModel.armingGracePeriodRemaining}} seconds...
             </div>
         </div>
@@ -119,7 +119,7 @@
             </div>
 
             <div class="item" ng-show="viewModel.isRefreshing" style="text-align:center;">
-                <i class="icon ion-loading-c"></i>
+                <i class="icon ion-load-c ion-spin-animation"></i>
             </div>
 
         </div>
