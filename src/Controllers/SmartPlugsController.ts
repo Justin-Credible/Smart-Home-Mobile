@@ -34,7 +34,7 @@
 
             if (this.HubDataSource.smartPlugs == null
                 || this.HubDataSource.smartPlugsLastUpdated == null
-                || this.HubDataSource.smartPlugsLastUpdated.diff(moment(), "minutes") > 10) {
+                || moment().diff(this.HubDataSource.smartPlugsLastUpdated, "minutes") > 10) {
                 this.refresh();
             }
             else {
