@@ -89,10 +89,17 @@
         }
 
         /**
-         * Used to check if the current platform is Windows 8 (desktop OS).
+         * Used to check if the current platform is Windows 8.
          */
         public get isWindows8(): boolean {
             return typeof(device) !== "undefined" && device.platform === "Windows8";
+        }
+
+        /**
+         * Used to check if the current platform is Windows 10 / UWP.
+         */
+        public get isWindows(): boolean {
+            return typeof(device) !== "undefined" && device.platform === "windows";
         }
 
         /**
@@ -104,6 +111,25 @@
             }
             else {
                 return device.platform;
+            }
+        }
+
+        /**
+         * Used to return the global device object.
+         */
+        public get device(): Device {
+            if (typeof(device) === "undefined") {
+                return {
+                    cordova: "unknown",
+                    platform: "unknown",
+                    model: "unknown",
+                    uuid: "unknown",
+                    version: "unknown",
+                    capture: null
+                };
+            }
+            else {
+                return device;
             }
         }
 

@@ -58,6 +58,13 @@
             };
         }
 
+        public getClipboardPluginForWindows(): ICordovaClipboardPlugin {
+            return {
+                copy: _.bind(this.clipboard_windows_copy, this),
+                paste: _.bind(this.clipboard_windows_paste, this)
+            };
+        }
+
         public getClipboardPluginForChromeExtension(): ICordovaClipboardPlugin {
             return {
                 copy: _.bind(this.clipboard_chromeExtension_copy, this),
@@ -148,29 +155,39 @@
         //#region Toast
 
         private toast(message: string) {
-            var div: HTMLDivElement,
-                existingToasts: number;
 
-            existingToasts = document.querySelectorAll(".mockToast").length;
-
-            div = document.createElement("div");
+            var div = document.createElement("div");
             div.className = "mockToast";
             div.style.position = "absolute";
-            div.style.bottom = (existingToasts === 0 ? 0 : (35 * existingToasts)) + "px";
+            div.style.bottom = "60px";
             div.style.width = "100%";
-            div.style.backgroundColor = "#444444";
-            div.style.opacity = "0.8";
             div.style.textAlign = "center";
-            div.style.color = "#fff";
-            div.style.padding = "10px";
             div.style.zIndex = "9000";
-            div.innerText = message;
+
+            var span = document.createElement("span");
+            span.style.backgroundColor = "#444444";
+            span.style.opacity = "0.8";
+            span.style.color = "#fff";
+            span.style.padding = "10px";
+            span.style.borderRadius = "40px";
+            span.innerText = message;
+            div.appendChild(span);
 
             document.body.appendChild(div);
 
-            setTimeout(() => {
-                document.body.removeChild(div);
-            }, 3000);
+            var removeToast = function () {
+                try {
+                    document.body.removeChild(div);
+                }
+                catch (err) {
+                    /* tslint:disable:no-empty */
+                    /* tslint:enable:no-empty */
+                }
+            };
+
+            div.addEventListener("click", removeToast);
+
+            setTimeout(removeToast, 3000);
         }
 
         //#endregion
@@ -222,6 +239,26 @@
                         onFail(new Error("The operation was cancelled."));
                     }
                 });
+            }
+        }
+
+        private clipboard_windows_copy(text: string, onSuccess: () => void, onFail: (err: Error) => void): void {
+
+            try {
+                // Obtain a reference to the UWP API namespace.
+                /* tslint:disable:no-string-literal */
+                var Windows = window["Windows"];
+                /* tslint:enable:no-string-literal */
+
+                var dataPackage = new Windows.ApplicationModel.DataTransfer.DataPackage();
+                dataPackage.setText(text);
+
+                Windows.ApplicationModel.DataTransfer.Clipboard.setContent(dataPackage);
+
+                onSuccess();
+            }
+            catch (exception) {
+                onFail(exception);
             }
         }
 
@@ -277,6 +314,23 @@
                         onSuccess(result);
                     }
                 });
+            }
+        }
+
+        private clipboard_windows_paste(onSuccess: (result: string) => void, onFail: (err: Error) => void): void {
+
+            try {
+                // Obtain a reference to the UWP API namespace.
+                /* tslint:disable:no-string-literal */
+                var Windows = window["Windows"];
+                /* tslint:enable:no-string-literal */
+
+                var dataPackage = Windows.ApplicationModel.DataTransfer.Clipboard.getContent();
+
+                dataPackage.getTextAsync().then(onSuccess, onFail);
+            }
+            catch (exception) {
+                onFail(exception);
             }
         }
 
@@ -457,7 +511,7 @@
             }
 
             this.$ionicLoading.show({
-                template: label
+                template: "<div class='progress-spinner'></div><br/>" + label
             });
 
             if (timeout) {
