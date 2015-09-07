@@ -179,7 +179,10 @@
                 try {
                     document.body.removeChild(div);
                 }
-                catch (err) {}
+                catch (err) {
+                    /* tslint:disable:no-empty */
+                    /* tslint:enable:no-empty */
+                }
             };
 
             div.addEventListener("click", removeToast);
@@ -243,7 +246,9 @@
 
             try {
                 // Obtain a reference to the UWP API namespace.
+                /* tslint:disable:no-string-literal */
                 var Windows = window["Windows"];
+                /* tslint:enable:no-string-literal */
 
                 var dataPackage = new Windows.ApplicationModel.DataTransfer.DataPackage();
                 dataPackage.setText(text);
@@ -316,7 +321,9 @@
 
             try {
                 // Obtain a reference to the UWP API namespace.
+                /* tslint:disable:no-string-literal */
                 var Windows = window["Windows"];
+                /* tslint:enable:no-string-literal */
 
                 var dataPackage = Windows.ApplicationModel.DataTransfer.Clipboard.getContent();
 
