@@ -341,7 +341,7 @@
                 this.$rootScope["nonBlockingRequestInProgress"] = false;
                 /* tslint:enable:no-string-literal */
             }
-            else {
+            else if (config.showSpinner) {
                 // If there are still spinner requests in progress, then kick up the progress
                 // bar a little bit to show some of the work has completed.
                 NProgress.inc();
