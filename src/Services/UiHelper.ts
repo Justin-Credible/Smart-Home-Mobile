@@ -162,7 +162,7 @@
         get keyboard(): Ionic.Keyboard {
 
             if (this.Utilities.isRipple) {
-                return this.MockPlatformApis.getKeyboardPlugin();;
+                return this.MockPlatformApis.getKeyboardPlugin();
             }
             else if (typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.Keyboard) {
                 return cordova.plugins.Keyboard;

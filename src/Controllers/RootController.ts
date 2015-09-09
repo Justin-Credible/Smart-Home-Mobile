@@ -113,7 +113,9 @@
         protected debuggerBreak_click(): void {
             this.popover.hide();
 
+            /* tslint:disable:no-debugger */
             debugger;
+            /* tslint:enable:no-debugger */
         }
 
         //#endregion
