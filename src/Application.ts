@@ -496,10 +496,16 @@ module JustinCredible.SmartHomeMobile.Application {
                     disableBack: true
                 });
 
-                // Navigate the user to their default view.
-                var category = services.Preferences.getCategoryByName(services.Preferences.defaultCategoryName);
-                services.$location.path(category.href.substring(1));
-                services.$location.replace();
+                if (services.Utilities.isWindowsIoT) {
+                    services.$location.path("/app/dashboard");
+                    services.$location.replace();
+                }
+                else {
+                    // Navigate the user to their default view.
+                    var category = services.Preferences.getCategoryByName(services.Preferences.defaultCategoryName);
+                    services.$location.path(category.href.substring(1));
+                    services.$location.replace();
+                }
             }
         });
     }

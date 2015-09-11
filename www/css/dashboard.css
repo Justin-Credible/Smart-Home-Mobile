@@ -1,0 +1,15 @@
+
+.floorplan {
+    background-image: url("../images/floorplan.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+    border: 1px solid #4a87ee;
+}
+
+.dashboard-lock-1 {
+    position: relative;
+    top: 200px;
+    left: 200px;
+}

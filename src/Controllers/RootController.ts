@@ -52,7 +52,7 @@
 
             this._hasLoaded = true;
 
-            this.viewModel.isDebugMode = this.Utilities.isDebugMode;
+            this.viewModel.showDashboardTab = this.Utilities.isWindowsIoT || this.Utilities.isRipple;
             this.viewModel.categories = this.Preferences.categories;
 
             this.$ionicPopover.fromTemplateUrl("templates/More-Menu.html", {
@@ -108,14 +108,6 @@
                 // items since they may have been re-ordered.
                 this.viewModel.categories = this.Preferences.categories;
             });
-        }
-
-        protected debuggerBreak_click(): void {
-            this.popover.hide();
-
-            /* tslint:disable:no-debugger */
-            debugger;
-            /* tslint:enable:no-debugger */
         }
 
         //#endregion

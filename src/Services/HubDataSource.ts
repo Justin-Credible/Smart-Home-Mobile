@@ -25,6 +25,43 @@
 
         //#endregion
 
+        //#region Dashboard
+
+        private _dashboard: ViewModels.DashboardViewModel;
+        private _dashboardLastUpdated: moment.Moment;
+
+        get dashboard(): ViewModels.DashboardViewModel {
+            return this._dashboard;
+        }
+
+        get dashboardLastUpdated(): moment.Moment {
+            return this._dashboardLastUpdated;
+        }
+
+        public refreshDashboard(): ng.IPromise<ViewModels.DashboardViewModel> {
+            var q = this.$q.defer<ViewModels.DashboardViewModel>();
+
+            this.$q.all([
+                this.refreshSecurity(),
+                this.refreshSmartPlugs()
+            ]).then(() => {
+                this._dashboard = new ViewModels.DashboardViewModel();
+
+                this._security.alarmData = this._alarm;
+                this._security.alarmOverviewData = this._alarmOverview;
+                this._security.lockData = this._locks;
+                this._dashboard.smartPlugs = this._smartPlugs;
+
+                this._dashboardLastUpdated = moment();
+
+                q.resolve(this._dashboard);
+            }, q.reject);
+
+            return q.promise;
+        }
+
+        //#endregion
+
         //#region Security
 
         private _security: ViewModels.SecurityViewModel;

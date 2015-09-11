@@ -82,6 +82,12 @@
             this.UiHelper.alert(helpMessage, "Help");
         }
 
+        protected debuggerBreak_click(): void {
+            /* tslint:disable:no-debugger */
+            debugger;
+            /* tslint:enable:no-debugger */
+        }
+
         protected mockApiRequests_change(): void {
 
             this.Configuration.enableMockHttpCalls = this.viewModel.mockApiRequests;

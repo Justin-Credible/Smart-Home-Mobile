@@ -28,6 +28,16 @@ module JustinCredible.SmartHomeMobile {
 
             //#region Main Application Areas
 
+            $stateProvider.state("app.dashboard", {
+                url: "/dashboard",
+                views: {
+                    "tab-dashboard": {
+                        templateUrl: "templates/Dashboard.html",
+                        controller: Controllers.DashboardController.ID
+                    }
+                }
+            });
+
             $stateProvider.state("app.security", {
                 url: "/security",
                 views: {
