@@ -376,17 +376,17 @@ module JustinCredible.SmartHomeMobile.Application {
             // Cordova doesn't currently recognize Windows 10 UWP on an IoT device
             // and therefore will never fire the device ready event, so we do it
             // here manually.
-            var app = services.Utilities.getValue(window, "WinJS.Application");
+
             var ActivationKind = services.Utilities.getValue(window, "Windows.ApplicationModel.Activation.ActivationKind");
 
-            app.onactivated = (args: any) => {
+            WinJS.Application.onactivated = (args: any) => {
                 if (args.detail.kind === ActivationKind.launch) {
                     ionicPlatform_ready();
                     args.setPromise(WinJS.UI.processAll());
                 }
             };
 
-            app.oncheckpoint = function (args) { device_pause(); };
+            WinJS.Application.oncheckpoint = function (args) { device_pause(); };
         }
     };
 

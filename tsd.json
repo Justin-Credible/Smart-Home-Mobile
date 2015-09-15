@@ -103,6 +103,9 @@
     },
     "webrtc/MediaStream.d.ts": {
       "commit": "c50b111ded0a3a18b87b5abffea3150d6aca94da"
+    },
+    "winjs/winjs.d.ts": {
+      "commit": "52b0ea5c9719831eecf6ba7436660e30061a4b3c"
     }
   }
 }
