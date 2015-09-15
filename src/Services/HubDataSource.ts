@@ -27,34 +27,34 @@
 
         //#region Dashboard
 
-        private _dashboard: ViewModels.DashboardViewModel;
-        private _dashboardLastUpdated: moment.Moment;
+        private _dashboardDevices: Models.DashboardDevices;
+        private _dashboardDevicesLastUpdated: moment.Moment;
 
-        get dashboard(): ViewModels.DashboardViewModel {
-            return this._dashboard;
+        get dashboardDevices(): Models.DashboardDevices {
+            return this._dashboardDevices;
         }
 
-        get dashboardLastUpdated(): moment.Moment {
-            return this._dashboardLastUpdated;
+        get dashboardDevicesLastUpdated(): moment.Moment {
+            return this._dashboardDevicesLastUpdated;
         }
 
-        public refreshDashboard(): ng.IPromise<ViewModels.DashboardViewModel> {
-            var q = this.$q.defer<ViewModels.DashboardViewModel>();
+        public refreshDashboardDevices(): ng.IPromise<Models.DashboardDevices> {
+            var q = this.$q.defer<Models.DashboardDevices>();
 
             this.$q.all([
                 this.refreshSecurity(),
                 this.refreshSmartPlugs()
             ]).then(() => {
-                this._dashboard = new ViewModels.DashboardViewModel();
+                this._dashboardDevices = new Models.DashboardDevices();
 
-                this._security.alarmData = this._alarm;
-                this._security.alarmOverviewData = this._alarmOverview;
-                this._security.lockData = this._locks;
-                this._dashboard.smartPlugs = this._smartPlugs;
+                this._dashboardDevices.alarmData = this._alarm;
+                this._dashboardDevices.alarmOverviewData = this._alarmOverview;
+                this._dashboardDevices.lockData = this._locks;
+                this._dashboardDevices.smartPlugs = this._smartPlugs;
 
-                this._dashboardLastUpdated = moment();
+                this._dashboardDevicesLastUpdated = moment();
 
-                q.resolve(this._dashboard);
+                q.resolve(this._dashboardDevices);
             }, q.reject);
 
             return q.promise;

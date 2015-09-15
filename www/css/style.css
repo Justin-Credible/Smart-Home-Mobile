@@ -190,3 +190,28 @@
 	padding-top: 20px;
 	padding-bottom: 10px;
 }
+
+/** Dashboard Views Shared  **********************************************************************/
+
+.floorplan {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+    border: 1px solid #4a87ee;
+}
+
+/** Dashboard Configuration View *****************************************************************/
+
+.dashboard-config-view .bar-subheader {
+    opacity: 0.75;
+    height: 60px;
+}
+
+.dashboard-config-view .bar-subheader .item-toggle {
+    text-align: right;
+}
+
+.dashboard-config-view .bar-subheader .col {
+    padding: 0px;
+}

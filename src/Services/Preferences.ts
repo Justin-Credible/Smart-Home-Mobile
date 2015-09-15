@@ -42,6 +42,9 @@
 
         private static CAMERAS = "CAMERAS";
 
+        private static DASHBOARD_FLOORPLAN_IMAGE_URL = "DASHBOARD_FLOORPLAN_IMAGE_URL";
+        private static DASHBOARD_ITEMS = "DASHBOARD_ITEMS";
+
         //#endregion
 
         //#region PIN
@@ -484,6 +487,50 @@
             }
             else {
                 localStorage.setItem(Preferences.DEFAULT_CATEGORY_NAME, value);
+            }
+        }
+
+        //#endregion
+
+        //#region Dashbaord
+
+        /**
+         * Returns the name of the category that is set as the default.
+         * If a default hasn't been set, then it will use first category's name.
+         */
+        public get dashboardFloorplanImageUrl(): string {
+            return localStorage.getItem(Preferences.DASHBOARD_FLOORPLAN_IMAGE_URL);
+        }
+
+        /**
+         * Sets the name of the category that should be the default.
+         */
+        public set dashboardFloorplanImageUrl(value: string) {
+            if (value == null) {
+                localStorage.removeItem(Preferences.DASHBOARD_FLOORPLAN_IMAGE_URL);
+            }
+            else {
+                localStorage.setItem(Preferences.DASHBOARD_FLOORPLAN_IMAGE_URL, value);
+            }
+        }
+
+        get dashboardItems(): Models.DashboardItem[] {
+            var json = localStorage.getItem(Preferences.DASHBOARD_ITEMS);
+
+            if (json == null) {
+                return null;
+            }
+            else {
+                return JSON.parse(json);
+            }
+        }
+
+        set dashboardItems(value: Models.DashboardItem[]) {
+            if (value == null) {
+                localStorage.removeItem(Preferences.DASHBOARD_ITEMS);
+            }
+            else {
+                localStorage.setItem(Preferences.DASHBOARD_ITEMS, JSON.stringify(value));
             }
         }
 

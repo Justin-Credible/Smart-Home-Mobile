@@ -154,6 +154,16 @@ module JustinCredible.SmartHomeMobile {
                 }
             });
 
+            $stateProvider.state("app.dashboard-config", {
+                url: "/settings/dashboard",
+                views: {
+                    "tab-settings": {
+                        templateUrl: "templates/Settings/Dashboard-Config.html",
+                        controller: Controllers.DashboardConfigController.ID
+                    }
+                }
+            });
+
             $stateProvider.state("app.cameras-list", {
                 url: "/settings/cameras",
                 views: {

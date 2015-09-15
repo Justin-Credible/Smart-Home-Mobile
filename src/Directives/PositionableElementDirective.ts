@@ -60,9 +60,7 @@ module JustinCredible.SmartHomeMobile.Directives {
             // Setup the element"s initial styling.
             element.css({
                 position: "relative",
-                border: "1px solid red",
-                backgroundColor: "lightgrey",
-                cursor: "pointer",
+                cursor: "move",
                 left: scope.left + "px",
                 top: scope.top + "px"
             });

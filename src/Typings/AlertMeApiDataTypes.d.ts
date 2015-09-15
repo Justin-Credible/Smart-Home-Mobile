@@ -5,6 +5,15 @@
  */
 declare module JustinCredible.SmartHomeMobile.AlertMeApiTypes {
 
+    interface DeviceId {
+        id: string;
+    }
+
+    interface DeviceDescriptor {
+        type: string;
+        name: string;
+    }
+
     /**
      * Response for GET /login
      */
@@ -54,10 +63,7 @@ declare module JustinCredible.SmartHomeMobile.AlertMeApiTypes {
     /**
      * Describes a device with locking capabilities (eg deadbolts).
      */
-    interface LockDevice {
-        id: string;
-        name: string;
-        type: string;
+    interface LockDevice extends DeviceId, DeviceDescriptor {
         presence: boolean;
         lockState: string;
         canLock: boolean;
@@ -114,9 +120,7 @@ declare module JustinCredible.SmartHomeMobile.AlertMeApiTypes {
     /**
      * Describes a device that can trigger an alarm.
      */
-    interface AlarmDevice {
-        name: string;
-        type: string;
+    interface AlarmDevice extends DeviceDescriptor {
         alarm: string;
         presence: boolean;
         state: string;
@@ -133,10 +137,7 @@ declare module JustinCredible.SmartHomeMobile.AlertMeApiTypes {
     /**
      * Describes a device that controls power (eg light switches, electrical outlets, etc).
      */
-    interface SmartPlugDevice {
-        id: string;
-        name: string;
-        type: string;
+    interface SmartPlugDevice extends DeviceId, DeviceDescriptor {
         controlType: string;
         plugType: string;
         presence: boolean;
@@ -336,9 +337,7 @@ declare module JustinCredible.SmartHomeMobile.AlertMeApiTypes {
     /**
      * Describes a single device in the homeStatus response.
      */
-    interface HomeStatusDevice {
-        name: string;
-        type: string;
+    interface HomeStatusDevice extends DeviceId, DeviceDescriptor {
         protocol: string[];
         battery: number;
         batteryLow: boolean;
@@ -363,6 +362,5 @@ declare module JustinCredible.SmartHomeMobile.AlertMeApiTypes {
         hardwareRevision: string;
         repeaterVersion?: number;
         missingProtocols?: { [id: string]: string };
-        id: string;
     }
 }
