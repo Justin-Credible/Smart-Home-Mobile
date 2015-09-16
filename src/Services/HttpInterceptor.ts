@@ -301,8 +301,21 @@
             this.requestsInProgress = 0;
             this.blockingRequestsInProgress = 0;
             this.spinnerRequestsInProgress = 0;
+
+            /* tslint:disable:no-string-literal */
+            this.$rootScope["nonBlockingRequestInProgress"] = false;
+            this.$rootScope["blockingRequestInProgress"] = false;
+            /* tslint:enable:no-string-literal */
+
             NProgress.done();
             this.UiHelper.progressIndicator.hide();
+
+            let error: ng.IHttpPromiseCallbackArg<any> = {
+                status: 0,
+                statusText: "Fatal error occurred in HttpInterceptor."
+            };
+
+            this.$rootScope.$broadcast(Constants.Events.HTTP_ERROR, error);
         }
 
         /**

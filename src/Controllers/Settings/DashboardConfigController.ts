@@ -11,9 +11,9 @@ module JustinCredible.SmartHomeMobile.Controllers {
                 "$scope",
                 Services.Utilities.ID,
                 Services.UiHelper.ID,
+                Services.Preferences.ID,
                 Services.DashboardHelper.ID,
-                Services.HubDataSource.ID,
-                Services.Preferences.ID
+                Services.HubDataSource.ID
             ];
         }
 
@@ -21,9 +21,9 @@ module JustinCredible.SmartHomeMobile.Controllers {
             $scope: ng.IScope,
             private Utilities: Services.Utilities,
             private UiHelper: Services.UiHelper,
+            private Preferences: Services.Preferences,
             private DashboardHelper: Services.DashboardHelper,
-            private HubDataSource: Services.HubDataSource,
-            private Preferences: Services.Preferences) {
+            private HubDataSource: Services.HubDataSource) {
             super($scope, ViewModels.DashboardConfigViewModel);
         }
 
@@ -93,6 +93,7 @@ module JustinCredible.SmartHomeMobile.Controllers {
                     // Device already has a corresponding item, so we'll update it.
                     items[deviceId].name = devices[deviceId].name;
                     items[deviceId].missing = false;
+                    items[deviceId].isBusy = false;
                     hasChanged = true;
                 }
                 else {
@@ -101,6 +102,7 @@ module JustinCredible.SmartHomeMobile.Controllers {
                     newItem.deviceId = deviceId;
                     newItem.type = devices[deviceId].type;
                     newItem.name = devices[deviceId].name;
+                    newItem.isBusy = false;
                     newItem.visible = true;
                     newItem.missing = false;
 

@@ -5,6 +5,7 @@ module JustinCredible.SmartHomeMobile.Models {
         public type: string;
         public missing: boolean;
         public visible: boolean;
+        public isBusy: boolean;
         public name: string;
         public x: number;
         public y: number;

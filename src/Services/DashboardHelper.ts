@@ -76,10 +76,22 @@ module JustinCredible.SmartHomeMobile.Services {
             return dictionary;
         }
 
+        /**
+         * Used to retrieve the class name of an Ionic icon for a dashboard item's button
+         * based on the state of its corresponding device.
+         * 
+         * @param item The dashboard item to retrieve an icon for.
+         * @param device The device that corresponds to the dashboard item; used to determine state.
+         * @returns The class name of an Ionic icon.
+         */
         public getIconForItem(item: Models.DashboardItem, device: AlertMeApiTypes.DeviceDescriptor): string {
 
             if (!item || !item.type || !device) {
                 return "ion-help";
+            }
+
+            if (item.isBusy) {
+                return "ion-load-c";
             }
 
             switch (item.type) {
@@ -92,10 +104,10 @@ module JustinCredible.SmartHomeMobile.Services {
                     let smartPlug = <AlertMeApiTypes.SmartPlugDevice> device;
 
                     if (smartPlug.onOffState === AlertMeApi.SmartPlugOnOffState.Off) {
-                        return "ion-ios-lightbulb-outline";
+                        return "ion-ios-lightbulb";
                     }
                     else if (smartPlug.onOffState === AlertMeApi.SmartPlugOnOffState.On) {
-                        return "ion-ios-lightbulb";
+                        return "ion-ios-lightbulb-outline";
                     }
                     else {
                         return "ion-help";
@@ -140,9 +152,21 @@ module JustinCredible.SmartHomeMobile.Services {
             return "ion-help";
         }
 
+        /**
+         * Used to retrieve a color in hex format for a dashboard item's button based on the state
+         * of its corresponding device.
+         * 
+         * @param item The dashboard item to retrieve a color for.
+         * @param device The device that corresponds to the dashboard item; used to determine state.
+         * @returns A color in hex format.
+         */
         public getColorForItem(item: Models.DashboardItem, device: AlertMeApiTypes.DeviceDescriptor): string {
 
             if (!item || item.missing || !device) {
+                return "#444";
+            }
+
+            if (item.isBusy) {
                 return "#444";
             }
 
@@ -155,13 +179,13 @@ module JustinCredible.SmartHomeMobile.Services {
                         return "#444";
                     }
                     else if (smartPlug.onOffState === AlertMeApi.SmartPlugOnOffState.On) {
-                        return "##ffc900"; // Ionic "Energized"
+                        return "#ffc900"; // Ionic "Energized"
                     }
                     else {
                         return "#444";
                     }
                 }
-               break;
+                break;
 
                 case "GenericMultilevelSwitch":
                 case "JascoBinarySwitch": {
@@ -171,7 +195,7 @@ module JustinCredible.SmartHomeMobile.Services {
                         return "#444";
                     }
                     else if (smartPlug.onOffState === AlertMeApi.SmartPlugOnOffState.On) {
-                        return "##ffc900"; // Ionic "Energized"
+                        return "#ffc900"; // Ionic "Energized"
                     }
                     else {
                         return "#444";
@@ -216,6 +240,14 @@ module JustinCredible.SmartHomeMobile.Services {
             return "#444";
         }
 
+        /**
+         * Used to retrieve a border color in hex format for a dashboard item's button based on the state
+         * of its corresponding device.
+         * 
+         * @param item The dashboard item to retrieve a border color for.
+         * @param device The device that corresponds to the dashboard item; used to determine state.
+         * @returns A color in hex format.
+         */
         public getBorderColorForItem(item: Models.DashboardItem, device: AlertMeApiTypes.DeviceDescriptor): string {
             return !item || item.missing || !device ? "red" :  "#444";
         }

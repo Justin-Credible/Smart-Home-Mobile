@@ -12,15 +12,18 @@
         <div class="floorplan"
             style="background-image: url('{{viewModel.floorplanImageUrl}}');">
 
-            <button ng-repeat="item in viewModel.items | filter: { visible: true }"
+            <button class="button"
+                ng-repeat="item in viewModel.items | filter: { visible: true }"
                 ng-click="controller.item_click(item)"
                 ng-style="{
                     'color': controller.getColorForItem(item),
                     'border-color': controller.getBorderColorForItem(item),
                     'top': item.y + 'px',
                     'left': item.x + 'px'
-                }"
-                class="button icon {{controller.getIconForItem(item)}}">
+                }">
+                <i class="icon {{controller.getIconForItem(item)}}"
+                    ng-class="{'ion-spin-animation': item.isBusy }">
+                </i>
             </button>
 
         </div>
