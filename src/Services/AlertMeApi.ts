@@ -60,6 +60,14 @@
         };
 
         /**
+         * The state of an AlarmDevice of type ContactSensor.
+         */
+        public static ContactSensorState = {
+            Closed: "CLOSED",
+            Opened: "OPENED"
+        };
+
+        /**
          * The on/off state of a smart plug device; can be used with AlertMeApi.setSmartPlugOnOffState(...)
          */
         public static SmartPlugOnOffState = {

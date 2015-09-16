@@ -4,6 +4,8 @@ module JustinCredible.SmartHomeMobile.ViewModels {
         public isRefreshing: boolean;
         public lastUpdated: Date;
 
-        public devices: Models.DashboardDevices;
+        public floorplanImageUrl: string;
+        public items: Models.DashboardItem[];
+        public devices: Models.Dictionary<AlertMeApiTypes.DeviceDescriptor>;
     }
 }

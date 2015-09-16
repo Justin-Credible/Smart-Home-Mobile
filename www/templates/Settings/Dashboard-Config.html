@@ -80,12 +80,16 @@
     <ion-content class="has-header" padding="false" scroll="false" >
 
         <div class="floorplan"
-            style="background-image: url('{{controller.getBackgroundImageUrl()}}');">
+            style="background-image: url('{{viewModel.floorplanImageUrl}}');">
 
             <button ng-repeat="item in viewModel.items"
                 positionable-element left="item.x" top="item.y"
                 ng-click="controller.item_click(item)"
-                ng-style="{ 'opacity': item.visible ? 1 : .3, 'border-color': item.missing ? 'red' :  'initial' }"
+                ng-style="{
+                    'color': controller.getColorForItem(item),
+                    'border-color': controller.getBorderColorForItem(item),
+                    'opacity': item.visible ? 1 : .3
+                }"
                 class="button icon {{controller.getIconForItem(item)}}">
             </button>
 

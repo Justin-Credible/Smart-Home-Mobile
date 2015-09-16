@@ -1,22 +1,27 @@
-<ion-view view-title="System Overview">
+<ion-view view-title="Dashboard" class="dashboard-config-view">
 
     <ion-nav-buttons side="right">
-        <button class="button icon ion-loop" ng-click="controller.refresh_click()" ng-hide="blockingRequestInProgress || nonBlockingRequestInProgress"></button>
+        <button class="button icon ion-loop"
+            ng-click="controller.refresh_click()"
+            ng-hide="blockingRequestInProgress || nonBlockingRequestInProgress">
+        </button>
     </ion-nav-buttons>
 
     <ion-content class="has-header" padding="false" scroll="false" >
 
-        <div class="floorplan">
+        <div class="floorplan"
+            style="background-image: url('{{viewModel.floorplanImageUrl}}');">
 
-            <button class="dashboard-front-lock button icon ion-ios-locked" positionable-element></button>
-
-            <button class="dashboard-garage-lock button icon ion-ios-locked" positionable-element></button>
-
-            <button class="dashboard-kitchen-lights button icon ion-ios-locked" positionable-element></button>
-
-            <button class="dashboard-patio-lights button icon ion-ios-locked" positionable-element></button>
-
-            <button class="dashboard-master-lamp button icon ion-ios-locked" positionable-element></button>
+            <button ng-repeat="item in viewModel.items | filter: { visible: true }"
+                ng-click="controller.item_click(item)"
+                ng-style="{
+                    'color': controller.getColorForItem(item),
+                    'border-color': controller.getBorderColorForItem(item),
+                    'top': item.y + 'px',
+                    'left': item.x + 'px'
+                }"
+                class="button icon {{controller.getIconForItem(item)}}">
+            </button>
 
         </div>
 

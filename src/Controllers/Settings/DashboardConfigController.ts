@@ -11,6 +11,7 @@ module JustinCredible.SmartHomeMobile.Controllers {
                 "$scope",
                 Services.Utilities.ID,
                 Services.UiHelper.ID,
+                Services.DashboardHelper.ID,
                 Services.HubDataSource.ID,
                 Services.Preferences.ID
             ];
@@ -20,6 +21,7 @@ module JustinCredible.SmartHomeMobile.Controllers {
             $scope: ng.IScope,
             private Utilities: Services.Utilities,
             private UiHelper: Services.UiHelper,
+            private DashboardHelper: Services.DashboardHelper,
             private HubDataSource: Services.HubDataSource,
             private Preferences: Services.Preferences) {
             super($scope, ViewModels.DashboardConfigViewModel);
@@ -32,17 +34,19 @@ module JustinCredible.SmartHomeMobile.Controllers {
         protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
-            this.viewModel.floorplanImageUrl = this.Preferences.dashboardFloorplanImageUrl;
             this.viewModel.hasChanges = false;
             this.viewModel.showToolbar = true;
+            this.viewModel.floorplanImageUrl = this.Preferences.dashboardFloorplanImageUrl;
+            this.viewModel.items = this.Preferences.dashboardItems;
 
-            let items = this.Preferences.dashboardItems;
-
-            if (items) {
-                this.viewModel.items = items;
+            if (this.HubDataSource.dashboardDevices == null
+                || this.HubDataSource.dashboardDevicesLastUpdated == null
+                || moment().diff(this.HubDataSource.dashboardDevicesLastUpdated, "minutes") > 10) {
+                this.refresh();
             }
             else {
-                this.refreshDeviceList();
+                this.viewModel.devices = this.DashboardHelper.getDeviceDictionary(this.HubDataSource.dashboardDevices);
+                this.updateItemList(this.HubDataSource.dashboardDevices);
             }
         }
 
@@ -50,147 +54,106 @@ module JustinCredible.SmartHomeMobile.Controllers {
 
         //#region Private Methods
 
-        private getDeviceDictionary(dashboardDevices: Models.DashboardDevices): Models.Dictionary<AlertMeApiTypes.DeviceDescriptor> {
+        private refresh(): void {
+            this.viewModel.isRefreshing = true;
 
-            var dictionary: Models.Dictionary<AlertMeApiTypes.DeviceDescriptor> = {};
+            this.HubDataSource.refreshDashboardDevices().then((result: Models.DashboardDevices) => {
+                this.viewModel.isRefreshing = false;
+                this.viewModel.devices = this.DashboardHelper.getDeviceDictionary(result);
+                this.viewModel.lastUpdated = this.HubDataSource.dashboardDevicesLastUpdated.toDate();
 
-            if (!dashboardDevices) {
-                return dictionary;
-            }
-
-            var otherDeviceIds = Object.keys(dashboardDevices.alarmOverviewData.otherDevices);
-
-            otherDeviceIds.forEach((deviceId: string, index: number) => {
-                let otherDevice = dashboardDevices.alarmOverviewData.otherDevices[deviceId];
-
-                if (otherDevice.type === "ContactSensor") {
-                    dictionary[deviceId] = otherDevice;
-                }
+                this.updateItemList(result);
+            }, () => {
+                this.viewModel.isRefreshing = false;
             });
-
-            dashboardDevices.lockData.locks.forEach((lockDevice: AlertMeApiTypes.LockDevice) => {
-                dictionary[lockDevice.id] = lockDevice;
-            });
-
-            dashboardDevices.smartPlugs.forEach((smartPlugDevice: AlertMeApiTypes.SmartPlugDevice) => {
-                dictionary[smartPlugDevice.id] = smartPlugDevice;
-            });
-
-            return dictionary;
         }
 
-        private getItemsDictionary(items: Models.DashboardItem[]): Models.Dictionary<Models.DashboardItem> {
+        private updateItemList(dashboardDevices: Models.DashboardDevices): void {
 
-            var dictionary: Models.Dictionary<Models.DashboardItem> = {};
-
-            if (!items) {
-                return dictionary;
-            }
-
-            items.forEach((item: Models.DashboardItem) => {
-                dictionary[item.deviceId] = item;
-            });
-
-            return dictionary;
-        }
-
-        private refreshDeviceList(): void {
-
-            this.HubDataSource.refreshDashboardDevices().then((dashboardDevices: Models.DashboardDevices) => {
-
-                if (!this.viewModel.items) {
-                    this.viewModel.items = [];
-                }
-
-                // Flatten the different device types into a single dictionary of devices by ID.
-                let deviceList = this.getDeviceDictionary(dashboardDevices);
-
-                // Flatten the items list into a dictionary of items by device ID.
-                let itemsList = this.getItemsDictionary(this.viewModel.items);
-
-                // Keeps track of the X coordiate for new items so they don't all overlap.
-                let newItemPositionCounter = 0;
-
-                // Keeps track of if a changed has occurred or not.
-                let hasChanged = false;
-
-                // First, loop over each of the devices and add items if they don't exist yet.
-                Object.keys(deviceList).forEach((deviceId: string) => {
-
-                    if (itemsList[deviceId]) {
-                        // Device already has a corresponding item, so we'll update it.
-                        itemsList[deviceId].name = deviceList[deviceId].name;
-                        itemsList[deviceId].missing = false;
-                        hasChanged = true;
-                    }
-                    else {
-                        // If this is a new device, add an item for it.
-                        let newItem = new Models.DashboardItem();
-                        newItem.deviceId = deviceId;
-                        newItem.type = deviceList[deviceId].type;
-                        newItem.name = deviceList[deviceId].name;
-                        newItem.visible = true;
-                        newItem.missing = false;
-
-                        newItem.x = newItemPositionCounter += 10;
-                        newItem.y = 45;
-
-                        itemsList[deviceId] = newItem;
-
-                        hasChanged = true;
-                    }
-                });
-
-                // Look for items whose devices are no longer present.
-                Object.keys(itemsList).forEach((deviceId: string) => {
-
-                    if (!deviceList[deviceId]) {
-                        itemsList[deviceId].missing = true;
-                        hasChanged = true;
-                    }
-                });
-
+            if (!this.viewModel.items) {
                 this.viewModel.items = [];
+            }
 
-                // Convert back to an array for the view model.
-                Object.keys(itemsList).forEach((deviceId: string) => {
-                    this.viewModel.items.push(itemsList[deviceId]);
-                });
+            // Flatten the different device types into a single dictionary of devices by ID.
+            let devices = this.DashboardHelper.getDeviceDictionary(dashboardDevices);
 
-                if (hasChanged) {
-                    this.viewModel.hasChanges = true;
+            // Flatten the items list into a dictionary of items by device ID.
+            let items = this.DashboardHelper.getItemsDictionary(this.viewModel.items);
+
+            // Keeps track of the X coordiate for new items so they don't all overlap.
+            let newItemPositionCounter = 0;
+
+            // Keeps track of if a changed has occurred or not.
+            let hasChanged = false;
+
+            // First, loop over each of the devices and add items if they don't exist yet.
+            Object.keys(devices).forEach((deviceId: string) => {
+
+                if (items[deviceId]) {
+                    // Device already has a corresponding item, so we'll update it.
+                    items[deviceId].name = devices[deviceId].name;
+                    items[deviceId].missing = false;
+                    hasChanged = true;
+                }
+                else {
+                    // If this is a new device, add an item for it.
+                    let newItem = new Models.DashboardItem();
+                    newItem.deviceId = deviceId;
+                    newItem.type = devices[deviceId].type;
+                    newItem.name = devices[deviceId].name;
+                    newItem.visible = true;
+                    newItem.missing = false;
+
+                    newItem.x = newItemPositionCounter += 10;
+                    newItem.y = 45;
+
+                    items[deviceId] = newItem;
+
+                    hasChanged = true;
                 }
             });
+
+            // Look for items whose devices are no longer present.
+            Object.keys(items).forEach((deviceId: string) => {
+
+                if (!devices[deviceId]) {
+                    items[deviceId].missing = true;
+                    hasChanged = true;
+                }
+            });
+
+            this.viewModel.items = [];
+
+            // Convert back to an array for the view model.
+            Object.keys(items).forEach((deviceId: string) => {
+                this.viewModel.items.push(items[deviceId]);
+            });
+
+            // Store the device dictionary so we can use it to determine icons etc.
+            this.viewModel.devices = devices;
+
+            if (hasChanged) {
+                this.viewModel.hasChanges = true;
+            }
         }
 
         //#endregion
 
         //#region Attribute/Expression Properties and Helpers
 
-        protected getIconForItem(item: Models.DashboardItem): string {
-
-            if (!item || !item.type) {
-                return "ion-help";
-            }
-
-            switch (item.type) {
-                case "SmartPlug":
-                case "JascoOutdoorModule":
-                    return "ion-outlet";
-                case "GenericMultilevelSwitch":
-                case "JascoBinarySwitch":
-                    return "ion-ios-lightbulb-outline";
-                case "DEADBOLT":
-                    return "ion-ios-locked";
-                case "ContactSensor":
-                    return "ion-checkmark-round";
-                default:
-                    return "ion-help";
-            }
+        public getIconForItem(item: Models.DashboardItem): string {
+            let device = this.viewModel.devices ? this.viewModel.devices[item.deviceId] : null;
+            return this.DashboardHelper.getIconForItem(item, device);
         }
 
-        protected getBackgroundImageUrl(): string {
-            return this.viewModel.floorplanImageUrl || "";
+        public getColorForItem(item: Models.DashboardItem): string {
+            let device = this.viewModel.devices ? this.viewModel.devices[item.deviceId] : null;
+            return this.DashboardHelper.getColorForItem(item, device);
+        }
+
+        public getBorderColorForItem(item: Models.DashboardItem): string {
+            let device = this.viewModel.devices ? this.viewModel.devices[item.deviceId] : null;
+            return this.DashboardHelper.getBorderColorForItem(item, device);
         }
 
         //#endregion
@@ -202,12 +165,12 @@ module JustinCredible.SmartHomeMobile.Controllers {
         }
 
         protected refreshDevices_click(): void {
-            this.refreshDeviceList();
+            this.refresh();
         }
 
         protected resetLayout_click(): void {
 
-        let message = "Are you sure you want to reset the layout of all of the devices?";
+            let message = "Are you sure you want to reset the layout of all of the devices?";
             let title = "Reset Layout";
 
             this.UiHelper.confirm(message, title).then((result: string) => {

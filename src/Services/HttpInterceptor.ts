@@ -249,8 +249,11 @@
                 this.blockingRequestsInProgress += 1;
 
                 // If this wasn't the first blocking HTTP request, we need to hide the previous
-                // blocking progress indicator before we show the new one.
-                if (this.blockingRequestsInProgress > 1) {
+                // blocking progress indicator before we show the new one on iOS because the iOS
+                // plugin will create a new instance and hide only operates on the last instance.
+                // If we don't do this here, it will result in being unable to hide progress
+                // indicators when multiple are shown.
+                if (this.Utilities.isIos && this.blockingRequestsInProgress > 1) {
                     this.UiHelper.progressIndicator.hide();
                 }
 
