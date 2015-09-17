@@ -139,10 +139,14 @@ gulp.task('emulate-android', ['ts'], function(cb) {
  */
 gulp.task('prepare-windows', ['ts'], function(cb) {
     exec("ionic build windows", function (err, stdout, stderr) {
-        del([
-            "platforms/windows/www/js/src",
-            "platforms/windows/www/js/src/bundle.d.ts"
-        ], cb);
+        gulp.src("resources/windows/**")
+            .pipe(gulp.dest("platforms/windows/images"))
+            .on("end", function() {
+                del([
+                    "platforms/windows/www/js/src",
+                    "platforms/windows/www/js/src/bundle.d.ts"
+                ], cb);
+        });
     });
 });
 
