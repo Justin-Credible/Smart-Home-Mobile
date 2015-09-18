@@ -80,9 +80,10 @@
     <ion-content class="has-header" padding="false" scroll="false" >
 
         <div class="floorplan"
-            style="background-image: url('{{viewModel.floorplanImageUrl}}');">
+            style="background-image: url('{{viewModel.floorplanImageUrl}}'); position: relative;">
 
             <button ng-repeat="item in viewModel.items"
+                style="position: absolute;"
                 positionable-element left="item.x" top="item.y"
                 ng-click="controller.item_click(item)"
                 ng-style="{

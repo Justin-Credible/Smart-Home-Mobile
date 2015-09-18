@@ -41,17 +41,26 @@ module JustinCredible.SmartHomeMobile.Directives {
 
         public link(scope: PositionableElementScope, element: ng.IAugmentedJQuery, attributes: ng.IAttributes, controller: any, transclude: ng.ITranscludeFunction): void {
 
-            var startX = 0, startY = 0, x = 0, y = 0;
+            var startX = scope.left,
+                startY = scope.top,
+                x = scope.left,
+                y = scope.top;
 
             // Watch the properties so we can update the element if they change.
 
             scope.$watch(() => { return scope.left; }, () => {
+                startX = scope.left;
+                x = scope.left;
+
                 element.css({
                     left: scope.left + "px"
                 });
             });
 
             scope.$watch(() => { return scope.top; }, () => {
+                startY = scope.top;
+                y = scope.top;
+
                 element.css({
                     top: scope.top + "px"
                 });
@@ -59,7 +68,7 @@ module JustinCredible.SmartHomeMobile.Directives {
 
             // Setup the element"s initial styling.
             element.css({
-                position: "relative",
+                position: "absolute",
                 cursor: "move",
                 left: scope.left + "px",
                 top: scope.top + "px"
