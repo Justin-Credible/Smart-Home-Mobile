@@ -13,10 +13,8 @@ A cross-platform mobile application used to control several smart home devices.
 	* Contact Sensors
 	* Thermostat
 	* Alarms (intrusion, fire, water leak, etc)
-* [IrrigationCaddy](http://irrigationcaddy.com)
+* [IrrigationCaddy](http://irrigationcaddy.com) (*work in progress*)
 * IP Video Cameras
-
-*This is currently a work in progress; more documentation and details will be added as the app progresses.*
 
 ## Why? ##
 
@@ -24,11 +22,18 @@ I wanted to have a single mobile app to control all of my smart home devices. Wh
 
 I also wanted to have an app that would be easily extensible so I can add support for non-Iris devices as I add them to my home (eg IrrigationCaddy, Philips Hue bulbs, etc).  
 
-## Application Framework ##
+## Supported Platforms ##
 
-The mobile app is cross-platform and supports Android, iOS, Windows Phone 8 and Windows 8.x 'metro'.
+The mobile app is cross-platform and supports the following platforms:
 
-It is built with Ionic, TypeScript, and AngularJS (among others) using the [Ionic-TypeScript-Starter](https://github.com/Justin-Credible/Ionic-TypeScript-Starter) skeleton project.
+* Android
+* iOS
+* Windows 10
+* Windows 10 IoT on Raspberry Pi 2
+
+It is built with Ionic, TypeScript, and AngularJS (among others) using the [Ionic-TypeScript-Starter](https://github.com/Justin-Credible/Ionic-TypeScript-Starter) starter project.
+
+See [`getting-started.md`](https://github.com/Justin-Credible/Smart-Home-Mobile/getting-started.md) for information on how to build and run the application.
 
 ## Integration APIs ##
 
@@ -43,25 +48,6 @@ IrrigationCaddy also does not provide a public API, but using an HTTP debugging 
 ### IP Video Cameras ###
 
 While each IP camera can be quite different, they usually all have at least one thing in common: an HTTP daemon serving up static images and/or mjpeg content. The mobile app allows the user to enter these URLs (static or streaming) for each camera.
-
-## Getting Started ##
-
-Install [Node.js](https://nodejs.org/) (I've tested with version 0.10.38), clone the project, and then install the node packages:
-
-    $ git clone https://github.com/Justin-Credible/Smart-Home-Mobile.git
-    $ cd Smart-Home-Mobile
-    $ npm install
-
-Now you can use the various gulp tasks to obtain Cordova plugins, install third party libraries via Bower, download TypeScript definition files and compile the TypeScript code.
-
-    $ gulp libs
-    $ gulp plugins
-    $ gulp tsd
-    $ gulp ts
-
-*You can also just run `gulp` without any arguments which will run the above targets.*
-
-While there are no unit tests the TypeScript code can be linted by using `gulp lint`.
 
 ## License ##
 

@@ -60,6 +60,14 @@
         };
 
         /**
+         * The state of an AlarmDevice of type ContactSensor.
+         */
+        public static ContactSensorState = {
+            Closed: "CLOSED",
+            Opened: "OPENED"
+        };
+
+        /**
          * The on/off state of a smart plug device; can be used with AlertMeApi.setSmartPlugOnOffState(...)
          */
         public static SmartPlugOnOffState = {
@@ -349,10 +357,15 @@
          * @param deviceId The device ID of the lock to operate on (or "all" to operate on all locks).
          * @param lockState The state to set the lock(s); one of the values provided by AlertMeApi.LockState.
          */
-        public setLockState(deviceId: string, lockState: string): ng.IPromise<AlertMeApiTypes.LockStatePutResult> {
+        public setLockState(deviceId: string, lockState: string, blocking?: boolean): ng.IPromise<AlertMeApiTypes.LockStatePutResult> {
             var q = this.$q.defer<AlertMeApiTypes.LockStatePutResult>(),
                 url: string,
                 httpConfig: Interfaces.RequestConfig;
+
+            // Default the blocking flag to true if not provided.
+            if (blocking == null) {
+                blocking = true;
+            }
 
             if (!this.arePreconditionsMet()) {
                 q.reject(AlertMeApi.URL_OR_CREDENTIALS_NOT_SPECIFIED_REJECTION);
@@ -364,6 +377,7 @@
             httpConfig = {
                 method: "PUT",
                 url: url,
+                blocking: blocking,
                 data: this.Utilities.format("lockState={0}", lockState)
             };
 
@@ -450,10 +464,15 @@
          * @param deviceId The device ID of the smart plug to operate on (or "all" to operate on all devices).
          * @param onOffState The state to set the smart plug(s); one of the values provided by AlertMeApi.SmartPlugOnOffState.
          */
-        public setSmartPlugState(deviceId: string, onOffState: string): ng.IPromise<void> {
+        public setSmartPlugState(deviceId: string, onOffState: string, blocking?: boolean): ng.IPromise<void> {
             var q = this.$q.defer<void>(),
                 url: string,
                 httpConfig: Interfaces.RequestConfig;
+
+            // Default the blocking flag to true if not provided.
+            if (blocking == null) {
+                blocking = true;
+            }
 
             if (!this.arePreconditionsMet()) {
                 q.reject(AlertMeApi.URL_OR_CREDENTIALS_NOT_SPECIFIED_REJECTION);
@@ -465,6 +484,7 @@
             httpConfig = {
                 method: "PUT",
                 url: url,
+                blocking: blocking,
                 data: this.Utilities.format("onOffState={0}", onOffState)
             };
 

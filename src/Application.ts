@@ -366,6 +366,28 @@ module JustinCredible.SmartHomeMobile.Application {
 
         // Mock up or allow HTTP responses.
         MockHttpApis.mockHttpCalls(Configuration.enableMockHttpCalls);
+
+        // Special code for Windows IoT devices.
+        if (services.Utilities.isWindowsIoT) {
+
+            // Currently the Rasberry Pi 2 isn't powerful enough to handle animations.
+            services.$ionicConfig.views.transition("none");
+
+            // Cordova doesn't currently recognize Windows 10 UWP on an IoT device
+            // and therefore will never fire the device ready event, so we do it
+            // here manually.
+
+            var ActivationKind = services.Utilities.getValue(window, "Windows.ApplicationModel.Activation.ActivationKind");
+
+            WinJS.Application.onactivated = (args: any) => {
+                if (args.detail.kind === ActivationKind.launch) {
+                    ionicPlatform_ready();
+                    args.setPromise(WinJS.UI.processAll());
+                }
+            };
+
+            WinJS.Application.oncheckpoint = function (args) { device_pause(); };
+        }
     };
 
     /**
@@ -474,10 +496,16 @@ module JustinCredible.SmartHomeMobile.Application {
                     disableBack: true
                 });
 
-                // Navigate the user to their default view.
-                var category = services.Preferences.getCategoryByName(services.Preferences.defaultCategoryName);
-                services.$location.path(category.href.substring(1));
-                services.$location.replace();
+                if (services.Utilities.isWindowsIoT) {
+                    services.$location.path("/app/dashboard");
+                    services.$location.replace();
+                }
+                else {
+                    // Navigate the user to their default view.
+                    var category = services.Preferences.getCategoryByName(services.Preferences.defaultCategoryName);
+                    services.$location.path(category.href.substring(1));
+                    services.$location.replace();
+                }
             }
         });
     }

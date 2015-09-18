@@ -123,6 +123,34 @@ gulp.task('emulate-android', ['ts'], function(cb) {
 });
 
 /**
+ * Used to prepare the Windows platform; currently this involves:
+ * 
+ * • Delegate to "ionic build windows"
+ * • Deletion of type TypeScript source at platforms/windows/www/js/src
+ * • Deletion of platforms/windows/www/js/bundle.d.ts
+ * 
+ * We delete the TypeScript source so that Visual Studio doesn't pick
+ * them up and try to convert the project to a TypeScript project (we
+ * don't need the TypeScript tooling in VS because we've already complied
+ * the TypeScript source via our gulp tasks).
+ * 
+ * Useful to quickly execute from Visual Studio Code's task launcher:
+ * Bind CMD+Shift+R to "workbench.action.tasks.runTask task launcher"
+ */
+gulp.task('prepare-windows', ['ts'], function(cb) {
+    exec("ionic build windows", function (err, stdout, stderr) {
+        gulp.src("resources/windows/**")
+            .pipe(gulp.dest("platforms/windows/images"))
+            .on("end", function() {
+                del([
+                    "platforms/windows/www/js/src",
+                    "platforms/windows/www/js/src/bundle.d.ts"
+                ], cb);
+        });
+    });
+});
+
+/**
  * Performs linting of the TypeScript source code.
  */
 gulp.task('lint', function (cb) {

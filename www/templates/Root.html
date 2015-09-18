@@ -11,6 +11,10 @@
         <ion-nav-view name="tab-extra"></ion-nav-view>
     </ion-tab>
 
+    <ion-tab title="Dashboard" icon-off="ion-home" icon-on="ion-home" ui-sref="app.dashboard" hidden="{{!viewModel.showDashboardTab}}">
+        <ion-nav-view name="tab-dashboard"></ion-nav-view>
+    </ion-tab>
+
     <ion-tab title="Security" icon-off="ion-locked" icon-on="ion-locked" ui-sref="app.security">
         <ion-nav-view name="tab-security"></ion-nav-view>
     </ion-tab>

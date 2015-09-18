@@ -37,6 +37,10 @@
         {
             "taskName": "emulate-android",
             "showOutput": "never"
+        },
+        {
+            "taskName": "prepare-windows",
+            "showOutput": "never"
         }
     ]
 }

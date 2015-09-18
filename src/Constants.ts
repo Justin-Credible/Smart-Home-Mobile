@@ -41,3 +41,11 @@ module JustinCredible.SmartHomeMobile.Constants.Events {
     export const APP_MENU_BUTTON = "app.menuButton";
     export const SCROLL_REFRESH_COMPLETE = "scroll.refreshComplete";
 }
+
+module JustinCredible.SmartHomeMobile.Constants.Dashboard {
+    export const ITEM_WIDTH = 40;
+    export const ITEM_DEFAULT_HORIZONTAL_SPACING = 55;
+    export const ITEM_DEFAULT_VERTICAL_SPACING = 60;
+    export const ITEM_DEFAULT_HORIZONTAL_START = 10;
+    export const ITEM_DEFAULT_VERTICAL_START = 65;
+}

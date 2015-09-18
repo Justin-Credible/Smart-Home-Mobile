@@ -28,6 +28,16 @@ module JustinCredible.SmartHomeMobile {
 
             //#region Main Application Areas
 
+            $stateProvider.state("app.dashboard", {
+                url: "/dashboard",
+                views: {
+                    "tab-dashboard": {
+                        templateUrl: "templates/Dashboard.html",
+                        controller: Controllers.DashboardController.ID
+                    }
+                }
+            });
+
             $stateProvider.state("app.security", {
                 url: "/security",
                 views: {
@@ -140,6 +150,16 @@ module JustinCredible.SmartHomeMobile {
                     "tab-settings": {
                         templateUrl: "templates/Settings/Hub.html",
                         controller: Controllers.HubController.ID
+                    }
+                }
+            });
+
+            $stateProvider.state("app.dashboard-config", {
+                url: "/settings/dashboard",
+                views: {
+                    "tab-settings": {
+                        templateUrl: "templates/Settings/Dashboard-Config.html",
+                        controller: Controllers.DashboardConfigController.ID
                     }
                 }
             });

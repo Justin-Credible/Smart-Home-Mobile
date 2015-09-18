@@ -1,0 +1,105 @@
+<ion-view view-title="" class="dashboard-config-view">
+
+    <ion-nav-buttons side="left">
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+
+        <button class="button icon ion-toggle"
+            ng-click="controller.toggleToolbar_click()"
+            ng-hide="blockingRequestInProgress || nonBlockingRequestInProgress">
+            Toggle Toolbar
+        </button>
+
+        <button class="button icon ion-loop"
+            ng-click="controller.refreshDevices_click()"
+            ng-hide="blockingRequestInProgress || nonBlockingRequestInProgress">
+            Refresh Devices
+        </button>
+
+        <button class="button icon ion-ios-refresh"
+            ng-click="controller.resetLayout_click()"
+            ng-hide="blockingRequestInProgress || nonBlockingRequestInProgress">
+            Reset Layout
+        </button>
+
+        <button class="button icon ion-images"
+            ng-click="controller.setFloorplanImage_click()"
+            ng-hide="blockingRequestInProgress || nonBlockingRequestInProgress">
+            Set Floorplan Image
+        </button>
+
+        <button class="button icon ion-checkmark-round"
+            ng-click="controller.save_click()"
+            ng-hide="blockingRequestInProgress || nonBlockingRequestInProgress || !viewModel.hasChanges">
+            Save
+        </button>
+
+    </ion-nav-buttons>
+
+    <div class="bar bar-subheader" ng-show="viewModel.showToolbar">
+        <h2 class="title">
+            <div class="row" ng-show="viewModel.selectedItem">
+                <div class="col">
+                    Selected Item:
+                </div>
+                <div class="col">
+                    {{viewModel.selectedItem.name}}
+                </div>
+                <div class="col">
+                    {{viewModel.selectedItem.type | TitleCase: true }}
+                </div>
+                <div class="col">
+                    {{viewModel.selectedItem.x}}, {{viewModel.selectedItem.y}}
+                </div>
+                <div class="col" ng-show="viewModel.selectedItem.missing">
+                    <button class="button icon ion-close-round"
+                        ng-click="controller.remove_click(viewModel.selectedItem)">
+                        Remove
+                    </button>
+                </div>
+                <div class="col">
+                    <div class="item-toggle">
+                        Visible
+                        <label class="toggle">
+                        <input type="checkbox"
+                            ng-model="viewModel.selectedItem.visible"
+                            ng-click="controller.visible_click(viewModel.selectedItem)">
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <span ng-show="!viewModel.selectedItem">
+                (drag and drop devices to arrange them)
+            </span>
+        </h2>
+    </div>
+
+    <ion-content class="has-header" padding="false" scroll="false" >
+
+        <div class="floorplan"
+            style="background-image: url('{{viewModel.floorplanImageUrl}}'); position: relative;">
+
+            <button ng-repeat="item in viewModel.items"
+                style="position: absolute;"
+                positionable-element left="item.x" top="item.y"
+                on-reposition="controller.item_reposition(item)"
+                ng-mousedown="controller.item_mouseDown(item)"
+                ng-click="controller.item_click(item)"
+                ng-style="{
+                    'color': controller.getColorForItem(item),
+                    'border-color': controller.getBorderColorForItem(item),
+                    'opacity': item.visible ? 1 : .3
+                }"
+                class="button icon {{controller.getIconForItem(item)}}">
+            </button>
+
+        </div>
+
+    </ion-content>
+
+</ion-view>

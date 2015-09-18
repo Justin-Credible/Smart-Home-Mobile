@@ -46,7 +46,7 @@
 
             this.viewModel.logToLocalStorage = this.Logger.getLogToLocalStorage();
 
-            this.viewModel.devicePlatform = this.Utilities.platform;
+            this.viewModel.devicePlatform = this.Utilities.device.platform;
             this.viewModel.deviceModel = this.Utilities.device.model;
             this.viewModel.deviceOsVersion = this.Utilities.device.version;
             this.viewModel.deviceUuid = this.Utilities.device.uuid;
@@ -80,6 +80,12 @@
 
         protected help_click(helpMessage: string): void {
             this.UiHelper.alert(helpMessage, "Help");
+        }
+
+        protected debuggerBreak_click(): void {
+            /* tslint:disable:no-debugger */
+            debugger;
+            /* tslint:enable:no-debugger */
         }
 
         protected mockApiRequests_change(): void {

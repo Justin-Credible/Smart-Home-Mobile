@@ -1,0 +1,140 @@
+Getting Started with Smart Home Mobile
+=============================
+
+This document outlines steps on how to setup your environment, build, and run the application.
+
+## Environment Setup ##
+
+The following prerequisites are required (I've listed the versions of the packages I've tested with).
+
+*While the following node modules can be installed globally, I recommend using them directly from the project directory. You can do so by adding `./node_modules/.bin` to your path.*
+
+* Node.js (0.10.28)
+* Cordova (5.1.1)
+* Ionic CLI (1.5.5)
+* TypeScript (1.5.0-beta)
+* Bower (1.4.1)
+* bower-installer (1.2.0)
+* tsd (0.6.1)
+
+*In addition, if you want to run on a emulator or physical device, you'll need your environment setup for iOS or Android development.*
+
+To begin, clone the repository and install the node packages:
+
+	$ git clone https://github.com/Justin-Credible/Smart-Home-Mobile.git
+    $ cd Smart-Home-Mobile
+	$ npm install
+
+## Compilation ##
+
+Now you can use the various gulp tasks to obtain Cordova plugins, install third party libraries via Bower, download TypeScript definition files and compile the TypeScript code.
+
+*You can also just run `gulp` without any arguments which will run the below targets.*
+
+	$ gulp libs       # Install 3rd Party JS libraries as defined in bower.json
+	$ gulp plugins    # Install Cordova plugins as defined in package.json
+	$ gulp tsd        # Install TypeScript definitions as defined in tsd.json
+	$ gulp ts         # Compiles TypeScript code as configured by src/tsconfig.json
+
+*If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>B</kbd> to run the `ts` task.*
+
+*By default, the debug variable will be set to true in `BuildVars.js`; for release builds use `gulp ts --scheme release`.*
+
+## Platform Setup ##
+
+Next you'll need to add the platforms you'll be running/building for.
+
+	$ ionic platform add ios
+
+If you are going to be developing on iOS, you'll probably want  two additional packages with allow you to run the your application on the iOS simulator as well as a physical device:
+
+	$ npm install ios-sim
+	$ npm install ios-deploy
+
+For best performance on Android, you'll may wish to add the [Crosswalk](https://crosswalk-project.org/) plugin which will use an up to date version of Chromium instead Android's built-in WebView:
+
+	$ ionic browser add crosswalk
+
+## Running in Browser ##
+
+Development can be done quickly using your desktop web browser with live reloading of code. Chrome is recommended for best results.
+
+	$ ionic serve
+
+You can also use the Apache Ripple emulator which adds features when debugging in your browser (screen resolutions, hardware simulation, etc). It is available via `npm` or as a [Chrome Plugin](https://chrome.google.com/webstore/detail/geelfhphabnejjhdalkjhgipohgpdnoc).
+
+To avoid [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) issues, you'll need to to mock up your API responses via `MockHttpApis.ts` or disable CORS by launching Chrome with the `--disable-web-security` argument.
+
+You may also find it useful to ignore all SSL certificate errors so you don't have to trust certificates on your machine by using `--ignore-certificate-errors`.
+
+	$ open -a "Google Chrome.app" --args --ignore-certificate-errors --disable-web-security
+
+*NOTE: You shouldn't use these flags on a browser you use to browse the internet as they disable important security measures. It is recommended to download an setup a separate Chrome instance when using these flags (I use the [Canary](https://www.google.com/chrome/browser/canary.html) builds).*
+
+## Running on Emulators ##
+
+You can run your application on the software emulator using the `emulate` command.
+
+	$ ionic emulate ios
+
+*You can optionally specify a specific emulator using the target parameter: `--target="iPhone-6-Plus"`*
+
+*If you are using VSCode you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and type `emulate` to run either the iOS or Android emulate targets.*
+
+## Running on the iOS Simulator remotely from Windows ##
+
+If you are developing your application on a Windows machine, but want to test and run your application on iOS, you can do so using the `gulp remote-emulate-ios` task and target a remote OS X machine.
+
+First, you'll need to install the `remotebuild` package via npm on the OS X machine on which you want to run the simulator. Note that since the Cordova project will be built on the OS X machine, you'll need to make sure you have all the build prerequisites installed (Xcode etc).
+
+	$ npm install -g remotebuild
+
+Next, you'll want to edit `remote-build.json` located in the root of the starter project. This file will let you set the host name, port, and URL to point at your OS machine, as well as configure other settings.
+
+Finally, you can execute `gulp remote-emulate-ios` from the root of the starter project which will take care of TypeScript compilation, building a payload, and uploading it to the OS X machine so it can be built and emulated.
+
+*If you are using VSCode you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and type `remote` to run the iOS remote emulate target*
+
+## Running on Hardware ##
+
+Before running on a device you'll want to make sure it is visible via XCode (for iOS) or via `adb devices -l` (for Android) otherwise the simulator may launch instead.
+
+	$ ionic run ios --device
+
+### Raspberry Pi 2 ###
+
+The application can run on a Raspberry Pi 2 device that is running Windows 10 IoT. This requires building and running on a machine with Windows 10 and Visual Studio 2015.
+
+First add the Windows platform; I've currently tested against 4.0.0 as of this writing.
+
+    $ platform add windows@4.0.0
+
+Next run the following custom gulp target. This will delegate to `ionic build windows`. In addition it will handle removing the source files from the `www` directory (which will confuse Visual Studio) as well as copies in the splash screen and icon resources.
+
+	$ gulp prepare-windows
+
+Unfortunately the `appx` package generated by Cordova is not accepted by the Windows 10 IoT app upload web page, so instead we must use Visual Studio to remote deploy.
+
+	$ start platforms\windows\CordovaApp.Windows10.jsproj
+
+Once the project has opened in Visual Studio you can use the Play button drop down on the toolbar to select Remote Machine to remotely deploy to the Pi.
+
+*NOTE: Ensure the device is attached to the network using an Ethernet cable as I've found Windows 10 IoT does not listen for remote deploys on secondary network adapters.*
+
+## Creating a Build ##
+
+To create production build, it is first a good idea to re-run all of the gulp tasks to ensure that all of the plugins and libraries are up to date at the TypeScript code has been compiled.
+
+	$ gulp --scheme release
+
+*Usage of the `--scheme release` flag here will set the `debug` flag to false in the `BuildVars.js` file.*
+
+Then, to create a native build, use Ionic's build command:
+
+	$ ionic build ios --release
+	
+Or to create a Chrome extension, use the `chrome` gulp task:
+
+	$ gulp chrome --scheme release
+	
+Native build artifacts will be located in the `platforms/<platform name>` directory and an unpacked Chrome extension will be located in the `chrome` directory.

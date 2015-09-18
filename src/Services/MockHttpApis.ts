@@ -171,7 +171,7 @@ module JustinCredible.SmartHomeMobile.Services {
                         "state": "CLOSED",
                         "alarmTypes": null
                     },
-                    "00-00-00-00-00-00-00-03": {
+                    "00-00-00-00-00-00-00-14": {
                         "name": "Water Leak Sensor",
                         "type": "EverspringST812",
                         "alarm": "Safety — Emergency",
@@ -181,7 +181,7 @@ module JustinCredible.SmartHomeMobile.Services {
                             "WATER"
                         ]
                     },
-                    "00-00-00-00-00-00-00-04": {
+                    "00-00-00-00-00-00-00-16": {
                         "name": "Smoke and CO Detector",
                         "type": "FirstAlertSmokeCOAlarm",
                         "alarm": "Safety — Emergency",
@@ -192,7 +192,7 @@ module JustinCredible.SmartHomeMobile.Services {
                             "CO"
                         ]
                     },
-                    "00-00-00-00-00-00-00-05": {
+                    "00-00-00-00-00-00-00-17": {
                         "name": "Keypad",
                         "type": "Keypad",
                         "alarm": "Safety — Panic",
@@ -208,7 +208,7 @@ module JustinCredible.SmartHomeMobile.Services {
             return {
                 "locks": [
                     {
-                        "id": "00-00-00-00-00-00-00-00",
+                        "id": "00-00-00-00-00-00-00-10",
                         "name": "Door Number 1",
                         "type": "DEADBOLT",
                         "presence": true,
@@ -217,7 +217,7 @@ module JustinCredible.SmartHomeMobile.Services {
                         "canBuzzIn": true
                     },
                     {
-                        "id": "00-00-00-00-00-00-00-00",
+                        "id": "00-00-00-00-00-00-00-11",
                         "name": "Door Number 2",
                         "type": "DEADBOLT",
                         "presence": true,
@@ -226,7 +226,7 @@ module JustinCredible.SmartHomeMobile.Services {
                         "canBuzzIn": true
                     },
                     {
-                        "id": "00-00-00-00-00-00-00-00",
+                        "id": "00-00-00-00-00-00-00-12",
                         "name": "Door Number 3",
                         "type": "DEADBOLT",
                         "presence": true,
@@ -284,7 +284,7 @@ module JustinCredible.SmartHomeMobile.Services {
                         "nextEvent": null
                     },
                     {
-                        "id": "00-00-00-00-00-00-00-02",
+                        "id": "00-00-00-00-00-00-00-12",
                         "name": "Multilevel switch 1",
                         "type": "GenericMultilevelSwitch",
                         "controlType": "INTENSITY",
@@ -533,7 +533,7 @@ module JustinCredible.SmartHomeMobile.Services {
                     },
                     "id": "00-00-00-00-00-00-00-01"
                 },
-                "00-00-00-00-00-00-00-02": {
+                "00-00-00-00-00-00-00-11": {
                     "name": "Main Thermostat",
                     "type": "RtcoaCT101",
                     "protocol": [
@@ -559,9 +559,9 @@ module JustinCredible.SmartHomeMobile.Services {
                     "upgrade": "INELIGIBLE",
                     "reason": "UPGRADE_NOT_POSSIBLE",
                     "hardwareRevision": "VERSION_UNAVAILABLE",
-                    "id": "00-00-00-00-00-00-00-02"
+                    "id": "00-00-00-00-00-00-00-11"
                 },
-                "00-00-00-00-00-00-00-03": {
+                "00-00-00-00-00-00-00-13": {
                     "name": "Inner Garage Door Keypad",
                     "type": "KwiksetDeadbolt",
                     "protocol": [
@@ -587,9 +587,9 @@ module JustinCredible.SmartHomeMobile.Services {
                     "upgrade": "INELIGIBLE",
                     "reason": "UPGRADE_NOT_POSSIBLE",
                     "hardwareRevision": "VERSION_UNAVAILABLE",
-                    "id": "00-00-00-00-00-00-00-03"
+                    "id": "00-00-00-00-00-00-00-13"
                 },
-                "00-00-00-00-00-00-00-04": {
+                "00-00-00-00-00-00-00-15": {
                     "name": "Back Window",
                     "type": "ContactSensor",
                     "protocol": [
@@ -615,7 +615,7 @@ module JustinCredible.SmartHomeMobile.Services {
                     "upgrade": "INELIGIBLE",
                     "reason": "ALREADY_AT_LATEST_VERSION",
                     "hardwareRevision": "1.0",
-                    "id": "00-00-00-00-00-00-00-04"
+                    "id": "00-00-00-00-00-00-00-15"
                 },
                 "00-00-00-00-00-00-00-05": {
                     "name": "Back Sliding Door",

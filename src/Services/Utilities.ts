@@ -71,47 +71,43 @@
          * Used to check if the current platform is Android.
          */
         public get isAndroid(): boolean {
-            return typeof(device) !== "undefined" && device.platform === "Android";
+            return this.device.platform === "Android";
         }
 
         /**
          * Used to check if the current platform is iOS.
          */
         public get isIos(): boolean {
-            return typeof (device) !== "undefined" && device.platform === "iOS";
+            return this.device.platform === "iOS";
         }
 
         /**
          * Used to check if the current platform is Windows Phone 8.x.
          */
         public get isWindowsPhone8(): boolean {
-            return typeof(device) !== "undefined" && device.platform === "WP8";
+            return this.device.platform === "WP8";
         }
 
         /**
          * Used to check if the current platform is Windows 8.
          */
         public get isWindows8(): boolean {
-            return typeof(device) !== "undefined" && device.platform === "Windows8";
+            return this.device.platform === "Windows8";
         }
 
         /**
          * Used to check if the current platform is Windows 10 / UWP.
          */
         public get isWindows(): boolean {
-            return typeof(device) !== "undefined" && device.platform === "windows";
+            return this.device.platform === "windows";
         }
 
         /**
-        * Used to return the name of the platform as specified via Cordova.
-        */
-        public get platform(): string {
-            if (typeof (device) === "undefined") {
-                return typeof(window.ripple) !== "undefined" ? "Ripple" : "Unknown";
-            }
-            else {
-                return device.platform;
-            }
+         * Used to check if the current platfor is Windows 10 /UWP running on
+         * an IoT device (eg Raspberry Pi 2).
+         */
+        public get isWindowsIoT(): boolean {
+            return this.device.platform === "Windows.IoT";
         }
 
         /**
@@ -125,6 +121,19 @@
                     model: "unknown",
                     uuid: "unknown",
                     version: "unknown",
+                    capture: null
+                };
+            }
+            else if (this.getValue(window, "Windows.System.Profile.AnalyticsInfo.versionInfo.deviceFamily") === "Windows.IoT") {
+                // Cordova will have created device object for Windows IoT devices, but it
+                // won't have any useful data. Here we can mock one up with at least a little
+                // bit of useful information.
+                return {
+                    cordova: "N/A",
+                    platform: "Windows.IoT",
+                    model: "unknown",
+                    uuid: "unknown",
+                    version: this.getValue(window, "Windows.System.Profile.AnalyticsInfo.versionInfo.deviceFamilyVersion"),
                     capture: null
                 };
             }

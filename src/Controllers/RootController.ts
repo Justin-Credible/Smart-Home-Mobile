@@ -52,6 +52,7 @@
 
             this._hasLoaded = true;
 
+            this.viewModel.showDashboardTab = this.Utilities.isWindowsIoT || this.Utilities.isRipple;
             this.viewModel.categories = this.Preferences.categories;
 
             this.$ionicPopover.fromTemplateUrl("templates/More-Menu.html", {
