@@ -80,8 +80,10 @@ module JustinCredible.SmartHomeMobile.Controllers {
             // Flatten the items list into a dictionary of items by device ID.
             let items = this.DashboardHelper.getItemsDictionary(this.viewModel.items);
 
-            // Keeps track of the X coordiate for new items so they don't all overlap.
-            let newItemPositionCounter = 0;
+            // Keeps track of the X and Y coordiates for new items so they don't all overlap
+            // and/or go off of the screen.
+            let newItemXPositionCounter = Constants.Dashboard.ITEM_DEFAULT_HORIZONTAL_START;
+            let newItemYPositionCounter = Constants.Dashboard.ITEM_DEFAULT_VERTICAL_START;
 
             // Keeps track of if a changed has occurred or not.
             let hasChanged = false;
@@ -110,8 +112,21 @@ module JustinCredible.SmartHomeMobile.Controllers {
                     newItem.visible = true;
                     newItem.missing = false;
 
-                    newItem.x = newItemPositionCounter += 10;
-                    newItem.y = 45;
+                    // Calculate the potential X position for this button.
+                    var nextXPosition = newItemXPositionCounter + Constants.Dashboard.ITEM_DEFAULT_HORIZONTAL_SPACING;
+
+                    if ((nextXPosition + Constants.Dashboard.ITEM_WIDTH) >= screen.width) {
+                        // If the button would be positioned off of the right of the screen
+                        // then we'll wrap it around to the next row.
+                        newItemXPositionCounter = Constants.Dashboard.ITEM_DEFAULT_HORIZONTAL_START;
+                        newItemYPositionCounter += Constants.Dashboard.ITEM_DEFAULT_VERTICAL_SPACING;
+                    }
+                    else {
+                        newItemXPositionCounter += Constants.Dashboard.ITEM_DEFAULT_HORIZONTAL_SPACING;
+                    }
+
+                    newItem.x = newItemXPositionCounter;
+                    newItem.y = newItemYPositionCounter;
 
                     items[deviceId] = newItem;
 
@@ -185,12 +200,28 @@ module JustinCredible.SmartHomeMobile.Controllers {
                     return;
                 }
 
-                // Keeps track of the X coordiate for new items so they don't all overlap.
-                let newItemPositionCounter = 0;
+                // Keeps track of the X and Y coordiates for new items so they don't all overlap
+                // and/or go off of the screen.
+                let itemXPositionCounter = Constants.Dashboard.ITEM_DEFAULT_HORIZONTAL_START;
+                let itemYPositionCounter = Constants.Dashboard.ITEM_DEFAULT_VERTICAL_START;
 
                 this.viewModel.items.forEach((item: Models.DashboardItem) => {
-                    item.x = newItemPositionCounter += 10;
-                    item.y = 45;
+
+                    // Calculate the potential X position for this button.
+                    var nextXPosition = itemXPositionCounter + Constants.Dashboard.ITEM_DEFAULT_HORIZONTAL_SPACING;
+
+                    if ((nextXPosition + Constants.Dashboard.ITEM_WIDTH) >= screen.width) {
+                        // If the button would be positioned off of the right of the screen
+                        // then we'll wrap it around to the next row.
+                        itemXPositionCounter = Constants.Dashboard.ITEM_DEFAULT_HORIZONTAL_START;
+                        itemYPositionCounter += Constants.Dashboard.ITEM_DEFAULT_VERTICAL_SPACING;
+                    }
+                    else {
+                        itemXPositionCounter += Constants.Dashboard.ITEM_DEFAULT_HORIZONTAL_SPACING;
+                    }
+
+                    item.x = itemXPositionCounter;
+                    item.y = itemYPositionCounter;
                 });
 
                 this.viewModel.hasChanges = true;
