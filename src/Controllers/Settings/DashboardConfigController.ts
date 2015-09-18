@@ -237,6 +237,7 @@ module JustinCredible.SmartHomeMobile.Controllers {
 
                 if (result.key === Constants.Buttons.OK) {
                     this.viewModel.floorplanImageUrl = result.value;
+                    this.viewModel.hasChanges = true;
                 }
             });
         }
