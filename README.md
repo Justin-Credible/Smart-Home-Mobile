@@ -33,7 +33,7 @@ The mobile app is cross-platform and supports the following platforms:
 
 It is built with Ionic, TypeScript, and AngularJS (among others) using the [Ionic-TypeScript-Starter](https://github.com/Justin-Credible/Ionic-TypeScript-Starter) starter project.
 
-See [`getting-started.md`](https://github.com/Justin-Credible/Smart-Home-Mobile/getting-started.md) for information on how to build and run the application.
+See [`getting-started.md`](https://github.com/Justin-Credible/Smart-Home-Mobile/blob/master/getting-started.md) for information on how to build and run the application.
 
 ## Integration APIs ##
 
