@@ -91,10 +91,14 @@ module JustinCredible.SmartHomeMobile.Controllers {
 
                 if (items[deviceId]) {
                     // Device already has a corresponding item, so we'll update it.
+
+                    if (items[deviceId].name !== devices[deviceId].name) {
+                        hasChanged = true;
+                    }
+
                     items[deviceId].name = devices[deviceId].name;
                     items[deviceId].missing = false;
                     items[deviceId].isBusy = false;
-                    hasChanged = true;
                 }
                 else {
                     // If this is a new device, add an item for it.
@@ -217,6 +221,18 @@ module JustinCredible.SmartHomeMobile.Controllers {
                     this.UiHelper.alert("Dashboard configuration saved!");
                 }
             });
+        }
+
+        protected visible_click(item: Models.DashboardItem): void {
+            this.viewModel.hasChanges = true;
+        }
+
+        protected item_reposition(item: Models.DashboardItem): void {
+            this.viewModel.hasChanges = true;
+        }
+
+        protected item_mouseDown(item: Models.DashboardItem): void {
+            this.viewModel.selectedItem = item;
         }
 
         protected item_click(item: Models.DashboardItem): void {

@@ -31,7 +31,7 @@
 
         <button class="button icon ion-checkmark-round"
             ng-click="controller.save_click()"
-            ng-hide="blockingRequestInProgress || nonBlockingRequestInProgress">
+            ng-hide="blockingRequestInProgress || nonBlockingRequestInProgress || !viewModel.hasChanges">
             Save
         </button>
 
@@ -62,7 +62,9 @@
                     <div class="item-toggle">
                         Visible
                         <label class="toggle">
-                        <input type="checkbox" ng-model="viewModel.selectedItem.visible">
+                        <input type="checkbox"
+                            ng-model="viewModel.selectedItem.visible"
+                            ng-click="controller.visible_click(viewModel.selectedItem)">
                         <div class="track">
                             <div class="handle"></div>
                         </div>
@@ -85,6 +87,8 @@
             <button ng-repeat="item in viewModel.items"
                 style="position: absolute;"
                 positionable-element left="item.x" top="item.y"
+                on-reposition="controller.item_reposition(item)"
+                ng-mousedown="controller.item_mouseDown(item)"
                 ng-click="controller.item_click(item)"
                 ng-style="{
                     'color': controller.getColorForItem(item),

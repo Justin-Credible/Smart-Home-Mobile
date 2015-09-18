@@ -3,10 +3,11 @@ module JustinCredible.SmartHomeMobile.Directives {
     export interface PositionableElementScope extends ng.IScope {
         left: number;
         top: number;
+        onReposition: () => void;
     }
 
     /**
-     * A directive for adding drag and drop capability to an element.
+     * A directive for adding user-positionable capabilities (eg drag and drop) to an element.
      * 
      * This was modified from the Angular directive sample:
      * https://docs.angularjs.org/guide/directive
@@ -36,7 +37,8 @@ module JustinCredible.SmartHomeMobile.Directives {
 
         public scope = {
             left: "=left",
-            top: "=top"
+            top: "=top",
+            onReposition: "&"
         };
 
         public link(scope: PositionableElementScope, element: ng.IAugmentedJQuery, attributes: ng.IAttributes, controller: any, transclude: ng.ITranscludeFunction): void {
@@ -87,11 +89,24 @@ module JustinCredible.SmartHomeMobile.Directives {
 
             // Once the mouse button is released, unwire the events and update the scope values.
             var mouseup = () => {
+                var positionChanged = false;
+
                 this.$document.off("mousemove", mousemove);
                 this.$document.off("mouseup", mouseup);
 
+                // Determine if this element moved.
+                if (scope.top !== y || scope.left !== x) {
+                    positionChanged = true;
+                }
+
                 scope.top = y;
                 scope.left = x;
+
+                // If the element moved, trigger the on-reposition event.
+                if (positionChanged) {
+                    scope.onReposition();
+                }
+
                 scope.$apply();
             };
 
