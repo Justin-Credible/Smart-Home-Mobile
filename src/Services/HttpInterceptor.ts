@@ -26,8 +26,8 @@
             return this.$injector.get(Utilities.ID);
         }
 
-        private get UiHelper(): UiHelper {
-            return this.$injector.get(UiHelper.ID);
+        private get Plugins(): Plugins {
+            return this.$injector.get(Plugins.ID);
         }
 
         private get Preferences(): Preferences {
@@ -254,15 +254,15 @@
                 // If we don't do this here, it will result in being unable to hide progress
                 // indicators when multiple are shown.
                 if (this.Utilities.isIos && this.blockingRequestsInProgress > 1) {
-                    this.UiHelper.progressIndicator.hide();
+                    this.Plugins.progressIndicator.hide();
                 }
 
                 // Show the blocking progress indicator with or without text.
                 if (config.blockingText) {
-                    this.UiHelper.progressIndicator.showSimpleWithLabel(true, config.blockingText);
+                    this.Plugins.progressIndicator.showSimpleWithLabel(true, config.blockingText);
                 }
                 else {
-                    this.UiHelper.progressIndicator.showSimple(true);
+                    this.Plugins.progressIndicator.showSimple(true);
                 }
 
                 // Let the rest of the application know that blocking requests are in progress.
@@ -308,7 +308,7 @@
             /* tslint:enable:no-string-literal */
 
             NProgress.done();
-            this.UiHelper.progressIndicator.hide();
+            this.Plugins.progressIndicator.hide();
 
             let error: ng.IHttpPromiseCallbackArg<any> = {
                 status: 0,
@@ -338,7 +338,7 @@
 
             // If there are no more blocking requests in progress, then hide the blocker.
             if (config.blocking && this.blockingRequestsInProgress === 0) {
-                this.UiHelper.progressIndicator.hide();
+                this.Plugins.progressIndicator.hide();
 
                 // Let the rest of the application know that all blocking requests are finished.
                 /* tslint:disable:no-string-literal */

@@ -12,6 +12,7 @@
                 "$location",
                 "$http",
                 "$ionicPopover",
+                Services.Plugins.ID,
                 Services.Utilities.ID,
                 Services.UiHelper.ID,
                 Services.Preferences.ID,
@@ -24,6 +25,7 @@
             private $location: ng.ILocationService,
             private $http: ng.IHttpService,
             private $ionicPopover: any,
+            private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
             private UiHelper: Services.UiHelper,
             private Preferences: Services.Preferences,
@@ -76,19 +78,19 @@
                 // In some cases, the API will return an error object with a reason enumeration/code.
                 // These usually a pretty human readable, especially after the underscores are stripped
                 // and the string is converted to title case.
-                this.UiHelper.toast.showLongBottom(this.Utilities.toTitleCase(error.data.error.reason));
+                this.Plugins.toast.showLongBottom(this.Utilities.toTitleCase(error.data.error.reason));
             }
             else {
-                this.UiHelper.toast.showLongBottom(this.Utilities.format("HTTP {0} - {1}", error.status, error.statusText));
+                this.Plugins.toast.showLongBottom(this.Utilities.format("HTTP {0} - {1}", error.status, error.statusText));
             }
         }
 
         private alertMeApi_urlNotSpecified(): void {
-            this.UiHelper.toast.showLongBottom("AlertMe API URL is required; see preferences.");
+            this.Plugins.toast.showLongBottom("AlertMe API URL is required; see preferences.");
         }
 
         private alertMeApi_credentialsNotSpecified(): void {
-            this.UiHelper.toast.showLongBottom("AlertMe API credentials are required; see preferences.");
+            this.Plugins.toast.showLongBottom("AlertMe API credentials are required; see preferences.");
         }
 
         //#endregion

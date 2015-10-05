@@ -10,7 +10,7 @@
             return [
                 "$scope",
                 Services.Utilities.ID,
-                Services.UiHelper.ID,
+                Services.Plugins.ID,
                 Services.HubDataSource.ID,
                 Services.AlertMeApi.ID
             ];
@@ -19,7 +19,7 @@
         constructor(
             $scope: ng.IScope,
             private Utilities: Services.Utilities,
-            private UiHelper: Services.UiHelper,
+            private Plugins: Services.Plugins,
             private HubDataSource: Services.HubDataSource,
             private AlertMeApi: Services.AlertMeApi) {
             super($scope, ViewModels.ThermostatViewModel);
@@ -74,7 +74,7 @@
                 this.scope.$broadcast(Constants.Events.SCROLL_REFRESH_COMPLETE);
 
                 if (result.widgetStatus === Services.AlertMeApi.WidgetStatus.DeviceMissing) {
-                    this.UiHelper.toast.showLongBottom(result.message);
+                    this.Plugins.toast.showLongBottom(result.message);
                 }
 
                 this.populateViewModel(result, this.HubDataSource.climateLastUpdated);

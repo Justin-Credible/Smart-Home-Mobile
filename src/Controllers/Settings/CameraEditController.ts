@@ -16,6 +16,7 @@
                 "$stateParams",
                 "$location",
                 "$ionicHistory",
+                Services.Plugins.ID,
                 Services.Utilities.ID,
                 Services.Preferences.ID,
                 Services.UiHelper.ID
@@ -27,6 +28,7 @@
             private $stateParams: ICameraEditControllerStateParams,
             private $location: ng.ILocationService,
             private $ionicHistory: any,
+            private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
             private Preferences: Services.Preferences,
             private UiHelper: Services.UiHelper) {
@@ -127,7 +129,7 @@
             this.Preferences.cameras = cameras;
 
             // Kick the user back to the camera list view.
-            this.UiHelper.toast.showShortBottom("Changes have been saved.");
+            this.Plugins.toast.showShortBottom("Changes have been saved.");
             this.$ionicHistory.goBack();
         }
 

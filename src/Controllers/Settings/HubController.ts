@@ -11,6 +11,7 @@
                 "$scope",
                 "$location",
                 "$ionicHistory",
+                Services.Plugins.ID,
                 Services.Utilities.ID,
                 Services.Preferences.ID,
                 Services.UiHelper.ID
@@ -21,6 +22,7 @@
             $scope: ng.IScope,
             private $location: ng.ILocationService,
             private $ionicHistory: any,
+            private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
             private Preferences: Services.Preferences,
             private UiHelper: Services.UiHelper) {
@@ -84,7 +86,7 @@
             this.Preferences.alertMeApiPassword = this.viewModel.password;
 
             // Kick the user back to the settings list view.
-            this.UiHelper.toast.showShortBottom("Changes have been saved.");
+            this.Plugins.toast.showShortBottom("Changes have been saved.");
             this.$ionicHistory.goBack();
         }
 

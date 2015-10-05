@@ -17,6 +17,7 @@ module JustinCredible.SmartHomeMobile.Application {
         $location: ng.ILocationService,
         $ionicHistory: any,
         $ionicConfig: any,
+        Plugins: Services.Plugins,
         Utilities: Services.Utilities,
         UiHelper: Services.UiHelper,
         Preferences: Services.Preferences,
@@ -325,6 +326,7 @@ module JustinCredible.SmartHomeMobile.Application {
         $ionicHistory: any,
         $ionicPlatform: Ionic.IPlatform,
         $ionicConfig: any,
+        Plugins: Services.Plugins,
         Utilities: Services.Utilities,
         UiHelper: Services.UiHelper,
         Preferences: Services.Preferences,
@@ -339,6 +341,7 @@ module JustinCredible.SmartHomeMobile.Application {
             $location: $location,
             $ionicHistory: $ionicHistory,
             $ionicConfig: $ionicConfig,
+            Plugins: Plugins,
             Utilities: Utilities,
             UiHelper: UiHelper,
             Preferences: Preferences,
@@ -361,8 +364,8 @@ module JustinCredible.SmartHomeMobile.Application {
 
         // We use this combination of settings so prevent the visual jank that
         // would otherwise occur when tapping an input that shows the keyboard.
-        UiHelper.keyboard.disableScroll(true);
-        UiHelper.keyboard.hideKeyboardAccessoryBar(false);
+        Plugins.keyboard.disableScroll(true);
+        Plugins.keyboard.hideKeyboardAccessoryBar(false);
 
         // Mock up or allow HTTP responses.
         MockHttpApis.mockHttpCalls(Configuration.enableMockHttpCalls);
@@ -537,10 +540,10 @@ module JustinCredible.SmartHomeMobile.Application {
 
         try {
             // Show a generic message to the user.
-            services.UiHelper.toast.showLongBottom("An error has occurred; please try again.");
+            services.Plugins.toast.showLongBottom("An error has occurred; please try again.");
 
             // If this exception occurred in the HttpInterceptor, there may still be a progress indicator on the scrren.
-            services.UiHelper.progressIndicator.hide();
+            services.Plugins.progressIndicator.hide();
         }
         catch (ex) {
             console.warn("There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
@@ -571,10 +574,10 @@ module JustinCredible.SmartHomeMobile.Application {
 
         try {
             // Show a generic message to the user.
-            services.UiHelper.toast.showLongBottom("An error has occurred; please try again.");
+            services.Plugins.toast.showLongBottom("An error has occurred; please try again.");
 
             // If this exception occurred in the HttpInterceptor, there may still be a progress indicator on the scrren.
-            services.UiHelper.progressIndicator.hide();
+            services.Plugins.progressIndicator.hide();
         }
         catch (ex) {
             console.warn("There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);

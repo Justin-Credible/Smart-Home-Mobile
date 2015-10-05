@@ -9,6 +9,7 @@ module JustinCredible.SmartHomeMobile.Controllers {
         public static get $inject(): string[] {
             return [
                 "$scope",
+                Services.Plugins.ID,
                 Services.Utilities.ID,
                 Services.UiHelper.ID,
                 Services.Preferences.ID,
@@ -20,6 +21,7 @@ module JustinCredible.SmartHomeMobile.Controllers {
 
         constructor(
             $scope: ng.IScope,
+            private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
             private UiHelper: Services.UiHelper,
             private Preferences: Services.Preferences,
@@ -153,7 +155,7 @@ module JustinCredible.SmartHomeMobile.Controllers {
 
             // Make sure the user can't send a request if the device is busy.
             if (item.isBusy) {
-                this.UiHelper.toast.showShortBottom("The device is busy; please try again later.");
+                this.Plugins.toast.showShortBottom("The device is busy; please try again later.");
                 return;
             }
 
@@ -199,7 +201,7 @@ module JustinCredible.SmartHomeMobile.Controllers {
                     let message = this.Utilities.format("This contact sensor is currently {0}.",
                                         this.Utilities.toTitleCase(sensor.state));
 
-                    this.UiHelper.toast.showShortCenter(message);
+                    this.Plugins.toast.showShortCenter(message);
                 }
                 break;
 
