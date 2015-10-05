@@ -3,7 +3,7 @@
 
     "name": "Smart Home Mobile",
     "description": "Used to control home automation devices.",
-    "version": "1.1.2",
+    "version": "1.2.0",
 
     "browser_action": {
         "default_icon": "icon.png",
