@@ -6,7 +6,8 @@
 /bower_components
 /platforms
 /plugins
-/typings
+/typings/*
+!/typings/custom/
 
 # Development Artifacts
 /www/lib

@@ -385,18 +385,7 @@ module JustinCredible.SmartHomeMobile.Services {
                         "presenceYesterday": false,
                         "nextEvent": null
                     }
-                ],
-                "hubAvailable": true,
-                "atAGlance": {
-                    "energyHogToday": "--",
-                    "energyHogYesterday": "--",
-                    "plugsOn": 2,
-                    "plugsTotal": 3,
-                    "heavyHour": -1,
-                    "minimumPower": 0
-                },
-                "widgetStatus": "OK",
-                "widgetVisible": true
+                ]
             };
         }
 
