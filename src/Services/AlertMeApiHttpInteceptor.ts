@@ -102,11 +102,9 @@
                 config: Interfaces.RequestConfig,
                 q = this.$q.defer<any>();
 
-            console.log("AlertMeApiHttpInteceptor.responseError", [httpResponse]);
-
             if (responseOrError instanceof Error) {
                 exception = <Error>responseOrError;
-                this.Logger.logError("An response error was encountered in the HttpInterceptorAlertMeApiHttpInteceptor.responseError().", exception);
+                this.Logger.error(AlertMeApiHttpInteceptor.ID, "responseError", "An uncaught exception occurred during an HTTP interceptor's response method.", exception);
                 return this.$q.reject(responseOrError);
             }
 

@@ -228,14 +228,20 @@ module JustinCredible.SmartHomeMobile {
                 url: "/settings/logs",
                 views: {
                     "tab-settings": {
-                        templateUrl: "templates/Settings/Logs.html",
-                        controller: Controllers.LogsController.ID
+                        templateUrl: "templates/Settings/Logs-List.html",
+                        controller: Controllers.LogsListController.ID
                     }
                 }
             });
 
             $stateProvider.state("app.log-entry", {
                 url: "/settings/log-entry/:id",
+                params: {
+                    id: {
+                        value: "",
+                        squash: false
+                    }
+                },
                 views: {
                     "tab-settings": {
                         templateUrl: "templates/Settings/Log-Entry.html",

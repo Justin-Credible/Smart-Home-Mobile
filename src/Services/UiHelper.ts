@@ -12,9 +12,9 @@
         public static get $inject(): string[] {
             return [
                 "$q",
-                "$ionicPopup",
                 "$ionicModal",
                 Plugins.ID,
+                Logger.ID,
                 Utilities.ID,
                 Preferences.ID,
                 Configuration.ID
@@ -23,9 +23,9 @@
 
         constructor(
             private $q: ng.IQService,
-            private $ionicPopup: any,
             private $ionicModal: any,
             private Plugins: Plugins,
+            private Logger: Logger,
             private Utilities: Utilities,
             private Preferences: Preferences,
             private Configuration: Services.Configuration) {
@@ -286,7 +286,7 @@
             }
 
             if (UiHelper.dialogTemplateMap[dialogId]) {
-                console.warn(this.Utilities.format("A dialog with ID {0} has already been registered; it will be overwritten.", dialogId));
+                this.Logger.warn(UiHelper.ID, "registerDialog", "A dialog with the same ID has already been registered; it will be overwritten.", dialogId);
             }
 
             UiHelper.dialogTemplateMap[dialogId] = templatePath;
@@ -355,8 +355,8 @@
             // If we were unable to find a dialog ID in the template map then we
             // can bail out here as there is nothing to do.
             if (!template) {
+                this.Logger.warn(UiHelper.ID, "showDialog", "A call was made to openDialog, but a template is not registered with the given ID in the dialogTemplateMap.", dialogId);
                 this.$q.reject(Constants.DIALOG_ID_NOT_REGISTERED);
-                console.warn(this.Utilities.format("A call was made to openDialog with dialogId '{0}', but a template is not registered with that ID in the dialogTemplateMap.", dialogId));
                 return q.promise;
             }
 
