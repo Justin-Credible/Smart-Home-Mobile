@@ -5,11 +5,9 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var runSequence = require('run-sequence');
 var bower = require('bower');
-var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 var exec = require('child_process').exec;
-var sourcemaps = require('gulp-sourcemaps');
 var ts = require('gulp-typescript');
 var tslint = require('gulp-tslint');
 var del = require('del');
@@ -386,7 +384,7 @@ gulp.task("plugins", ["git-check"], function(cb) {
  * that don't need to be committed to source control by delegating to several of the clean
  * sub-tasks.
  */
-gulp.task('clean', ['clean:node', 'clean:bower', 'clean:platforms', 'clean:plugins', 'clean:chrome', 'clean:libs', 'clean:ts']);
+gulp.task('clean', ['clean:node', 'clean:bower', 'clean:platforms', 'clean:plugins', 'clean:chrome', 'clean:libs', 'clean:ts', 'clean:tsd']);
 
 /**
  * Removes the node_modules directory.
@@ -443,6 +441,28 @@ gulp.task('clean:ts', function (cb) {
     'www/js/BuildVars.js',
     'www/js/src'
   ], cb);
+});
+
+/**
+ * Removes files related to TypeScript definitions.
+ */
+gulp.task("clean:tsd", function (cb) {
+
+    // TODO: These patterns don't actually remove the sub-directories
+    // located in the typings directories, they leave the directories
+    // but remove the *.d.ts files. The following glob should work for
+    // remove directories and preserving the custom directory, but they
+    // don't for some reason and the custom directory is always removed:
+    // "typings/**"
+    // "!typings/custom/**"
+
+    del([
+        "src/tsd.d.ts",
+        "typings/**/*.d.ts",
+        "!typings/custom/*.d.ts",
+        // "typings/**",
+        // "!typings/custom/**",
+    ], cb);
 });
 
 /**
