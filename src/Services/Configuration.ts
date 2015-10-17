@@ -19,7 +19,7 @@ module JustinCredible.SmartHomeMobile.Services {
         }
 
         constructor(
-            private buildVars: BuildVars) {
+            private buildVars: Interfaces.BuildVars) {
         }
 
         //#endregion
