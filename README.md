@@ -2,8 +2,7 @@ Smart-Home-Mobile
 =============================
 
 [![Build Status](https://travis-ci.org/Justin-Credible/Smart-Home-Mobile.svg?branch=master)](https://travis-ci.org/Justin-Credible/Smart-Home-Mobile)
-[![Dependencies](https://david-dm.org/Justin-Credible/Smart-Home-Mobile
-.svg)](https://david-dm.org/Justin-Credible/Smart-Home-Mobile)
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 A cross-platform mobile application used to control several smart home devices.
 
