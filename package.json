@@ -25,7 +25,7 @@
     "gulp-typescript": "2.9.2",
     "gulp-util": "3.0.6",
     "ionic": "1.7.6",
-    "request": "2.65.0",
+    "request": "2.88.2",
     "run-sequence": "1.1.4",
     "shelljs": "0.5.3",
     "tsd": "0.6.5",
