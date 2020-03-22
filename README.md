@@ -2,6 +2,7 @@ Smart Home Mobile App
 =============================
 
 ![banner](.readme/banner.jpg)
+![dashboard banner](.readme/dashboard-banner.jpg)
 
 [![Build Status](https://travis-ci.org/Justin-Credible/Smart-Home-Mobile.svg?branch=master)](https://travis-ci.org/Justin-Credible/Smart-Home-Mobile)
 [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
